@@ -106,7 +106,7 @@
             window.location.href = 'admin-login.html';
         } else {
             // Verify token with backend
-            fetch('http://localhost:8082/api/verify-token', {
+            fetch('/api/verify-token', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ token })
@@ -421,7 +421,7 @@
 
             try {
                 // Send to local Node server to extract and save images
-                const response = await fetch('http://localhost:8082/api/save-blog', {
+                const response = await fetch('/api/save-blog', {
                     method: 'POST',
                     headers: { 
                         'Content-Type': 'application/json',

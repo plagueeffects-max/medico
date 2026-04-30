@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -5,21 +6,14 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
-// Load environment variables manually
-if (fs.existsSync(path.join(__dirname, '.env'))) {
-    const envConfig = fs.readFileSync(path.join(__dirname, '.env'), 'utf-8').split('\n');
-    envConfig.forEach(line => {
-        const parts = line.split('=');
-        if (parts.length >= 2) {
-            const key = parts[0].trim();
-            const value = parts.slice(1).join('=').trim().replace(/['"]/g, '');
-            if (key) process.env[key] = value;
-        }
-    });
-}
-
 const app = express();
-const PORT = 8082; // Changed to 8082 to bypass stuck background processes
+const PORT = process.env.PORT || 8082;
+
+// Verify Admin Credentials on Startup
+if (!process.env.ADMIN_EMAIL || !process.env.ADMIN_PASSWORD) {
+    console.warn('\n[WARNING] ADMIN_EMAIL or ADMIN_PASSWORD not found in environment variables.');
+    console.warn('Admin login will not function until these are set.\n');
+}
 
 app.use(cors());
 app.use(bodyParser.json({ limit: '100mb' })); // Support large images
