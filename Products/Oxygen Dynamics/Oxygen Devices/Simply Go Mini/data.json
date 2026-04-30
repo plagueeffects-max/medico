@@ -1,0 +1,52 @@
+{
+    "title": "Simply Go Mini",
+    "make": "Philips",
+    "model": "1112605",
+    "sku": "1112605",
+    "category": "Oxygen Dynamics",
+    "subcategory": "Oxygen Devices",
+    "showSubcategory": true,
+    "price": 42000,
+    "comparePrice": 46500,
+    "showPrice": true,
+    "stock": "In Stock",
+    "description": "Light weight and Easy to Transport Oxygen Purity Indicator 3 Years Warranty Provides a continuous flow Budget-friendly Low maintenance for reduced service cost",
+    "longDescription": "<h3>SimplyGo Mini</h3><p><br></p><p>The&nbsp;<span style=\"color: rgb(26, 32, 44);\">SimplyGo Mini</span>&nbsp;is one of the&nbsp;<span style=\"color: rgb(26, 32, 44);\">lightest and most compact portable oxygen concentrators</span>&nbsp;in its class, designed to support active, on-the-go lifestyles.</p><p><br></p><h3>Key Highlights</h3><p><br></p><ul><li><span style=\"color: rgb(26, 32, 44);\">Ultra-Lightweight &amp; Compact Design</span></li><li>Weighs approximately&nbsp;<span style=\"color: rgb(26, 32, 44);\">2.3 kg (5 lbs)</span>&nbsp;with the standard battery, and around&nbsp;<span style=\"color: rgb(26, 32, 44);\">2.7 kg (6 lbs)</span>&nbsp;with the extended battery Its dimensions are about&nbsp;<span style=\"color: rgb(26, 32, 44);\">9.4\" × 8.3\" × 3.6\"</span>&nbsp;(~23.9 × 21.1 × 9.1 cm)</li><li><span style=\"color: rgb(26, 32, 44);\">Pulse-Dose Oxygen Delivery (Settings 1–5)</span></li><li>Delivers oxygen in pulses aligned with your breathing.</li><li>Flow outputs range from&nbsp;<span style=\"color: rgb(26, 32, 44);\">≈220 ml/min</span>&nbsp;(Setting 1) to&nbsp;<span style=\"color: rgb(26, 32, 44);\">≈1,000 ml/min</span>&nbsp;(Setting 5), with oxygen purity levels between&nbsp;<span style=\"color: rgb(26, 32, 44);\">87% and 96%</span></li><li><span style=\"color: rgb(26, 32, 44);\">Impressive Battery Life</span></li><li class=\"ql-indent-1\"><span style=\"color: rgb(26, 32, 44);\">Standard battery:</span>&nbsp;~4.5 hours (Setting 2) up to ~6 hours (Setting 1)</li><li class=\"ql-indent-1\"><span style=\"color: rgb(26, 32, 44);\">Extended battery:</span>&nbsp;Up to ~9 hours (Setting 2) and up to ~12 hours (Setting 1)</li><li><span style=\"color: rgb(26, 32, 44);\">FAA, FDA, and CE Approved</span></li><li>Fully certified for use aboard aircraft, meeting US and international regulatory standards</li><li><span style=\"color: rgb(26, 32, 44);\">Durable &amp; Travel-Ready</span></li><li>Built for rugged use tested against vibrations, drops, and extreme temperatures. Features a stylish carry case, intuitive touch-screen, and an easily swappable external battery</li><li><span style=\"color: rgb(26, 32, 44);\">Safety First: Alarms Included</span></li><li>Alerts include low battery, power loss, system malfunction, no flow, and low oxygen purity alarms, ensuring peace of mind</li></ul><p><br></p>",
+    "specifications": [
+        {
+            "key": "Weight",
+            "value": "~2.3 kg (5 lbs) standard / ~2.7 kg (6 lbs) extended"
+        },
+        {
+            "key": "Dimensions",
+            "value": "~9.4 × 8.3 × 3.6 inches"
+        },
+        {
+            "key": "Oxygen Purity",
+            "value": "~87–96%"
+        },
+        {
+            "key": "Battery Life",
+            "value": "4.5–6 hrs (standard), up to ~12 hrs (extended)"
+        },
+        {
+            "key": "Recharge Time",
+            "value": "~4 hours"
+        },
+        {
+            "key": "Noise Level",
+            "value": "~43 dB (Settings 2), ~46 dB (Setting 5)"
+        },
+        {
+            "key": "Portablity",
+            "value": "Compact, touchscreen interface, travel-friendly"
+        }
+    ],
+    "inTheBox": "<p><br></p>",
+    "brochure": "Products/Oxygen Dynamics/Oxygen Devices/Simply Go Mini/brochure_1777531177175.pdf",
+    "mainImage": "Products/Oxygen Dynamics/Oxygen Devices/Simply Go Mini/Images/main.webp",
+    "gallery": [
+        "Products/Oxygen Dynamics/Oxygen Devices/Simply Go Mini/Images/gallery_1777531177175_1.webp"
+    ],
+    "features": []
+}

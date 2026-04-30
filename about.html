@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medico Group | About Us</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800;900&family=Space+Grotesk:wght@300;500;700;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <style>
+        /* --- Page Specific Premium Styles --- */
+        .page-header {
+            position: relative;
+            padding: 180px 20px 60px;
+            background: var(--bg-pure);
+            text-align: center;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .page-header-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 900;
+            letter-spacing: -2px;
+            color: var(--text-dark);
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        /* Responsive Grid Columns */
+        .col-6 { grid-column: span 6; }
+        .col-4 { grid-column: span 4; }
+        .col-3 { grid-column: span 3; }
+        
+        /* Founder Block */
+        .founder-card {
+            display: grid;
+            grid-template-columns: 320px 1fr; 
+            gap: 40px;
+            align-items: center;
+            padding: clamp(30px, 4vw, 50px);
+        }
+        
+        /* --- THIS IS THE SECTION THAT CONTROLS THE WHITE CIRCLE --- */
+        .founder-img-ring {
+            width: 300px; 
+            height: 300px; 
+            border-radius: 50%;
+            background: #ffffff;
+            border: 6px solid #ffffff; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08); 
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden; 
+        }
+        .founder-img-ring img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transform: scale(1.18); 
+        }
+
+        /* Journey List */
+        .journey-list {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        .journey-item {
+            display: grid;
+            grid-template-columns: 40px 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+        .journey-num {
+            width: 40px;
+            height: 40px;
+            background: var(--text-dark);
+            color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        /* Custom Color Glow For Tiles */
+        .aww-card.custom-glow:hover {
+            box-shadow: 0 40px 80px var(--glow-color, rgba(0,0,0,0.06)) !important;
+        }
+
+        /* Check Grid (Why Choose Us) */
+        .check-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .check-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #ffffff;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        .check-icon {
+            color: var(--accent-red);
+            flex-shrink: 0;
+        }
+
+        /* Contact Data Blocks */
+        .data-block {
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: var(--transition-fast);
+        }
+        .data-block:hover {
+            box-shadow: 0 10px 20px rgba(0,0,0,0.04);
+            border-color: #dcdfe5;
+        }
+
+        /* Editorial Brand Cards */
+        .brand-card-premium {
+            background: #ffffff;
+            padding: clamp(30px, 4vw, 45px);
+            position: relative;
+            overflow: hidden;
+            min-height: 340px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(0,0,0,0.04);
+            border-radius: 16px;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .brand-card-premium:hover {
+            box-shadow: 0 40px 80px rgba(0,0,0,0.06);
+            transform: translateY(-8px);
+            border-color: transparent;
+        }
+        .brand-watermark {
+            position: absolute;
+            right: 0%;
+            bottom: 20%;
+            width: 80%;
+            height: 60%;
+            background-size: contain;
+            background-position: center right;
+            background-repeat: no-repeat;
+            opacity: 0.12; 
+            filter: grayscale(100%);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 0;
+            pointer-events: none;
+        }
+        .brand-card-premium:hover .brand-watermark {
+            opacity: 0.25; 
+            filter: grayscale(0%);
+            transform: scale(1.05); 
+        }
+        .brand-content {
+            position: relative;
+            z-index: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .brand-eyebrow {
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent-red);
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .brand-eyebrow::before {
+            content: '';
+            display: block;
+            width: 16px;
+            height: 2px;
+            background: var(--accent-red);
+        }
+        .brand-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 900;
+            font-size: clamp(2.2rem, 3vw, 2.8rem);
+            margin-bottom: auto;
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+        .brand-desc-wrapper {
+            border-top: 1px solid rgba(0,0,0,0.06);
+            padding-top: 25px;
+            margin-top: 40px;
+            transition: border-color 0.4s ease;
+        }
+        .brand-card-premium:hover .brand-desc-wrapper {
+            border-color: rgba(211, 47, 47, 0.2);
+        }
+        .brand-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 500;
+            line-height: 1.6;
+            max-width: 90%;
+        }
+
+        /* --- MOBILE RESPONSIVENESS FIXES --- */
+        @media (max-width: 1024px) {
+            .col-4 { grid-column: span 6; }
+            .col-3 { grid-column: span 6; }
+        }
+
+        @media (max-width: 900px) {
+            .founder-card { grid-template-columns: 1fr; text-align: center; }
+            .journey-item { grid-template-columns: 30px 1fr; gap: 15px; }
+            .journey-num { width: 30px; height: 30px; font-size: 0.9rem; }
+        }
+
+        @media (max-width: 768px) {
+            .col-6, .col-4, .col-3 { grid-column: span 12; }
+            .about-split { display: flex; flex-direction: column; gap: 24px; }
+            
+            .aww-grid .aww-card, .aww-grid .brand-card-premium {
+                position: sticky !important;
+                top: calc(90px + (var(--index, 0) * 16px)) !important;
+                z-index: var(--z-index, 10) !important;
+                margin-bottom: 0px !important;
+                box-shadow: 0 -12px 30px rgba(0,0,0,0.06) !important;
+                border-top: 1px solid rgba(255,255,255,0.9) !important;
+            }
+
+            .founder-card,
+            .dark-banner-card,
+            .about-split .aww-card {
+                position: relative !important;
+                top: auto !important;
+                z-index: 1 !important;
+                margin-bottom: 40px !important;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.03) !important;
+                border-top: 1px solid rgba(255, 255, 255, 0.5) !important;
+            }
+            
+            .address-meta-grid { grid-template-columns: 1fr !important; }
+            .check-grid { grid-template-columns: 1fr !important; }
+            
+            .dark-banner-card {
+                padding: 30px 20px !important;
+            }
+
+            .brand-watermark {
+                width: 100%;
+                bottom: 5%;
+                right: -10%;
+                opacity: 0.08;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="navbar">
+        <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">Medico<span>.</span></a>
+        <div class="nav-links">
+            <a href="index.html#catalogue-grid" class="nav-link">Catalogue</a>
+            <a href="about.html" class="nav-link">About Us</a>
+            <a href="blog.html" class="nav-link">Blog</a>
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="admin-login.html" class="login-btn" style="text-decoration:none;">Admin Login</a>
+        </div>
+    </nav>
+
+    <header class="page-header" style="background: var(--bg-pure);">
+        <div style="position: absolute; inset: 0; z-index: 0; background-image: url('images/about_us2.png'); background-size: cover; background-position: center; background-attachment: fixed; opacity: 0.12; filter: grayscale(100%);"></div>
+        
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 150px; background: linear-gradient(to bottom, var(--bg-pure) 0%, transparent 100%); z-index: 1; pointer-events: none;"></div>
+        <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 150px; background: linear-gradient(to top, var(--bg-pure) 0%, transparent 100%); z-index: 1; pointer-events: none;"></div>
+        
+        <div class="container reveal" style="position: relative; z-index: 2;">
+            <h1 class="page-header-title">
+                <span class="cinematic-word word-1" style="animation-delay: 0.1s;">ABOUT MEDICO</span><br>
+                <span class="cinematic-word word-2" style="animation-delay: 0.2s;">SCIENTIFIC</span>
+                <span class="cinematic-word word-3" style="animation-delay: 0.3s; color: var(--accent-red);">SERVICE CENTRE</span>
+            </h1>
+            <p style="max-width: 800px; margin: 0 auto; color: var(--text-muted); font-size: 1.1rem; line-height: 1.7; font-weight: 500;">
+                Since its establishment in 2000, Medico Scientific Service Centre has grown into one of the premier and most trusted suppliers of medical and scientific equipment in Jammu & Kashmir. For 25 years, we have been supporting hospitals, clinics, and laboratories with world-class products and excellent services, ensuring that healthcare professionals have access to the tools they need to save lives.
+            </p>
+        </div>
+    </header>
+
+    <div class="container" style="padding-top: clamp(60px, 8vh, 80px);">
+        
+        <div class="aww-card founder-card reveal" style="margin-bottom: 100px;">
+            <div class="founder-img-ring">
+                <img src="images/syed-naseer.png?v=2" alt="Mr. Syed Naseer Ahmad Andrabi">
+            </div>
+            <div>
+                <h2 style="font-size: clamp(1.8rem, 3vw, 2.2rem); margin-bottom: 5px; letter-spacing: -1px;">Mr. Syed Naseer Ahmad Andrabi</h2>
+                <div style="color: var(--accent-red); font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px;">Visionary Founder & Proprietor</div>
+                
+                <p style="color: var(--text-muted); line-height: 1.7; font-size: 0.95rem; margin-bottom: 25px;">
+                    Mr. Syed Naseer Ahmad Andrabi, the visionary founder of Medico Scientific Service Centre, began this journey in the year 2000 with a strong commitment to provide the best medical equipment and services to the healthcare sector of Jammu & Kashmir. With extensive experience, Mr. Andrabi has guided the company with integrity, dedication, and professionalism. Under his leadership, Medico Scientific Service Centre has become a trusted name that stands for quality, reliability, and customer satisfaction. His belief has always been simple: "Only the best solutions are good enough for saving lives."
+                </p>
+
+                <blockquote style="background: #ffffff; padding: 20px 25px; border-left: 3px solid var(--text-dark); font-style: italic; color: var(--text-dark); font-weight: 500; font-size: 1rem; border-radius: 0 8px 8px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.02);">
+                    "Under his leadership, Medico Scientific Service Centre has become a trusted name that stands for quality, reliability, and customer satisfaction."
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="reveal" style="text-align: center; margin-bottom: 40px;">
+            <h2 class="section-title" style="margin-bottom: 0;">Our Journey & Evolution</h2>
+        </div>
+        
+        <div class="about-split reveal" style="margin-bottom: 100px; align-items: center;">
+            <div class="journey-list">
+                <div class="journey-item">
+                    <div class="journey-num">1</div>
+                    <div>
+                        <h4 style="font-size: 1.1rem; margin-bottom: 5px;">Foundation (2000)</h4>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">Started as a first-of-its-kind venture in Kashmir, repairing and selling electronic medical devices.</p>
+                    </div>
+                </div>
+                <div class="journey-item">
+                    <div class="journey-num" style="background: var(--accent-red);">2</div>
+                    <div>
+                        <h4 style="font-size: 1.1rem; margin-bottom: 5px;">Growth & Expansion</h4>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">Evolved into a trusted distributor specializing in respiratory and life-support devices.</p>
+                    </div>
+                </div>
+                <div class="journey-item">
+                    <div class="journey-num">3</div>
+                    <div>
+                        <h4 style="font-size: 1.1rem; margin-bottom: 5px;">Today (<span class="current-year">2026</span>)</h4>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">Leading medical equipment supplier supporting healthcare across J&K with world-class products.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="about-image-wrapper">
+                <div style="position: absolute; inset: 15px -15px -15px 15px; background: var(--bg-grey); border-radius: 12px; z-index: 0;"></div>
+                <img src="images/medico_shop.png?v=2" alt="Medico Shop" style="position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
+            </div>
+        </div>
+
+        <div class="reveal" style="text-align: center; margin-bottom: 40px;">
+            <h2 class="section-title" style="margin-bottom: 0;">Our Vision & Mission</h2>
+        </div>
+        
+        <div class="aww-grid" style="margin-bottom: 100px;">
+            <div class="aww-card custom-glow col-6 reveal" style="background: #ffffff; --glow-color: rgba(211, 47, 47, 0.15); --index: 0; --z-index: 10;">
+                <div class="aww-header">
+                    <span class="aww-icon" style="color: var(--accent-red);">★</span>
+                </div>
+                <div class="aww-content">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 15px;">Our Vision</h3>
+                    <p style="font-size: 1rem; color: var(--text-muted); line-height: 1.7;">To become the premier and most reliable healthcare equipment partner in Jammu & Kashmir, ensuring that every healthcare institution big or small has access to advanced, affordable, and trusted medical technology.</p>
+                </div>
+                <div class="aww-watermark" style="font-size: 6rem; right: 10px;">VSN</div>
+            </div>
+
+            <div class="aww-card custom-glow col-6 reveal" style="background: #ffffff; transition-delay: 0.1s; --glow-color: rgba(211, 47, 47, 0.15); --index: 1; --z-index: 11;">
+                <div class="aww-header">
+                    <span class="aww-icon" style="color: var(--accent-red);">♥</span>
+                </div>
+                <div class="aww-content">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 15px;">Our Mission</h3>
+                    <ul style="color: var(--text-muted); padding-left: 20px; line-height: 1.8; font-size: 0.95rem;">
+                        <li>Deliver top-tier medical solutions that improve patient care</li>
+                        <li>Provide trusted after-sales support for uninterrupted services</li>
+                        <li>Constantly upgrade with latest technologies</li>
+                        <li>Build long-lasting relationships based on trust and professionalism</li>
+                    </ul>
+                </div>
+                <div class="aww-watermark" style="font-size: 6rem; right: 10px;">MSN</div>
+            </div>
+        </div>
+
+        <div class="reveal" style="text-align: center; margin-bottom: 50px;">
+            <h2 class="section-title" style="margin-bottom: 0;">Our Alliance Brands</h2>
+        </div>
+        
+        <div class="aww-grid" style="margin-bottom: 120px;">
+            
+            <div class="brand-card-premium col-4 reveal" style="--index: 0; --z-index: 10;">
+                <div class="brand-watermark" style="background-image: url('images/Phillips.png');"></div>
+                <div class="brand-content">
+                    <div class="brand-eyebrow">Respiratory</div>
+                    <h3 class="brand-name" style="color: #00529b;">PHILIPS</h3>
+                    <div class="brand-desc-wrapper">
+                        <p class="brand-desc">Advanced clinical solutions for sleep apnea and continuous respiratory care.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="brand-card-premium col-4 reveal" style="transition-delay: 0.1s; --index: 1; --z-index: 11;">
+                <div class="brand-watermark" style="background-image: url('images/logo.svg'); background-size: 90%;"></div>
+                <div class="brand-content">
+                    <div class="brand-eyebrow">Diagnostics</div>
+                    <h3 class="brand-name" style="color: #e3000f;">SCHILLER</h3>
+                    <div class="brand-desc-wrapper">
+                        <p class="brand-desc">Precision-engineered pulmonary function and advanced testing solutions.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="brand-card-premium col-4 reveal" style="transition-delay: 0.2s; --index: 2; --z-index: 12;">
+                <div class="brand-watermark" style="background-image: url('images/shayla.png');"></div>
+                <div class="brand-content">
+                    <div class="brand-eyebrow">Surgical</div>
+                    <h3 class="brand-name" style="color: #009ca6;">SHALYA</h3>
+                    <div class="brand-desc-wrapper">
+                        <p class="brand-desc">Trusted high-acuity surgical and operating room hardware equipment.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="reveal" style="text-align: center; margin-bottom: 40px;">
+            <h2 class="section-title" style="margin-bottom: 0;">Our Comprehensive Services</h2>
+        </div>
+        
+        <div class="aww-grid" style="margin-bottom: 100px;">
+            <div class="aww-card custom-glow col-3 reveal" style="background: #ffffff; --glow-color: rgba(16, 185, 129, 0.2); --index: 0; --z-index: 10;">
+                <div class="aww-icon" style="color: #10b981; font-size: 1.5rem; margin-bottom: 15px;">⚲</div>
+                <h4 style="font-size: 1.1rem; margin-bottom: 10px;">Sales & Supply</h4>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">Medical equipment for clinics, nursing homes & hospitals</p>
+            </div>
+            <div class="aww-card custom-glow col-3 reveal" style="background: #ffffff; transition-delay: 0.1s; --glow-color: rgba(59, 130, 246, 0.2); --index: 1; --z-index: 11;">
+                <div class="aww-icon" style="color: #3b82f6; font-size: 1.5rem; margin-bottom: 15px;">🔧</div>
+                <h4 style="font-size: 1.1rem; margin-bottom: 10px;">Installation & Training</h4>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">Professional setup with comprehensive staff training</p>
+            </div>
+            <div class="aww-card custom-glow col-3 reveal" style="background: #ffffff; transition-delay: 0.2s; --glow-color: rgba(34, 197, 94, 0.2); --index: 2; --z-index: 12;">
+                <div class="aww-icon" style="color: #22c55e; font-size: 1.5rem; margin-bottom: 15px;">⛨</div>
+                <h4 style="font-size: 1.1rem; margin-bottom: 10px;">Maintenance & Repair</h4>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">Expert servicing for long-lasting performance</p>
+            </div>
+            <div class="aww-card custom-glow col-3 reveal" style="background: #ffffff; transition-delay: 0.3s; --glow-color: rgba(168, 85, 247, 0.2); --index: 3; --z-index: 13;">
+                <div class="aww-icon" style="color: #a855f7; font-size: 1.5rem; margin-bottom: 15px;">👥</div>
+                <h4 style="font-size: 1.1rem; margin-bottom: 10px;">After-Sales Support</h4>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">The dedicated support team, always available</p>
+            </div>
+        </div>
+
+        <div class="reveal" style="text-align: center; margin-bottom: 30px;">
+            <h2 class="section-title" style="margin-bottom: 0;">Why Choose Us?</h2>
+        </div>
+
+        <div class="aww-card dark-banner-card reveal" style="background: var(--text-dark); padding: 50px; border: none; --index: 0; --z-index: 10;">
+            <div class="check-grid">
+                <div class="check-item">
+                    <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    25+ years of experience & expertise
+                </div>
+                <div class="check-item">
+                    <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Top-tier equipment from global leaders
+                </div>
+                <div class="check-item">
+                    <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Trusted by leading hospitals & institutions
+                </div>
+                <div class="check-item">
+                    <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Competitive pricing with no compromise
+                </div>
+                <div class="check-item">
+                    <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Professional, quick & reliable services
+                </div>
+                <div class="check-item">
+                    <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    GST Registered & Fully Compliant
+                </div>
+            </div>
+        </div>
+
+        <div class="reveal" style="text-align: center; margin-bottom: 40px; margin-top: 80px;">
+            <h2 class="section-title" style="margin-bottom: 0;">Visit Our Location</h2>
+        </div>
+
+        <div class="about-split reveal" style="align-items: stretch; margin-bottom: 100px;">
+            <div class="aww-card custom-glow" style="background: #ffffff; text-align: center; --glow-color: rgba(18, 18, 18, 0.15); --index: 0; --z-index: 10;">
+                <div style="color: var(--text-dark); font-size: 2rem; margin-bottom: 15px;">📍</div>
+                <h3 style="margin-bottom: 25px; font-size: 1.5rem;">Our Address</h3>
+                
+                <div class="data-block" style="justify-content: center; flex-direction: column; text-align: center; gap: 5px; padding: 25px;">
+                    <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">
+                        2nd Floor, Iqbal Complex, Opposite Iqbal Park<br>
+                        Central Market, Batamaloo<br>
+                        Srinagar, Jammu and Kashmir - 190009
+                    </p>
+                </div>
+                
+                <div class="address-meta-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="data-block" style="flex-direction: column; text-align: center; gap: 5px;">
+                        <span style="font-weight: 700; font-size: 0.9rem;">Working Hours</span>
+                        <span style="color: var(--text-muted); font-size: 0.85rem;">Monday - Sunday<br>7 Days Service Available</span>
+                    </div>
+                    <div class="data-block" style="flex-direction: column; text-align: center; gap: 5px;">
+                        <span style="font-weight: 700; font-size: 0.9rem;">GST Registration</span>
+                        <span style="color: var(--text-muted); font-size: 0.85rem;">01AALPI4731K1ZV<br>Fully Compliant</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="aww-card custom-glow" style="background: #ffffff; --glow-color: rgba(211, 47, 47, 0.15); --index: 1; --z-index: 11;">
+                <h3 style="text-align: center; margin-bottom: 25px; font-size: 1.5rem;">Contact Information</h3>
+                
+                <div class="data-block">
+                    <div style="color: var(--accent-red); font-size: 1.2rem;">📞</div>
+                    <div>
+                        <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 2px;">Phone</div>
+                        <a href="tel:9419008453" style="color: var(--text-dark); font-weight: 600; text-decoration: none;">9419008453</a>
+                    </div>
+                </div>
+
+                <div class="data-block">
+                    <div style="color: var(--accent-red); font-size: 1.2rem;">✉</div>
+                    <div>
+                        <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 2px;">Email</div>
+                        <a href="mailto:medicosgr@gmail.com" style="color: var(--text-dark); font-weight: 600; text-decoration: none;">medicosgr@gmail.com</a>
+                    </div>
+                </div>
+
+                <div style="background: var(--text-dark); border-radius: 8px; padding: 30px 20px; text-align: center; color: #ffffff; margin-top: 20px;">
+                    <h4 style="font-size: 1.2rem; margin-bottom: 10px;">Ready to Serve You</h4>
+                    <p style="font-size: 0.85rem; color: rgba(255,255,255,0.7); line-height: 1.5;">Contact us today for the premier medical equipment solutions in Jammu & Kashmir.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-cta-strip">
+        <div class="footer-cta-left reveal">
+            <div class="footer-cta-headline" style="font-size: clamp(2rem, 3.5vw, 3rem);">
+                Experience <em>Excellence</em><br>in Healthcare Technology
+            </div>
+            <p style="color: rgba(255,255,255,0.7); margin-top: 15px; font-size: 1.05rem;">
+                Join 100+ healthcare partners who trust us for their medical equipment needs.
+            </p>
+        </div>
+        <div style="display: flex; gap: 15px; flex-wrap: wrap; position: relative; z-index: 2;" class="reveal">
+            <a href="mailto:medicosgr@gmail.com" class="footer-cta-btn" style="background: #ffffff; color: var(--text-dark); border-color: #ffffff;">
+                Contact Us Today
+            </a>
+            <a href="index.html#catalogue-grid" class="footer-cta-btn">
+                View Our Products
+            </a>
+        </div>
+    </div>
+
+    <footer class="footer-premium">
+        <div class="footer-main">
+            <div class="footer-grid">
+                <div class="footer-col reveal" style="transition-delay:0.05s">
+                    <span class="footer-logo">MEDICO<span>.</span></span>
+                    <span class="footer-tagline">Caring &middot; Respirating</span>
+                    <p class="footer-desc">Kashmir&rsquo;s most trusted partner for clinical-grade respiratory and life-support equipment. Serving hospitals, clinics &amp; families since 2000.</p>
+                </div>
+
+                <div class="footer-col reveal" style="transition-delay:0.1s">
+                    <h4>Navigate</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#catalogue-grid">Products</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Admin Login</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col reveal" style="transition-delay:0.2s">
+                    <h4>Explore</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Blogs</a></li>
+                        <li><a href="#">Certifications</a></li>
+                        <li><a href="#">Reviews</a></li>
+                        <li><a href="#">Clinician Login</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col reveal" style="transition-delay:0.3s">
+                    <h4>Connect</h4>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+                        <a href="#" class="social-icon" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg></a>
+                        <a href="#" class="social-icon" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+                        <a href="#" class="social-icon" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="currentColor"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg></a>
+                        <a href="#" class="social-icon" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></a>
+                    </div>
+                    <div class="footer-accent-line"></div>
+                    <div class="footer-contact-text">
+                        <a href="mailto:medicosgr@gmail.com">medicosgr@gmail.com</a>
+                        <a href="tel:+919419008453">+91 94190 08453</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <span class="footer-bottom-left">&copy; <span class="current-year">2026</span> Medico Scientific Service Centre. All rights reserved.</span>
+            <div class="footer-bottom-right">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Use</a>
+                <a href="#">Sitemap</a>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/919419008453" class="floating-action-btn fab-whatsapp">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+    </a>
+    <a href="#" class="floating-action-btn fab-chat">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        <div class="fab-badge">1</div>
+    </a>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

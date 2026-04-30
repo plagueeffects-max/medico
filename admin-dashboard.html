@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medico Group | Admin Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800;900&family=Space+Grotesk:wght@300;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Quill Rich Text Editor -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-pure: #ffffff;
+            --bg-offwhite: #fafafa;
+            --bg-grey: #f0f2f5;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --accent-red: #e11d48;
+            --border-light: #e2e8f0;
+            --transition-fast: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-grey); color: var(--text-dark); }
+        .admin-nav { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-light); position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.02); }
+        .brand { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 800; }
+        .brand span { color: var(--accent-red); }
+        .nav-actions { display: flex; gap: 20px; align-items: center; }
+        .btn { padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: var(--transition-fast); border: 1px solid transparent; }
+        .btn-primary { background: var(--text-dark); color: #ffffff; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15); }
+        .btn-primary:hover { background: var(--accent-red); box-shadow: 0 6px 16px rgba(225, 29, 72, 0.2); transform: translateY(-2px); }
+        .btn-outline { background: #ffffff; border-color: var(--border-light); color: var(--text-dark); }
+        .btn-outline:hover { border-color: var(--text-dark); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .btn-danger { background: #fef2f2; color: #e11d48; border: 1px solid #fecdd3; }
+        .btn-danger:hover { background: #e11d48; color: #ffffff; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(225, 29, 72, 0.2); }
+
+        .container { max-width: 1400px; margin: 40px auto; padding: 0 20px; }
+        .top-section { display: grid; grid-template-columns: 480px 1fr; gap: 40px; margin-bottom: 60px; }
+        @media (max-width: 1000px) { .top-section { grid-template-columns: 1fr; } }
+        
+        .card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(20px); border-radius: 16px; padding: 35px; border: 1px solid rgba(255,255,255,0.8); box-shadow: 0 10px 40px rgba(0,0,0,0.03), 0 1px 3px rgba(0,0,0,0.05); height: fit-content; }
+        .preview-card { position: sticky; top: 100px; max-height: calc(100vh - 140px); overflow-y: auto; padding: 0; }
+        .preview-card-header { position: sticky; top: 0; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); padding: 20px 30px; border-bottom: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center; z-index: 10; border-radius: 16px 16px 0 0; }
+        .preview-card-content { padding: 30px; }
+        .card-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; margin-bottom: 25px; font-weight: 700; letter-spacing: -0.5px; }
+        
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; color: #334155; }
+        .form-control { width: 100%; padding: 12px 14px; border: 1px solid var(--border-light); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 0.95rem; background: #ffffff; transition: var(--transition-fast); }
+        .form-control:focus { outline: none; border-color: #94a3b8; box-shadow: 0 0 0 3px rgba(148, 163, 184, 0.15); }
+        textarea.form-control { min-height: 150px; resize: vertical; }
+        
+        .file-upload-wrapper { position: relative; display: flex; flex-direction: column; gap: 10px; }
+        .file-input-btn { background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 25px; text-align: center; cursor: pointer; font-size: 0.9rem; color: var(--text-muted); transition: var(--transition-fast); font-weight: 500; }
+        .file-input-btn:hover { border-color: var(--text-dark); color: var(--text-dark); background: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+        input[type="file"] { display: none; }
+        .image-preview-container { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+        .image-preview { width: 70px; height: 70px; border-radius: 8px; object-fit: cover; border: 1px solid var(--border-light); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+
+        .checkbox-group { display: flex; align-items: center; gap: 10px; }
+
+        .blog-list { display: flex; flex-direction: column; gap: 20px; }
+        .blog-item { background: #ffffff; border: 1px solid var(--border-light); border-radius: 12px; padding: 24px; display: flex; justify-content: space-between; align-items: flex-start; transition: var(--transition-fast); }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(2, 132, 199, 0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(2, 132, 199, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(2, 132, 199, 0); }
+        }
+
+        .circle-back-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--text-dark);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            transition: var(--transition-fast);
+            text-decoration: none;
+        }
+        .circle-back-btn:hover {
+            background-color: var(--accent-red);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <script>
+        const token = sessionStorage.getItem('medico_admin_auth');
+        if (!token) {
+            window.location.href = 'admin-login.html';
+        } else {
+            // Verify token with backend
+            fetch('http://localhost:8082/api/verify-token', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ token })
+            }).then(res => res.json()).then(data => {
+                if (!data.success) {
+                    sessionStorage.removeItem('medico_admin_auth');
+                    window.location.href = 'admin-login.html';
+                }
+            }).catch(() => {
+                console.error("Auth server offline.");
+            });
+        }
+    </script>
+
+    <nav class="admin-nav">
+        <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">Medico<span>.</span> Dashboard</a>
+        <div class="nav-actions">
+            <a href="admin-shop.html" class="btn btn-outline" style="border-color: var(--text-dark); color: var(--text-dark);">Manage Store</a>
+            <a href="blog.html" target="_blank" class="btn btn-outline">View Live Blog</a>
+            <button onclick="logout()" class="btn btn-outline">Logout</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Floating Back Button (Resets Form) -->
+        <button type="button" onclick="resetForm()" class="circle-back-btn" title="Cancel Editing / Add New">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        </button>
+
+        <div class="top-section">
+            <!-- Editor Side -->
+            <div class="card">
+                <h2 class="card-title" id="form-title">Create New Post</h2>
+                <form id="blogForm">
+                    <input type="hidden" id="blogId">
+                    
+                    <!-- Section 1: Text & Metadata -->
+                    <div style="background: #f9fafb; padding: 15px; border-radius: 8px; border: 1px solid var(--border-light); margin-bottom: 25px;">
+                        <h3 style="font-size:1.1rem; margin-bottom: 15px; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px;">Article Details</h3>
+                        <div class="form-group">
+                            <label class="form-label">Heading (Title)</label>
+                            <input type="text" id="title" class="form-control" required placeholder="Enter primary heading">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Subheading (Short Description)</label>
+                            <input type="text" id="subheading" class="form-control" required placeholder="A brief summary or excerpt">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Author Name</label>
+                            <input type="text" id="author" class="form-control" required value="Medico Team">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Date</label>
+                                <input type="date" id="date" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Time</label>
+                                <input type="time" id="time" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Media Uploads -->
+                    <div style="background: #f9fafb; padding: 15px; border-radius: 8px; border: 1px solid var(--border-light); margin-bottom: 25px;">
+                        <h3 style="font-size:1.1rem; margin-bottom: 15px; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px;">Media Uploads</h3>
+                        
+                        <div class="form-group file-upload-wrapper">
+                            <label class="form-label">Main Display Image</label>
+                            <label class="file-input-btn" for="mainImageUpload">Click to Upload Main Image</label>
+                            <input type="file" id="mainImageUpload" accept="image/*">
+                            <!-- Hidden field to store base64 or path -->
+                            <input type="hidden" id="mainImageBase64">
+                            <div class="image-preview-container" id="mainImagePreviewContainer"></div>
+                        </div>
+
+                        <div class="form-group file-upload-wrapper">
+                            <label class="form-label">Gallery Images (Up to 5)</label>
+                            <label class="file-input-btn" for="galleryImagesUpload">Click to Upload Extra Images (Max 5)</label>
+                            <input type="file" id="galleryImagesUpload" accept="image/*" multiple>
+                            <div class="image-preview-container" id="galleryImagesPreviewContainer"></div>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Content -->
+                    <div class="form-group" style="margin-bottom: 30px;">
+                        <label class="form-label">Detailed Content</label>
+                        <div style="background: white; border-radius: 6px; overflow: hidden; border: 1px solid var(--border-light);">
+                            <div id="editor-toolbar">
+                                <span class="ql-formats">
+                                    <select class="ql-header">
+                                        <option value="2">Heading 2</option>
+                                        <option value="3">Heading 3</option>
+                                        <option selected>Normal</option>
+                                    </select>
+                                </span>
+                                <span class="ql-formats">
+                                    <button class="ql-bold"></button>
+                                    <button class="ql-italic"></button>
+                                    <button class="ql-underline"></button>
+                                </span>
+                                <span class="ql-formats">
+                                    <button class="ql-list" value="ordered"></button>
+                                    <button class="ql-list" value="bullet"></button>
+                                </span>
+                                <span class="ql-formats">
+                                    <button class="ql-link"></button>
+                                    <button class="ql-clean"></button>
+                                </span>
+                            </div>
+                            <div id="editor" style="height: 350px; font-family: 'Inter', sans-serif; font-size: 1.05rem;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="featured">
+                        <label for="featured" class="form-label" style="margin:0;">Mark as Featured Post</label>
+                    </div>
+
+                    <div style="display: flex; gap: 10px;">
+                        <button type="submit" class="btn btn-primary" style="flex: 1;" id="submitBtn">Publish Post</button>
+                        <button type="button" class="btn btn-outline" style="display:none;" id="cancelBtn" onclick="resetForm()">Cancel Edit</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Live Preview Side -->
+            <div class="card preview-card">
+                <div class="preview-card-header">
+                    <h2 class="card-title" style="margin: 0; font-size: 1.3rem;">Live Preview</h2>
+                    <span class="badge" style="margin: 0; background: #e0f2fe; color: #0369a1;"><span style="display:inline-block; width:6px; height:6px; background:#0284c7; border-radius:50%; margin-right:5px; animation: pulse 2s infinite;"></span>Real-time</span>
+                </div>
+                <div class="preview-card-content" id="live-preview-container">
+                    <!-- Preview HTML injected here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- List Side (Moved Down) -->
+        <div class="card" style="background: transparent; border: none; padding: 0; box-shadow: none; max-width: 1000px; margin: 0 auto;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-light); padding-bottom: 15px; margin-bottom: 30px;">
+                <h2 class="card-title" style="margin: 0; font-size: 1.8rem;">Manage Published Posts</h2>
+            </div>
+            <div class="blog-list" id="admin-blog-list">
+                <!-- Admin Blogs Rendered Here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/blog-data.js"></script>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script>
+        // Initialize Quill Editor
+        var quill = new Quill('#editor', {
+            theme: 'snow',
+            modules: {
+                toolbar: '#editor-toolbar'
+            },
+            placeholder: 'Write your post content here...'
+        });
+
+        // Set today's date and time as default
+        document.getElementById('date').valueAsDate = new Date();
+        document.getElementById('time').value = new Date().toTimeString().slice(0, 5);
+
+        let galleryBase64Array = [];
+
+        // Image Upload Handlers
+        document.getElementById('mainImageUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if(file) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    document.getElementById('mainImageBase64').value = evt.target.result;
+                    document.getElementById('mainImagePreviewContainer').innerHTML = `<img src="${evt.target.result}" class="image-preview">`;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('galleryImagesUpload').addEventListener('change', function(e) {
+            const files = Array.from(e.target.files);
+            if (files.length + galleryBase64Array.length > 5) {
+                alert("You can only upload up to 5 gallery images in total.");
+                return;
+            }
+            
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    galleryBase64Array.push(evt.target.result);
+                    renderGalleryPreviews();
+                };
+                reader.readAsDataURL(file);
+            });
+        });
+
+        function renderGalleryPreviews() {
+            const container = document.getElementById('galleryImagesPreviewContainer');
+            container.innerHTML = '';
+            galleryBase64Array.forEach((b64, idx) => {
+                container.innerHTML += `<div style="position:relative; display:inline-block;">
+                    <img src="${b64}" class="image-preview">
+                    <span style="position:absolute; top:-5px; right:-5px; background:red; color:white; border-radius:50%; width:16px; height:16px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:10px;" onclick="removeGalleryImage(${idx})">x</span>
+                </div>`;
+            });
+            updatePreview();
+        }
+
+        function removeGalleryImage(idx) {
+            galleryBase64Array.splice(idx, 1);
+            renderGalleryPreviews();
+        }
+
+        function updatePreview() {
+            const title = document.getElementById('title').value || 'Post Title';
+            const subheading = document.getElementById('subheading').value || 'Post Subheading';
+            const author = document.getElementById('author').value || 'Medico Team';
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            const mainImg = document.getElementById('mainImageBase64').value || 'images/medico_shop.png';
+            const content = quill.root.innerHTML === '<p><br></p>' ? '' : quill.root.innerHTML;
+
+            const previewContainer = document.getElementById('live-preview-container');
+            
+            previewContainer.innerHTML = `
+                <div style="font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 900; letter-spacing: -1px; color: var(--text-dark); line-height: 1.1; margin-bottom: 15px;">${title}</div>
+                <div style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 25px; font-weight: 500;">${subheading}</div>
+                
+                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 30px;">
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--accent-red); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1rem;">${author.charAt(0).toUpperCase()}</div>
+                    <div>
+                        <div style="font-weight: 600; font-size: 0.95rem;">${author}</div>
+                        <div style="font-size: 0.85rem; color: var(--text-muted);">${date} ${time ? 'at ' + time : ''}</div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 30px; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.06); background: #f0f2f5;">
+                    <img src="${mainImg}" style="width: 100%; height: auto; max-height: 400px; object-fit: cover; display: block;" alt="Preview Image">
+                </div>
+
+                <div style="line-height: 1.8; color: #374151; font-size: 1.05rem;" class="ql-editor">
+                    ${content || '<p style="color:#94a3b8; font-style:italic;">Post content will appear here...</p>'}
+                </div>
+            `;
+        }
+
+        // Attach real-time listeners
+        document.getElementById('blogForm').addEventListener('input', updatePreview);
+        quill.on('text-change', updatePreview);
+        document.getElementById('mainImageUpload').addEventListener('change', () => setTimeout(updatePreview, 100)); // allow time for reader
+        
+        // Initial preview render
+        document.addEventListener('DOMContentLoaded', () => {
+            renderAdminBlogs();
+            updatePreview();
+        });
+
+        function renderAdminBlogs() {
+            const list = document.getElementById('admin-blog-list');
+            const blogs = BlogDB.getBlogs();
+
+            if(blogs.length === 0) {
+                list.innerHTML = '<p style="color:var(--text-muted);">No blog posts found. Create one!</p>';
+                return;
+            }
+
+            let html = '';
+            blogs.forEach(blog => {
+                html += `
+                    <div class="blog-item">
+                        <div class="blog-info">
+                            ${blog.featured ? '<span class="badge">Featured</span>' : ''}
+                            <h3>${blog.title}</h3>
+                            <p>${blog.date} at ${blog.time || ''} &bull; By ${blog.author}</p>
+                            <p style="margin-top:8px; font-weight:500;">${blog.subheading || ''}</p>
+                        </div>
+                        <div class="blog-actions">
+                            <button onclick="editBlog('${blog.id}')" class="btn btn-outline">Edit</button>
+                            <button onclick="deleteBlog('${blog.id}')" class="btn btn-danger">Delete</button>
+                        </div>
+                    </div>
+                `;
+            });
+            list.innerHTML = html;
+        }
+
+        document.getElementById('blogForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.querySelector('.btn-primary');
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = "Publishing... Please wait";
+            submitBtn.disabled = true;
+
+            const blogData = {
+                title: document.getElementById('title').value,
+                subheading: document.getElementById('subheading').value,
+                author: document.getElementById('author').value,
+                date: document.getElementById('date').value,
+                time: document.getElementById('time').value,
+                image: document.getElementById('mainImageBase64').value || 'images/medico_shop.png',
+                galleryImages: galleryBase64Array,
+                content: quill.root.innerHTML,
+                featured: document.getElementById('featured').checked
+            };
+
+            const id = document.getElementById('blogId').value;
+            if (id) {
+                blogData.id = id;
+            }
+
+            try {
+                // Send to local Node server to extract and save images
+                const response = await fetch('http://localhost:8082/api/save-blog', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + sessionStorage.getItem('medico_admin_auth')
+                    },
+                    body: JSON.stringify(blogData)
+                });
+
+                if (!response.ok) throw new Error("Server error - please ensure server.js is running.");
+                
+                const data = await response.json();
+                if (data.success && data.blog) {
+                    const finalBlog = data.blog;
+
+                    // Save to local storage database
+                    if (id) {
+                        if(finalBlog.featured) {
+                            const blogs = BlogDB.getBlogs();
+                            blogs.forEach(b => {
+                                if(b.id !== id && b.featured) {
+                                    BlogDB.updateBlog(b.id, {featured: false});
+                                }
+                            });
+                        }
+                        BlogDB.updateBlog(id, finalBlog);
+                    } else {
+                        if(finalBlog.featured) {
+                            const blogs = BlogDB.getBlogs();
+                            blogs.forEach(b => {
+                                if(b.featured) {
+                                    BlogDB.updateBlog(b.id, {featured: false});
+                                }
+                            });
+                        }
+                        BlogDB.addBlog(finalBlog);
+                    }
+
+                    resetForm();
+                    renderAdminBlogs();
+                    alert(id ? 'Post updated and assets organized successfully!' : 'Post published and assets organized successfully!');
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Could not process post. Ensure you are running the Medico CMS server (node server.js). " + err.message);
+            } finally {
+                submitBtn.innerText = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+
+        function editBlog(id) {
+            const blog = BlogDB.getBlog(id);
+            if(blog) {
+                document.getElementById('form-title').textContent = 'Edit Post';
+                document.getElementById('blogId').value = blog.id;
+                document.getElementById('title').value = blog.title || '';
+                document.getElementById('subheading').value = blog.subheading || '';
+                document.getElementById('author').value = blog.author || '';
+                
+                // Format date for input if needed
+                let d = blog.date;
+                if(d && d.includes('/')) {
+                     // try to parse MM/DD/YYYY to YYYY-MM-DD
+                     const parts = d.split('/');
+                     if(parts.length === 3) d = `${parts[2]}-${parts[0].padStart(2,'0')}-${parts[1].padStart(2,'0')}`;
+                }
+                document.getElementById('date').value = d || '';
+                document.getElementById('time').value = blog.time || '';
+                
+                document.getElementById('mainImageBase64').value = blog.image === 'images/medico_shop.png' ? '' : blog.image;
+                if(blog.image && blog.image !== 'images/medico_shop.png') {
+                    document.getElementById('mainImagePreviewContainer').innerHTML = `<img src="${blog.image}" class="image-preview">`;
+                } else {
+                    document.getElementById('mainImagePreviewContainer').innerHTML = '';
+                }
+
+                galleryBase64Array = blog.galleryImages || [];
+                renderGalleryPreviews();
+
+                quill.clipboard.dangerouslyPasteHTML(0, blog.content || '');
+                document.getElementById('featured').checked = blog.featured || false;
+                
+                document.getElementById('submitBtn').textContent = 'Update Post';
+                document.getElementById('cancelBtn').style.display = 'block';
+                window.scrollTo(0, 0);
+            }
+        }
+
+        function deleteBlog(id) {
+            if(confirm('Are you sure you want to delete this post?')) {
+                BlogDB.deleteBlog(id);
+                renderAdminBlogs();
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('blogForm').reset();
+            document.getElementById('blogId').value = '';
+            document.getElementById('mainImageBase64').value = '';
+            document.getElementById('mainImagePreviewContainer').innerHTML = '';
+            galleryBase64Array = [];
+            renderGalleryPreviews();
+            quill.setContents([]);
+            
+            document.getElementById('form-title').textContent = 'Create New Post';
+            document.getElementById('submitBtn').textContent = 'Publish Post';
+            document.getElementById('cancelBtn').style.display = 'none';
+        }
+
+        function logout() {
+            sessionStorage.removeItem('medico_admin_auth');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

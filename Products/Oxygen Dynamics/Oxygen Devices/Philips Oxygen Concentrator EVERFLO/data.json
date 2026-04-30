@@ -1,0 +1,44 @@
+{
+    "title": "Philips Oxygen Concentrator EVERFLO",
+    "make": "Philips",
+    "model": "1020009",
+    "sku": "1020009",
+    "category": "Oxygen Dynamics",
+    "subcategory": "Oxygen Devices",
+    "showSubcategory": true,
+    "price": 45000,
+    "comparePrice": 55000,
+    "showPrice": true,
+    "stock": "In Stock",
+    "description": "Light weight and Easy to Transport Oxygen Purity Indicator 3 Years Warranty Provides a continuous flow Budget-friendly Low maintenance for reduced service cost",
+    "longDescription": "<p>The&nbsp;<span style=\"color: rgb(26, 32, 44);\">EverFlo Oxygen Concentrator</span>&nbsp;is a&nbsp;<span style=\"color: rgb(26, 32, 44);\">stationary home medical device</span>&nbsp;designed to provide a continuous flow of medical-grade oxygen (0.5–5 liters per minute) for individuals with chronic respiratory conditions like COPD, asthma, or hypoxemia. It draws in room air, filters it, then uses zeolite-based sieves (Pressure Swing Adsorption) to separate nitrogen and deliver around&nbsp;<span style=\"color: rgb(26, 32, 44);\">93 % ±3% oxygen content</span>.</p><p><br></p><h3>Key Highlights</h3><ul><li><span style=\"color: rgb(26, 32, 44);\">Ultra-lightweight &amp; compact</span></li><li class=\"ql-indent-1\">Weighs about&nbsp;<span style=\"color: rgb(26, 32, 44);\">14 kg (31 lbs)&nbsp;</span>one of the lightest stationary units available making it easier to transport and store.</li><li><span style=\"color: rgb(26, 32, 44);\">Quiet &amp; energy-efficient</span></li><li class=\"ql-indent-1\">Runs at approximately&nbsp;<span style=\"color: rgb(26, 32, 44);\">45 dB</span>, akin to a quiet conversation or soft appliance hum.</li><li class=\"ql-indent-1\">Consumes around&nbsp;<span style=\"color: rgb(26, 32, 44);\">350 watts</span>, producing less heat and lowering running costs.</li><li><span style=\"color: rgb(26, 32, 44);\">Low maintenance</span></li><li class=\"ql-indent-1\">Requires filter replacement only every&nbsp;<span style=\"color: rgb(26, 32, 44);\">two years</span>&nbsp;by a provider no frequent user maintenance needed.</li><li><span style=\"color: rgb(26, 32, 44);\">Safe &amp; user‑friendly design</span></li><li class=\"ql-indent-1\">Compact and less medical-looking, it fits comfortably into home settings.</li><li class=\"ql-indent-1\">Features like a&nbsp;<span style=\"color: rgb(26, 32, 44);\">recessed flow meter</span>&nbsp;minimize accidental bumps or misalignment.</li><li class=\"ql-indent-1\">Equipped with a&nbsp;<span style=\"color: rgb(26, 32, 44);\">Humidifier Bottle Platform</span>&nbsp;and&nbsp;<span style=\"color: rgb(26, 32, 44);\">durable metal cannula&nbsp;</span>built for flexibility and durability.</li><li class=\"ql-indent-1\">Optional&nbsp;<span style=\"color: rgb(26, 32, 44);\">Oxygen Purity Indicator (OPI)</span>&nbsp;provides real-time monitoring and alarms if oxygen drops below safe thresholds (e.g., &lt;82 % or &lt;70 %).</li><li><span style=\"color: rgb(26, 32, 44);\">Built for patient safety &amp; convenience</span></li><li class=\"ql-indent-1\">Produces high-purity oxygen consistently, with simplified setup and operation.</li></ul><p><br></p>",
+    "specifications": [
+        {
+            "key": "Oxygen Purity",
+            "value": "~93 % (±3%) at 5 LPM"
+        },
+        {
+            "key": "Power Consumption",
+            "value": "350 W"
+        },
+        {
+            "key": "Noise Level",
+            "value": "45 dB"
+        },
+        {
+            "key": "Weight",
+            "value": "14 Kg"
+        },
+        {
+            "key": "Dimensions",
+            "value": "~23″ H × 15″ W × 9.5″ D (~58 × 38 × 24 cm)"
+        }
+    ],
+    "inTheBox": "<p><span style=\"color: oklch(0.145 0 0);\">Supplied with Bubble Bottle ,Connector and Cannula 1 N/E</span></p>",
+    "brochure": "Products/Oxygen Dynamics/Oxygen Devices/Philips Oxygen Concentrator EVERFLO/brochure_1777530218594.pdf",
+    "mainImage": "Products/Oxygen Dynamics/Oxygen Devices/Philips Oxygen Concentrator EVERFLO/Images/main.png",
+    "gallery": [
+        "Products/Oxygen Dynamics/Oxygen Devices/Philips Oxygen Concentrator EVERFLO/Images/gallery_1777529742852_1.webp"
+    ],
+    "features": []
+}

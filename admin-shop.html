@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medico | Store Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Quill CSS & JS -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <script src="assets/js/products-data.js"></script>
+
+    <style>
+        :root {
+            --bg-light: #f8fafc;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --accent-red: #d21e1e;
+            --border-light: #e2e8f0;
+            --transition-fast: 0.2s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); color: var(--text-dark); line-height: 1.6; }
+
+        .admin-nav { background: #ffffff; border-bottom: 1px solid var(--border-light); padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .brand { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; }
+        .brand span { color: var(--accent-red); }
+
+        .btn { padding: 10px 20px; border-radius: 8px; font-weight: 500; font-family: 'Inter', sans-serif; cursor: pointer; transition: var(--transition-fast); text-decoration: none; display: inline-block; font-size: 0.9rem; }
+        .btn-primary { background: var(--text-dark); color: #fff; border: 1px solid var(--text-dark); }
+        .btn-primary:hover { background: #000; }
+        .btn-outline { background: transparent; color: var(--text-dark); border: 1px solid var(--border-light); }
+        .btn-outline:hover { background: #f1f5f9; }
+        .btn-danger { background: #fee2e2; color: var(--accent-red); border: 1px solid #fecaca; }
+        .btn-danger:hover { background: #fca5a5; color: #991b1b; }
+
+        .container { max-width: 1400px; margin: 40px auto; padding: 0 20px; }
+        
+        .top-section { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+        @media (max-width: 1000px) { .top-section { grid-template-columns: 1fr; } }
+
+        .card { background: #ffffff; border: 1px solid var(--border-light); border-radius: 12px; padding: 30px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+        .card-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; }
+
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; color: #334155; }
+        .form-control { width: 100%; padding: 12px 14px; border: 1px solid var(--border-light); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 0.95rem; background: #ffffff; transition: var(--transition-fast); }
+        .form-control:focus { outline: none; border-color: #94a3b8; box-shadow: 0 0 0 3px rgba(148, 163, 184, 0.15); }
+        textarea.form-control { min-height: 100px; resize: vertical; }
+
+        .file-upload-wrapper { position: relative; display: flex; flex-direction: column; gap: 10px; }
+        .file-input-btn { background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 20px; text-align: center; cursor: pointer; font-size: 0.9rem; color: var(--text-muted); font-weight: 500; }
+        input[type="file"] { display: none; }
+        .image-preview-container { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+        .image-preview { width: 70px; height: 70px; border-radius: 8px; object-fit: cover; border: 1px solid var(--border-light); }
+
+        .product-list { display: flex; flex-direction: column; gap: 15px; }
+        .product-item { background: #ffffff; border: 1px solid var(--border-light); border-radius: 12px; padding: 20px; display: flex; gap: 15px; align-items: center; }
+        .product-item img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; background: #f1f5f9; }
+        .product-info { flex-grow: 1; }
+        .product-info h3 { font-size: 1.1rem; margin-bottom: 4px; }
+        .product-info p { font-size: 0.85rem; color: var(--text-muted); }
+        .product-actions { display: flex; gap: 10px; }
+
+        .features-list { display: flex; flex-direction: column; gap: 8px; }
+        .feature-input-row { display: flex; gap: 10px; }
+        
+        .toggle-switch { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
+        .toggle-switch input { display: none; }
+        .toggle-slider { width: 36px; height: 20px; background: #cbd5e1; border-radius: 20px; position: relative; transition: var(--transition-fast); }
+        .toggle-slider::after { content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; background: white; border-radius: 50%; transition: var(--transition-fast); }
+        .toggle-switch input:checked + .toggle-slider { background: var(--text-dark); }
+        .toggle-switch input:checked + .toggle-slider::after { transform: translateX(16px); }
+        .toggle-label-text { font-size: 0.85rem; font-weight: 500; color: var(--text-muted); }
+
+        .ql-container { font-family: 'Inter', sans-serif; font-size: 0.95rem; background: #ffffff; border-radius: 0 0 8px 8px; border-color: var(--border-light); }
+        .ql-toolbar { border-radius: 8px 8px 0 0; border-color: var(--border-light); background: #f8fafc; }
+        .ql-editor { min-height: 200px; }
+
+        .editor-tabs { display: flex; gap: 10px; margin-bottom: -1px; }
+        .editor-tab { padding: 10px 20px; background: #f8fafc; border: 1px solid var(--border-light); border-bottom: none; border-radius: 8px 8px 0 0; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 500; color: var(--text-muted); transition: var(--transition-fast); }
+        .editor-tab.active { background: #ffffff; color: var(--text-dark); border-color: var(--text-dark); position: relative; z-index: 2; font-weight: 600; }
+        .editor-content { display: none; }
+        .editor-content.active { display: block; }
+
+        .circle-back-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--text-dark);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            transition: var(--transition-fast);
+            text-decoration: none;
+        }
+        .circle-back-btn:hover {
+            background-color: var(--accent-red);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <script>
+        const token = sessionStorage.getItem('medico_admin_auth');
+        if (!token) {
+            window.location.href = 'admin-login.html';
+        } else {
+            // Verify token with backend
+            fetch('http://localhost:8082/api/verify-token', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ token })
+            }).then(res => res.json()).then(data => {
+                if (!data.success) {
+                    sessionStorage.removeItem('medico_admin_auth');
+                    window.location.href = 'admin-login.html';
+                }
+            }).catch(() => {
+                console.error("Auth server offline.");
+            });
+        }
+    </script>
+
+    <nav class="admin-nav">
+        <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">Medico<span>.</span> Store Admin</a>
+        <div class="nav-actions" style="display:flex; gap:10px;">
+            <a href="admin-dashboard.html" class="btn btn-outline">Back to Blog</a>
+            <button onclick="logout()" class="btn btn-outline">Logout</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Floating Back Button (Resets Form) -->
+        <button type="button" onclick="resetForm()" class="circle-back-btn" title="Cancel Editing / Add New">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        </button>
+
+        <div class="top-section">
+            
+            <!-- Editor Side -->
+            <div class="card">
+                <h2 class="card-title" id="form-title">Add New Product</h2>
+                <form id="productForm">
+                    <input type="hidden" id="productId">
+                    
+                    <div class="form-group">
+                        <label class="form-label">Product Title</label>
+                        <input type="text" id="title" class="form-control" required placeholder="e.g. Oxygen Concentrator 10L">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Make / Brand</label>
+                            <input type="text" id="make" class="form-control" placeholder="e.g. Philips">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Model</label>
+                            <input type="text" id="model" class="form-control" placeholder="e.g. EverFlo">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">SKU</label>
+                            <input type="text" id="sku" class="form-control" placeholder="e.g. MED-OXY-001">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Inventory Status</label>
+                            <select id="stockStatus" class="form-control">
+                                <option value="In Stock">In Stock</option>
+                                <option value="Low Stock">Low Stock</option>
+                                <option value="Out of Stock">Out of Stock</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Category</label>
+                            <select id="categorySelect" class="form-control" onchange="handleCategoryChange()" required>
+                                <!-- Rendered by JS -->
+                            </select>
+                            <input type="text" id="newCategory" class="form-control" placeholder="Enter new category name..." style="display: none; margin-top: 10px;">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" style="display:flex; justify-content:space-between; align-items:center;">
+                                Subcategory
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="showSubcategory" checked>
+                                    <div class="toggle-slider"></div>
+                                    <span class="toggle-label-text">Show</span>
+                                </label>
+                            </label>
+                            <select id="subcategorySelect" class="form-control" onchange="handleSubcategoryChange()">
+                                <!-- Rendered by JS -->
+                            </select>
+                            <input type="text" id="newSubcategory" class="form-control" placeholder="Enter new subcategory name..." style="display: none; margin-top: 10px;">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" style="display:flex; justify-content:space-between; align-items:center;">
+                                Regular Price (₹)
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="showPrice" checked>
+                                    <div class="toggle-slider"></div>
+                                    <span class="toggle-label-text">Show</span>
+                                </label>
+                            </label>
+                            <input type="number" id="price" class="form-control" placeholder="45000">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Compare at Price (₹)</label>
+                            <input type="number" id="comparePrice" class="form-control" placeholder="55000">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Short Description</label>
+                        <input type="text" id="description" class="form-control" placeholder="Brief overview for the card...">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Detailed Product Information</label>
+                        <div class="editor-tabs">
+                            <button type="button" class="editor-tab active" onclick="switchTab('desc')">Description</button>
+                            <button type="button" class="editor-tab" onclick="switchTab('specs')">Specifications</button>
+                            <button type="button" class="editor-tab" onclick="switchTab('box')">What's in the Box</button>
+                        </div>
+                        <div style="border-top: 1px solid var(--text-dark);">
+                            <div id="tab-desc" class="editor-content active">
+                                <div id="descEditor"></div>
+                            </div>
+                            <div id="tab-specs" class="editor-content" style="padding: 15px; background: #fff; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;">
+                                <div id="specsBuilderList" style="display:flex; flex-direction:column; gap:10px;">
+                                    <div class="feature-input-row spec-row">
+                                        <input type="text" class="form-control spec-key" placeholder="e.g. Oxygen Purity" style="flex: 1;">
+                                        <input type="text" class="form-control spec-val" placeholder="e.g. ~93% (±3%)" style="flex: 2;">
+                                        <button type="button" class="btn btn-outline" onclick="this.parentElement.remove()">-</button>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-outline" onclick="addSpecRow()" style="margin-top: 15px; width: 100%; border-style: dashed;">+ Add Specification</button>
+                            </div>
+                            <div id="tab-box" class="editor-content">
+                                <div id="boxEditor"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Main Product Image (Transparent PNG recommended)</label>
+                        <div class="file-upload-wrapper">
+                            <label for="mainImage" class="file-input-btn">Click to upload main image</label>
+                            <input type="file" id="mainImage" accept="image/*,video/mp4" onchange="handleMainImage(event)">
+                            <input type="hidden" id="mainImageBase64">
+                            <div class="image-preview-container" id="mainImagePreviewContainer"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Gallery Images</label>
+                        <div class="file-upload-wrapper">
+                            <label for="galleryImages" class="file-input-btn">Click to upload gallery images</label>
+                            <input type="file" id="galleryImages" accept="image/*,video/mp4" multiple onchange="handleGalleryImages(event)">
+                            <div class="image-preview-container" id="galleryPreviewContainer"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Product Brochure (PDF)</label>
+                        <div class="file-upload-wrapper">
+                            <label for="brochureFile" class="file-input-btn">Click to upload PDF Brochure</label>
+                            <input type="file" id="brochureFile" accept="application/pdf" onchange="handleBrochure(event)">
+                            <input type="hidden" id="brochureBase64">
+                            <div class="image-preview-container" id="brochurePreviewContainer" style="font-size: 0.9rem; color: var(--accent-red); margin-top: 10px;"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="display: none;">
+                        <label class="form-label">Key Features</label>
+                        <div class="features-list" id="featuresList">
+                            <div class="feature-input-row">
+                                <input type="text" class="form-control feature-input" placeholder="e.g. 10 Liters/min capacity">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 15px; margin-top: 30px;">
+                        <button type="submit" class="btn btn-primary" id="submitBtn" style="flex: 1;">Save Product</button>
+                        <button type="button" class="btn btn-outline" id="cancelBtn" onclick="resetForm()" style="display: none;">Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Live Preview Side -->
+            <div style="display: flex; flex-direction: column;">
+                <div class="card" style="position: sticky; top: 100px; padding: 20px;">
+                    <h2 class="card-title">Detailed Page Preview</h2>
+                    
+                    <!-- Simulated Product Page -->
+                    <div style="border: 1px solid var(--border-light); border-radius: 12px; overflow: hidden; background: #ffffff; box-shadow: 0 10px 30px rgba(0,0,0,0.05); font-family: 'Inter', sans-serif;">
+                        
+                        <div style="display: flex; flex-direction: column;">
+                            <div style="position: relative; width: 100%; height: 250px; background: var(--bg-offwhite); display: flex; justify-content: center; align-items: center; border-bottom: 1px solid var(--border-light);">
+                                <img id="previewImage" src="images/placeholder.png" alt="Preview" style="max-width: 80%; max-height: 80%; object-fit: contain;">
+                                <span id="previewStock" style="position: absolute; top: 10px; left: 10px; background: rgba(22,163,74,0.1); padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 600; color: #16a34a;">In Stock</span>
+                            </div>
+                            <div style="padding: 20px;">
+                                <p id="previewCategory" style="font-size: 0.7rem; color: var(--accent-red); font-weight: 600; text-transform: uppercase;">Category</p>
+                                <h3 id="previewTitle" style="font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; font-weight: 700; margin: 5px 0;">Product Title</h3>
+                                <p id="previewSku" style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 10px; display: none;">#SKU</p>
+                                
+                                <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 15px;">
+                                    <p id="previewPrice" style="font-size: 1.4rem; font-weight: 700; color: var(--text-dark);">₹0</p>
+                                    <p id="previewComparePrice" style="font-size: 0.9rem; color: var(--text-muted); text-decoration: line-through; display: none;">₹0</p>
+                                </div>
+                                <p id="previewDescription" style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">Brief overview of the product...</p>
+                                
+                                <button style="width: 100%; padding: 12px; background: var(--text-dark); color: white; border: none; border-radius: 6px; font-weight: 600; font-family: 'Inter', sans-serif;">Add to Cart</button>
+                            </div>
+                            
+                            <!-- Preview Tabs -->
+                            <div style="background: var(--bg-offwhite); border-top: 1px solid var(--border-light); padding: 15px;">
+                                <div style="display: flex; gap: 10px; border-bottom: 1px solid var(--border-light); padding-bottom: 10px; margin-bottom: 10px;" id="livePreviewTabsHeaders">
+                                    <span class="lp-tab-btn active" onclick="switchLivePreviewTab('desc')" style="font-size: 0.85rem; font-weight: 600; border-bottom: 2px solid var(--accent-red); padding-bottom: 9px; cursor: pointer; color: var(--text-dark);">Description</span>
+                                    <span class="lp-tab-btn" onclick="switchLivePreviewTab('specs')" style="font-size: 0.85rem; font-weight: 500; color: var(--text-muted); padding-bottom: 9px; cursor: pointer;">Specifications</span>
+                                    <span class="lp-tab-btn" onclick="switchLivePreviewTab('box')" style="font-size: 0.85rem; font-weight: 500; color: var(--text-muted); padding-bottom: 9px; cursor: pointer;">What's in the Box</span>
+                                </div>
+                                <div id="previewLongDesc" class="lp-tab-content" style="font-size: 0.85rem; color: var(--text-dark); min-height: 150px; max-height: 300px; overflow-y: auto; display: block;">
+                                    Rich description will appear here...
+                                </div>
+                                <div id="previewSpecs" class="lp-tab-content" style="font-size: 0.85rem; color: var(--text-dark); min-height: 150px; max-height: 300px; overflow-y: auto; display: none;">
+                                    Specifications table will appear here...
+                                </div>
+                                <div id="previewBox" class="lp-tab-content" style="font-size: 0.85rem; color: var(--text-dark); min-height: 150px; max-height: 300px; overflow-y: auto; display: none;">
+                                    What's in the box will appear here...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="text-align: center; font-size: 0.8rem; color: var(--text-muted); margin-top: 10px;">This simulates the full product page layout.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Inventory Full Width Section -->
+        <div class="card" style="margin-top: 40px;">
+            <div class="card-title" style="margin-bottom: 20px;">
+                <h2>Inventory Manager</h2>
+            </div>
+            <input type="text" id="searchInventory" class="form-control" placeholder="Search products or SKUs..." oninput="filterInventory()" style="margin-bottom: 20px; max-width: 400px;">
+            
+            <div class="product-list" id="adminProductList" style="max-height: 50vh; overflow-y: auto; padding-right: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Quill Editors
+        const quillConfig = {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    [{ 'header': [1, 2, 3, false] }],
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    ['clean']
+                ]
+            }
+        };
+
+        var quillDesc = new Quill('#descEditor', { ...quillConfig, placeholder: 'Enter product description...' });
+        var quillBox = new Quill('#boxEditor', { ...quillConfig, placeholder: 'List items included in the box...' });
+
+        function addSpecRow() {
+            const list = document.getElementById('specsBuilderList');
+            const row = document.createElement('div');
+            row.className = 'feature-input-row spec-row';
+            row.innerHTML = `
+                <input type="text" class="form-control spec-key" placeholder="e.g. Weight" style="flex: 1;">
+                <input type="text" class="form-control spec-val" placeholder="e.g. 14 Kg" style="flex: 2;">
+                <button type="button" class="btn btn-outline" onclick="this.parentElement.remove()">-</button>
+            `;
+            list.appendChild(row);
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.editor-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.editor-content').forEach(c => c.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById('tab-' + tabId).classList.add('active');
+        }
+
+        // Live Preview Tabs Logic
+        function switchLivePreviewTab(tabId) {
+            // Update Headers
+            const headers = document.getElementById('livePreviewTabsHeaders').querySelectorAll('.lp-tab-btn');
+            headers.forEach(h => {
+                h.style.fontWeight = '500';
+                h.style.color = 'var(--text-muted)';
+                h.style.borderBottom = 'none';
+            });
+            const activeHeader = document.querySelector(`.lp-tab-btn[onclick*="${tabId}"]`);
+            if (activeHeader) {
+                activeHeader.style.fontWeight = '600';
+                activeHeader.style.color = 'var(--text-dark)';
+                activeHeader.style.borderBottom = '2px solid var(--accent-red)';
+            }
+
+            // Update Content
+            document.getElementById('previewLongDesc').style.display = 'none';
+            document.getElementById('previewSpecs').style.display = 'none';
+            document.getElementById('previewBox').style.display = 'none';
+
+            if (tabId === 'desc') document.getElementById('previewLongDesc').style.display = 'block';
+            if (tabId === 'specs') document.getElementById('previewSpecs').style.display = 'block';
+            if (tabId === 'box') document.getElementById('previewBox').style.display = 'block';
+        }
+
+        // Live Preview Updater
+        function updateLivePreview() {
+            const title = document.getElementById('title').value || 'Product Title';
+            const make = document.getElementById('make').value;
+            const model = document.getElementById('model').value;
+            const sku = document.getElementById('sku').value;
+            const categorySelect = document.getElementById('categorySelect').value;
+            const subcatSelect = document.getElementById('subcategorySelect').value;
+            
+            let category = categorySelect === '_new' ? document.getElementById('newCategory').value : categorySelect;
+            let subcategory = subcatSelect === '_new' ? document.getElementById('newSubcategory').value : subcatSelect;
+            if(!category) category = 'Category';
+
+            const price = document.getElementById('price').value;
+            const comparePrice = document.getElementById('comparePrice').value;
+            const showPrice = document.getElementById('showPrice').checked;
+            const showSubcat = document.getElementById('showSubcategory').checked;
+            
+            const stock = document.getElementById('stockStatus').value;
+            const desc = document.getElementById('description').value || 'Brief overview of the product...';
+            const mainImg = document.getElementById('mainImageBase64').value || 'images/placeholder.png';
+
+            document.getElementById('previewTitle').textContent = title;
+            
+            let skuDisplay = '';
+            if (make || model) skuDisplay += `${make} ${model} `.trim();
+            if (sku) skuDisplay += (skuDisplay ? ` | #${sku}` : `#${sku}`);
+            
+            document.getElementById('previewSku').textContent = skuDisplay;
+            document.getElementById('previewSku').style.display = skuDisplay ? 'block' : 'none';
+            
+            const catDisplay = showSubcat && subcategory && subcategory !== 'None' ? `${category} · ${subcategory}` : category;
+            document.getElementById('previewCategory').textContent = catDisplay;
+
+            if (showPrice && price) {
+                document.getElementById('previewPrice').textContent = `₹${parseFloat(price).toLocaleString()}`;
+                document.getElementById('previewPrice').style.display = 'block';
+                if (comparePrice && parseFloat(comparePrice) > parseFloat(price)) {
+                    document.getElementById('previewComparePrice').textContent = `₹${parseFloat(comparePrice).toLocaleString()}`;
+                    document.getElementById('previewComparePrice').style.display = 'block';
+                } else {
+                    document.getElementById('previewComparePrice').style.display = 'none';
+                }
+            } else {
+                document.getElementById('previewPrice').textContent = showPrice ? '₹0' : 'Price Hidden';
+                document.getElementById('previewComparePrice').style.display = 'none';
+            }
+
+            document.getElementById('previewDescription').textContent = desc;
+            
+            const imgEl = document.getElementById('previewImage');
+            imgEl.src = mainImg;
+
+            const stockEl = document.getElementById('previewStock');
+            stockEl.textContent = stock;
+            if(stock === 'Out of Stock') { stockEl.style.color = 'var(--accent-red)'; stockEl.style.background = 'rgba(211,47,47,0.1)'; }
+            else if(stock === 'Low Stock') { stockEl.style.color = '#d97706'; stockEl.style.background = 'rgba(217,119,6,0.1)'; }
+            else { stockEl.style.color = '#16a34a'; stockEl.style.background = 'rgba(22,163,74,0.1)'; }
+            
+            document.getElementById('previewLongDesc').innerHTML = quillDesc.root.innerHTML === '<p><br></p>' ? '<i>No rich description provided.</i>' : quillDesc.root.innerHTML;
+            
+            // Box content update
+            document.getElementById('previewBox').innerHTML = quillBox.root.innerHTML === '<p><br></p>' ? '<i>No "What\'s in the box" provided.</i>' : quillBox.root.innerHTML;
+
+            // Specs content update (format exactly like product.html)
+            const specRows = Array.from(document.querySelectorAll('.spec-row'));
+            const specs = specRows.map(row => {
+                return {
+                    key: row.querySelector('.spec-key').value,
+                    val: row.querySelector('.spec-val').value
+                };
+            }).filter(s => s.key || s.val);
+
+            if (specs.length > 0) {
+                let tableHtml = '<table class="specs-table" style="width: 100%; border-collapse: collapse; font-size: 0.85rem;"><tbody>';
+                specs.forEach(s => {
+                    tableHtml += `
+                        <tr style="border-bottom: 1px solid var(--border-light);">
+                            <td style="padding: 10px 15px; font-weight: 600; width: 40%; color: var(--text-dark);">${s.key || ''}</td>
+                            <td style="padding: 10px 15px; color: var(--text-muted);">${s.val || ''}</td>
+                        </tr>
+                    `;
+                });
+                tableHtml += '</tbody></table>';
+                document.getElementById('previewSpecs').innerHTML = tableHtml;
+            } else {
+                document.getElementById('previewSpecs').innerHTML = '<i>No specifications provided.</i>';
+            }
+        }
+
+        // Attach listeners for Live Preview
+        document.querySelectorAll('#productForm input, #productForm select, #productForm textarea').forEach(el => {
+            el.addEventListener('input', updateLivePreview);
+            el.addEventListener('change', updateLivePreview);
+        });
+        quillDesc.on('text-change', updateLivePreview);
+        quillBox.on('text-change', updateLivePreview);
+
+        // Form Handling
+        document.getElementById('productForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Saving...';
+            submitBtn.disabled = true;
+
+            const features = Array.from(document.querySelectorAll('.feature-input'))
+                .map(input => input.value.trim())
+                .filter(val => val !== '');
+
+            const categoryVal = document.getElementById('categorySelect').value;
+            const category = categoryVal === '_new' ? document.getElementById('newCategory').value : categoryVal;
+            if (categoryVal === '_new' && category) ProductsDB.addCategory(category);
+
+            const subcategoryVal = document.getElementById('subcategorySelect').value;
+            const subcategory = subcategoryVal === '_new' ? document.getElementById('newSubcategory').value : subcategoryVal;
+            if (subcategoryVal === '_new' && subcategory) ProductsDB.addSubcategory(subcategory);
+            
+            const specs = [];
+            document.querySelectorAll('.spec-row').forEach(row => {
+                const k = row.querySelector('.spec-key').value;
+                const v = row.querySelector('.spec-val').value;
+                if(k || v) specs.push({ key: k, value: v });
+            });
+
+            const productData = {
+                title: document.getElementById('title').value,
+                make: document.getElementById('make').value,
+                model: document.getElementById('model').value,
+                sku: document.getElementById('sku').value,
+                category: category,
+                subcategory: subcategory,
+                showSubcategory: document.getElementById('showSubcategory').checked,
+                price: document.getElementById('price').value ? parseFloat(document.getElementById('price').value) : 0,
+                comparePrice: document.getElementById('comparePrice').value ? parseFloat(document.getElementById('comparePrice').value) : null,
+                showPrice: document.getElementById('showPrice').checked,
+                stock: document.getElementById('stockStatus').value,
+                description: document.getElementById('description').value,
+                longDescription: quillDesc.root.innerHTML,
+                specifications: specs,
+                inTheBox: quillBox.root.innerHTML,
+                brochure: document.getElementById('brochureBase64') ? document.getElementById('brochureBase64').value : '',
+                mainImage: document.getElementById('mainImageBase64').value || 'images/placeholder.png',
+                gallery: galleryBase64Array,
+                features: [] // Legacy field
+            };
+
+            const id = document.getElementById('productId').value;
+
+            try {
+                // Save to Node Server (Downloads Images to local folder)
+                const response = await fetch('http://localhost:8082/api/save-product', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + sessionStorage.getItem('medico_admin_auth')
+                    },
+                    body: JSON.stringify(productData)
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if(data.success) {
+                        if (id) {
+                            ProductsDB.updateProduct(id, data.product);
+                        } else {
+                            ProductsDB.addProduct(data.product);
+                        }
+                        
+                        resetForm();
+                        renderAdminProducts();
+                        alert('Product saved successfully!');
+                    }
+                } else {
+                    throw new Error('Server not running. Saving only to local storage.');
+                }
+            } catch (err) {
+                console.warn("Save Error:", err);
+                
+                // FATAL FIX: Prevent localStorage quota crash if server fails
+                if (productData.brochure && productData.brochure.length > 100000) {
+                    productData.brochure = ''; // Strip massive base64
+                    alert('Warning: Node server is not running. The PDF was too large to save to LocalStorage, so the brochure was discarded. Please start the server to save PDFs.');
+                } else {
+                    alert('Saved locally. Note: Images were not downloaded because Node server is not running.');
+                }
+
+                try {
+                    if (id) ProductsDB.updateProduct(id, productData);
+                    else ProductsDB.addProduct(productData);
+                } catch (storageErr) {
+                    console.error("Storage Error:", storageErr);
+                    alert("Fatal Error: Your LocalStorage is completely full. Cannot save product.");
+                }
+                
+                resetForm();
+                renderAdminProducts();
+            }
+
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        });
+
+        function handleMainImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('mainImageBase64').value = e.target.result;
+                    const preview = document.getElementById('mainImagePreviewContainer');
+                    if (file.type === 'video/mp4') {
+                        preview.innerHTML = `<video src="${e.target.result}" autoplay loop muted style="width:70px; height:70px; border-radius:8px; object-fit:cover;"></video>`;
+                    } else {
+                        preview.innerHTML = `<img src="${e.target.result}" class="image-preview">`;
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function handleBrochure(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('brochureBase64').value = e.target.result;
+                    document.getElementById('brochurePreviewContainer').innerHTML = `✅ ${file.name} uploaded successfully. <button type="button" onclick="removeBrochure()" style="margin-left: 10px; background: none; border: none; color: var(--accent-red); cursor: pointer; text-decoration: underline;">Remove</button>`;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removeBrochure() {
+            const bBase = document.getElementById('brochureBase64');
+            const bFile = document.getElementById('brochureFile');
+            const bCont = document.getElementById('brochurePreviewContainer');
+            if(bBase) bBase.value = '';
+            if(bFile) bFile.value = '';
+            if(bCont) bCont.innerHTML = '';
+        }
+
+        let galleryBase64Array = [];
+        function handleGalleryImages(event) {
+            const files = event.target.files;
+            if (files.length > 0) {
+                Array.from(files).forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        galleryBase64Array.push(e.target.result);
+                        renderGalleryPreviews();
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+        }
+
+        function renderGalleryPreviews() {
+            const container = document.getElementById('galleryPreviewContainer');
+            container.innerHTML = galleryBase64Array.map((src, index) => {
+                if (src.includes('video')) {
+                    return `
+                        <div style="position:relative;">
+                            <video src="${src}" autoplay loop muted class="image-preview"></video>
+                            <button type="button" onclick="removeGalleryImage(${index})" style="position:absolute;top:-5px;right:-5px;background:red;color:white;border:none;border-radius:50%;width:20px;height:20px;cursor:pointer;">&times;</button>
+                        </div>
+                    `;
+                }
+                return `
+                    <div style="position:relative;">
+                        <img src="${src}" class="image-preview">
+                        <button type="button" onclick="removeGalleryImage(${index})" style="position:absolute;top:-5px;right:-5px;background:red;color:white;border:none;border-radius:50%;width:20px;height:20px;cursor:pointer;">&times;</button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function removeGalleryImage(index) {
+            galleryBase64Array.splice(index, 1);
+            renderGalleryPreviews();
+        }
+
+        function populateCategories() {
+            const categories = ProductsDB.getCategories();
+            const catSelect = document.getElementById('categorySelect');
+            catSelect.innerHTML = categories.map(c => `<option value="${c}">${c}</option>`).join('') + '<option value="_new">+ Add New Category...</option>';
+            
+            const subcategories = ProductsDB.getSubcategories();
+            const subcatSelect = document.getElementById('subcategorySelect');
+            subcatSelect.innerHTML = subcategories.map(c => `<option value="${c}">${c}</option>`).join('') + '<option value="">None</option><option value="_new">+ Add New Subcategory...</option>';
+        }
+
+        function handleCategoryChange() {
+            const select = document.getElementById('categorySelect');
+            const input = document.getElementById('newCategory');
+            input.style.display = select.value === '_new' ? 'block' : 'none';
+            if(select.value === '_new') input.focus();
+        }
+
+        function handleSubcategoryChange() {
+            const select = document.getElementById('subcategorySelect');
+            const input = document.getElementById('newSubcategory');
+            input.style.display = select.value === '_new' ? 'block' : 'none';
+            if(select.value === '_new') input.focus();
+        }
+
+        function addFeatureRow(val = '') {
+            const list = document.getElementById('featuresList');
+            const row = document.createElement('div');
+            row.className = 'feature-input-row';
+            row.innerHTML = `
+                <input type="text" class="form-control feature-input" placeholder="e.g. Key feature..." value="${val}">
+                <button type="button" class="btn btn-outline" onclick="this.parentElement.remove()">-</button>
+            `;
+            list.appendChild(row);
+        }
+
+        function addSpecRow(key = '', val = '') {
+            const list = document.getElementById('specsBuilderList');
+            const row = document.createElement('div');
+            row.className = 'feature-input-row spec-row';
+            row.innerHTML = `
+                <input type="text" class="form-control spec-key" placeholder="e.g. Weight" style="flex: 1;" value="${key}">
+                <input type="text" class="form-control spec-val" placeholder="e.g. 14 Kg" style="flex: 2;" value="${val}">
+                <button type="button" class="btn btn-outline" onclick="this.parentElement.remove()">-</button>
+            `;
+            list.appendChild(row);
+        }
+
+        function filterInventory() {
+            renderAdminProducts(document.getElementById('searchInventory').value);
+        }
+
+        function renderAdminProducts(searchQuery = '') {
+            const list = document.getElementById('adminProductList');
+            let products = ProductsDB.getProducts().sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+            
+            if (searchQuery) {
+                const q = searchQuery.toLowerCase();
+                products = products.filter(p => 
+                    p.title.toLowerCase().includes(q) || 
+                    (p.sku && p.sku.toLowerCase().includes(q)) || 
+                    p.category.toLowerCase().includes(q)
+                );
+            }
+            
+            list.innerHTML = products.map(p => {
+                const stockBadge = p.stock === 'Out of Stock' ? `<span style="color:var(--accent-red); font-size:0.75rem; font-weight:600;">Out of Stock</span>` : 
+                                   p.stock === 'Low Stock' ? `<span style="color:#d97706; font-size:0.75rem; font-weight:600;">Low Stock</span>` :
+                                   `<span style="color:#16a34a; font-size:0.75rem; font-weight:600;">In Stock</span>`;
+                                   
+                return `
+                <div class="product-item">
+                    <img src="${p.mainImage}" alt="${p.title}" onerror="this.src='images/placeholder.png'">
+                    <div class="product-info">
+                        <h3>${p.title} ${p.sku ? `<span style="font-size:0.8rem; color:var(--text-muted);">#${p.sku}</span>` : ''}</h3>
+                        <p>${p.category} | ₹${p.price.toLocaleString()} <br>${stockBadge}</p>
+                    </div>
+                    <div class="product-actions">
+                        <button onclick="editProduct('${p.id}')" class="btn btn-outline">Edit</button>
+                        <button onclick="deleteProduct('${p.id}')" class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
+            `}).join('');
+            
+            if(products.length === 0) {
+                list.innerHTML = `<p style="color:var(--text-muted); font-size:0.9rem; padding: 20px; text-align: center;">${searchQuery ? 'No products match your search.' : 'No products found. Create one to get started.'}</p>`;
+            }
+        }
+
+        function editProduct(id) {
+            const p = ProductsDB.getProduct(id);
+            if (p) {
+                document.getElementById('productId').value = p.id;
+                document.getElementById('title').value = p.title;
+                document.getElementById('make').value = p.make || '';
+                document.getElementById('model').value = p.model || '';
+                document.getElementById('sku').value = p.sku || '';
+                document.getElementById('price').value = p.price;
+                document.getElementById('comparePrice').value = p.comparePrice || '';
+                document.getElementById('stockStatus').value = p.stock || 'In Stock';
+                document.getElementById('description').value = p.description;
+                
+                quillDesc.root.innerHTML = p.longDescription || '';
+                quillBox.root.innerHTML = p.inTheBox || '';
+                
+                // Load specs
+                const specsList = document.getElementById('specsBuilderList');
+                specsList.innerHTML = '';
+                if(p.specifications && Array.isArray(p.specifications) && p.specifications.length > 0) {
+                    p.specifications.forEach(s => {
+                        const row = document.createElement('div');
+                        row.className = 'feature-input-row spec-row';
+                        row.innerHTML = `
+                            <input type="text" class="form-control spec-key" placeholder="e.g. Weight" style="flex: 1;" value="${s.key}">
+                            <input type="text" class="form-control spec-val" placeholder="e.g. 14 Kg" style="flex: 2;" value="${s.value}">
+                            <button type="button" class="btn btn-outline" onclick="this.parentElement.remove()">-</button>
+                        `;
+                        specsList.appendChild(row);
+                    });
+                }
+                if(specsList.children.length === 0) addSpecRow();
+                
+                if (p.mainImage) {
+                    const ext = p.mainImage.split('.').pop();
+                    if(ext === 'mp4') {
+                         document.getElementById('mainImagePreviewContainer').innerHTML = `<video src="${p.mainImage}" autoplay loop muted style="width:70px; height:70px; border-radius:8px; object-fit:cover;"></video>`;
+                    } else {
+                         document.getElementById('mainImagePreviewContainer').innerHTML = `<img src="${p.mainImage}" class="image-preview">`;
+                    }
+                    document.getElementById('mainImageBase64').value = p.mainImage;
+                }
+
+                galleryBase64Array = p.gallery ? [...p.gallery] : [];
+                renderGalleryPreviews();
+
+                if (p.brochure) {
+                    const bBase = document.getElementById('brochureBase64');
+                    const bCont = document.getElementById('brochurePreviewContainer');
+                    if(bBase) bBase.value = p.brochure;
+                    if(bCont) bCont.innerHTML = `✅ Brochure uploaded. <button type="button" onclick="removeBrochure()" style="margin-left: 10px; background: none; border: none; color: var(--accent-red); cursor: pointer; text-decoration: underline;">Remove</button>`;
+                } else {
+                    removeBrochure();
+                }
+
+                document.getElementById('categorySelect').value = p.category;
+                if(!document.getElementById('categorySelect').value) {
+                    document.getElementById('categorySelect').value = '_new';
+                    document.getElementById('newCategory').value = p.category;
+                    document.getElementById('newCategory').style.display = 'block';
+                } else {
+                    document.getElementById('newCategory').style.display = 'none';
+                }
+
+                document.getElementById('subcategorySelect').value = p.subcategory || '';
+                if(p.subcategory && !document.getElementById('subcategorySelect').value) {
+                    document.getElementById('subcategorySelect').value = '_new';
+                    document.getElementById('newSubcategory').value = p.subcategory;
+                    document.getElementById('newSubcategory').style.display = 'block';
+                } else {
+                    document.getElementById('newSubcategory').style.display = 'none';
+                }
+                
+                // Toggles
+                document.getElementById('showSubcategory').checked = p.showSubcategory !== false; // default true
+                document.getElementById('showPrice').checked = p.showPrice !== false; // default true
+
+                // Restore features
+                const list = document.getElementById('featuresList');
+                list.innerHTML = '';
+                if(p.features && p.features.length > 0) {
+                    p.features.forEach(f => addFeatureRow(f));
+                } else {
+                    addFeatureRow();
+                }
+
+                document.getElementById('form-title').textContent = 'Edit Product';
+                document.getElementById('submitBtn').textContent = 'Update Product';
+                document.getElementById('cancelBtn').style.display = 'block';
+                window.scrollTo(0, 0);
+            }
+        }
+
+        function deleteProduct(id) {
+            if(confirm('Are you sure you want to delete this product?')) {
+                ProductsDB.deleteProduct(id);
+                renderAdminProducts();
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('productForm').reset();
+            document.getElementById('productId').value = '';
+            document.getElementById('make').value = '';
+            document.getElementById('model').value = '';
+            document.getElementById('mainImageBase64').value = '';
+            document.getElementById('mainImagePreviewContainer').innerHTML = '';
+            
+            quillDesc.setContents([]);
+            quillBox.setContents([]);
+            
+            document.getElementById('specsBuilderList').innerHTML = '';
+            addSpecRow();
+            
+            galleryBase64Array = [];
+            renderGalleryPreviews();
+            
+            populateCategories();
+            document.getElementById('newCategory').style.display = 'none';
+            document.getElementById('newCategory').value = '';
+            document.getElementById('newSubcategory').style.display = 'none';
+            document.getElementById('newSubcategory').value = '';
+            
+            document.getElementById('showSubcategory').checked = true;
+            document.getElementById('showPrice').checked = true;
+            
+            const list = document.getElementById('featuresList');
+            list.innerHTML = `
+                <div class="feature-input-row">
+                    <input type="text" class="form-control feature-input" placeholder="e.g. 10 Liters/min capacity">
+                    <button type="button" class="btn btn-outline" onclick="addFeatureRow()">+</button>
+                </div>
+            `;
+            
+            document.getElementById('form-title').textContent = 'Add New Product';
+            document.getElementById('submitBtn').textContent = 'Save Product';
+            document.getElementById('cancelBtn').style.display = 'none';
+            updateLivePreview();
+        }
+
+        function logout() {
+            sessionStorage.removeItem('medico_admin_auth');
+            window.location.href = 'index.html';
+        }
+
+        // Init
+        populateCategories();
+        renderAdminProducts();
+    </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+{
+    "title": "3.1 Litre Oxygen Cylinder",
+    "make": "",
+    "model": "",
+    "sku": "6",
+    "category": "Oxygen Dynamics",
+    "subcategory": "Oxygen Cylinders",
+    "showSubcategory": true,
+    "price": 12000,
+    "comparePrice": 15000,
+    "showPrice": true,
+    "stock": "In Stock",
+    "description": "Lightweight and portable Non-magnetic High-purity oxygen Refillable ",
+    "longDescription": "<p>A 3.1-litre oxygen cylinder, often referred to by the brand name Al-Can or as an \"OxyKit,\" is&nbsp;a portable medical-grade oxygen device used for home, travel, and emergency situations.</p><p><br></p><p><strong><u>Key features</u></strong></p><ul><li><span style=\"font-size: 0.95rem; color: rgb(26, 32, 44);\">Lightweight and portable:</span>&nbsp;Made from aluminum, these cylinders are significantly lighter than traditional steel oxygen cylinders, weighing around 3–4 kg. This makes them easy to carry using a shoulder bag.</li><li><span style=\"color: rgb(26, 32, 44);\">Refillable:</span>&nbsp;Most models are designed to be refilled by certified oxygen manufacturers or dealers.</li><li><span style=\"color: rgb(26, 32, 44);\">Typical duration:</span>&nbsp;A 3.1-litre cylinder can provide approximately 3 to 3.25 hours of oxygen at a flow rate of 2 litres per minute (LPM).</li><li><span style=\"color: rgb(26, 32, 44);\">Complete kits:</span>&nbsp;The cylinders are often sold as part of a kit that includes a valve, pressure gauge, flowmeter, humidifier bottle, nasal mask, and a carry bag.</li><li><span style=\"color: rgb(26, 32, 44);\">Regulatory approval:</span>&nbsp;In India, many such cylinders and their valves are approved by the Petroleum and Explosives Safety Organisation (PESO) for medical use.</li></ul><p><br></p>",
+    "specifications": [
+        {
+            "key": "Gas Capacity",
+            "value": "465 LTR"
+        },
+        {
+            "key": "Outside Dia",
+            "value": "111mm"
+        },
+        {
+            "key": "Length",
+            "value": "496mm"
+        },
+        {
+            "key": "Weight",
+            "value": "5.75 kg"
+        },
+        {
+            "key": "Duration (flow rate 2 Ltr per. min)",
+            "value": "3 hrs. 52 mins"
+        }
+    ],
+    "inTheBox": "<p><span style=\"color: oklch(0.145 0 0);\">1 Cylinder,Regulator ,Bottle</span></p>",
+    "brochure": "",
+    "mainImage": "Products/Oxygen Dynamics/Oxygen Cylinders/31 Litre Oxygen Cylinder/Images/main.webp",
+    "gallery": [],
+    "features": []
+}

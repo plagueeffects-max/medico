@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medico Group | Insights & Updates</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800;900&family=Space+Grotesk:wght@300;500;700;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <style>
+        .page-header {
+            position: relative;
+            padding: 150px 20px 60px;
+            background: #ffffff;
+            text-align: center;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .page-header-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            background-image: url('images/blog_header_bg.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            opacity: 0.15;
+            filter: grayscale(100%);
+        }
+
+        .page-header .container {
+            position: relative;
+            z-index: 1;
+        }
+        .page-header-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 900;
+            letter-spacing: -2px;
+            color: var(--text-dark);
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            padding: 60px 0;
+        }
+
+        .blog-card {
+            background: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+            transition: var(--transition-fast);
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: var(--text-dark);
+        }
+        
+        .blog-card:hover {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            transform: translateY(-5px);
+        }
+
+        .blog-img-wrapper {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            background: var(--bg-grey);
+        }
+
+        .blog-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-fast);
+        }
+        
+        .blog-card:hover .blog-img-wrapper img {
+            transform: scale(1.05);
+        }
+
+        .blog-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--accent-red);
+            color: #fff;
+            padding: 4px 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 4px;
+            z-index: 2;
+        }
+
+        .blog-content {
+            padding: 24px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.4;
+            letter-spacing: -0.5px;
+        }
+
+        .blog-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .author-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--accent-red);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .meta-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .meta-author {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .meta-date {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .read-more {
+            margin-left: auto;
+            color: #fff;
+            background: #111827;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .blog-card:hover .read-more {
+            background: var(--accent-red);
+        }
+
+        /* Large Feature Card */
+        .blog-card.featured {
+            grid-column: 1 / -1;
+            flex-direction: row;
+        }
+        .blog-card.featured .blog-img-wrapper {
+            width: 60%;
+            height: auto;
+            min-height: 400px;
+        }
+        .blog-card.featured .blog-content {
+            width: 40%;
+            padding: 40px;
+            justify-content: center;
+        }
+        .blog-card.featured .blog-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        .blog-card.featured .blog-meta {
+            margin-top: 30px;
+        }
+
+        @media (max-width: 900px) {
+            .blog-card.featured {
+                flex-direction: column;
+            }
+            .blog-card.featured .blog-img-wrapper,
+            .blog-card.featured .blog-content {
+                width: 100%;
+            }
+            .blog-card.featured .blog-img-wrapper {
+                min-height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="navbar">
+        <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">Medico<span>.</span></a>
+        <div class="nav-links">
+            <a href="index.html#catalogue-grid" class="nav-link">Catalogue</a>
+            <a href="about.html" class="nav-link">About Us</a>
+            <a href="blog.html" class="nav-link" style="color: var(--text-dark);">Blog</a>
+            <a href="index.html#testimonials-section" class="nav-link">Testimonials</a>
+            <a href="admin-login.html" class="login-btn" style="text-decoration:none;">Admin Login</a>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="page-header-bg"></div>
+        <div class="container reveal">
+            <h1 class="page-header-title">Insights &amp; Updates</h1>
+            <p style="color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto;">Discover the latest in medical equipment, industry news, and Medico events.</p>
+        </div>
+    </header>
+
+    <section class="container">
+        <div class="blog-grid reveal" id="blog-container">
+            <!-- Blogs will be dynamically rendered here -->
+        </div>
+    </section>
+
+    <!-- Basic Footer similar to main site -->
+    <footer class="footer-premium">
+        <div class="footer-main">
+            <div class="footer-grid">
+                <div class="footer-col reveal" style="transition-delay:0.05s">
+                    <span class="footer-logo">MEDICO<span>.</span></span>
+                    <span class="footer-tagline">Caring &middot; Respirating</span>
+                    <p class="footer-desc">Kashmir&rsquo;s most trusted partner for clinical-grade respiratory and life-support equipment. Serving hospitals, clinics &amp; families since 2000.</p>
+                </div>
+                <div class="footer-col reveal" style="transition-delay:0.1s">
+                    <h4>Navigate</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#catalogue-grid">Products</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="admin-login.html">Admin Login</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col reveal" style="transition-delay:0.2s">
+                    <h4>Explore</h4>
+                    <ul class="footer-links">
+                        <li><a href="blog.html">Blogs</a></li>
+                        <li><a href="#">Certifications</a></li>
+                        <li><a href="#">Reviews</a></li>
+                        <li><a href="#">Clinician Login</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col reveal" style="transition-delay:0.3s">
+                    <h4>Connect</h4>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+                        <a href="#" class="social-icon" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg></a>
+                        <a href="#" class="social-icon" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+                        <a href="#" class="social-icon" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="currentColor"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg></a>
+                        <a href="#" class="social-icon" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></a>
+                    </div>
+                    <div class="footer-accent-line"></div>
+                    <div class="footer-contact-text">
+                        <a href="mailto:medicosgr@gmail.com">medicosgr@gmail.com</a>
+                        <a href="tel:+919419008453">+91 94190 08453</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span class="footer-bottom-left">&copy; <span class="current-year">2026</span> Medico Scientific Service Centre. All rights reserved.</span>
+            <div class="footer-bottom-right">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Use</a>
+                <a href="#">Sitemap</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/blog-data.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Setup sticky nav
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if(window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Reveal Animation
+            setTimeout(() => {
+                document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
+            }, 100);
+
+            // Render Blogs
+            const container = document.getElementById('blog-container');
+            const blogs = BlogDB.getBlogs();
+
+            if (blogs.length === 0) {
+                container.innerHTML = '<p>No blogs available at the moment.</p>';
+                return;
+            }
+
+            // Separate featured from regular
+            const featuredBlog = blogs.find(b => b.featured);
+            const regularBlogs = blogs.filter(b => b !== featuredBlog);
+
+            let html = '';
+
+            if (featuredBlog) {
+                html += createBlogCardHTML(featuredBlog, true);
+            }
+
+            regularBlogs.forEach(blog => {
+                html += createBlogCardHTML(blog, false);
+            });
+
+            container.innerHTML = html;
+        });
+
+        function createBlogCardHTML(blog, isFeatured) {
+            const authorInitial = blog.author ? blog.author.charAt(0).toUpperCase() : 'M';
+            return `
+                <a href="blog-post.html?id=${blog.id}" class="blog-card ${isFeatured ? 'featured' : ''}">
+                    <div class="blog-img-wrapper">
+                        ${isFeatured ? '<span class="blog-badge">Featured</span>' : ''}
+                        <img src="${blog.image || 'images/medico_shop.png'}" alt="${blog.title}">
+                    </div>
+                    <div class="blog-content">
+                        <h2 class="blog-title">${blog.title}</h2>
+                        <p style="color:var(--text-muted); margin-bottom: 20px; line-height: 1.6; font-size: 0.95rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                            ${blog.subheading || (blog.content ? blog.content.substring(0, 150).replace(/<[^>]+>/g, '') + '...' : '')}
+                        </p>
+                        <div class="blog-meta">
+                            <div class="author-avatar">${authorInitial}</div>
+                            <div class="meta-text">
+                                <span class="meta-author">${blog.author}</span>
+                                <span class="meta-date">${blog.date}</span>
+                            </div>
+                            <div class="read-more">Read <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+            `;
+        }
+    </script>
+</body>
+</html>

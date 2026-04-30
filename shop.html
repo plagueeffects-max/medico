@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medico | Professional Medical Equipment</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800;900&family=Space+Grotesk:wght@300;500;700;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/products-data.js"></script>
+
+    <style>
+        .shop-header {
+            padding: 150px 20px 50px;
+            text-align: center;
+            background: var(--bg-pure);
+            position: relative;
+        }
+
+        .shop-header h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+            line-height: 1.1;
+        }
+
+        .shop-header p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        .shop-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 40px 20px 100px;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 40px;
+        }
+
+        @media (max-width: 992px) {
+            .shop-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Sidebar Filters */
+        .shop-sidebar {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .filter-group {
+            margin-bottom: 30px;
+        }
+
+        .filter-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--text-dark);
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 10px;
+        }
+
+        .filter-list {
+            list-style: none;
+        }
+
+        .filter-item {
+            margin-bottom: 10px;
+        }
+
+        .filter-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            text-align: left;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            color: var(--accent-red);
+            font-weight: 500;
+        }
+
+        .filter-count {
+            font-size: 0.8rem;
+            background: var(--bg-offwhite);
+            padding: 2px 8px;
+            border-radius: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Product Grid */
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        /* Product Card Styling (Adapting aww-card) */
+        .product-card {
+            background: var(--bg-pure);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: var(--transition-fast);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+        }
+
+        .product-card:hover {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+            transform: translateY(-5px);
+        }
+
+        .product-image-wrap {
+            position: relative;
+            width: 100%;
+            padding-top: 100%; /* 1:1 Aspect Ratio */
+            background: var(--bg-offwhite);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .product-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 30px;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(4px);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #16a34a;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            z-index: 2;
+        }
+
+        .product-badge.out { color: var(--accent-red); }
+        .product-badge.low { color: #d97706; }
+
+        .product-info {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-category {
+            font-size: 0.75rem;
+            color: var(--accent-red);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .product-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-price-wrap {
+            margin-top: auto;
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+        }
+
+        .product-price {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .product-compare-price {
+            font-size: 1rem;
+            color: var(--text-muted);
+            text-decoration: line-through;
+        }
+        
+        .product-sku {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 100px 20px;
+        }
+        
+        .empty-state h3 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .empty-state p {
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Reusing Navbar from index.html -->
+    <nav id="navbar" style="background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-light);">
+        <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">Medico<span>.</span></a>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="shop.html" class="nav-link" style="color: var(--accent-red);">Products</a>
+            <a href="about.html" class="nav-link">About Us</a>
+            <a href="blog.html" class="nav-link">Blog</a>
+            <a href="admin-login.html" class="login-btn" style="text-decoration:none;">Admin Login</a>
+        </div>
+    </nav>
+
+    <header class="shop-header">
+        <h1 class="reveal">Medical Equipment Catalog</h1>
+        <p class="reveal" style="transition-delay: 0.1s;">Explore our comprehensive range of high-end clinical technology and hospital infrastructure.</p>
+    </header>
+
+    <section class="shop-container">
+        
+        <!-- Sidebar -->
+        <aside class="shop-sidebar reveal" style="transition-delay: 0.2s;">
+            <div class="filter-group">
+                <h3 class="filter-title">Categories</h3>
+                <ul class="filter-list" id="categoryFilterList">
+                    <!-- Populated by JS -->
+                </ul>
+            </div>
+            
+            <div class="filter-group" id="subcategoryGroup" style="display: none;">
+                <h3 class="filter-title">Subcategories</h3>
+                <ul class="filter-list" id="subcategoryFilterList">
+                    <!-- Populated by JS -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Product Grid -->
+        <main>
+            <div class="shop-grid" id="productGrid">
+                <!-- Populated by JS -->
+            </div>
+        </main>
+
+    </section>
+
+    <script>
+        let currentCategory = 'All';
+        let currentSubcategory = 'All';
+        
+        function initShop() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const catParam = urlParams.get('category');
+            
+            if (catParam) {
+                const categories = ProductsDB.getCategories();
+                if (!categories.includes(catParam)) {
+                    // Auto-register the category if it was clicked from the homepage but isn't in cache yet
+                    ProductsDB.addCategory(catParam); 
+                }
+                currentCategory = catParam;
+            }
+            
+            renderCategories();
+            renderSubcategories();
+            renderProducts();
+        }
+
+        function renderCategories() {
+            const list = document.getElementById('categoryFilterList');
+            const categories = ProductsDB.getCategories();
+            const allProducts = ProductsDB.getProducts();
+            
+            let html = `
+                <li class="filter-item">
+                    <button class="filter-btn ${currentCategory === 'All' ? 'active' : ''}" onclick="filterByCategory('All')">
+                        All Products <span class="filter-count">${allProducts.length}</span>
+                    </button>
+                </li>
+            `;
+            
+            categories.forEach(cat => {
+                const count = allProducts.filter(p => p.category === cat).length;
+                if(count > 0) {
+                    html += `
+                        <li class="filter-item">
+                            <button class="filter-btn ${currentCategory === cat ? 'active' : ''}" onclick="filterByCategory('${cat}')">
+                                ${cat} <span class="filter-count">${count}</span>
+                            </button>
+                        </li>
+                    `;
+                }
+            });
+            
+            list.innerHTML = html;
+        }
+
+        function filterByCategory(cat) {
+            currentCategory = cat;
+            currentSubcategory = 'All'; // Reset subcategory when changing category
+            renderCategories();
+            renderSubcategories();
+            renderProducts();
+        }
+        
+        function renderSubcategories() {
+            const subcatGroup = document.getElementById('subcategoryGroup');
+            const list = document.getElementById('subcategoryFilterList');
+            
+            if (currentCategory === 'All') {
+                subcatGroup.style.display = 'none';
+                return;
+            }
+            
+            const categoryProducts = ProductsDB.getProducts().filter(p => p.category === currentCategory);
+            // Get unique subcategories for this category
+            const subcats = [...new Set(categoryProducts.map(p => p.subcategory).filter(Boolean))];
+            
+            if (subcats.length === 0 || (subcats.length === 1 && subcats[0] === 'General')) {
+                subcatGroup.style.display = 'none';
+                return;
+            }
+            
+            subcatGroup.style.display = 'block';
+            
+            let html = `
+                <li class="filter-item">
+                    <button class="filter-btn ${currentSubcategory === 'All' ? 'active' : ''}" onclick="filterBySubcategory('All')">
+                        All ${currentCategory} <span class="filter-count">${categoryProducts.length}</span>
+                    </button>
+                </li>
+            `;
+            
+            subcats.forEach(sub => {
+                const count = categoryProducts.filter(p => p.subcategory === sub).length;
+                html += `
+                    <li class="filter-item">
+                        <button class="filter-btn ${currentSubcategory === sub ? 'active' : ''}" onclick="filterBySubcategory('${sub}')">
+                            ${sub} <span class="filter-count">${count}</span>
+                        </button>
+                    </li>
+                `;
+            });
+            
+            list.innerHTML = html;
+        }
+        
+        function filterBySubcategory(subcat) {
+            currentSubcategory = subcat;
+            renderSubcategories(); // Update active state
+            renderProducts();
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('productGrid');
+            let products = ProductsDB.getProducts();
+            
+            if (currentCategory !== 'All') {
+                products = products.filter(p => p.category === currentCategory);
+            }
+            
+            if (currentSubcategory !== 'All') {
+                products = products.filter(p => p.subcategory === currentSubcategory);
+            }
+            
+            // Sort by newest first
+            products.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+            if (products.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state reveal">
+                        <h3>No Products Found</h3>
+                        <p>We couldn't find any products in this category.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = products.map((p, index) => {
+                const delay = (index % 6) * 0.1;
+                
+                let badgeClass = '';
+                if(p.stock === 'Out of Stock') badgeClass = 'out';
+                if(p.stock === 'Low Stock') badgeClass = 'low';
+                
+                const stockBadge = p.stock ? `<div class="product-badge ${badgeClass}">${p.stock}</div>` : '';
+                
+                let priceHtml = '';
+                if (p.showPrice !== false) {
+                    priceHtml = `
+                        <div class="product-price-wrap">
+                            <span class="product-price">₹${p.price.toLocaleString()}</span>
+                            ${p.comparePrice && p.comparePrice > p.price ? `<span class="product-compare-price">₹${p.comparePrice.toLocaleString()}</span>` : ''}
+                        </div>
+                    `;
+                }
+                
+                let catDisplay = p.category;
+                if (p.showSubcategory !== false && p.subcategory && p.subcategory !== 'None' && p.subcategory !== 'General') {
+                    catDisplay = `${p.category} · ${p.subcategory}`;
+                }
+                
+                // If it's a video
+                let mediaHtml = `<img src="${p.mainImage}" alt="${p.title}" class="product-image" onerror="this.src='images/placeholder.png'">`;
+                if (p.mainImage && p.mainImage.endsWith('.mp4')) {
+                    mediaHtml = `<video src="${p.mainImage}" class="product-image" autoplay loop muted playsinline style="object-fit:cover; padding:0;"></video>`;
+                }
+
+                return `
+                    <a href="product.html?id=${p.id}" class="product-card reveal" style="transition-delay: ${delay}s">
+                        <div class="product-image-wrap">
+                            ${stockBadge}
+                            ${mediaHtml}
+                        </div>
+                        <div class="product-info">
+                            <div class="product-category">${catDisplay}</div>
+                            <h3 class="product-title">${p.title}</h3>
+                            ${p.sku ? `<div class="product-sku">SKU: ${p.sku}</div>` : ''}
+                            ${priceHtml}
+                        </div>
+                    </a>
+                `;
+            }).join('');
+            
+            // Re-trigger scroll animations for newly added items
+            setTimeout(() => {
+                document.querySelectorAll('.reveal').forEach(el => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                });
+            }, 50);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initShop();
+            
+            // Simple animation trigger
+            setTimeout(() => {
+                document.querySelectorAll('.reveal').forEach(el => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                });
+            }, 100);
+        });
+    </script>
+</body>
+</html>
