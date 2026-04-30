@@ -21,18 +21,23 @@ app.use(express.static(path.join(__dirname)));
 
 const BLOG_ASSETS_DIR = path.join(__dirname, 'Blog Assets');
 
-// Top-Tier Security: Active Tokens
-const activeTokens = new Set();
+// Top-Tier Security: Stateless Verification
+function generateToken() {
+    // We use the password hash as a simple stateless token
+    return crypto.createHash('sha256').update(process.env.ADMIN_PASSWORD).digest('hex');
+}
 
 // Security Middleware
 function requireAuth(req, res, next) {
     const authHeader = req.headers['authorization'];
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        return res.status(401).json({ success: false, message: 'Unauthorized: Missing or invalid token' });
+        return res.status(401).json({ success: false, message: 'Unauthorized: Missing token' });
     }
     const token = authHeader.split(' ')[1];
-    if (!activeTokens.has(token)) {
-        return res.status(401).json({ success: false, message: 'Unauthorized: Invalid or expired token' });
+    const validToken = generateToken();
+    
+    if (token !== validToken) {
+        return res.status(401).json({ success: false, message: 'Unauthorized: Invalid token' });
     }
     next();
 }
@@ -76,8 +81,7 @@ app.post('/api/login', (req, res) => {
 
     // Server-side credential check
     if (email === adminEmail && password === adminPassword) {
-        const token = crypto.randomBytes(32).toString('hex');
-        activeTokens.add(token);
+        const token = generateToken();
         res.json({ success: true, token });
     } else {
         res.status(401).json({ success: false, message: 'Invalid credentials' });
@@ -86,7 +90,8 @@ app.post('/api/login', (req, res) => {
 
 app.post('/api/verify-token', (req, res) => {
     const { token } = req.body;
-    if (token && activeTokens.has(token)) {
+    const validToken = generateToken();
+    if (token && token === validToken) {
         res.json({ success: true });
     } else {
         res.status(401).json({ success: false });
