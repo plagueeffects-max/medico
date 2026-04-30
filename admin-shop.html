@@ -128,7 +128,8 @@
                     window.location.href = 'admin-login.html';
                 }
             }).catch(() => {
-                console.error("Auth server offline.");
+                // Network error or API down — don't log out, just continue
+                console.warn('Auth check: API unreachable, continuing with stored token.');
             });
         }
     </script>
