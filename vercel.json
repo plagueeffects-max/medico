@@ -1,0 +1,28 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "api/login.js", "use": "@vercel/node" },
+    { "src": "api/verify-token.js", "use": "@vercel/node" },
+    { "src": "api/save-blog.js", "use": "@vercel/node" },
+    { "src": "api/save-product.js", "use": "@vercel/node" },
+    { "src": "index.html", "use": "@vercel/static" },
+    { "src": "about.html", "use": "@vercel/static" },
+    { "src": "shop.html", "use": "@vercel/static" },
+    { "src": "blog.html", "use": "@vercel/static" },
+    { "src": "blog-post.html", "use": "@vercel/static" },
+    { "src": "product.html", "use": "@vercel/static" },
+    { "src": "admin-login.html", "use": "@vercel/static" },
+    { "src": "admin-dashboard.html", "use": "@vercel/static" },
+    { "src": "admin-shop.html", "use": "@vercel/static" },
+    { "src": "favicon.ico", "use": "@vercel/static" },
+    { "src": "assets/**", "use": "@vercel/static" },
+    { "src": "images/**", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/api/login", "dest": "/api/login.js" },
+    { "src": "/api/verify-token", "dest": "/api/verify-token.js" },
+    { "src": "/api/save-blog", "dest": "/api/save-blog.js" },
+    { "src": "/api/save-product", "dest": "/api/save-product.js" },
+    { "handle": "filesystem" }
+  ]
+}
