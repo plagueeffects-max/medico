@@ -1,4 +1,4 @@
-// --- Navbar Scroll Effect ---
+// --- Navbar Scroll Effect & Mobile Nav ---
 window.addEventListener('scroll', () => {
     const nav = document.getElementById('navbar');
     if (window.scrollY > 50) {
@@ -7,6 +7,24 @@ window.addEventListener('scroll', () => {
         nav.classList.remove('scrolled');
     }
 });
+
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.querySelector('.nav-links');
+const navLinksItems = document.querySelectorAll('.nav-link');
+
+if (hamburger && navLinks) {
+    hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('nav-active');
+        hamburger.classList.toggle('toggle');
+    });
+
+    navLinksItems.forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('nav-active');
+            hamburger.classList.remove('toggle');
+        });
+    });
+}
 
 // --- Scroll Reveal Observer ---
 const revealElements = document.querySelectorAll('.reveal');
@@ -259,7 +277,11 @@ if (canvas) {
             this.size = Math.random() * 3 + 1;
             this.speedY = Math.random() * -1 - 0.5;
             this.speedX = Math.random() * 1 - 0.5;
-            const colors = ['rgba(211, 47, 47, 0.4)', 'rgba(211, 47, 47, 0.1)', 'rgba(100, 100, 100, 0.2)'];
+            const colors = [
+                'rgba(211, 47, 47, 0.4)', 'rgba(211, 47, 47, 0.1)', 
+                'rgba(100, 100, 100, 0.2)', 
+                'rgba(76, 175, 80, 0.4)', 'rgba(76, 175, 80, 0.15)'
+            ];
             this.color = colors[Math.floor(Math.random() * colors.length)];
         }
         update() {
@@ -583,5 +605,30 @@ document.addEventListener('DOMContentLoaded', () => {
     
     yearElements.forEach(el => {
         el.textContent = currentYear;
+    });
+});
+
+// --- Typewriter Effect ---
+document.addEventListener('DOMContentLoaded', () => {
+    const typewriterElements = document.querySelectorAll('.typewriter-subtitle');
+    typewriterElements.forEach(element => {
+        const textToType = element.getAttribute('data-text');
+        if (!textToType) return;
+        
+        element.innerHTML = '';
+        let i = 0;
+        
+        function typeWriter() {
+            if (i < textToType.length) {
+                element.innerHTML += textToType.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50); // Typing speed
+            } else {
+                element.classList.add('typewriter-done');
+            }
+        }
+        
+        // Wait 1.2s for the main MEDICO text to animate in before starting
+        setTimeout(typeWriter, 1200);
     });
 });

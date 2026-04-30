@@ -327,7 +327,7 @@
             const author = document.getElementById('author').value || 'Medico Team';
             const date = document.getElementById('date').value;
             const time = document.getElementById('time').value;
-            const mainImg = document.getElementById('mainImageBase64').value || 'images/medico_shop.png';
+            const mainImg = document.getElementById('mainImageBase64').value || 'images/medico_shop.webp';
             const content = quill.root.innerHTML === '<p><br></p>' ? '' : quill.root.innerHTML;
 
             const previewContainer = document.getElementById('live-preview-container');
@@ -408,7 +408,7 @@
                 author: document.getElementById('author').value,
                 date: document.getElementById('date').value,
                 time: document.getElementById('time').value,
-                image: document.getElementById('mainImageBase64').value || 'images/medico_shop.png',
+                image: document.getElementById('mainImageBase64').value || 'images/medico_shop.webp',
                 galleryImages: galleryBase64Array,
                 content: quill.root.innerHTML,
                 featured: document.getElementById('featured').checked
@@ -491,8 +491,8 @@
                 document.getElementById('date').value = d || '';
                 document.getElementById('time').value = blog.time || '';
                 
-                document.getElementById('mainImageBase64').value = blog.image === 'images/medico_shop.png' ? '' : blog.image;
-                if(blog.image && blog.image !== 'images/medico_shop.png') {
+                document.getElementById('mainImageBase64').value = blog.image === 'images/medico_shop.webp' ? '' : blog.image;
+                if(blog.image && blog.image !== 'images/medico_shop.webp') {
                     document.getElementById('mainImagePreviewContainer').innerHTML = `<img src="${blog.image}" class="image-preview">`;
                 } else {
                     document.getElementById('mainImagePreviewContainer').innerHTML = '';

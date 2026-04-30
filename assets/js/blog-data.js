@@ -31,7 +31,7 @@ const defaultBlogs = [
         author: "Medico Team",
         date: "2025-11-20",
         time: "10:00",
-        image: "images/medico_shop.png",
+        image: "images/medico_shop.webp",
         galleryImages: ["images/6card.png", "images/3card.png", "images/7card.png"],
         content: detailedContent,
         featured: true
