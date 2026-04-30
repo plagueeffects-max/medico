@@ -7,7 +7,7 @@ const crypto = require('crypto');
 
 // Load environment variables manually
 if (fs.existsSync(path.join(__dirname, '.env'))) {
-    const envConfig = fs.readFileSync(path.join(__dirname, '.env'), 'utf-8').split('\n');
+    const envConfig = fs.readFileSync(path.join(__dirname, '.env'), 'utf-8').replace(/\r/g, '').split('\n');
     envConfig.forEach(line => {
         const parts = line.split('=');
         if (parts.length >= 2) {

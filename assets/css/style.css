@@ -18,9 +18,7 @@
     box-sizing: border-box;
 }
 
-html {
-    /* Custom JS cinematic scroll used instead of native smooth scroll */
-}
+/* Custom JS cinematic scroll used instead of native smooth scroll */
 
 body {
     background-color: var(--bg-pure);
