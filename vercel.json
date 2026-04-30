@@ -1,18 +1,8 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "server.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "server.js"
-    },
-    {
-      "handle": "filesystem"
-    }
+  "rewrites": [
+    { "source": "/api/login", "destination": "/api/login.js" },
+    { "source": "/api/verify-token", "destination": "/api/verify-token.js" },
+    { "source": "/api/save-blog", "destination": "/api/save-blog.js" },
+    { "source": "/api/save-product", "destination": "/api/save-product.js" }
   ]
 }
