@@ -280,22 +280,7 @@ nav.scrolled {
     font-weight: 700;
 }
 
-.typewriter-cursor {
-    border-right: 3px solid var(--accent-red);
-    padding-right: 5px;
-    animation: blinkCursor 0.8s step-end infinite;
-}
 
-.typewriter-done {
-    border-right: none !important;
-    animation: none !important;
-    padding-right: 0 !important;
-}
-
-@keyframes blinkCursor {
-    0%, 100% { border-color: transparent; }
-    50% { border-color: var(--accent-red); }
-}
 
 .hero-content p {
     font-size: clamp(1.1rem, 1.6vw, 1.45rem);

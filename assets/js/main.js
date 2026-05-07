@@ -481,15 +481,43 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!textToType) return;
         
         element.innerHTML = '';
+        element.classList.remove('typewriter-cursor');
+        element.style.position = 'relative';
+        
+        const placeholder = document.createElement('span');
+        placeholder.textContent = textToType;
+        placeholder.style.visibility = 'hidden';
+        element.appendChild(placeholder);
+        
+        const typer = document.createElement('span');
+        typer.style.position = 'absolute';
+        typer.style.top = '0';
+        typer.style.left = '0';
+        typer.style.right = '0';
+        typer.style.whiteSpace = 'nowrap';
+        
+        const currentText = document.createTextNode('');
+        const cursor = document.createElement('span');
+        cursor.className = 'typewriter-cursor';
+        cursor.textContent = '|';
+        
+        typer.appendChild(currentText);
+        typer.appendChild(cursor);
+        element.appendChild(typer);
+        
         let i = 0;
         
         function typeWriter() {
             if (i < textToType.length) {
-                element.innerHTML += textToType.charAt(i);
+                currentText.nodeValue += textToType.charAt(i);
                 i++;
                 setTimeout(typeWriter, 50); // Typing speed
             } else {
-                element.classList.add('typewriter-done');
+                setTimeout(() => {
+                    cursor.style.transition = 'opacity 0.5s';
+                    cursor.style.opacity = '0';
+                    setTimeout(() => cursor.remove(), 500);
+                }, 1000);
             }
         }
         
