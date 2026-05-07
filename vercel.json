@@ -1,28 +1,29 @@
 {
   "version": 2,
   "builds": [
-    { "src": "api/login.js", "use": "@vercel/node" },
-    { "src": "api/verify-token.js", "use": "@vercel/node" },
-    { "src": "api/save-blog.js", "use": "@vercel/node" },
-    { "src": "api/save-product.js", "use": "@vercel/node" },
-    { "src": "index.html", "use": "@vercel/static" },
-    { "src": "about.html", "use": "@vercel/static" },
-    { "src": "shop.html", "use": "@vercel/static" },
-    { "src": "blog.html", "use": "@vercel/static" },
-    { "src": "blog-post.html", "use": "@vercel/static" },
-    { "src": "product.html", "use": "@vercel/static" },
-    { "src": "admin-login.html", "use": "@vercel/static" },
-    { "src": "admin-dashboard.html", "use": "@vercel/static" },
-    { "src": "admin-shop.html", "use": "@vercel/static" },
-    { "src": "favicon.ico", "use": "@vercel/static" },
+    { "src": "api/*.js", "use": "@vercel/node" },
+    { "src": "*.html", "use": "@vercel/static" },
     { "src": "assets/**", "use": "@vercel/static" },
-    { "src": "images/**", "use": "@vercel/static" }
+    { "src": "images/**", "use": "@vercel/static" },
+    { "src": "Products/**", "use": "@vercel/static" },
+    { "src": "Blog Assets/**", "use": "@vercel/static" }
   ],
   "routes": [
-    { "src": "/api/login", "dest": "/api/login.js" },
-    { "src": "/api/verify-token", "dest": "/api/verify-token.js" },
-    { "src": "/api/save-blog", "dest": "/api/save-blog.js" },
-    { "src": "/api/save-product", "dest": "/api/save-product.js" },
+    { "src": "/api/(.*)", "dest": "/api/$1.js" },
     { "handle": "filesystem" }
+  ],
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.quilljs.com https://cdn.jsdelivr.net https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.quilljs.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' data:; connect-src 'self';" }
+      ]
+    }
   ]
 }

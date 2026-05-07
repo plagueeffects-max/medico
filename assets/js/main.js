@@ -1,12 +1,20 @@
-// --- Navbar Scroll Effect & Mobile Nav ---
-window.addEventListener('scroll', () => {
-    const nav = document.getElementById('navbar');
+// --- Navbar Scroll Effect & Mobile Nav (Debounced) ---
+const nav = document.getElementById('navbar');
+const debounce = (fn, delay) => {
+    let timeout;
+    return (...args) => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => fn.apply(this, args), delay);
+    };
+};
+const handleNavScroll = () => {
     if (window.scrollY > 50) {
         nav.classList.add('scrolled');
     } else {
         nav.classList.remove('scrolled');
     }
-});
+};
+window.addEventListener('scroll', debounce(handleNavScroll, 50), { passive: true });
 
 const hamburger = document.getElementById('hamburger');
 const navLinks = document.querySelector('.nav-links');
@@ -26,7 +34,7 @@ if (hamburger && navLinks) {
     });
 }
 
-// --- Scroll Reveal Observer ---
+// --- Scroll Reveal Observer (unchanged) ---
 const revealElements = document.querySelectorAll('.reveal');
 const revealObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
@@ -38,7 +46,7 @@ const revealObserver = new IntersectionObserver((entries, observer) => {
 }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 revealElements.forEach(el => revealObserver.observe(el));
 
-// --- Number Counting Animation ---
+// --- Number Counting Animation (unchanged) ---
 const counters = document.querySelectorAll('.number');
 let hasCounted = false;
 
@@ -71,197 +79,54 @@ const statsObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.5 });
 if (statsSection) statsObserver.observe(statsSection);
 
-// --- Hover Reveal Effect for Parallax Image ---
-const ac1Card = document.querySelector('.ac-1');
-const equipParallax = document.getElementById('equipment-parallax');
-if (ac1Card && equipParallax) {
-    ac1Card.addEventListener('mouseenter', () => {
-        equipParallax.classList.add('active');
-    });
-    ac1Card.addEventListener('mouseleave', () => {
-        equipParallax.classList.remove('active');
-    });
-}
+// --- Hover Reveal & 3D Parallax Grid Effect (unchanged) ---
+const parallaxMap = [
+    { card: '.ac-1', parallax: 'equipment-parallax',   props: ['--px',  '--py']  },
+    { card: '.ac-2', parallax: 'equipment-parallax-2', props: ['--px2', '--py2'] },
+    { card: '.ac-3', parallax: 'equipment-parallax-3', props: ['--px3', '--py3'] },
+    { card: '.ac-4', parallax: 'equipment-parallax-4', props: ['--px4', '--py4'] },
+    { card: '.ac-5', parallax: 'equipment-parallax-5', props: ['--px5', '--py5'] },
+    { card: '.ac-6', parallax: 'equipment-parallax-6', props: ['--px6', '--py6'] },
+    { card: '.ac-7', parallax: 'equipment-parallax-7', props: ['--px7', '--py7'] },
+];
 
-const ac2Card = document.querySelector('.ac-2');
-const equipParallax2 = document.getElementById('equipment-parallax-2');
-if (ac2Card && equipParallax2) {
-    ac2Card.addEventListener('mouseenter', () => {
-        equipParallax2.classList.add('active');
-    });
-    ac2Card.addEventListener('mouseleave', () => {
-        equipParallax2.classList.remove('active');
-    });
-}
+parallaxMap.forEach(({ card, parallax, props }) => {
+    const cardEl = document.querySelector(card);
+    const parallaxEl = document.getElementById(parallax);
+    if (!cardEl || !parallaxEl) return;
 
-const ac3Card = document.querySelector('.ac-3');
-const equipParallax3 = document.getElementById('equipment-parallax-3');
-if (ac3Card && equipParallax3) {
-    ac3Card.addEventListener('mouseenter', () => {
-        equipParallax3.classList.add('active');
-    });
-    ac3Card.addEventListener('mouseleave', () => {
-        equipParallax3.classList.remove('active');
-    });
-}
-
-const ac4Card = document.querySelector('.ac-4');
-const equipParallax4 = document.getElementById('equipment-parallax-4');
-if (ac4Card && equipParallax4) {
-    ac4Card.addEventListener('mouseenter', () => {
-        equipParallax4.classList.add('active');
-    });
-    ac4Card.addEventListener('mouseleave', () => {
-        equipParallax4.classList.remove('active');
-    });
-}
-
-const ac5Card = document.querySelector('.ac-5');
-const equipParallax5 = document.getElementById('equipment-parallax-5');
-if (ac5Card && equipParallax5) {
-    ac5Card.addEventListener('mouseenter', () => {
-        equipParallax5.classList.add('active');
-    });
-    ac5Card.addEventListener('mouseleave', () => {
-        equipParallax5.classList.remove('active');
-    });
-}
-
-const ac6Card = document.querySelector('.ac-6');
-const equipParallax6 = document.getElementById('equipment-parallax-6');
-if (ac6Card && equipParallax6) {
-    ac6Card.addEventListener('mouseenter', () => {
-        equipParallax6.classList.add('active');
-    });
-    ac6Card.addEventListener('mouseleave', () => {
-        equipParallax6.classList.remove('active');
-    });
-}
-
-const ac7Card = document.querySelector('.ac-7');
-const equipParallax7 = document.getElementById('equipment-parallax-7');
-if (ac7Card && equipParallax7) {
-    ac7Card.addEventListener('mouseenter', () => {
-        equipParallax7.classList.add('active');
-    });
-    ac7Card.addEventListener('mouseleave', () => {
-        equipParallax7.classList.remove('active');
-    });
-}
-
-// --- 3D Parallax Grid Effect ---
-const cards = document.querySelectorAll('.aww-card');
-cards.forEach(card => {
-    card.addEventListener('mousemove', e => {
-        if (!card.closest('#catalogue-grid')) return;
-
-        const rect = card.getBoundingClientRect();
+    cardEl.addEventListener('mouseenter', () => parallaxEl.classList.add('active'));
+    
+    cardEl.addEventListener('mousemove', e => {
+        if (!cardEl.closest('#catalogue-grid')) return;
+        const rect = cardEl.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
 
-        const rotateX = ((y - centerY) / centerY) * -8; // Max 8 deg
+        const rotateX = ((y - centerY) / centerY) * -8;
         const rotateY = ((x - centerX) / centerX) * 8;
 
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-        card.style.transition = 'none';
+        cardEl.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+        cardEl.style.transition = 'none';
 
-        if (card.classList.contains('ac-1') && typeof equipParallax !== 'undefined' && equipParallax) {
-            const moveX = ((x - centerX) / centerX) * -30;
-            const moveY = ((y - centerY) / centerY) * -30;
-            equipParallax.style.setProperty('--px', `${moveX}px`);
-            equipParallax.style.setProperty('--py', `${moveY}px`);
-        }
-        
-        if (card.classList.contains('ac-2') && typeof equipParallax2 !== 'undefined' && equipParallax2) {
-            const moveX = ((x - centerX) / centerX) * -30;
-            const moveY = ((y - centerY) / centerY) * -30;
-            equipParallax2.style.setProperty('--px2', `${moveX}px`);
-            equipParallax2.style.setProperty('--py2', `${moveY}px`);
-        }
-
-        if (card.classList.contains('ac-3') && typeof equipParallax3 !== 'undefined' && equipParallax3) {
-            const moveX = ((x - centerX) / centerX) * -30;
-            const moveY = ((y - centerY) / centerY) * -30;
-            equipParallax3.style.setProperty('--px3', `${moveX}px`);
-            equipParallax3.style.setProperty('--py3', `${moveY}px`);
-        }
-
-        if (card.classList.contains('ac-4') && typeof equipParallax4 !== 'undefined' && equipParallax4) {
-            const moveX = ((x - centerX) / centerX) * -30;
-            const moveY = ((y - centerY) / centerY) * -30;
-            equipParallax4.style.setProperty('--px4', `${moveX}px`);
-            equipParallax4.style.setProperty('--py4', `${moveY}px`);
-        }
-
-        if (card.classList.contains('ac-5') && typeof equipParallax5 !== 'undefined' && equipParallax5) {
-            const moveX = ((x - centerX) / centerX) * -30;
-            const moveY = ((y - centerY) / centerY) * -30;
-            equipParallax5.style.setProperty('--px5', `${moveX}px`);
-            equipParallax5.style.setProperty('--py5', `${moveY}px`);
-        }
-
-        if (card.classList.contains('ac-6') && typeof equipParallax6 !== 'undefined' && equipParallax6) {
-            const moveX = ((x - centerX) / centerX) * -30;
-            const moveY = ((y - centerY) / centerY) * -30;
-            equipParallax6.style.setProperty('--px6', `${moveX}px`);
-            equipParallax6.style.setProperty('--py6', `${moveY}px`);
-        }
-
-        if (card.classList.contains('ac-7') && typeof equipParallax7 !== 'undefined' && equipParallax7) {
-            const moveX = ((x - centerX) / centerX) * -30;
-            const moveY = ((y - centerY) / centerY) * -30;
-            equipParallax7.style.setProperty('--px7', `${moveX}px`);
-            equipParallax7.style.setProperty('--py7', `${moveY}px`);
-        }
+        const moveX = ((x - centerX) / centerX) * -30;
+        const moveY = ((y - centerY) / centerY) * -30;
+        parallaxEl.style.setProperty(props[0], `${moveX}px`);
+        parallaxEl.style.setProperty(props[1], `${moveY}px`);
     });
 
-    card.addEventListener('mouseleave', () => {
-        if (!card.closest('#catalogue-grid')) return;
-
-        card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)`;
-        card.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
-
-        if (card.classList.contains('ac-1') && typeof equipParallax !== 'undefined' && equipParallax) {
-            equipParallax.style.setProperty('--px', '0px');
-            equipParallax.style.setProperty('--py', '0px');
-        }
-        
-        if (card.classList.contains('ac-2') && typeof equipParallax2 !== 'undefined' && equipParallax2) {
-            equipParallax2.style.setProperty('--px2', '0px');
-            equipParallax2.style.setProperty('--py2', '0px');
-        }
-        
-        if (card.classList.contains('ac-3') && typeof equipParallax3 !== 'undefined' && equipParallax3) {
-            equipParallax3.style.setProperty('--px3', '0px');
-            equipParallax3.style.setProperty('--py3', '0px');
-        }
-
-        if (card.classList.contains('ac-4') && typeof equipParallax4 !== 'undefined' && equipParallax4) {
-            equipParallax4.style.setProperty('--px4', '0px');
-            equipParallax4.style.setProperty('--py4', '0px');
-        }
-        
-        if (card.classList.contains('ac-5') && typeof equipParallax5 !== 'undefined' && equipParallax5) {
-            equipParallax5.style.setProperty('--px5', '0px');
-            equipParallax5.style.setProperty('--py5', '0px');
-        }
-
-        if (card.classList.contains('ac-6') && typeof equipParallax6 !== 'undefined' && equipParallax6) {
-            equipParallax6.style.setProperty('--px6', '0px');
-            equipParallax6.style.setProperty('--py6', '0px');
-        }
-
-        if (card.classList.contains('ac-7') && typeof equipParallax7 !== 'undefined' && equipParallax7) {
-            equipParallax7.style.setProperty('--px7', '0px');
-            equipParallax7.style.setProperty('--py7', '0px');
-        }
+    cardEl.addEventListener('mouseleave', () => {
+        parallaxEl.classList.remove('active');
+        cardEl.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)`;
+        cardEl.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+        parallaxEl.style.setProperty(props[0], '0px');
+        parallaxEl.style.setProperty(props[1], '0px');
     });
 });
 
-// --- Custom Red Particle Engine ---
+// --- Custom Red Particle Engine (unchanged) ---
 const canvas = document.getElementById('particle-canvas');
 if (canvas) {
     const ctx = canvas.getContext('2d');

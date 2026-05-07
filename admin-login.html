@@ -21,6 +21,21 @@
             min-height: 100vh;
         }
 
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--text-dark);
+            color: white;
+            padding: 8px 15px;
+            z-index: 9999;
+            transition: top 0.2s;
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-bottom-right-radius: 8px;
+        }
+        .skip-link:focus { top: 0; }
+
         .login-card {
             background: #ffffff;
             padding: 50px 40px;
@@ -121,30 +136,35 @@
             color: var(--text-dark);
         }
     </style>
+    
 </head>
 <body>
 
-    <div class="login-card reveal active">
-        <a href="index.html" class="login-brand" style="text-decoration:none; color:inherit; display:block;">Medico<span>.</span></a>
-        <div class="login-subtitle">Admin Portal Access</div>
+    <a href="#main-content" class="skip-link">Skip to login form</a>
 
-        <form id="loginForm">
-            <div class="form-group">
-                <label class="form-label" for="email">Email Address</label>
-                <input type="email" id="email" class="form-control" placeholder="Enter admin email" required>
-            </div>
-            <div class="form-group">
-                <label class="form-label" for="password">Password</label>
-                <input type="password" id="password" class="form-control" placeholder="Enter password" required>
-            </div>
-            
-            <div id="errorMsg" class="error-msg">Invalid email or password.</div>
+    <main id="main-content">
+        <div class="login-card reveal active">
+            <a href="index.html" class="login-brand" style="text-decoration:none; color:inherit; display:block;">Medico<span>.</span></a>
+            <div class="login-subtitle">Admin Portal Access</div>
 
-            <button type="submit" class="login-btn-submit">Sign In</button>
-        </form>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label" for="email">Email Address</label>
+                    <input type="email" id="email" class="form-control" placeholder="Enter admin email" required autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input type="password" id="password" class="form-control" placeholder="Enter password" required autocomplete="current-password">
+                </div>
+                
+                <div id="errorMsg" class="error-msg">Invalid email or password.</div>
 
-        <a href="index.html" class="back-home">← Back to Website</a>
-    </div>
+                <button type="submit" class="login-btn-submit">Sign In</button>
+            </form>
+
+            <a href="index.html" class="back-home">← Back to Website</a>
+        </div>
+    </main>
 
     <script>
         document.getElementById('loginForm').addEventListener('submit', async function(e) {
@@ -156,6 +176,7 @@
             
             submitBtn.textContent = 'Verifying...';
             submitBtn.disabled = true;
+            errorMsg.style.display = 'none';
 
             try {
                 const response = await fetch('/api/login', {
@@ -166,24 +187,24 @@
 
                 const data = await response.json();
 
-                if (response.ok && data.success) {
-                    // Set session token
-                    sessionStorage.setItem('medico_admin_auth', data.token || 'true');
+                if (response.ok && data.success && data.token) {
+                    sessionStorage.setItem('medico_admin_auth', data.token);
                     window.location.href = 'admin-dashboard.html';
                 } else {
-                    errorMsg.textContent = data.message || 'Invalid email or password.';
+                    errorMsg.textContent = data.message || 'Access denied. Check credentials.';
                     errorMsg.style.display = 'block';
                     submitBtn.textContent = 'Sign In';
                     submitBtn.disabled = false;
                 }
             } catch (err) {
                 console.error(err);
-                errorMsg.textContent = 'Server offline. Cannot verify credentials.';
+                errorMsg.textContent = 'Auth server offline.';
                 errorMsg.style.display = 'block';
                 submitBtn.textContent = 'Sign In';
                 submitBtn.disabled = false;
             }
         });
     </script>
+    
 </body>
 </html>

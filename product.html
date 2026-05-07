@@ -11,7 +11,8 @@
     
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="assets/css/style.css">
-    <script src="assets/js/products-data.js"></script>
+    <script src="assets/js/products-data.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js" defer></script>
 
     <style>
         .product-page-container {
@@ -46,7 +47,6 @@
             }
         }
 
-        /* Gallery Styles */
         .gallery-main {
             background: var(--bg-offwhite);
             border-radius: 20px;
@@ -69,7 +69,6 @@
         }
 
         .gallery-main:hover img {
-            transform: scale(2);
             cursor: crosshair;
         }
 
@@ -102,7 +101,6 @@
             object-fit: cover;
         }
 
-        /* Product Info Styles */
         .product-category {
             color: var(--accent-red);
             font-weight: 600;
@@ -193,15 +191,6 @@
             box-shadow: 0 10px 20px var(--accent-glow);
         }
 
-        .add-to-cart-btn:disabled {
-            background: var(--border-light);
-            color: var(--text-muted);
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        /* Extra Action Buttons */
         .product-actions-extra {
             display: flex;
             flex-direction: column;
@@ -226,19 +215,11 @@
             text-decoration: none;
             transition: var(--transition-fast);
             cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-            font-family: 'Inter', sans-serif;
         }
 
         .btn-extra:hover {
             border-color: var(--text-dark);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-
-        .btn-extra.full-width {
-            width: 100%;
-            padding: 15px 10px;
         }
 
         .btn-group-4 {
@@ -247,7 +228,6 @@
             gap: 10px;
         }
 
-        /* Tabs Section */
         .tabs-container {
             margin-top: 60px;
             border: 1px solid var(--border-light);
@@ -282,11 +262,6 @@
             border-bottom: 2px solid var(--accent-red);
         }
 
-        .tab-btn:hover:not(.active) {
-            color: var(--text-dark);
-            background: var(--bg-pure);
-        }
-
         .tab-content {
             display: none;
             padding: 40px;
@@ -300,51 +275,19 @@
             animation: fadeIn 0.4s ease forwards;
         }
 
-        /* Quill Styles Override for Display */
-        .tab-content h1, .tab-content h2, .tab-content h3 { margin-bottom: 15px; margin-top: 30px; font-family: 'Space Grotesk', sans-serif; }
-        .tab-content h1:first-child, .tab-content h2:first-child, .tab-content h3:first-child { margin-top: 0; }
-        .tab-content p { margin-bottom: 15px; }
-        .tab-content ul, .tab-content ol { margin-bottom: 20px; padding-left: 20px; }
-        .tab-content li { margin-bottom: 8px; }
-
-        /* Specifications Table */
-        .specs-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.95rem;
-        }
-        .specs-table tr {
-            border-bottom: 1px solid var(--border-light);
-        }
-        .specs-table td {
-            padding: 16px 20px;
-            vertical-align: top;
-        }
-        .specs-table td:first-child {
-            font-weight: 600;
-            color: var(--text-dark);
-            width: 30%;
-        }
-        .specs-table td:last-child {
-            color: var(--text-muted);
-        }
-
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        #errorContainer {
-            text-align: center;
-            padding: 150px 20px;
-            display: none;
-        }
-
-        #errorContainer h1 { font-size: 3rem; margin-bottom: 20px; }
+        #errorContainer { text-align: center; padding: 150px 20px; display: none; }
+        .skip-link { position: absolute; top: -100px; left: 0; background: #000; color: #fff; padding: 10px; z-index: 9999; }
+        .skip-link:focus { top: 0; }
     </style>
 </head>
 <body>
+
+    <a href="#main-content" class="skip-link">Skip to content</a>
 
     <nav id="navbar" style="background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-light);">
         <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">Medico<span>.</span></a>
@@ -353,314 +296,158 @@
             <a href="shop.html" class="nav-link" style="color: var(--accent-red);">Products</a>
             <a href="about.html" class="nav-link">About Us</a>
             <a href="blog.html" class="nav-link">Blog</a>
-            <a href="admin-login.html" class="login-btn" style="text-decoration:none;">Admin Login</a>
+            <a href="admin-login.html" class="login-btn">Admin Login</a>
         </div>
     </nav>
 
-    <div id="errorContainer">
-        <h1>Product Not Found</h1>
-        <p style="color: var(--text-muted); margin-bottom: 30px;">The product you are looking for does not exist or has been removed.</p>
-        <a href="shop.html" class="btn btn-primary">Return to Shop</a>
-    </div>
+    <main id="main-content">
+        <div id="errorContainer">
+            <h1>Product Not Found</h1>
+            <p>The product you are looking for does not exist.</p>
+            <a href="shop.html">Return to Shop</a>
+        </div>
 
-    <div class="product-page-container" id="productContainer" style="display: none;">
-        <a href="shop.html" class="back-link">← Back to Catalog</a>
+        <div class="product-page-container" id="productContainer" style="display: none;">
+            <a href="shop.html" class="back-link">← Back to Catalog</a>
 
-        <div class="product-grid">
-            
-            <!-- Left: Gallery -->
-            <div class="product-gallery reveal">
-                <div class="gallery-main" id="mainGalleryImage">
-                    <!-- Populated by JS -->
-                </div>
-                <div class="gallery-thumbs" id="galleryThumbs">
-                    <!-- Populated by JS -->
-                </div>
-            </div>
-
-            <!-- Right: Info -->
-            <div class="product-info reveal" style="transition-delay: 0.1s;">
-                <div class="product-category" id="productCategory">Category</div>
-                <h1 class="product-title" id="productTitle">Product Title</h1>
+            <div class="product-grid">
                 
-                <div class="product-meta">
-
-                    <span class="stock-badge" id="productStock">In Stock</span>
-                    <span id="productSku" style="display: none;"><span id="skuValue"></span></span>
+                <!-- Left: Gallery -->
+                <div class="product-gallery reveal">
+                    <div class="gallery-main" id="mainGalleryImage">
+                        <!-- Populated by JS -->
+                    </div>
+                    <div class="gallery-thumbs" id="galleryThumbs">
+                        <!-- Populated by JS -->
+                    </div>
                 </div>
 
-                <div class="product-price-container" id="priceContainer">
-                    <div class="product-price" id="productPrice">₹0</div>
-                    <div class="product-compare-price" id="productComparePrice" style="display: none;">₹0</div>
-                </div>
-
-                <div class="product-short-desc" id="productShortDesc">
-                    Short description goes here.
-                </div>
-
-                <button class="add-to-cart-btn" id="addToCartBtn">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-                    Add to Cart
-                </button>
-
-                <div class="product-actions-extra" id="productActionsExtra">
-                    <a href="#" id="downloadBrochureBtn" class="btn-extra full-width" style="display: none;" download="Product_Brochure.pdf">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
-                        Download Brochure
-                    </a>
+                <!-- Right: Info -->
+                <div class="product-info reveal" style="transition-delay: 0.1s;">
+                    <div class="product-category" id="productCategory">Category</div>
+                    <h1 class="product-title" id="productTitle">Product Title</h1>
                     
-                    <div class="btn-group-4">
-                        <a href="https://wa.me/?text=I'm interested in a product." target="_blank" class="btn-extra" id="whatsappBtn">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path></svg>
-                            WhatsApp
+                    <div class="product-meta">
+                        <span class="stock-badge" id="productStock">In Stock</span>
+                        <span id="productSku" style="display: none;">SKU: <span id="skuValue"></span></span>
+                    </div>
+
+                    <div class="product-price-container" id="priceContainer">
+                        <div class="product-price" id="productPrice">₹0</div>
+                        <div class="product-compare-price" id="productComparePrice" style="display: none;">₹0</div>
+                    </div>
+
+                    <div class="product-short-desc" id="productShortDesc"></div>
+
+                    <button class="add-to-cart-btn" id="addToCartBtn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                        Add to Cart
+                    </button>
+
+                    <div class="product-actions-extra">
+                        <a href="#" id="downloadBrochureBtn" class="btn-extra" style="display: none; width:100%; padding:15px;" download>
+                            Download Brochure
                         </a>
-                        <a href="tel:+910000000000" class="btn-extra">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0d9488" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                            Phone
-                        </a>
-                        <a href="mailto:?subject=Product Inquiry" class="btn-extra" id="emailBtn">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                            Email
-                        </a>
-                        <button onclick="navigator.share({title: document.title, url: window.location.href})" class="btn-extra">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4b5563" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-                            Share
-                        </button>
+                        <div class="btn-group-4">
+                            <a href="#" target="_blank" class="btn-extra" id="whatsappBtn">WhatsApp</a>
+                            <a href="tel:+919419008453" class="btn-extra">Phone</a>
+                            <a href="mailto:medicosgr@gmail.com" class="btn-extra" id="emailBtn">Email</a>
+                            <button onclick="navigator.share({title: document.title, url: window.location.href})" class="btn-extra">Share</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Bottom: Tabs -->
-        <div class="tabs-container reveal" style="transition-delay: 0.2s;" id="detailedInfoContainer">
-            <div class="tabs-header">
-                <button class="tab-btn active" onclick="switchTab('desc')">Description</button>
-                <button class="tab-btn" onclick="switchTab('specs')" id="tabBtnSpecs">Specifications</button>
-                <button class="tab-btn" onclick="switchTab('box')" id="tabBtnBox">What's in the Box</button>
-            </div>
-            
-            <div class="tab-content active" id="tab-desc">
-                <!-- Rich text -->
-            </div>
-            <div class="tab-content" id="tab-specs">
-                <!-- Rich text -->
-            </div>
-            <div class="tab-content" id="tab-box">
-                <!-- Rich text -->
+            <div class="tabs-container reveal" style="transition-delay: 0.2s;">
+                <div class="tabs-header">
+                    <button class="tab-btn active" onclick="switchTab('desc')">Description</button>
+                    <button class="tab-btn" onclick="switchTab('specs')" id="tabBtnSpecs">Specifications</button>
+                    <button class="tab-btn" onclick="switchTab('box')" id="tabBtnBox">What's in the Box</button>
+                </div>
+                <div class="tab-content active" id="tab-desc"></div>
+                <div class="tab-content" id="tab-specs"></div>
+                <div class="tab-content" id="tab-box"></div>
             </div>
         </div>
-
-    </div>
+    </main>
 
     <script>
-        let currentProduct = null;
-
-        function getProductIdFromUrl() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('id');
-        }
-
-        function loadProduct() {
-            const id = getProductIdFromUrl();
-            if (!id) {
-                showError();
-                return;
-            }
-
-            const products = ProductsDB.getProducts();
-            currentProduct = products.find(p => p.id === id);
-
-            if (!currentProduct) {
-                showError();
-                return;
-            }
-
-            renderProduct();
-        }
-
-        function showError() {
-            document.getElementById('productContainer').style.display = 'none';
-            document.getElementById('errorContainer').style.display = 'block';
-        }
-
-        function renderMedia(src, isMain = true) {
-            const ext = src.split('.').pop().toLowerCase();
-            const isVideo = ext === 'mp4' || src.startsWith('data:video');
-            
-            if (isVideo) {
-                return `<video src="${src}" ${isMain ? 'autoplay loop muted playsinline controls' : 'muted playsinline'}></video>`;
-            } else {
-                return `<img src="${src}" alt="Product Image" onerror="this.src='images/placeholder.png'">`;
-            }
+        function switchTab(id) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('tab-' + id).classList.add('active');
         }
 
         function setMainMedia(src) {
-            document.getElementById('mainGalleryImage').innerHTML = renderMedia(src, true);
-            
-            // Update active thumbnail
-            document.querySelectorAll('.thumb-item').forEach(t => {
-                t.classList.remove('active');
-                if(t.dataset.src === src) t.classList.add('active');
-            });
+            const ext = src.split('.').pop().toLowerCase();
+            const isVideo = ext === 'mp4' || ext === 'webm' || src.startsWith('data:video');
+            const el = document.getElementById('mainGalleryImage');
+            el.innerHTML = isVideo ? `<video src="${src}" autoplay loop muted playsinline controls></video>` : `<img src="${src}" onerror="this.src='images/medico_shop.webp'">`;
         }
 
-        function renderProduct() {
+        document.addEventListener('DOMContentLoaded', () => {
+            const id = new URLSearchParams(window.location.search).get('id');
+            const p = ProductsDB.getProducts().find(x => x.id === id);
+            if (!p) { document.getElementById('errorContainer').style.display = 'block'; return; }
+            
             document.getElementById('productContainer').style.display = 'block';
-            const p = currentProduct;
-
-            // 1. Meta & Text
-            document.title = `${p.title} | Medico`;
             document.getElementById('productTitle').textContent = p.title;
+            document.getElementById('productCategory').textContent = p.category;
             document.getElementById('productShortDesc').textContent = p.description;
-
-            // Category
-            let catDisplay = p.category;
-            if (p.showSubcategory !== false && p.subcategory && p.subcategory !== 'None' && p.subcategory !== 'General') {
-                catDisplay = `${p.category} · ${p.subcategory}`;
-            }
-            document.getElementById('productCategory').textContent = catDisplay;
-
-            // Make, Model, SKU
-            let skuDisplay = '';
-            if (p.make || p.model) skuDisplay += `${p.make || ''} ${p.model || ''} `.trim();
-            if (p.sku) skuDisplay += (skuDisplay ? ` | SKU: ${p.sku}` : `SKU: ${p.sku}`);
+            document.getElementById('productPrice').textContent = `₹${p.price.toLocaleString()}`;
             
-            if (skuDisplay) {
-                document.getElementById('skuValue').textContent = skuDisplay;
-                document.getElementById('productSku').style.display = 'inline-block';
-            } else {
-                document.getElementById('productSku').style.display = 'none';
+            if (p.sku) {
+                document.getElementById('productSku').style.display = 'inline';
+                document.getElementById('skuValue').textContent = p.sku;
             }
 
-            // Stock
-            const stockEl = document.getElementById('productStock');
-            stockEl.textContent = p.stock || 'In Stock';
-            if (p.stock === 'Out of Stock') stockEl.classList.add('out');
-            else if (p.stock === 'Low Stock') stockEl.classList.add('low');
+            const stock = document.getElementById('productStock');
+            stock.textContent = p.stock || 'In Stock';
+            if(p.stock === 'Out of Stock') stock.className = 'stock-badge out';
+            else if(p.stock === 'Low Stock') stock.className = 'stock-badge low';
+
+            setMainMedia(p.mainImage || 'images/medico_shop.webp');
             
-            const btn = document.getElementById('addToCartBtn');
-            if (p.stock === 'Out of Stock') {
-                btn.disabled = true;
-                btn.innerHTML = 'Out of Stock';
+            // Render thumbs if gallery exists
+            const thumbs = document.getElementById('galleryThumbs');
+            if (p.galleryImages && p.galleryImages.length > 0) {
+                const allImages = [p.mainImage, ...p.galleryImages].filter(Boolean);
+                thumbs.innerHTML = allImages.map(img => `
+                    <div class="thumb-item" onclick="setMainMedia('${img}')">
+                        <img src="${img}" onerror="this.src='images/medico_shop.webp'">
+                    </div>
+                `).join('');
             }
-
-            // Pricing
-            const priceContainer = document.getElementById('priceContainer');
-            if (p.showPrice !== false) {
-                document.getElementById('productPrice').textContent = `₹${p.price.toLocaleString()}`;
-                if (p.comparePrice && p.comparePrice > p.price) {
-                    const compEl = document.getElementById('productComparePrice');
-                    compEl.textContent = `₹${p.comparePrice.toLocaleString()}`;
-                    compEl.style.display = 'block';
-                }
-            } else {
-                priceContainer.style.display = 'none';
-            }
-
-            // 2. Actions & Links
-            const brochureBtn = document.getElementById('downloadBrochureBtn');
-            if (p.brochure && p.brochure.trim() !== '') {
-                brochureBtn.href = p.brochure;
-                brochureBtn.style.display = 'flex';
-                brochureBtn.download = `${p.title.replace(/[^a-z0-9]/gi, '_')}_Brochure.pdf`;
-            } else {
-                brochureBtn.style.display = 'none';
-            }
-
-            document.getElementById('whatsappBtn').href = `https://wa.me/?text=Hi! I am interested in this product: ${p.title} - ${window.location.href}`;
-            document.getElementById('emailBtn').href = `mailto:?subject=Inquiry: ${p.title}&body=I would like more information about: ${window.location.href}`;
-
-            // 3. Gallery
-            const allMedia = [];
-            if (p.mainImage) allMedia.push(p.mainImage);
-            if (p.gallery && p.gallery.length > 0) allMedia.push(...p.gallery);
-
-            if (allMedia.length > 0) {
-                setMainMedia(allMedia[0]);
-                
-                if (allMedia.length > 1) {
-                    const thumbsHtml = allMedia.map((src, index) => `
-                        <div class="thumb-item ${index === 0 ? 'active' : ''}" data-src="${src}" onclick="setMainMedia('${src}')">
-                            ${renderMedia(src, false)}
-                        </div>
-                    `).join('');
-                    document.getElementById('galleryThumbs').innerHTML = thumbsHtml;
-                } else {
-                    document.getElementById('galleryThumbs').style.display = 'none';
-                }
-            } else {
-                setMainMedia('images/placeholder.png');
-                document.getElementById('galleryThumbs').style.display = 'none';
-            }
-
-            // 3. Tabs
-            const tabDesc = document.getElementById('tab-desc');
-            const tabSpecs = document.getElementById('tab-specs');
-            const tabBox = document.getElementById('tab-box');
             
-            tabDesc.innerHTML = p.longDescription || `<p>${p.description || 'No description available.'}</p>`;
+            // XSS Protection with DOMPurify
+            document.getElementById('tab-desc').innerHTML = typeof DOMPurify !== 'undefined' ? DOMPurify.sanitize(p.longDescription || p.description) : (p.longDescription || p.description);
             
-            if (p.specifications && Array.isArray(p.specifications) && p.specifications.length > 0) {
-                let tableHtml = '<table class="specs-table"><tbody>';
-                p.specifications.forEach(spec => {
-                    tableHtml += `
-                        <tr>
-                            <td>${spec.key || ''}</td>
-                            <td>${spec.value || ''}</td>
-                        </tr>
-                    `;
-                });
-                tableHtml += '</tbody></table>';
-                tabSpecs.innerHTML = tableHtml;
+            if(p.specifications && p.specifications.length > 0) {
+                document.getElementById('tab-specs').innerHTML = p.specifications.map(s => `
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; padding:10px 0; border-bottom:1px solid #eee;">
+                        <span style="font-weight:600;">${s.label}</span>
+                        <span>${s.value}</span>
+                    </div>
+                `).join('');
             } else {
                 document.getElementById('tabBtnSpecs').style.display = 'none';
             }
-            
-            if (p.inTheBox && p.inTheBox.trim() !== '' && p.inTheBox !== '<p><br></p>') {
-                tabBox.innerHTML = p.inTheBox;
+
+            if(p.inTheBox) {
+                document.getElementById('tab-box').innerHTML = typeof DOMPurify !== 'undefined' ? DOMPurify.sanitize(p.inTheBox) : p.inTheBox;
             } else {
                 document.getElementById('tabBtnBox').style.display = 'none';
             }
-        }
 
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            // CTA Links
+            document.getElementById('whatsappBtn').href = `https://wa.me/919419008453?text=I'm interested in ${encodeURIComponent(p.title)}`;
+            document.getElementById('emailBtn').href = `mailto:medicosgr@gmail.com?subject=Enquiry about ${encodeURIComponent(p.title)}`;
             
-            event.target.classList.add('active');
-            document.getElementById('tab-' + tabId).classList.add('active');
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            loadProduct();
-            
+            // Reveal animations
             setTimeout(() => {
-                document.querySelectorAll('.reveal').forEach(el => {
-                    el.style.opacity = '1';
-                    el.style.transform = 'translateY(0)';
-                });
+                document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
             }, 100);
-
-            // Hover zoom logic
-            const mainGallery = document.getElementById('mainGalleryImage');
-            mainGallery.addEventListener('mousemove', function(e) {
-                const img = this.querySelector('img');
-                if(!img) return;
-                
-                // Calculate position percentage
-                const rect = this.getBoundingClientRect();
-                const x = ((e.clientX - rect.left) / rect.width) * 100;
-                const y = ((e.clientY - rect.top) / rect.height) * 100;
-                
-                img.style.transformOrigin = `${x}% ${y}%`;
-            });
-
-            mainGallery.addEventListener('mouseleave', function() {
-                const img = this.querySelector('img');
-                if(!img) return;
-                img.style.transformOrigin = 'center center';
-            });
         });
     </script>
 </body>

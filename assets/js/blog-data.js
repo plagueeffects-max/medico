@@ -32,7 +32,7 @@ const defaultBlogs = [
         date: "2025-11-20",
         time: "10:00",
         image: "images/medico_shop.webp",
-        galleryImages: ["images/6card.png", "images/3card.png", "images/7card.png"],
+        galleryImages: ["images/6card.webp", "images/3card.webp", "images/7card.webp"],
         content: detailedContent,
         featured: true
     },
@@ -43,7 +43,7 @@ const defaultBlogs = [
         author: "Dr. Naseer Andrabi",
         date: "2025-11-03",
         time: "14:30",
-        image: "images/image2.png",
+        image: "images/image2.webp",
         galleryImages: [],
         content: "<p>Join us for the Annual Lung Function Assessment program where we will discuss the latest protocols for assessing respiratory health in post-operative patients. The session will cover spirometry interpretation, diffusion capacity, and practical workshops on equipment calibration.</p>",
         featured: false

@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin-login.html
+Disallow: /admin-dashboard.html
+Disallow: /admin-shop.html
+Disallow: /api/
+
+Sitemap: https://medico-inky.vercel.app/sitemap.xml

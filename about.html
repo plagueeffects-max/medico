@@ -319,8 +319,11 @@
             }
         }
     </style>
+    
 </head>
 <body>
+    <a href="#main-content" class="skip-link" style="position:absolute; top:-100px; left:0; z-index:9999; background:#000; color:#fff; padding:10px;" onfocus="this.style.top='0'" onblur="this.style.top='-100px'">Skip to content</a>
+    <main id="main-content">
 
     <nav id="navbar">
         <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">Medico<span>.</span></a>
@@ -339,7 +342,7 @@
     </nav>
 
     <header class="page-header" style="background: var(--bg-pure);">
-        <div style="position: absolute; inset: 0; z-index: 0; background-image: url('images/about_us2.png'); background-size: cover; background-position: center; background-attachment: fixed; opacity: 0.12; filter: grayscale(100%);"></div>
+        <div style="position: absolute; inset: 0; z-index: 0; background-image: url('images/about_us2.webp'); background-size: cover; background-position: center; background-attachment: fixed; opacity: 0.12; filter: grayscale(100%);"></div>
         
         <div style="position: absolute; top: 0; left: 0; width: 100%; height: 150px; background: linear-gradient(to bottom, var(--bg-pure) 0%, transparent 100%); z-index: 1; pointer-events: none;"></div>
         <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 150px; background: linear-gradient(to top, var(--bg-pure) 0%, transparent 100%); z-index: 1; pointer-events: none;"></div>
@@ -359,7 +362,7 @@
         <div class="premium-founder-card reveal" style="margin-bottom: 100px;">
             <div class="founder-img-ring">
                 <div class="founder-img-inner">
-                    <img src="images/syed-naseer.png?v=2" alt="Mr. Syed Naseer Ahmad Andrabi">
+                    <img loading="lazy" src="images/syed-naseer.webp?v=2" alt="Mr. Syed Naseer Ahmad Andrabi">
                 </div>
             </div>
             <div>
@@ -411,7 +414,7 @@
                     <img src="images/medico_shop.webp" alt="Medico Shop 2026" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 12px; pointer-events: none;">
                     
                     <!-- "Before" image (Old Shop) -->
-                    <img id="beforeImg" src="images/oldshop.png" alt="Medico Shop 2000" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 12px; clip-path: inset(0 50% 0 0); pointer-events: none;">
+                    <img id="beforeImg" src="images/oldshop.webp" alt="Medico Shop 2000" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 12px; clip-path: inset(0 50% 0 0); pointer-events: none;">
                     
                     <!-- Premium Glass Slider Handle -->
                     <div id="sliderHandle" style="position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: rgba(255,255,255,0.7); transform: translateX(-50%); pointer-events: none; z-index: 5; box-shadow: 0 0 10px rgba(0,0,0,0.2);">
@@ -492,7 +495,7 @@
         <div class="aww-grid" style="margin-bottom: 120px;">
             
             <div class="brand-card-premium col-4 reveal" style="--index: 0; --z-index: 10;">
-                <div class="brand-watermark" style="background-image: url('images/Phillips.png');"></div>
+                <div class="brand-watermark" style="background-image: url('images/Phillips.webp');"></div>
                 <div class="brand-content">
                     <div class="brand-eyebrow">Respiratory</div>
                     <h3 class="brand-name" style="color: #00529b;">PHILIPS</h3>
@@ -503,7 +506,7 @@
             </div>
             
             <div class="brand-card-premium col-4 reveal" style="transition-delay: 0.1s; --index: 1; --z-index: 11;">
-                <div class="brand-watermark" style="background-image: url('images/logo.svg'); background-size: 90%;"></div>
+                <div class="brand-watermark" style="background-image: url('images/logo.webp'); background-size: 90%;"></div>
                 <div class="brand-content">
                     <div class="brand-eyebrow">Diagnostics</div>
                     <h3 class="brand-name" style="color: #e3000f;">SCHILLER</h3>
@@ -514,7 +517,7 @@
             </div>
             
             <div class="brand-card-premium col-4 reveal" style="transition-delay: 0.2s; --index: 2; --z-index: 12;">
-                <div class="brand-watermark" style="background-image: url('images/shayla.png');"></div>
+                <div class="brand-watermark" style="background-image: url('images/shayla.webp');"></div>
                 <div class="brand-content">
                     <div class="brand-eyebrow">Surgical</div>
                     <h3 class="brand-name" style="color: #009ca6;">SHALYA</h3>
@@ -661,6 +664,7 @@
         </div>
     </div>
 
+    </main>
     <footer class="footer-premium">
         <div class="footer-main">
             <div class="footer-grid">
@@ -726,5 +730,6 @@
     </a>
 
     <script src="assets/js/main.js"></script>
+    
 </body>
 </html>

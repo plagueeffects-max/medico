@@ -100,7 +100,7 @@ if (ProductsDB.getProducts().length === 0) {
             price: 45000,
             originalPrice: 55000,
             description: "High-yield 10L oxygen concentrator designed for continuous uninterrupted respiratory support in ICU and homecare settings. Features dual-flow and low noise operation.",
-            mainImage: "images/oxygen.gif",
+            mainImage: "images/oxygen.webp",
             gallery: [],
             features: ["10 Liters/min capacity", "Purity indicator", "Low noise < 45dB"],
             stock: "In Stock",
@@ -114,7 +114,7 @@ if (ProductsDB.getProducts().length === 0) {
             price: 85000,
             originalPrice: 95000,
             description: "Advanced non-invasive ventilation (CPAP/BiPAP) machinery offering superior patient synchrony and comfort. Built-in humidifier and multiple ventilation modes.",
-            mainImage: "images/sleep.mp4", // Or a fallback image
+            mainImage: "images/sleep.webm", // Or a fallback image
             gallery: [],
             features: ["Auto-CPAP mode", "Integrated Humidifier", "Data logging"],
             stock: "In Stock",
