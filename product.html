@@ -381,7 +381,7 @@
 
         function setMainMedia(src) {
             const ext = src.split('.').pop().toLowerCase();
-            const isVideo = ext === 'mp4' || ext === 'webm' || src.startsWith('data:video');
+            const isVideo = ext === 'webm' || src.startsWith('data:video');
             const el = document.getElementById('mainGalleryImage');
             el.innerHTML = isVideo ? `<video src="${src}" autoplay loop muted playsinline controls></video>` : `<img src="${src}" onerror="this.src='images/medico_shop.webp'">`;
         }

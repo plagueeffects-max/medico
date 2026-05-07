@@ -461,7 +461,7 @@
                 
                 // If it's a video
                 let mediaHtml = `<img loading="lazy" src="${p.mainImage}" alt="${p.title}" class="product-image" onerror="this.src='images/medico_shop.webp'">`;
-                if (p.mainImage && (p.mainImage.endsWith('.mp4') || p.mainImage.endsWith('.webm'))) {
+                if (p.mainImage && p.mainImage.endsWith('.webm')) {
                     mediaHtml = `<video src="${p.mainImage}" class="product-image" autoplay loop muted playsinline style="object-fit:cover; padding:0;"></video>`;
                 }
 
