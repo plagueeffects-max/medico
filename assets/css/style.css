@@ -1188,13 +1188,14 @@ img {
         transform: translateY(-8px) rotate(-45deg);
     }
 
-    /* Hero: hide landscape video on portrait screens, show dedicated img instead */
+    /* Hero: show video on mobile, adjust position for portrait crop */
     .hero-video {
-        display: none;
+        display: block;
+        object-position: 60% center;
     }
 
     .hero-mobile-poster {
-        display: block;
+        display: none;
     }
 
     .hero-content h1 {
