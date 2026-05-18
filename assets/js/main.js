@@ -517,6 +517,17 @@ if (categoryVideos.length > 0) {
     categoryVideos.forEach(video => videoObserver.observe(video));
 }
 
+// --- Hero Video Fade-In ---
+const heroVideoEl = document.querySelector('.hero-video');
+if (heroVideoEl) {
+  const markReady = () => heroVideoEl.classList.add('is-ready');
+  if (heroVideoEl.readyState >= 2) {
+    markReady();
+  } else {
+    heroVideoEl.addEventListener('canplay', markReady, { once: true });
+  }
+}
+
 // --- Dynamic Year Auto-Updater ---
 document.addEventListener('DOMContentLoaded', () => {
     const currentYear = new Date().getFullYear();

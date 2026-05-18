@@ -205,6 +205,12 @@ img {
     z-index: 1;
     object-fit: cover;
     filter: blur(2px);
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-video.is-ready {
+    opacity: 1;
 }
 
 .hero-mobile-poster {
