@@ -46,13 +46,14 @@ const revealObserver = new IntersectionObserver((entries, observer) => {
 }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 revealElements.forEach(el => revealObserver.observe(el));
 
-// --- Number Counting Animation (unchanged) ---
+// --- Number Counting Animation ---
 const counters = document.querySelectorAll('.number');
 let hasCounted = false;
 
 const countUp = () => {
     counters.forEach(counter => {
         const target = +counter.getAttribute('data-target');
+        const suffix = counter.getAttribute('data-suffix') || '';
         const duration = 2000;
         const increment = target / (duration / 16);
 
@@ -60,10 +61,10 @@ const countUp = () => {
         const updateCounter = () => {
             current += increment;
             if (current < target) {
-                counter.innerText = Math.ceil(current) + (target > 50 ? '+' : '');
+                counter.innerText = Math.ceil(current) + suffix;
                 requestAnimationFrame(updateCounter);
             } else {
-                counter.innerText = target + '+';
+                counter.innerText = target + suffix;
             }
         };
         updateCounter();
@@ -216,12 +217,12 @@ if (canvas) {
         document.hidden ? stopParticles() : startParticles();
     });
 
-    // Pause when hero scrolls out of view
-    const heroSection = document.querySelector('.hero');
-    if (heroSection) {
+    // Pause when hero sticky area scrolls out of view
+    const heroStickyEl = document.querySelector('.hero-sticky') || document.querySelector('.hero');
+    if (heroStickyEl) {
         new IntersectionObserver(entries => {
             entries[0].isIntersecting ? startParticles() : stopParticles();
-        }, { threshold: 0 }).observe(heroSection);
+        }, { threshold: 0 }).observe(heroStickyEl);
     }
 
     window.addEventListener('resize', () => {
@@ -231,28 +232,74 @@ if (canvas) {
     });
 }
 
-// --- Cinematic Hero Scroll Parallax & Blur ---
-const heroContent = document.querySelector('.hero-content');
-if (heroContent) {
-    let heroScrollTicking = false;
-    window.addEventListener('scroll', () => {
-        if (heroScrollTicking) return;
-        heroScrollTicking = true;
-        requestAnimationFrame(() => {
-            const scrolled = window.scrollY;
-            if (scrolled < window.innerHeight) {
-                const opacity = 1 - (scrolled / (window.innerHeight * 0.6));
-                const blur = (scrolled / 80);
-                const yPos = scrolled * 0.4;
+// --- Option A: Pinned Hero Scroll Sequence (Apple-style) ---
+(function () {
+    const heroSection   = document.querySelector('.hero');
+    const heroContent   = document.querySelector('.hero-content');
+    const heroVid       = document.querySelector('.hero-video');
+    const scrollIndic   = document.querySelector('.scroll-indicator');
+    if (!heroSection || !heroContent) return;
 
-                heroContent.style.opacity = Math.max(0, opacity);
-                heroContent.style.transform = `translateY(${yPos}px)`;
-                heroContent.style.filter = blur > 0.1 ? `blur(${Math.min(blur, 15)}px)` : 'none';
+    const isMobile = () => window.innerWidth <= 768;
+
+    const updateHero = () => {
+        const scrolled = window.scrollY;
+        const vh = window.innerHeight;
+
+        if (isMobile()) {
+            // Mobile: simple fade — hero is 100vh so standard fade
+            if (scrolled < vh) {
+                const p = scrolled / (vh * 0.7);
+                heroContent.style.opacity = Math.max(0, 1 - p);
+                heroContent.style.transform = `translateY(${scrolled * 0.25}px)`;
+                heroContent.style.filter = 'none';
             }
-            heroScrollTicking = false;
-        });
+            return;
+        }
+
+        // Desktop: 200vh hero → scroll zone = 1 × vh (extra 100vh of sticky range)
+        const scrollZone = vh;
+        const progress = Math.max(0, Math.min(1, scrolled / scrollZone));
+
+        if (progress <= 0.35) {
+            // Phase 1 — fully visible, gentle upward drift + indicator fades
+            const p = progress / 0.35;
+            heroContent.style.opacity = '1';
+            heroContent.style.transform = `translateY(${-p * 18}px)`;
+            heroContent.style.filter = 'none';
+            if (heroVid) heroVid.style.transform = `translate(-50%, -50%) scale(${1 + p * 0.03})`;
+            if (scrollIndic) scrollIndic.style.opacity = `${Math.max(0, 1 - p * 3)}`;
+        } else if (progress <= 0.72) {
+            // Phase 2 — content scatters + video zooms in
+            const p = (progress - 0.35) / 0.37;
+            const eased = p * p;
+            heroContent.style.opacity = `${Math.max(0, 1 - eased)}`;
+            heroContent.style.transform = `translateY(${-18 - eased * 55}px)`;
+            heroContent.style.filter = eased > 0.05 ? `blur(${(eased * 7).toFixed(1)}px)` : 'none';
+            if (heroVid) heroVid.style.transform = `translate(-50%, -50%) scale(${1.03 + p * 0.08})`;
+            if (scrollIndic) scrollIndic.style.opacity = '0';
+        } else {
+            // Phase 3 — fully cleared
+            heroContent.style.opacity = '0';
+            heroContent.style.transform = 'translateY(-73px)';
+            heroContent.style.filter = 'blur(7px)';
+            if (heroVid) heroVid.style.transform = 'translate(-50%, -50%) scale(1.11)';
+            if (scrollIndic) scrollIndic.style.opacity = '0';
+        }
+    };
+
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => { updateHero(); ticking = false; });
     }, { passive: true });
-}
+
+    // On resize, reset video transform if switching to mobile
+    window.addEventListener('resize', () => {
+        if (isMobile() && heroVid) heroVid.style.transform = '';
+    });
+})();
 
 // --- Custom Cinematic Smooth Scroll ---
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -537,6 +584,19 @@ document.addEventListener('DOMContentLoaded', () => {
         el.textContent = currentYear;
     });
 });
+
+// --- Active Nav State ---
+(function () {
+    const path = window.location.pathname;
+    document.querySelectorAll('.nav-link').forEach(link => {
+        const href = link.getAttribute('href');
+        if (!href || href.startsWith('#') || href.startsWith('mailto:')) return;
+        const page = href.split('?')[0];
+        const isHome = page === 'index.html' && (path === '/' || path.endsWith('/') || path.endsWith('index.html'));
+        const isMatch = !isHome && path.endsWith(page);
+        if (isHome || isMatch) link.classList.add('active');
+    });
+})();
 
 // --- Typewriter Effect ---
 document.addEventListener('DOMContentLoaded', () => {
