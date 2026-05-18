@@ -1,0 +1,44 @@
+# Medico Scientific Service Centre
+
+> Medico Scientific Service Centre is a Srinagar-based supplier and authorised service centre
+> for clinical-grade medical equipment, serving hospitals, clinics, and families across
+> Jammu & Kashmir since 2000. Founded by Mr. Syed Naseer Ahmad Andrabi. GST registered
+> (01AALPI4731K1ZV). Authorised distributor for Philips (respiratory/sleep therapy),
+> Schiller (diagnostics), and Shalya (surgical equipment).
+
+## Core Pages
+
+- [Home](https://medico-inky.vercel.app/): Company overview, product categories, customer testimonials, contact
+- [Products / Equipment Catalog](https://medico-inky.vercel.app/shop.html): Full catalog — Oxygen Dynamics, Anaesthesia, Diagnostics, Emergency & Resuscitation, Critical Care, Sleep & NIV, Surgery
+- [About Us](https://medico-inky.vercel.app/about.html): Company history (est. 2000), founder Mr. Syed Naseer Ahmad Andrabi, brand partnerships, physical address, certifications
+- [Blog & Insights](https://medico-inky.vercel.app/blog.html): Medical equipment guidance and healthcare updates for Jammu & Kashmir
+
+## Key Facts
+
+- **Full name:** Medico Scientific Service Centre
+- **Founded:** 2000
+- **Founder:** Mr. Syed Naseer Ahmad Andrabi, Proprietor
+- **Address:** 2nd Floor, Iqbal Complex, Opposite Iqbal Park, Central Market, Batamaloo, Srinagar, J&K 190009
+- **Phone:** +91 94190 08453
+- **Email:** medicosgr@gmail.com
+- **GST:** 01AALPI4731K1ZV
+- **Service area:** Jammu & Kashmir, India
+- **Clients:** 100+ healthcare partners
+
+## Product Categories
+
+- Oxygen Dynamics (concentrators, portable delivery systems)
+- Anaesthesia (workstations, gas delivery)
+- Diagnostics (patient monitoring, telemetry)
+- Emergency & Resuscitation (defibrillators, AEDs)
+- Critical Care (multiparameter monitors, ventilators)
+- Sleep & NIV (CPAP, BiPAP, APAP machines)
+- Surgery (laparoscopic, electrosurgical instruments)
+
+## Services
+
+- Equipment supply and installation
+- Staff training and clinical orientation
+- Preventive maintenance and AMC
+- Repair and calibration
+- 7-days-a-week technical support

@@ -95,29 +95,41 @@ parallaxMap.forEach(({ card, parallax, props }) => {
     const parallaxEl = document.getElementById(parallax);
     if (!cardEl || !parallaxEl) return;
 
+    let rafPending = false;
+    let lastE = null;
+
     cardEl.addEventListener('mouseenter', () => parallaxEl.classList.add('active'));
-    
+
     cardEl.addEventListener('mousemove', e => {
         if (!cardEl.closest('#catalogue-grid')) return;
-        const rect = cardEl.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
+        lastE = e;
+        if (rafPending) return;
+        rafPending = true;
+        requestAnimationFrame(() => {
+            if (!lastE) { rafPending = false; return; }
+            const rect = cardEl.getBoundingClientRect();
+            const x = lastE.clientX - rect.left;
+            const y = lastE.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
 
-        const rotateX = ((y - centerY) / centerY) * -8;
-        const rotateY = ((x - centerX) / centerX) * 8;
+            const rotateX = ((y - centerY) / centerY) * -8;
+            const rotateY = ((x - centerX) / centerX) * 8;
 
-        cardEl.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-        cardEl.style.transition = 'none';
+            cardEl.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            cardEl.style.transition = 'none';
 
-        const moveX = ((x - centerX) / centerX) * -30;
-        const moveY = ((y - centerY) / centerY) * -30;
-        parallaxEl.style.setProperty(props[0], `${moveX}px`);
-        parallaxEl.style.setProperty(props[1], `${moveY}px`);
+            const moveX = ((x - centerX) / centerX) * -30;
+            const moveY = ((y - centerY) / centerY) * -30;
+            parallaxEl.style.setProperty(props[0], `${moveX}px`);
+            parallaxEl.style.setProperty(props[1], `${moveY}px`);
+            rafPending = false;
+        });
     });
 
     cardEl.addEventListener('mouseleave', () => {
+        rafPending = false;
+        lastE = null;
         parallaxEl.classList.remove('active');
         cardEl.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)`;
         cardEl.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
@@ -126,7 +138,7 @@ parallaxMap.forEach(({ card, parallax, props }) => {
     });
 });
 
-// --- Custom Red Particle Engine (unchanged) ---
+// --- Custom Red Particle Engine ---
 const canvas = document.getElementById('particle-canvas');
 if (canvas) {
     const ctx = canvas.getContext('2d');
@@ -134,6 +146,8 @@ if (canvas) {
     canvas.height = window.innerHeight;
 
     let particlesArray = [];
+    let particleRafId = null;
+    let particleRunning = false;
 
     class Particle {
         constructor() {
@@ -143,8 +157,8 @@ if (canvas) {
             this.speedY = Math.random() * -1 - 0.5;
             this.speedX = Math.random() * 1 - 0.5;
             const colors = [
-                'rgba(211, 47, 47, 0.4)', 'rgba(211, 47, 47, 0.1)', 
-                'rgba(100, 100, 100, 0.2)', 
+                'rgba(211, 47, 47, 0.4)', 'rgba(211, 47, 47, 0.1)',
+                'rgba(100, 100, 100, 0.2)',
                 'rgba(76, 175, 80, 0.4)', 'rgba(76, 175, 80, 0.15)'
             ];
             this.color = colors[Math.floor(Math.random() * colors.length)];
@@ -178,11 +192,37 @@ if (canvas) {
             particlesArray[i].update();
             particlesArray[i].draw();
         }
-        requestAnimationFrame(animateParticles);
+        particleRafId = requestAnimationFrame(animateParticles);
+    }
+
+    function startParticles() {
+        if (particleRunning) return;
+        particleRunning = true;
+        animateParticles();
+    }
+
+    function stopParticles() {
+        if (!particleRunning) return;
+        particleRunning = false;
+        cancelAnimationFrame(particleRafId);
+        particleRafId = null;
     }
 
     initParticles();
-    animateParticles();
+    startParticles();
+
+    // Pause when tab is hidden, resume when visible
+    document.addEventListener('visibilitychange', () => {
+        document.hidden ? stopParticles() : startParticles();
+    });
+
+    // Pause when hero scrolls out of view
+    const heroSection = document.querySelector('.hero');
+    if (heroSection) {
+        new IntersectionObserver(entries => {
+            entries[0].isIntersecting ? startParticles() : stopParticles();
+        }, { threshold: 0 }).observe(heroSection);
+    }
 
     window.addEventListener('resize', () => {
         canvas.width = window.innerWidth;
@@ -194,26 +234,22 @@ if (canvas) {
 // --- Cinematic Hero Scroll Parallax & Blur ---
 const heroContent = document.querySelector('.hero-content');
 if (heroContent) {
+    let heroScrollTicking = false;
     window.addEventListener('scroll', () => {
-        // requestAnimationFrame for performance
-        window.requestAnimationFrame(() => {
+        if (heroScrollTicking) return;
+        heroScrollTicking = true;
+        requestAnimationFrame(() => {
             const scrolled = window.scrollY;
             if (scrolled < window.innerHeight) {
-                // Fade out by 60% of viewport height
                 const opacity = 1 - (scrolled / (window.innerHeight * 0.6));
-                // Blur increases as you scroll
                 const blur = (scrolled / 80);
-                // Move down slightly slower than the scroll (parallax)
                 const yPos = scrolled * 0.4;
-                
+
                 heroContent.style.opacity = Math.max(0, opacity);
                 heroContent.style.transform = `translateY(${yPos}px)`;
-                if (blur > 0.1) {
-                    heroContent.style.filter = `blur(${Math.min(blur, 15)}px)`;
-                } else {
-                    heroContent.style.filter = 'none';
-                }
+                heroContent.style.filter = blur > 0.1 ? `blur(${Math.min(blur, 15)}px)` : 'none';
             }
+            heroScrollTicking = false;
         });
     }, { passive: true });
 }
@@ -277,29 +313,27 @@ const scrollRevealContainers = document.querySelectorAll('.scroll-text-reveal');
 scrollRevealContainers.forEach(container => {
     // Split text nodes into spans to animate word-by-word
     const walkDOM = (node, func) => {
-        if (node.nodeType === 3) { 
+        if (node.nodeType === 3) {
             func(node);
         } else if (node.nodeType === 1 && node.nodeName !== 'SCRIPT' && !node.classList.contains('scroll-word')) {
             Array.from(node.childNodes).forEach(child => walkDOM(child, func));
         }
     };
-    
+
     walkDOM(container, (node) => {
         const text = node.nodeValue;
         if (!text.trim()) return;
-        
+
         const words = text.split(/(\s+)/);
         const fragment = document.createDocumentFragment();
-        
+
         words.forEach(word => {
             if (word.trim()) {
                 const span = document.createElement('span');
                 span.className = 'scroll-word';
                 span.textContent = word;
-                // Start muted
                 span.style.color = 'rgba(71, 85, 105, 0.25)';
                 span.style.transition = 'color 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
-                // If it's inside a strong tag, store a flag so we can make it darker when highlighted
                 if (node.parentNode.tagName === 'STRONG') {
                     span.dataset.strong = 'true';
                 }
@@ -308,35 +342,36 @@ scrollRevealContainers.forEach(container => {
                 fragment.appendChild(document.createTextNode(word));
             }
         });
-        
+
         node.parentNode.replaceChild(fragment, node);
     });
-    
+
     const words = container.querySelectorAll('.scroll-word');
-    
+
+    let scrollWordTicking = false;
     window.addEventListener('scroll', () => {
-        const rect = container.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
-        
-        // The effect starts when the container enters the bottom 85% of the viewport
-        // and finishes when it reaches the top 35%
-        const start = windowHeight * 0.85;
-        const end = windowHeight * 0.35;
-        
-        let progress = (start - rect.top) / (start - end);
-        progress = Math.max(0, Math.min(1, progress));
-        
-        const highlightCount = Math.floor(progress * words.length);
-        
-        words.forEach((word, index) => {
-            if (index < highlightCount) {
-                word.style.color = word.dataset.strong ? 'var(--text-dark)' : '#475569';
-            } else {
-                word.style.color = 'rgba(71, 85, 105, 0.25)';
-            }
+        if (scrollWordTicking) return;
+        scrollWordTicking = true;
+        requestAnimationFrame(() => {
+            const rect = container.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            const start = windowHeight * 0.85;
+            const end = windowHeight * 0.35;
+
+            let progress = (start - rect.top) / (start - end);
+            progress = Math.max(0, Math.min(1, progress));
+
+            const highlightCount = Math.floor(progress * words.length);
+
+            words.forEach((word, index) => {
+                word.style.color = index < highlightCount
+                    ? (word.dataset.strong ? 'var(--text-dark)' : '#475569')
+                    : 'rgba(71, 85, 105, 0.25)';
+            });
+            scrollWordTicking = false;
         });
     }, { passive: true });
-    
+
     // Trigger once on load
     window.dispatchEvent(new Event('scroll'));
 });
@@ -463,11 +498,30 @@ testimonials.forEach(t => {
     obs.observe(headline);
 })();
 
+// --- Category Card Video Lazy Autoplay ---
+// Videos have preload="none" in HTML; play only when card scrolls into view
+const categoryVideos = document.querySelectorAll('.aww-card video');
+if (categoryVideos.length > 0) {
+    const videoObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            const video = entry.target;
+            if (entry.isIntersecting) {
+                if (video.readyState === 0) video.load();
+                video.play().catch(() => {});
+            } else {
+                video.pause();
+            }
+        });
+    }, { threshold: 0.25 });
+
+    categoryVideos.forEach(video => videoObserver.observe(video));
+}
+
 // --- Dynamic Year Auto-Updater ---
 document.addEventListener('DOMContentLoaded', () => {
     const currentYear = new Date().getFullYear();
     const yearElements = document.querySelectorAll('.current-year');
-    
+
     yearElements.forEach(el => {
         el.textContent = currentYear;
     });

@@ -5,22 +5,7 @@ const cors = require('cors');
 const crypto = require('crypto');
 require('dotenv').config();
 
-<<<<<<< HEAD
-// Load environment variables manually
-if (fs.existsSync(path.join(__dirname, '.env'))) {
-    const envConfig = fs.readFileSync(path.join(__dirname, '.env'), 'utf-8').replace(/\r/g, '').split('\n');
-    envConfig.forEach(line => {
-        const parts = line.split('=');
-        if (parts.length >= 2) {
-            const key = parts[0].trim();
-            const value = parts.slice(1).join('=').trim().replace(/['"]/g, '');
-            if (key) process.env[key] = value;
-        }
-    });
-}
 
-=======
->>>>>>> ad1eac739fa9ccd63c3cb8f44f80420da82a8cdb
 const app = express();
 const PORT = process.env.PORT || 8082;
 
