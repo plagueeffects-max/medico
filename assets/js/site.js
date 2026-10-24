@@ -123,7 +123,7 @@ document.querySelectorAll('.current-year').forEach((el) => { el.textContent = ne
      data-parallax     background drifts slower than the page
      data-scrub-scale  big card grows into place as it scrolls in (desktop)
      data-scrub-words  statement text lights up word by word
-     data-draw         vertical line draws itself while scrolling
+     data-draw         line draws itself while scrolling (="x" for horizontal)
      data-count        number counts up
    window.siteMotion.reveal(el) animates children rendered later by JS.
    With reduced motion everything still arrives, as a plain fade.
@@ -269,10 +269,14 @@ function initMotion() {
     });
 
     // Lines that draw themselves as you scroll (timelines)
+    // data-draw="x" draws left to right on wide screens; stacked layouts draw top to bottom
     $$('[data-draw]').forEach((el) => {
-      gsap.fromTo(el, { scaleY: 0 }, {
-        scaleY: 1, ease: 'none', transformOrigin: 'top center',
-        scrollTrigger: { trigger: el.parentElement, start: 'top 70%', end: 'bottom 60%', scrub: 0.4 },
+      const across = el.dataset.draw === 'x' && window.matchMedia('(min-width: 901px)').matches;
+      const axis = across ? 'scaleX' : 'scaleY';
+      gsap.fromTo(el, { [axis]: 0 }, {
+        [axis]: 1, ease: 'none', transformOrigin: across ? 'left center' : 'top center',
+        // The line's container (timeline block) sets the scroll distance, not the 2px line itself
+        scrollTrigger: { trigger: el.parentElement.parentElement, start: 'top 75%', end: 'bottom 55%', scrub: 0.4 },
       });
     });
 

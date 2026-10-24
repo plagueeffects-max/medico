@@ -1084,7 +1084,9 @@ ul, ol { list-style: none; }
   .faq-card summary { min-height: 58px; padding: 16px 18px; font-size: 15.5px; }
   .faq-list details > p,
   .faq-answer { padding: 12px 18px 18px; }
-  .cta-features li { font-size: 13px; }
+  .cta-features { gap: 8px; }
+  .cta-features li { padding: 6px 14px 6px 6px; font-size: 13px; }
+  .cta-features li span { width: 28px; height: 28px; }
   .field-row { grid-template-columns: 1fr; gap: 0; }
 
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px 20px; }

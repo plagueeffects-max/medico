@@ -1128,9 +1128,6 @@
   .insight-grid { grid-template-columns: 1fr; gap: 16px; }
   .insight-more { grid-column: auto; }
   .insight-body { padding: 22px 20px; }
-  .cta-features { gap: 8px; }
-  .cta-features li { padding: 6px 14px 6px 6px; font-size: 13px; }
-  .cta-features li span { width: 28px; height: 28px; }
   .reviews-track { grid-auto-columns: 86%; }
   .review { padding: 24px; }
   .review blockquote { font-size: 16px; }
