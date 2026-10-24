@@ -19,3 +19,7 @@ system-commandline-sentinel-files/
 # IDE / Editor
 .claude/
 .vscode/
+
+# Local tool output
+.playwright-mcp/
+.code-review-graph/

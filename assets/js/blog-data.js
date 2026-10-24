@@ -43,7 +43,7 @@ const defaultBlogs = [
         author: "Dr. Naseer Andrabi",
         date: "2025-11-03",
         time: "14:30",
-        image: "images/image2.webp",
+        image: "images/insight-alfa.webp",
         galleryImages: [],
         content: "<p>Join us for the Annual Lung Function Assessment program where we will discuss the latest protocols for assessing respiratory health in post-operative patients. The session will cover spirometry interpretation, diffusion capacity, and practical workshops on equipment calibration.</p>",
         featured: false

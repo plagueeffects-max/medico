@@ -142,24 +142,36 @@
 
     <a href="#main-content" class="skip-link">Skip to login form</a>
 
+    <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+        <symbol id="i-ecg" viewBox="0 0 64 64"><path d="M8 34h9l3.5-6 4.5 11 6.5-25 6.5 33 4.5-17 3 4h10"/></symbol>
+    </svg>
+
     <main id="main-content">
         <div class="login-card reveal active">
-            <a href="index.html" class="login-brand" style="text-decoration:none; color:inherit; display:block;">Medico<span>.</span></a>
+            <a href="index.html" class="brand" style="display:inline-flex; align-items:center; gap:10px; margin-bottom:16px; text-decoration:none;">
+                <span class="brand-mark" style="display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:12px; background:#fff; box-shadow:0 0 0 1px #e2e8f0, 0 4px 12px -6px rgba(11,18,32,0.25);">
+                    <svg style="width:32px; height:32px; fill:none; stroke:#e5181f; stroke-width:5; stroke-linecap:round; stroke-linejoin:round;"><use href="#i-ecg"/></svg>
+                </span>
+                <span class="brand-text" style="display:flex; flex-direction:column; line-height:1; text-align:left;">
+                    <span class="brand-name" style="font-size:24px; font-weight:800; letter-spacing:-0.04em; color:#0b1220;">Medico<span style="color:#e5181f;">.</span></span>
+                    <span class="brand-sub" style="margin-top:4px; font-size:8.5px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#64748b;">Scientific Service Centre</span>
+                </span>
+            </a>
             <div class="login-subtitle">Admin Portal Access</div>
 
             <form id="loginForm">
                 <div class="form-group">
                     <label class="form-label" for="email">Email Address</label>
-                    <input type="email" id="email" class="form-control" placeholder="Enter admin email" required autocomplete="email">
+                    <input type="email" id="email" class="form-control" placeholder="admin@medicojk.com" required autocomplete="email">
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="password">Password</label>
-                    <input type="password" id="password" class="form-control" placeholder="Enter password" required autocomplete="current-password">
+                    <input type="password" id="password" class="form-control" placeholder="••••••••" required autocomplete="current-password">
                 </div>
                 
                 <div id="errorMsg" class="error-msg">Invalid email or password.</div>
 
-                <button type="submit" class="login-btn-submit">Sign In</button>
+                <button type="submit" class="login-btn-submit" style="border-radius:9999px;">Sign In</button>
             </form>
 
             <a href="index.html" class="back-home">← Back to Website</a>

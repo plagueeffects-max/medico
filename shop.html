@@ -3,542 +3,554 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medico Scientific Service Centre | Medical Equipment Kashmir</title>
-    <meta name="description" content="Browse clinical-grade medical equipment in Kashmir — oxygen concentrators, CPAP/BiPAP machines, anaesthesia workstations, defibrillators, and critical care monitors. Medico Scientific Service Centre, Srinagar.">
+    <title>Products | Medico Scientific Service Centre</title>
+    <meta name="description" content="Explore our comprehensive range of high-end clinical technology and hospital infrastructure across Jammu & Kashmir. Authorized distributor for Philips, Schiller & Shalya.">
     <link rel="canonical" href="https://medico-inky.vercel.app/shop.html">
 
-    <meta property="og:title" content="Medical Equipment Catalog | Medico Scientific Service Centre">
+    <!-- Open Graph -->
+    <meta property="og:title" content="Clinical Equipment & Hospital Infrastructure | Medico Scientific Service Centre">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://medico-inky.vercel.app/shop.html">
-    <meta property="og:image" content="https://medico-inky.vercel.app/images/medico_shop.webp">
-    <meta property="og:description" content="Browse clinical-grade oxygen concentrators, CPAP/BiPAP machines, anaesthesia workstations, defibrillators, and critical care monitors. Srinagar, Kashmir.">
+    <meta property="og:image" content="https://medico-inky.vercel.app/images/productsHeroBg.png">
+    <meta property="og:description" content="Explore clinical-grade oxygen concentrators, CPAP/BiPAP machines, anaesthesia workstations, defibrillators, and critical care monitors in Srinagar, Kashmir.">
     <meta property="og:locale" content="en_IN">
     <meta property="og:site_name" content="Medico Scientific Service Centre">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Medical Equipment Catalog | Medico Scientific Service Centre">
-    <meta name="twitter:description" content="Browse clinical-grade oxygen concentrators, CPAP/BiPAP machines, and critical care monitors. Srinagar, Kashmir.">
-    <meta name="twitter:image" content="https://medico-inky.vercel.app/images/medico_shop.webp">
 
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Clinical Equipment & Hospital Infrastructure | Medico">
+    <meta name="twitter:description" content="High-end clinical technology and medical infrastructure across Jammu & Kashmir.">
+    <meta name="twitter:image" content="https://medico-inky.vercel.app/images/productsHeroBg.png">
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800;900&family=Space+Grotesk:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Icons & Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg">
+    <link rel="alternate icon" type="image/x-icon" href="favicon.ico">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="assets/css/shop.css">
+
+    <!-- Scripts -->
     <script src="assets/js/products-data.js" defer></script>
+    <script src="assets/js/shop.js" defer></script>
 
+    <!-- Schema.org Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://medico-inky.vercel.app/" },
-        { "@type": "ListItem", "position": 2, "name": "Medical Equipment", "item": "https://medico-inky.vercel.app/shop.html" }
+        { "@type": "ListItem", "position": 2, "name": "Products", "item": "https://medico-inky.vercel.app/shop.html" }
       ]
     }
     </script>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Organization",
+      "@type": "MedicalOrganization",
       "@id": "https://medico-inky.vercel.app/#organization",
       "name": "Medico Scientific Service Centre",
       "url": "https://medico-inky.vercel.app/",
-      "telephone": "+91-9419008453",
-      "email": "medicosgr@gmail.com"
+      "telephone": "+91-7006123456",
+      "email": "info@medicojk.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "2nd Floor, Iqbal Complex, Opposite Iqbal Park, Central Market, Batamaloo",
+        "addressLocality": "Srinagar",
+        "addressRegion": "Jammu and Kashmir",
+        "postalCode": "190009",
+        "addressCountry": "IN"
+      }
     }
     </script>
-
-    <style>
-        .shop-header {
-            padding: 150px 20px 50px;
-            text-align: center;
-            background: var(--bg-pure);
-            position: relative;
-        }
-
-        .shop-header h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            margin-bottom: 20px;
-            letter-spacing: -1px;
-            line-height: 1.1;
-        }
-
-        .shop-header p {
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto;
-            font-size: 1.1rem;
-        }
-
-        .shop-container {
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: 40px 20px 100px;
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 40px;
-        }
-
-        @media (max-width: 992px) {
-            .shop-container {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Sidebar Filters */
-        .shop-sidebar {
-            position: sticky;
-            top: 100px;
-            height: fit-content;
-        }
-
-        .filter-group {
-            margin-bottom: 30px;
-        }
-
-        .filter-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            color: var(--text-dark);
-            border-bottom: 1px solid var(--border-light);
-            padding-bottom: 10px;
-        }
-
-        .filter-list {
-            list-style: none;
-        }
-
-        .filter-item {
-            margin-bottom: 10px;
-        }
-
-        .filter-btn {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: var(--transition-fast);
-            text-align: left;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .filter-btn:hover, .filter-btn.active {
-            color: var(--accent-red);
-            font-weight: 500;
-        }
-
-        .filter-count {
-            font-size: 0.8rem;
-            background: var(--bg-offwhite);
-            padding: 2px 8px;
-            border-radius: 12px;
-            color: var(--text-muted);
-        }
-
-        /* Product Grid */
-        .shop-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-        }
-
-        /* Product Card Styling (Adapting aww-card) */
-        .product-card {
-            background: var(--bg-pure);
-            border: 1px solid var(--border-light);
-            border-radius: 16px;
-            overflow: hidden;
-            transition: var(--transition-fast);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            text-decoration: none;
-        }
-
-        .product-card:hover {
-            box-shadow: 0 20px 40px rgba(0,0,0,0.06);
-            transform: translateY(-5px);
-        }
-
-        .product-image-wrap {
-            position: relative;
-            width: 100%;
-            padding-top: 100%; /* 1:1 Aspect Ratio */
-            background: var(--bg-offwhite);
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .product-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            padding: 30px;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .product-card:hover .product-image {
-            transform: scale(1.05);
-        }
-
-        .product-badge {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(8px);
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: #15803d;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            z-index: 2;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .product-badge.out { color: var(--accent-red); background: rgba(253, 232, 232, 0.95); }
-        .product-badge.low { color: #b45309; background: rgba(254, 243, 199, 0.95); }
-
-        .product-info {
-            padding: 25px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .product-category {
-            font-size: 0.75rem;
-            color: var(--accent-red);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
-
-        .product-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 15px;
-            line-height: 1.3;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .product-price-wrap {
-            margin-top: auto;
-            display: flex;
-            align-items: baseline;
-            gap: 10px;
-        }
-
-        .product-price {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--text-dark);
-        }
-
-        .product-compare-price {
-            font-size: 1rem;
-            color: var(--text-muted);
-            text-decoration: line-through;
-        }
-        
-        .product-sku {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-top: 5px;
-        }
-
-        .empty-state {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 100px 20px;
-        }
-        
-        .empty-state h3 {
-            font-size: 2rem;
-            margin-bottom: 10px;
-        }
-        
-        .empty-state p {
-            color: var(--text-muted);
-        }
-    </style>
-    
 </head>
 <body>
-    <a href="#main-content" class="skip-link" style="position:absolute; top:-100px; left:0; z-index:9999; background:#000; color:#fff; padding:10px;" onfocus="this.style.top='0'" onblur="this.style.top='-100px'">Skip to content</a>
-    <main id="main-content">
+    <!-- Icon sprite: Lucide-style 2px strokes -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+        <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+        <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></symbol>
+        <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+        <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></symbol>
+        <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+        <symbol id="i-ecg" viewBox="0 0 64 64"><path d="M8 34h9l3.5-6 4.5 11 6.5-25 6.5 33 4.5-17 3 4h10"/></symbol>
+        <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+        <symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+        <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+    </svg>
 
-    <!-- Reusing Navbar from index.html -->
-    <nav id="navbar" style="background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-light);">
-        <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">Medico<span>.</span></a>
-        <div class="nav-links">
-            <a href="index.html" class="nav-link">Home</a>
-            <a href="shop.html" class="nav-link" style="color: var(--accent-red);">Products</a>
-            <a href="about.html" class="nav-link">About Us</a>
-            <a href="blog.html" class="nav-link">Blog</a>
-            <a href="admin-login.html" class="login-btn" style="text-decoration:none;">Admin Login</a>
+    <!-- =====================================================
+         Site Header (Unified Floating Header)
+         ===================================================== -->
+    <header class="site-header" id="site-header">
+        <div class="container header-inner">
+            <a href="index.html" class="brand" aria-label="Medico Scientific Service Centre, home">
+                <span class="brand-mark" aria-hidden="true"><svg><use href="#i-ecg"/></svg></span>
+                <span class="brand-text">
+                    <span class="brand-name">Medico<span class="brand-dot">.</span></span>
+                    <span class="brand-sub">Scientific Service Centre</span>
+                </span>
+            </a>
+
+            <nav class="main-nav" id="main-nav" aria-label="Main">
+                <a href="index.html">Home</a>
+                <a href="index.html#services">Services</a>
+                <a href="index.html#about">About</a>
+                <a href="index.html#reviews">Reviews</a>
+                <a href="index.html#insights">Insights</a>
+                <a href="index.html#contact">Contact</a>
+                <a href="shop.html" class="nav-external is-active">Products<svg class="icon"><use href="#i-arrow-up-right"/></svg></a>
+                <div class="nav-mobile-ctas">
+                    <a href="tel:+919419008453" class="btn btn-outline btn-block"><svg class="icon"><use href="#i-phone"/></svg>Call us</a>
+                    <a href="index.html#contact" class="btn btn-dark btn-block">Get a quote<svg class="icon"><use href="#i-arrow"/></svg></a>
+                </div>
+            </nav>
+
+            <div class="header-actions">
+                <a href="tel:+919419008453" class="icon-btn header-call" aria-label="Call Medico"><svg class="icon"><use href="#i-phone"/></svg></a>
+                <a href="index.html#contact" class="btn btn-dark btn-sm header-cta">Get a quote<svg class="icon"><use href="#i-arrow"/></svg></a>
+                <button class="icon-btn menu-toggle" id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="main-nav">
+                    <svg class="icon icon-open"><use href="#i-menu"/></svg>
+                    <svg class="icon icon-close"><use href="#i-x"/></svg>
+                </button>
+            </div>
         </div>
-        <div class="hamburger" id="hamburger">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
+    </header>
+
+    <!-- =====================================================
+         3. Breadcrumb
+         ===================================================== -->
+    <nav class="breadcrumb-bar" aria-label="Breadcrumb">
+        <div class="container">
+            <ol class="breadcrumb-list">
+                <li>
+                    <a href="index.html">
+                        <svg class="breadcrumb-home-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li class="breadcrumb-separator">/</li>
+                <li class="breadcrumb-current" aria-current="page">Products</li>
+            </ol>
         </div>
     </nav>
 
-    <header class="shop-header">
-        <h1 class="reveal">Medical Equipment Catalog</h1>
-        <p class="reveal" style="transition-delay: 0.1s;">Explore our comprehensive range of high-end clinical technology and hospital infrastructure.</p>
-    </header>
+    <main id="main-content">
 
-    <section class="shop-container">
-        
-        <!-- Sidebar -->
-        <aside class="shop-sidebar reveal" style="transition-delay: 0.2s;">
-            <div class="filter-group">
-                <h3 class="filter-title">Categories</h3>
-                <ul class="filter-list" id="categoryFilterList">
-                    <!-- Populated by JS -->
-                </ul>
-            </div>
-            
-            <div class="filter-group" id="subcategoryGroup" style="display: none;">
-                <h3 class="filter-title">Subcategories</h3>
-                <ul class="filter-list" id="subcategoryFilterList">
-                    <!-- Populated by JS -->
-                </ul>
-            </div>
-        </aside>
-
-        <!-- Product Grid -->
-        <main>
-            <div class="shop-grid" id="productGrid">
-                <!-- Populated by JS -->
-            </div>
-        </main>
-
-    </section>
-
-    <script>
-        let currentCategory = 'All';
-        let currentSubcategory = 'All';
-        
-        function initShop() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const catParam = urlParams.get('category');
-            
-            if (catParam) {
-                const categories = ProductsDB.getCategories();
-                if (!categories.includes(catParam)) {
-                    // Auto-register the category if it was clicked from the homepage but isn't in cache yet
-                    ProductsDB.addCategory(catParam); 
-                }
-                currentCategory = catParam;
-            }
-            
-            renderCategories();
-            renderSubcategories();
-            renderProducts();
-        }
-
-        function renderCategories() {
-            const list = document.getElementById('categoryFilterList');
-            const categories = ProductsDB.getCategories();
-            const allProducts = ProductsDB.getProducts();
-            
-            let html = `
-                <li class="filter-item">
-                    <button class="filter-btn ${currentCategory === 'All' ? 'active' : ''}" onclick="filterByCategory('All')">
-                        All Products <span class="filter-count">${allProducts.length}</span>
-                    </button>
-                </li>
-            `;
-            
-            categories.forEach(cat => {
-                const count = allProducts.filter(p => p.category === cat).length;
-                if(count > 0) {
-                    html += `
-                        <li class="filter-item">
-                            <button class="filter-btn ${currentCategory === cat ? 'active' : ''}" onclick="filterByCategory('${cat}')">
-                                ${cat} <span class="filter-count">${count}</span>
-                            </button>
-                        </li>
-                    `;
-                }
-            });
-            
-            list.innerHTML = html;
-        }
-
-        function filterByCategory(cat) {
-            currentCategory = cat;
-            currentSubcategory = 'All'; // Reset subcategory when changing category
-            renderCategories();
-            renderSubcategories();
-            renderProducts();
-        }
-        
-        function renderSubcategories() {
-            const subcatGroup = document.getElementById('subcategoryGroup');
-            const list = document.getElementById('subcategoryFilterList');
-            
-            if (currentCategory === 'All') {
-                subcatGroup.style.display = 'none';
-                return;
-            }
-            
-            const categoryProducts = ProductsDB.getProducts().filter(p => p.category === currentCategory);
-            // Get unique subcategories for this category
-            const subcats = [...new Set(categoryProducts.map(p => p.subcategory).filter(Boolean))];
-            
-            if (subcats.length === 0 || (subcats.length === 1 && subcats[0] === 'General')) {
-                subcatGroup.style.display = 'none';
-                return;
-            }
-            
-            subcatGroup.style.display = 'block';
-            
-            let html = `
-                <li class="filter-item">
-                    <button class="filter-btn ${currentSubcategory === 'All' ? 'active' : ''}" onclick="filterBySubcategory('All')">
-                        All ${currentCategory} <span class="filter-count">${categoryProducts.length}</span>
-                    </button>
-                </li>
-            `;
-            
-            subcats.forEach(sub => {
-                const count = categoryProducts.filter(p => p.subcategory === sub).length;
-                html += `
-                    <li class="filter-item">
-                        <button class="filter-btn ${currentSubcategory === sub ? 'active' : ''}" onclick="filterBySubcategory('${sub}')">
-                            ${sub} <span class="filter-count">${count}</span>
-                        </button>
-                    </li>
-                `;
-            });
-            
-            list.innerHTML = html;
-        }
-        
-        function filterBySubcategory(subcat) {
-            currentSubcategory = subcat;
-            renderSubcategories(); // Update active state
-            renderProducts();
-        }
-
-        function renderProducts() {
-            const grid = document.getElementById('productGrid');
-            let products = ProductsDB.getProducts();
-            
-            if (currentCategory !== 'All') {
-                products = products.filter(p => p.category === currentCategory);
-            }
-            
-            if (currentSubcategory !== 'All') {
-                products = products.filter(p => p.subcategory === currentSubcategory);
-            }
-            
-            // Sort by newest first
-            products.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-
-            if (products.length === 0) {
-                grid.innerHTML = `
-                    <div class="empty-state reveal">
-                        <h3>No Products Found</h3>
-                        <p>We couldn't find any products in this category.</p>
+        <!-- =====================================================
+             4. Hero Section
+             ===================================================== -->
+        <section class="products-hero">
+            <div class="container products-hero-inner">
+                <div class="products-hero-copy">
+                    <span class="hero-eyebrow-red">MEDICAL EQUIPMENT, MADE ACCESSIBLE</span>
+                    <h1 class="hero-main-title">Clinical equipment.<br>Trusted support.</h1>
+                    <p class="hero-lead">Explore our comprehensive range of high-end clinical technology and hospital infrastructure across Jammu &amp; Kashmir.</p>
+                    <div class="hero-cta-buttons">
+                        <a href="#browse-equipment" class="btn-hero-primary">
+                            <span>Explore categories</span>
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                        </a>
+                        <a href="tel:+917006123456" class="btn-hero-secondary">Talk to a specialist</a>
                     </div>
-                `;
-                return;
-            }
+                </div>
+            </div>
+        </section>
 
-            grid.innerHTML = products.map((p, index) => {
-                const delay = (index % 6) * 0.1;
-                
-                let badgeClass = '';
-                if(p.stock === 'Out of Stock') badgeClass = 'out';
-                if(p.stock === 'Low Stock') badgeClass = 'low';
-                
-                const stockBadge = p.stock ? `<div class="product-badge ${badgeClass}">${p.stock}</div>` : '';
-                
-                let priceHtml = '';
-                if (p.showPrice !== false) {
-                    priceHtml = `
-                        <div class="product-price-wrap">
-                            <span class="product-price">₹${p.price.toLocaleString()}</span>
-                            ${p.comparePrice && p.comparePrice > p.price ? `<span class="product-compare-price">₹${p.comparePrice.toLocaleString()}</span>` : ''}
+        <!-- =====================================================
+             5. Value Proposition Strip (4 pillars)
+             ===================================================== -->
+        <section class="value-strip-section" aria-label="Key Commitments">
+            <div class="container">
+                <div class="value-strip-grid">
+                    <div class="value-strip-item">
+                        <span class="value-strip-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 17l2 2a1 1 0 0 0 1.4 0l4.3-4.3a1 1 0 0 0 0-1.4l-2-2"/><path d="M14 14l2.5 2.5a1 1 0 0 0 1.4 0l2.3-2.3a1 1 0 0 0 0-1.4L18 10.5"/><path d="M18 11V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h3"/><path d="M2 8h16"/></svg>
+                        </span>
+                        <div>
+                            <h4>Authorised brand partners</h4>
+                            <p>Genuine products from leading global manufacturers.</p>
                         </div>
-                    `;
-                }
-                
-                let catDisplay = p.category;
-                if (p.showSubcategory !== false && p.subcategory && p.subcategory !== 'None' && p.subcategory !== 'General') {
-                    catDisplay = `${p.category} · ${p.subcategory}`;
-                }
-                
-                // If it's a video
-                let mediaHtml = `<img loading="lazy" src="${p.mainImage}" alt="${p.title}" class="product-image" onerror="this.src='images/medico_shop.webp'">`;
-                if (p.mainImage && p.mainImage.endsWith('.webm')) {
-                    mediaHtml = `<video src="${p.mainImage}" class="product-image" autoplay loop muted playsinline style="object-fit:cover; padding:0;"></video>`;
-                }
+                    </div>
 
-                return `
-                    <a href="product.html?id=${p.id}" class="product-card reveal" style="transition-delay: ${delay}s">
-                        <div class="product-image-wrap">
-                            ${stockBadge}
-                            ${mediaHtml}
+                    <div class="value-strip-item">
+                        <span class="value-strip-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                        </span>
+                        <div>
+                            <h4>Installation &amp; commissioning</h4>
+                            <p>Professional on-site setup and configuration.</p>
                         </div>
-                        <div class="product-info">
-                            <div class="product-category">${catDisplay}</div>
-                            <h3 class="product-title">${p.title}</h3>
-                            ${p.sku ? `<div class="product-sku">SKU: ${p.sku}</div>` : ''}
-                            ${priceHtml}
+                    </div>
+
+                    <div class="value-strip-item">
+                        <span class="value-strip-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                        </span>
+                        <div>
+                            <h4>Maintenance &amp; AMC</h4>
+                            <p>Preventive maintenance for uninterrupted care.</p>
                         </div>
+                    </div>
+
+                    <div class="value-strip-item">
+                        <span class="value-strip-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z"/><path d="M21 16v2a4 4 0 0 1-4 4h-5"/></svg>
+                        </span>
+                        <div>
+                            <h4>Regional technical support</h4>
+                            <p>Dedicated support across Jammu &amp; Kashmir.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             6. Browse Equipment & Sidebar Filters
+             ===================================================== -->
+        <section class="browse-section" id="browse-equipment">
+            <div class="container browse-layout">
+                
+                <!-- Left Sidebar Filters -->
+                <aside class="catalog-sidebar" aria-label="Product Filters">
+                    
+                    <!-- Search Input -->
+                    <div class="search-box-wrap">
+                        <svg class="search-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        <input type="text" id="equipmentSearch" class="search-input" placeholder="Search equipment or category..." aria-label="Search equipment">
+                    </div>
+
+                    <!-- Categories Filter -->
+                    <div class="filter-block">
+                        <div class="filter-block-header">
+                            <h3 class="filter-block-title">Categories</h3>
+                        </div>
+                        <ul class="category-item-list" id="categoryFilterList">
+                            <!-- Populated dynamically by shop.js -->
+                        </ul>
+                    </div>
+
+                    <!-- Availability Filter -->
+                    <div class="filter-block">
+                        <div class="filter-block-header">
+                            <h3 class="filter-block-title">Availability</h3>
+                        </div>
+                        <ul class="checkbox-list">
+                            <li>
+                                <label class="custom-checkbox-label">
+                                    <span class="checkbox-content">
+                                        <input type="checkbox" name="availability" value="In Stock" checked>
+                                        <span>In Stock</span>
+                                    </span>
+                                    <span class="checkbox-count">10</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="custom-checkbox-label">
+                                    <span class="checkbox-content">
+                                        <input type="checkbox" name="availability" value="Order on Request">
+                                        <span>Order on Request</span>
+                                    </span>
+                                    <span class="checkbox-count">2</span>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Brand Filter -->
+                    <div class="filter-block">
+                        <div class="filter-block-header">
+                            <h3 class="filter-block-title">Brand</h3>
+                        </div>
+                        <ul class="checkbox-list">
+                            <li>
+                                <label class="custom-checkbox-label">
+                                    <span class="checkbox-content">
+                                        <input type="checkbox" name="brand" value="Philips">
+                                        <span>Philips</span>
+                                    </span>
+                                    <span class="checkbox-count">4</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="custom-checkbox-label">
+                                    <span class="checkbox-content">
+                                        <input type="checkbox" name="brand" value="Schiller">
+                                        <span>Schiller</span>
+                                    </span>
+                                    <span class="checkbox-count">2</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="custom-checkbox-label">
+                                    <span class="checkbox-content">
+                                        <input type="checkbox" name="brand" value="Shalya">
+                                        <span>Shalya</span>
+                                    </span>
+                                    <span class="checkbox-count">1</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="custom-checkbox-label">
+                                    <span class="checkbox-content">
+                                        <input type="checkbox" name="brand" value="ResMed">
+                                        <span>ResMed</span>
+                                    </span>
+                                    <span class="checkbox-count">1</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="custom-checkbox-label">
+                                    <span class="checkbox-content">
+                                        <input type="checkbox" name="brand" value="Medico">
+                                        <span>Medico</span>
+                                    </span>
+                                    <span class="checkbox-count">2</span>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Reset Filters Button -->
+                    <button type="button" class="btn-reset-filters" id="resetFiltersBtn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                        <span>Reset Filters</span>
+                    </button>
+                </aside>
+
+                <!-- Right Main Content -->
+                <div class="catalog-content">
+                    <div class="catalog-header">
+                        <div class="catalog-header-text">
+                            <h2>Browse equipment</h2>
+                            <p>Explore our product range of high-end clinical technology.</p>
+                        </div>
+                        <div class="catalog-tools">
+                            <div class="sort-wrap">
+                                <span>Sort by</span>
+                                <select id="sortSelect" class="sort-select" aria-label="Sort products">
+                                    <option value="featured">Featured</option>
+                                    <option value="price-low">Price: Low to High</option>
+                                    <option value="price-high">Price: High to Low</option>
+                                    <option value="name-asc">Name: A to Z</option>
+                                </select>
+                            </div>
+                            <div class="view-switchers" role="group" aria-label="View toggle">
+                                <button type="button" class="view-btn is-active" id="btnGridView" aria-label="Grid view">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                                </button>
+                                <button type="button" class="view-btn" id="btnListView" aria-label="List view">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3x2 Product Grid Container -->
+                    <div class="product-cards-grid" id="productGrid">
+                        <!-- Populated dynamically via shop.js -->
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- =====================================================
+             7. Consultation Banner
+             ===================================================== -->
+        <section class="consult-banner-wrap">
+            <div class="container">
+                <div class="consult-banner-card">
+                    <div class="consult-banner-copy">
+                        <h3>Need help choosing the right equipment?</h3>
+                        <p>Our experts can help you find the ideal solution for your clinical needs.</p>
+                        <a href="tel:+919419008453" class="btn-consult-team">
+                            <span>Consult our team</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             8. Our Commitment Section
+             ===================================================== -->
+        <section class="commitment-section" aria-label="Our Commitment">
+            <div class="container">
+                <span class="section-eyebrow-red">OUR COMMITMENT</span>
+                <h2 class="commitment-title">More than equipment. A complete support ecosystem.</h2>
+
+                <div class="commitment-grid">
+                    <div class="commitment-card">
+                        <div class="commitment-icon-box" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/><path d="M6 8h.01"/><path d="M10 8h.01"/></svg>
+                        </div>
+                        <h4>Supply &amp; Installation</h4>
+                        <p>End-to-end delivery and professional on-site installation across J&amp;K.</p>
+                    </div>
+
+                    <div class="commitment-card">
+                        <div class="commitment-icon-box" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><circle cx="12" cy="11" r="3"/></svg>
+                        </div>
+                        <h4>Maintenance &amp; AMC</h4>
+                        <p>Preventive maintenance, calibration and annual maintenance contracts.</p>
+                    </div>
+
+                    <div class="commitment-card">
+                        <div class="commitment-icon-box" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                        </div>
+                        <h4>Clinical Staff Training</h4>
+                        <p>Hands-on training and clinical orientation for hospital staff.</p>
+                    </div>
+
+                    <div class="commitment-card">
+                        <div class="commitment-icon-box" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                        </div>
+                        <h4>Technical Support</h4>
+                        <p>Round-the-week support for troubleshooting and emergency assistance.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             9. Frequently Asked Questions
+             ===================================================== -->
+        <section class="shop-faq-section" aria-label="Frequently Asked Questions">
+            <div class="container">
+                <div class="faq-header-row">
+                    <div class="faq-header-left">
+                        <span class="section-eyebrow-red">FAQS</span>
+                        <h2>Frequently asked questions</h2>
+                    </div>
+                    <a href="index.html#faq" class="faq-view-all-link">
+                        <span>View all FAQs</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                     </a>
-                `;
-            }).join('');
-            
-            // Re-trigger scroll animations for newly added items
-            setTimeout(() => {
-                document.querySelectorAll('.reveal').forEach(el => {
-                    el.style.opacity = '1';
-                    el.style.transform = 'translateY(0)';
-                });
-            }, 50);
-        }
+                </div>
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            initShop();
-            
-            // Simple animation trigger
-            setTimeout(() => {
-                document.querySelectorAll('.reveal').forEach(el => {
-                    el.style.opacity = '1';
-                    el.style.transform = 'translateY(0)';
-                });
-            }, 100);
-        });
-    </script>
-    
+                <div class="faq-split-grid">
+                    <!-- Left Expanded Card -->
+                    <div class="faq-featured-card">
+                        <div class="faq-featured-top">
+                            <h3>Can I request a quotation for equipment?</h3>
+                            <button type="button" class="faq-toggle-btn" aria-label="Toggle answer">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                            </button>
+                        </div>
+                        <p>Yes, you can request a quotation through our website or by directly contacting our team. Our specialists will help you with product recommendations and provide a detailed quote based on your requirements.</p>
+                    </div>
+
+                    <!-- Right Accordion Stack -->
+                    <div class="faq-accordion-stack">
+                        <div class="faq-accordion-item">
+                            <button type="button" class="faq-accordion-header">
+                                <span>Do you provide installation and training?</span>
+                                <span class="faq-accordion-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                </span>
+                            </button>
+                            <div class="faq-accordion-body">
+                                <p>Yes. Every piece of equipment supplied includes full on-site delivery, professional installation, testing, and comprehensive clinical training for nursing staff and biomedical engineers.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button type="button" class="faq-accordion-header">
+                                <span>Which areas do you serve?</span>
+                                <span class="faq-accordion-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                </span>
+                            </button>
+                            <div class="faq-accordion-body">
+                                <p>We serve all districts across Jammu &amp; Kashmir and Ladakh — including Srinagar, Baramulla, Anantnag, Pulwama, Kupwara, Jammu, Leh and Kargil, with reliable on-ground emergency technical dispatch.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-accordion-item">
+                            <button type="button" class="faq-accordion-header">
+                                <span>Can you help identify the right model for my facility?</span>
+                                <span class="faq-accordion-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                </span>
+                            </button>
+                            <div class="faq-accordion-body">
+                                <p>Absolutely. Our clinical equipment consultants assess your clinical caseload, bed capacity, electrical infrastructure, and budgetary guidelines to recommend the optimal OEM configurations.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- =====================================================
+         10. Unified Site Footer
+         ===================================================== -->
+    <footer class="site-footer">
+        <img class="footer-bg" src="images/footer-bg.webp" alt="" width="1920" height="640" loading="lazy" aria-hidden="true">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <a href="index.html" class="brand" aria-label="Medico Scientific Service Centre, home">
+                    <span class="brand-mark" aria-hidden="true"><svg><use href="#i-ecg"/></svg></span>
+                    <span class="brand-text">
+                        <span class="brand-name">Medico<span class="brand-dot">.</span></span>
+                        <span class="brand-sub">Scientific Service Centre</span>
+                    </span>
+                </a>
+                <p>Kashmir&rsquo;s trusted partner for clinical-grade respiratory and life-support equipment. Serving hospitals, clinics and families since 2000.</p>
+            </div>
+            <nav aria-label="Navigate">
+                <h3>Navigate</h3>
+                <ul>
+                    <li><a href="index.html#services">Services</a></li>
+                    <li><a href="index.html#about">About us</a></li>
+                    <li><a href="index.html#reviews">Reviews</a></li>
+                    <li><a href="blog.html">Insights</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                    <li><a href="shop.html">Products</a></li>
+                </ul>
+            </nav>
+            <nav aria-label="Equipment">
+                <h3>Equipment</h3>
+                <ul>
+                    <li><a href="shop.html?category=Oxygen+Therapy">Oxygen therapy</a></li>
+                    <li><a href="shop.html?category=Anaesthesia">Anaesthesia</a></li>
+                    <li><a href="shop.html?category=Diagnostics+%26+Monitoring">Diagnostics &amp; monitoring</a></li>
+                    <li><a href="shop.html?category=Emergency+%26+Resuscitation">Emergency &amp; resuscitation</a></li>
+                    <li><a href="shop.html?category=Critical+Care">Critical care</a></li>
+                    <li><a href="shop.html?category=Sleep+%26+NIV">Sleep &amp; NIV</a></li>
+                    <li><a href="shop.html?category=Surgical+Equipment">Surgical equipment</a></li>
+                </ul>
+            </nav>
+            <div>
+                <h3>Contact</h3>
+                <ul class="footer-contact">
+                    <li><svg class="icon"><use href="#i-pin"/></svg><a href="https://www.google.com/maps/search/?api=1&amp;query=Medico+Scientific+Service+Centre+Iqbal+Complex+Srinagar" target="_blank" rel="noopener">Iqbal Complex, Batamaloo, Srinagar 190009</a></li>
+                    <li><svg class="icon"><use href="#i-mail"/></svg><a href="mailto:medicosgr@gmail.com">medicosgr@gmail.com</a></li>
+                    <li><svg class="icon"><use href="#i-phone"/></svg><a href="tel:+919419008453">+91 94190 08453</a></li>
+                    <li><svg class="icon"><use href="#i-clock"/></svg><span>Mon &ndash; Sun, 9:00 AM &ndash; 8:00 PM</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <span>&copy; <span class="current-year">2026</span> Medico Scientific Service Centre. GSTIN 01AALPI4731K1ZV</span>
+            <div class="footer-legal">
+                <a href="privacy-policy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
 </body>
 </html>

@@ -12,6 +12,7 @@
     { "src": "/robots.txt", "dest": "/robots.txt" },
     { "src": "/sitemap.xml", "dest": "/sitemap.xml" },
     { "src": "/llms.txt", "dest": "/llms.txt" },
+    { "src": "/admin/?$", "dest": "/admin-login.html" },
     { "src": "/api/(.*)", "dest": "/api/$1.js" },
     { "handle": "filesystem" },
     { "src": "/(.*)", "dest": "/index.html" }

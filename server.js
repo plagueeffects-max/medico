@@ -14,6 +14,11 @@ app.use(cors());
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
+// Admin URL route
+app.get(['/admin', '/admin/'], (req, res) => {
+    res.sendFile(path.join(__dirname, 'admin-login.html'));
+});
+
 // Serve static files
 app.use(express.static(path.join(__dirname, './')));
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
@@ -52,6 +57,9 @@ app.post('/api/verify-token', (req, res) => {
     
     res.status(401).json({ success: false, message: 'Invalid session' });
 });
+
+// Google reviews (same handler as Vercel; needs GOOGLE_PLACES_API_KEY in .env)
+app.get('/api/google-reviews', require('./api/google-reviews'));
 
 // Save Blog/Product (Local mock)
 app.post('/api/save-blog', (req, res) => {
