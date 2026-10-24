@@ -11,9 +11,9 @@ if (header) {
   const onScroll = () => {
     const y = window.scrollY;
     header.classList.toggle('is-scrolled', y > 8);
-    // Hide only after the hero, and only while travelling down
-    header.classList.toggle('is-hidden', y > 480 && y > lastY + 4);
-    if (y < lastY - 4 || y < 480) header.classList.remove('is-hidden');
+    // Hide only after the hero, and only while travelling down; small steps change nothing
+    if (y < 480 || y < lastY - 4) header.classList.remove('is-hidden');
+    else if (y > lastY + 4) header.classList.add('is-hidden');
     lastY = y;
   };
   window.addEventListener('scroll', onScroll, { passive: true });
