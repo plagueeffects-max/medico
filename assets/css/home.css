@@ -970,12 +970,15 @@
    Responsive
    ===================================================== */
 @media (max-width: 1180px) {
-  .hero-media::after {
-    background:
-      linear-gradient(90deg, #fff 0%, rgba(255, 255, 255, 0.95) 40%, rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 80%),
-      linear-gradient(0deg, #fff 0%, rgba(255, 255, 255, 0) 22%);
+  /* Narrow desktops and iPad landscape: the video keeps to the right so the lungs never sit behind the copy */
+  .hero { background: #fff; }
+  .hero-media {
+    left: 40%;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 32%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 32%);
   }
-  .hero-copy { max-width: min(640px, 60vw); }
+  .hero-media::after { background: linear-gradient(0deg, #fff 0%, rgba(255, 255, 255, 0) 22%); }
+  .hero-copy { max-width: min(560px, 54vw); }
   .tagline-line { font-size: 18px; }
   .about-grid { grid-template-columns: 1fr 1fr; }
   .about-values { grid-column: 1 / -1; grid-template-columns: repeat(4, 1fr); gap: 12px; }
@@ -1011,52 +1014,38 @@
   /* Tagline on mobile: hidden to avoid clutter */
   .hero-tagline { display: none; }
 
-  /* Hero: video fills the background cleanly, playing behind copy */
-  .hero { background: #eef2f5; position: relative; }
+  /* Hero: copy first, then the video as its own stage below it.
+     Behind the copy it had to be washed out to stay readable; as a stage it plays at full strength. */
+  .hero { display: flex; flex-direction: column; background: #fff; }
   .hero-inner {
+    order: 1;
     flex-direction: column;
     align-items: flex-start;
-    min-height: calc(100svh - var(--header-h));
-    padding-top: 32px;
-    padding-bottom: 56px;
+    min-height: 0;
+    padding-top: 28px;
+    padding-bottom: 0;
   }
   .hero-media {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    overflow: hidden;
-    background-color: #eef2f5;
-  }
-  .hero-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 70% center;
-    opacity: 0.88;
-  }
-  .hero-media::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.86) 38%, rgba(255, 255, 255, 0.52) 70%, rgba(255, 255, 255, 0.95) 100%),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.68) 100%);
-  }
-  .hero-badge {
+    order: 2;
     position: relative;
-    right: auto;
+    inset: auto;
+    z-index: 0;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    max-height: 70svh;
+    margin-top: 8px;
     left: auto;
-    bottom: auto;
-    margin-top: 24px;
-    display: inline-flex;
-    max-width: 100%;
+    background-position: 80% center;
+    /* Soft top and bottom edges so the stage melts into the page */
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 78%, transparent 100%);
+    mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 78%, transparent 100%);
   }
+  .hero-media::after { display: none; }
+  .hero-video { object-position: 80% center; }
+  .hero-badge { display: none; }
   .hero-proof { margin-top: 24px; }
 
-  .stats-wrap { margin-top: 20px; }
+  .stats-wrap { margin-top: -48px; }
   .reviews-meta { align-items: flex-start; }
   .faq-grid { grid-template-columns: 1fr; }
   .faq-intro { position: static; }
@@ -1079,7 +1068,11 @@
 }
 
 @media (max-width: 600px) {
-  .hero-eyebrow { font-size: 11.5px; letter-spacing: 0.08em; }
+  .hero-eyebrow { font-size: 11.5px; letter-spacing: 0.08em; margin-bottom: 18px; }
+  .hero-media { aspect-ratio: 1 / 1; }
+  .hero-copy .display { margin-bottom: 18px; }
+  .hero-copy .lead { margin-bottom: 28px; font-size: 1.0625rem; }
+  .hero-proof { margin-top: 22px; }
 
   .stats-card { padding: 4px; border-radius: var(--r-lg); }
   .stat { flex-direction: column; align-items: flex-start; gap: 12px; padding: 18px 16px; }
