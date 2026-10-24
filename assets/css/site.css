@@ -1043,7 +1043,7 @@ ul, ol { list-style: none; }
   .topbar-inner { height: 34px; justify-content: center; }
   .topbar-links { display: none; }
 
-  .section-head { flex-direction: column; align-items: flex-start; margin-bottom: 36px; }
+  .section-head { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 32px; }
   .section-head-center { align-items: center; }
   .faq-columns { grid-template-columns: 1fr; }
 
