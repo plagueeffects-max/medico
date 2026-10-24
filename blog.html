@@ -1,505 +1,305 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Knowledge for Better Healthcare | Medico Insights</title>
-    <meta name="description" content="Expert perspectives, clinical insights, and healthcare technology updates to support better care across Jammu & Kashmir and beyond. Published by Medico Scientific Service Centre.">
-    <link rel="canonical" href="https://medico-inky.vercel.app/blog.html">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Insights | Medico Scientific Service Centre</title>
+  <meta name="description" content="Expert perspectives, clinical insights and equipment guides from Medico Scientific Service Centre, supporting better care across Jammu & Kashmir.">
+  <link rel="canonical" href="https://medico-inky.vercel.app/blog.html">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="format-detection" content="telephone=no">
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="Knowledge for Better Healthcare | Medico Insights">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://medico-inky.vercel.app/blog.html">
-    <meta property="og:image" content="https://medico-inky.vercel.app/images/blog-doctor-hero.jpg">
-    <meta property="og:description" content="Expert perspectives, clinical insights, and healthcare equipment updates across Jammu & Kashmir from Medico Scientific Service Centre.">
-    <meta property="og:locale" content="en_IN">
-    <meta property="og:site_name" content="Medico Scientific Service Centre">
+  <meta property="og:title" content="Knowledge for better healthcare | Medico Insights">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://medico-inky.vercel.app/blog.html">
+  <meta property="og:image" content="https://medico-inky.vercel.app/images/blog-doctor-hero.webp">
+  <meta property="og:description" content="Clinical insights, equipment guides and healthcare updates for Jammu & Kashmir.">
+  <meta property="og:locale" content="en_IN">
+  <meta property="og:site_name" content="Medico Scientific Service Centre">
+  <meta name="twitter:card" content="summary_large_image">
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Knowledge for Better Healthcare | Medico Insights">
-    <meta name="twitter:description" content="Expert clinical insights and medical equipment updates for Jammu & Kashmir.">
-    <meta name="twitter:image" content="https://medico-inky.vercel.app/images/blog-doctor-hero.jpg">
+  <link rel="preload" as="image" href="images/blog-doctor-hero.webp" fetchpriority="high">
+  <!-- @head -->
+  <link rel="icon" type="image/svg+xml" href="favicon/icon.svg">
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
+  <link rel="shortcut icon" href="favicon/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+  <link rel="manifest" href="favicon/site.webmanifest">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script>document.documentElement.classList.add('js');</script>
+  <script src="assets/vendor/gsap.min.js" defer></script>
+  <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="assets/vendor/SplitText.min.js" defer></script>
+  <script src="assets/js/site.js" defer></script>
+  <!-- /@head -->
+  <link rel="stylesheet" href="assets/css/blog.css">
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-    <!-- Icons & Favicon -->
-    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg">
-    <link rel="alternate icon" type="image/x-icon" href="favicon.ico">
-
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="assets/css/blog.css">
-
-    <!-- Scripts -->
-    <script src="assets/js/blog.js" defer></script>
-
-    <!-- Schema.org Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://medico-inky.vercel.app/" },
-        { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://medico-inky.vercel.app/blog.html" }
-      ]
-    }
-    </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://medico-inky.vercel.app/" },
+      { "@type": "ListItem", "position": 2, "name": "Insights", "item": "https://medico-inky.vercel.app/blog.html" }
+    ]
+  }
+  </script>
 </head>
-<body>
-    <!-- Icon sprite: Lucide-style 2px strokes -->
-    <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
-        <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
-        <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></symbol>
-        <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
-        <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></symbol>
-        <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
-        <symbol id="i-ecg" viewBox="0 0 64 64"><path d="M8 34h9l3.5-6 4.5 11 6.5-25 6.5 33 4.5-17 3 4h10"/></symbol>
-        <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
-        <symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
-        <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
-        <symbol id="i-document" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></symbol>
-        <symbol id="i-stethoscope" viewBox="0 0 24 24"><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/></symbol>
-        <symbol id="i-clipboard" viewBox="0 0 24 24"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></symbol>
-        <symbol id="i-hospital" viewBox="0 0 24 24"><path d="M18 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2Z"/><path d="M10 16h4"/><path d="M12 14v4"/><path d="M10 8h4"/><path d="M12 6v4"/></symbol>
-        <symbol id="i-patient" viewBox="0 0 24 24"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></symbol>
-        <symbol id="i-news" viewBox="0 0 24 24"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></symbol>
-    </svg>
 
-    <!-- =====================================================
-         Site Header (Unified Floating Header)
-         ===================================================== -->
-    <header class="site-header" id="site-header">
-        <div class="container header-inner">
-            <a href="index.html" class="brand" aria-label="Medico Scientific Service Centre, home">
-                <span class="brand-mark" aria-hidden="true"><svg><use href="#i-ecg"/></svg></span>
-                <span class="brand-text">
-                    <span class="brand-name">Medico<span class="brand-dot">.</span></span>
-                    <span class="brand-sub">Scientific Service Centre</span>
-                </span>
-            </a>
+<body data-page="blog">
+  <a href="#main" class="skip-link">Skip to content</a>
 
-            <nav class="main-nav" id="main-nav" aria-label="Main">
-                <a href="index.html">Home</a>
-                <a href="index.html#services">Services</a>
-                <a href="index.html#about">About</a>
-                <a href="index.html#reviews">Reviews</a>
-                <a href="blog.html" class="is-active">Blog</a>
-                <a href="index.html#contact">Contact</a>
-                <a href="shop.html" class="nav-external">Products<svg class="icon"><use href="#i-arrow-up-right"/></svg></a>
-                <div class="nav-mobile-ctas">
-                    <a href="tel:+919419008453" class="btn btn-outline btn-block"><svg class="icon"><use href="#i-phone"/></svg>Call us</a>
-                    <a href="index.html#contact" class="btn btn-dark btn-block">Get a quote<svg class="icon"><use href="#i-arrow"/></svg></a>
-                </div>
-            </nav>
+  <!-- @header -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="Medico Scientific Service Centre, home">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 64 64"><use href="assets/icons.svg#i-ecg"/></svg></span>
+        <span class="brand-text">
+          <span class="brand-name">Medico<span class="brand-dot">.</span></span>
+          <span class="brand-sub">Scientific Service Centre</span>
+        </span>
+      </a>
 
-            <div class="header-actions">
-                <a href="admin-login.html" class="btn-admin-login">Admin Login</a>
-                <a href="tel:+919419008453" class="icon-btn header-call" aria-label="Call Medico"><svg class="icon"><use href="#i-phone"/></svg></a>
-                <a href="index.html#contact" class="btn btn-dark btn-sm header-cta">Get a quote<svg class="icon"><use href="#i-arrow"/></svg></a>
-                <button class="icon-btn menu-toggle" id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="main-nav">
-                    <svg class="icon icon-open"><use href="#i-menu"/></svg>
-                    <svg class="icon icon-close"><use href="#i-x"/></svg>
-                </button>
-            </div>
+      <nav class="main-nav" id="main-nav" aria-label="Main">
+        <a href="shop.html">Products</a>
+        <a href="index.html#services">Services</a>
+        <a href="about.html">About Us</a>
+        <a href="blog.html" aria-current="page">Insights</a>
+        <a href="index.html#contact">Contact</a>
+        <div class="nav-mobile-ctas">
+          <a href="tel:+919419008453" class="btn btn-outline btn-block"><svg class="icon"><use href="assets/icons.svg#i-phone"/></svg>Call us</a>
+          <button type="button" class="btn btn-dark btn-block" data-open-enquiry>Get a quote<svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></button>
         </div>
-    </header>
+      </nav>
 
-    <main id="main-content">
+      <div class="header-actions">
+        <button type="button" class="icon-btn header-search-btn" id="search-toggle" aria-label="Search equipment" aria-expanded="false" aria-controls="header-search"><svg class="icon"><use href="assets/icons.svg#i-search"/></svg></button>
+        <a href="tel:+919419008453" class="icon-btn header-call" aria-label="Call Medico"><svg class="icon"><use href="assets/icons.svg#i-phone"/></svg></a>
+        <button type="button" class="btn btn-dark btn-sm header-cta" data-open-enquiry>Get a quote<svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></button>
+        <button type="button" class="icon-btn menu-toggle" id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="main-nav">
+          <svg class="icon icon-open"><use href="assets/icons.svg#i-menu"/></svg>
+          <svg class="icon icon-close"><use href="assets/icons.svg#i-x"/></svg>
+        </button>
+      </div>
+    </div>
 
-        <!-- =====================================================
-             1. Breadcrumb Bar
-             ===================================================== -->
-        <nav class="breadcrumb-bar" aria-label="Breadcrumb">
-            <div class="container">
-                <ol class="breadcrumb-list">
-                    <li>
-                        <a href="index.html">
-                            <svg class="breadcrumb-home-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                            <span>Home</span>
-                        </a>
-                    </li>
-                    <li class="breadcrumb-separator">/</li>
-                    <li class="breadcrumb-current" aria-current="page">Blog</li>
-                </ol>
-            </div>
+    <div class="header-search" id="header-search">
+      <div class="container">
+        <form action="shop.html" method="get" role="search">
+          <svg class="icon"><use href="assets/icons.svg#i-search"/></svg>
+          <label for="header-search-input" class="visually-hidden">Search equipment</label>
+          <input id="header-search-input" name="q" type="search" placeholder="Search oxygen, CPAP, monitors…" autocomplete="off">
+          <button type="submit" class="btn btn-dark btn-sm">Search<svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></button>
+        </form>
+        <div class="header-search-hint">
+          <a href="shop.html?category=Oxygen+Therapy">Oxygen therapy</a>
+          <a href="shop.html?category=Sleep+%26+NIV">CPAP &amp; BiPAP</a>
+          <a href="shop.html?category=Critical+Care">Patient monitors</a>
+          <a href="shop.html?category=Emergency+%26+Resuscitation">Defibrillators</a>
+          <a href="shop.html?category=Anaesthesia">Anaesthesia</a>
+        </div>
+      </div>
+    </div>
+    <span class="scroll-progress" aria-hidden="true"></span>
+  </header>
+  <!-- /@header -->
+
+  <main id="main">
+
+    <!-- ============ Hero ============ -->
+    <section class="page-hero blog-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb" data-hero>
+          <ol>
+            <li><a href="index.html"><svg class="icon"><use href="assets/icons.svg#i-home"/></svg>Home</a></li>
+            <li><span aria-current="page">Insights</span></li>
+          </ol>
         </nav>
-
-        <!-- =====================================================
-             2. Blog Hero Section
-             ===================================================== -->
-        <section class="blog-hero" aria-label="Blog Hero">
-            <div class="container">
-                <div class="blog-hero-grid">
-                    <div class="blog-hero-copy">
-                        <span class="blog-hero-eyebrow">MEDICO INSIGHTS</span>
-                        <h1 class="blog-hero-title">Knowledge for<br>better healthcare.</h1>
-                        <p class="blog-hero-sub">Expert perspectives, clinical insights and industry updates to support better care across Jammu &amp; Kashmir and beyond.</p>
-
-                        <!-- Search Bar Input -->
-                        <div class="blog-search-bar" role="search">
-                            <svg class="blog-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                            <input type="text" id="blogSearchInput" placeholder="Search articles, topics or keywords..." aria-label="Search articles, topics or keywords">
-                            <button type="button" id="blogSearchBtn" class="blog-search-btn" aria-label="Search articles">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="blog-hero-visual" aria-hidden="true">
-                        <div class="blog-hero-img-wrap">
-                            <img src="images/blog-doctor-hero.jpg" alt="Doctor reviewing clinical guidelines on tablet" width="600" height="375" loading="eager">
-                        </div>
-                    </div>
-                </div>
+        <div class="page-hero-grid">
+          <div class="page-hero-copy">
+            <p class="eyebrow" data-hero>Medico insights</p>
+            <h1 class="display-md" data-hero-title>Knowledge for better healthcare.</h1>
+            <p class="lead" data-hero>Expert perspectives, clinical insights and equipment guides to support better care across Jammu &amp; Kashmir.</p>
+            <form class="blog-search" role="search" id="blog-search" data-hero>
+              <svg class="icon"><use href="assets/icons.svg#i-search"/></svg>
+              <label for="blog-search-input" class="visually-hidden">Search articles</label>
+              <input type="search" id="blog-search-input" placeholder="Search articles, topics or keywords…" autocomplete="off">
+              <button type="submit" class="icon-btn" aria-label="Search articles"><svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></button>
+            </form>
+          </div>
+          <div class="page-hero-media" data-hero-media>
+            <div class="page-hero-photo">
+              <img src="images/blog-doctor-hero.webp" alt="Doctor reviewing clinical notes on a tablet" width="1200" height="670">
             </div>
-        </section>
-
-        <!-- =====================================================
-             3. Category Filter Tabs Row
-             ===================================================== -->
-        <section class="category-filter-section" aria-label="Article Categories">
-            <div class="container">
-                <div class="category-filter-row" role="tablist">
-                    
-                    <button type="button" class="category-tab-card is-active" data-category="All" role="tab" aria-selected="true">
-                        <div class="category-tab-icon" aria-hidden="true">
-                            <svg><use href="#i-document"/></svg>
-                        </div>
-                        <div class="category-tab-info">
-                            <span class="category-tab-name">All Articles</span>
-                            <span class="category-tab-count">32</span>
-                        </div>
-                    </button>
-
-                    <button type="button" class="category-tab-card" data-category="Clinical Insights" role="tab" aria-selected="false">
-                        <div class="category-tab-icon" aria-hidden="true">
-                            <svg><use href="#i-stethoscope"/></svg>
-                        </div>
-                        <div class="category-tab-info">
-                            <span class="category-tab-name">Clinical Insights</span>
-                            <span class="category-tab-count">8</span>
-                        </div>
-                    </button>
-
-                    <button type="button" class="category-tab-card" data-category="Product Updates" role="tab" aria-selected="false">
-                        <div class="category-tab-icon" aria-hidden="true">
-                            <svg><use href="#i-clipboard"/></svg>
-                        </div>
-                        <div class="category-tab-info">
-                            <span class="category-tab-name">Product Updates</span>
-                            <span class="category-tab-count">6</span>
-                        </div>
-                    </button>
-
-                    <button type="button" class="category-tab-card" data-category="Healthcare Infrastructure" role="tab" aria-selected="false">
-                        <div class="category-tab-icon" aria-hidden="true">
-                            <svg><use href="#i-hospital"/></svg>
-                        </div>
-                        <div class="category-tab-info">
-                            <span class="category-tab-name">Healthcare Infrastructure</span>
-                            <span class="category-tab-count">5</span>
-                        </div>
-                    </button>
-
-                    <button type="button" class="category-tab-card" data-category="Patient Care" role="tab" aria-selected="false">
-                        <div class="category-tab-icon" aria-hidden="true">
-                            <svg><use href="#i-patient"/></svg>
-                        </div>
-                        <div class="category-tab-info">
-                            <span class="category-tab-name">Patient Care</span>
-                            <span class="category-tab-count">5</span>
-                        </div>
-                    </button>
-
-                    <button type="button" class="category-tab-card" data-category="Industry News" role="tab" aria-selected="false">
-                        <div class="category-tab-icon" aria-hidden="true">
-                            <svg><use href="#i-news"/></svg>
-                        </div>
-                        <div class="category-tab-info">
-                            <span class="category-tab-name">Industry News</span>
-                            <span class="category-tab-count">4</span>
-                        </div>
-                    </button>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- =====================================================
-             4. Featured Article Section
-             ===================================================== -->
-        <section class="featured-article-section" aria-label="Featured Article">
-            <div class="container">
-                <article class="featured-card">
-                    <div class="featured-copy">
-                        <span class="featured-eyebrow">FEATURED ARTICLE</span>
-                        <h2 class="featured-title">Advancing Critical Care in Remote Regions</h2>
-                        <p class="featured-desc">How modern critical care technology is helping hospitals in Jammu &amp; Kashmir deliver better outcomes, even in challenging environments.</p>
-                        <a href="blog-post.html?id=1" class="btn-read-full">
-                            <span>Read full article</span>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                        </a>
-                    </div>
-                    <div class="featured-visual">
-                        <img src="images/blog-featured-icu.jpg" alt="Modern hospital ICU critical care room with ventilators and monitors" width="600" height="375" loading="lazy">
-                        <div class="featured-badges-overlay">
-                            <span class="badge-cat">Clinical Insights</span>
-                            <span class="badge-dot-sep">&bull;</span>
-                            <span class="badge-time">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                                <span>5 min read</span>
-                            </span>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </section>
-
-        <!-- =====================================================
-             5. Latest Articles Section
-             ===================================================== -->
-        <section class="latest-articles-section" id="latestArticles" aria-label="Latest Articles">
-            <div class="container">
-                <div class="latest-header-row">
-                    <div class="latest-header-left">
-                        <h2>Latest Articles</h2>
-                        <p>Stay updated with expert insights, product innovations and healthcare stories.</p>
-                    </div>
-                    <a href="#latestArticles" class="view-all-link">
-                        <span>View all articles</span>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                    </a>
-                </div>
-
-                <!-- 3x2 Articles Grid -->
-                <div class="articles-grid">
-
-                    <!-- Article 1 -->
-                    <article class="article-card" data-category="Product Updates">
-                        <div class="article-thumb-wrap">
-                            <img src="images/products/oxygenConc.png" alt="Clinical Oxygen Concentrator" width="380" height="238" loading="lazy">
-                        </div>
-                        <div class="article-card-body">
-                            <div class="article-card-meta">
-                                <span class="article-cat-badge">Product Updates</span>
-                                <span class="article-read-time">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                                    <span>4 min read</span>
-                                </span>
-                            </div>
-                            <h3 class="article-card-title">Choosing the Right Oxygen Therapy Solution for Home Care</h3>
-                            <p class="article-card-desc">A guide to understanding oxygen concentrators, their benefits and key factors to consider before purchasing.</p>
-                            <a href="blog-post.html?id=oxygen-therapy" class="article-card-link">
-                                <span>Read more</span>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                            </a>
-                        </div>
-                    </article>
-
-                    <!-- Article 2 -->
-                    <article class="article-card" data-category="Clinical Insights">
-                        <div class="article-thumb-wrap">
-                            <img src="images/blog-surgical-lights.jpg" alt="Advanced surgical theatre lights" width="380" height="238" loading="lazy">
-                        </div>
-                        <div class="article-card-body">
-                            <div class="article-card-meta">
-                                <span class="article-cat-badge">Clinical Insights</span>
-                                <span class="article-read-time">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                                    <span>6 min read</span>
-                                </span>
-                            </div>
-                            <h3 class="article-card-title">The Role of Advanced Surgical Equipment in Better Outcomes</h3>
-                            <p class="article-card-desc">How minimally invasive technologies are improving precision, safety and recovery times.</p>
-                            <a href="blog-post.html?id=surgical-outcomes" class="article-card-link">
-                                <span>Read more</span>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                            </a>
-                        </div>
-                    </article>
-
-                    <!-- Article 3 -->
-                    <article class="article-card" data-category="Healthcare Infrastructure">
-                        <div class="article-thumb-wrap">
-                            <img src="images/blog-icu-monitor.jpg" alt="Critical care ICU patient vital signs monitor" width="380" height="238" loading="lazy">
-                        </div>
-                        <div class="article-card-body">
-                            <div class="article-card-meta">
-                                <span class="article-cat-badge">Healthcare Infrastructure</span>
-                                <span class="article-read-time">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                                    <span>5 min read</span>
-                                </span>
-                            </div>
-                            <h3 class="article-card-title">Strengthening ICU Readiness in Jammu &amp; Kashmir</h3>
-                            <p class="article-card-desc">Key infrastructure and equipment essentials for building resilient critical care units.</p>
-                            <a href="blog-post.html?id=icu-readiness" class="article-card-link">
-                                <span>Read more</span>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                            </a>
-                        </div>
-                    </article>
-
-                    <!-- Article 4 -->
-                    <article class="article-card" data-category="Patient Care">
-                        <div class="article-thumb-wrap">
-                            <img src="images/blog-sleep-apnea.jpg" alt="Patient sleeping comfortably with CPAP NIV mask" width="380" height="238" loading="lazy">
-                        </div>
-                        <div class="article-card-body">
-                            <div class="article-card-meta">
-                                <span class="article-cat-badge">Patient Care</span>
-                                <span class="article-read-time">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                                    <span>4 min read</span>
-                                </span>
-                            </div>
-                            <h3 class="article-card-title">Understanding Sleep Apnea and NIV Therapy</h3>
-                            <p class="article-card-desc">How non-invasive ventilation can improve sleep quality and respiratory health.</p>
-                            <a href="blog-post.html?id=sleep-apnea" class="article-card-link">
-                                <span>Read more</span>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                            </a>
-                        </div>
-                    </article>
-
-                    <!-- Article 5 -->
-                    <article class="article-card" data-category="Clinical Insights">
-                        <div class="article-thumb-wrap">
-                            <img src="images/blog-anaesthesia.jpg" alt="Surgical anaesthesia workstation in operation theatre" width="380" height="238" loading="lazy">
-                        </div>
-                        <div class="article-card-body">
-                            <div class="article-card-meta">
-                                <span class="article-cat-badge">Clinical Insights</span>
-                                <span class="article-read-time">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                                    <span>5 min read</span>
-                                </span>
-                            </div>
-                            <h3 class="article-card-title">Anaesthesia Workstations: Features to Look For</h3>
-                            <p class="article-card-desc">A practical guide for hospitals on selecting the right anaesthesia system for safe and efficient care.</p>
-                            <a href="blog-post.html?id=anaesthesia-guide" class="article-card-link">
-                                <span>Read more</span>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                            </a>
-                        </div>
-                    </article>
-
-                    <!-- Article 6 -->
-                    <article class="article-card" data-category="Industry News">
-                        <div class="article-thumb-wrap">
-                            <img src="images/blog-biomedical-amc.jpg" alt="Biomedical technician inspecting medical monitor during AMC routine" width="380" height="238" loading="lazy">
-                        </div>
-                        <div class="article-card-body">
-                            <div class="article-card-meta">
-                                <span class="article-cat-badge">Industry News</span>
-                                <span class="article-read-time">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                                    <span>3 min read</span>
-                                </span>
-                            </div>
-                            <h3 class="article-card-title">The Importance of AMC for Medical Equipment</h3>
-                            <p class="article-card-desc">How regular maintenance ensures reliability, safety and longer equipment life cycles.</p>
-                            <a href="blog-post.html?id=importance-of-amc" class="article-card-link">
-                                <span>Read more</span>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                            </a>
-                        </div>
-                    </article>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- =====================================================
-             6. Newsletter Subscription Card ("STAY INFORMED")
-             ===================================================== -->
-        <section class="newsletter-section" aria-label="Newsletter Subscription">
-            <div class="container">
-                <div class="newsletter-card">
-                    <div class="newsletter-copy">
-                        <span class="newsletter-eyebrow">STAY INFORMED</span>
-                        <h2 class="newsletter-title">Get the latest healthcare insights.</h2>
-                        <p class="newsletter-desc">Subscribe to our newsletter for expert articles, product updates and industry news.</p>
-                    </div>
-
-                    <div class="newsletter-form-wrap">
-                        <form class="newsletter-form" id="newsletterForm">
-                            <svg class="newsletter-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                            <input type="email" id="newsletterEmail" placeholder="Enter your email address" required aria-label="Enter your email address">
-                            <button type="submit" class="btn-subscribe">
-                                <span>Subscribe</span>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                            </button>
-                        </form>
-                        <span class="newsletter-disclaimer">No spam. Unsubscribe anytime.</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- =====================================================
-         7. Unified Site Footer
-         ===================================================== -->
-    <footer class="site-footer">
-        <img class="footer-bg" src="images/footer-bg.webp" alt="" width="1920" height="640" loading="lazy" aria-hidden="true">
-        <div class="container footer-grid">
-            <div class="footer-brand">
-                <a href="index.html" class="brand" aria-label="Medico Scientific Service Centre, home">
-                    <span class="brand-mark" aria-hidden="true"><svg><use href="#i-ecg"/></svg></span>
-                    <span class="brand-text">
-                        <span class="brand-name">Medico<span class="brand-dot">.</span></span>
-                        <span class="brand-sub">Scientific Service Centre</span>
-                    </span>
-                </a>
-                <p>Kashmir&rsquo;s trusted partner for clinical-grade respiratory and life-support equipment. Serving hospitals, clinics and families since 2000.</p>
-            </div>
-            <nav aria-label="Navigate">
-                <h3>Navigate</h3>
-                <ul>
-                    <li><a href="index.html#services">Services</a></li>
-                    <li><a href="index.html#about">About us</a></li>
-                    <li><a href="index.html#reviews">Reviews</a></li>
-                    <li><a href="blog.html">Insights</a></li>
-                    <li><a href="index.html#contact">Contact</a></li>
-                    <li><a href="shop.html">Products</a></li>
-                </ul>
-            </nav>
-            <nav aria-label="Equipment">
-                <h3>Equipment</h3>
-                <ul>
-                    <li><a href="shop.html?category=Oxygen+Therapy">Oxygen therapy</a></li>
-                    <li><a href="shop.html?category=Anaesthesia">Anaesthesia</a></li>
-                    <li><a href="shop.html?category=Diagnostics+%26+Monitoring">Diagnostics &amp; monitoring</a></li>
-                    <li><a href="shop.html?category=Emergency+%26+Resuscitation">Emergency &amp; resuscitation</a></li>
-                    <li><a href="shop.html?category=Critical+Care">Critical care</a></li>
-                    <li><a href="shop.html?category=Sleep+%26+NIV">Sleep &amp; NIV</a></li>
-                    <li><a href="shop.html?category=Surgical+Equipment">Surgical equipment</a></li>
-                </ul>
-            </nav>
-            <div>
-                <h3>Contact</h3>
-                <ul class="footer-contact">
-                    <li><svg class="icon"><use href="#i-pin"/></svg><a href="https://www.google.com/maps/search/?api=1&amp;query=Medico+Scientific+Service+Centre+Iqbal+Complex+Srinagar" target="_blank" rel="noopener">Iqbal Complex, Batamaloo, Srinagar 190009</a></li>
-                    <li><svg class="icon"><use href="#i-mail"/></svg><a href="mailto:medicosgr@gmail.com">medicosgr@gmail.com</a></li>
-                    <li><svg class="icon"><use href="#i-phone"/></svg><a href="tel:+919419008453">+91 94190 08453</a></li>
-                    <li><svg class="icon"><use href="#i-clock"/></svg><span>Mon &ndash; Sun, 9:00 AM &ndash; 8:00 PM</span></li>
-                </ul>
-            </div>
+          </div>
         </div>
-        <div class="container footer-bottom">
-            <span>&copy; <span class="current-year">2026</span> Medico Scientific Service Centre. GSTIN 01AALPI4731K1ZV</span>
-            <div class="footer-legal">
-                <a href="privacy-policy.html">Privacy Policy</a>
-                <a href="terms.html">Terms of Service</a>
-            </div>
-        </div>
-    </footer>
+      </div>
+    </section>
 
+    <!-- ============ Categories ============ -->
+    <section class="topic-bar" aria-label="Article topics">
+      <div class="container">
+        <div class="topic-row" id="topic-row" role="group" aria-label="Filter by topic"></div>
+      </div>
+    </section>
+
+    <!-- ============ Featured ============ -->
+    <section class="section featured-section" id="featured-wrap" hidden>
+      <div class="container">
+        <article class="featured-card" id="featured" data-scrub-scale></article>
+      </div>
+    </section>
+
+    <!-- ============ Latest ============ -->
+    <section class="section latest" id="latest">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 class="h2" data-split>Latest articles</h2>
+            <p class="latest-sub" data-reveal>Expert insights, product guides and healthcare stories.</p>
+          </div>
+          <p class="latest-count" data-reveal><span id="article-count">0</span> articles</p>
+        </div>
+        <div class="article-grid" id="article-grid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- ============ Stay informed ============ -->
+    <section class="section section-tight">
+      <div class="container">
+        <div class="newsletter" data-scrub-scale>
+          <div>
+            <p class="eyebrow" data-reveal>Stay informed</p>
+            <h2 class="h3-display" data-split>Get the latest healthcare insights.</h2>
+            <p class="newsletter-desc" data-reveal>New articles, product updates and workshop dates, sent to you on WhatsApp.</p>
+          </div>
+          <div data-reveal>
+            <form class="newsletter-form" id="newsletter-form" novalidate>
+              <svg class="icon"><use href="assets/icons.svg#i-mail"/></svg>
+              <label for="newsletter-email" class="visually-hidden">Email address</label>
+              <input type="email" id="newsletter-email" placeholder="Enter your email address" autocomplete="email" required>
+              <button type="submit" class="btn btn-dark">Subscribe<svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></button>
+            </form>
+            <p class="newsletter-note" id="newsletter-note">No spam. Unsubscribe anytime.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- @footer -->
+  <footer class="site-footer">
+    <img class="footer-bg" src="images/footer-bg.webp" alt="" width="1920" height="640" loading="lazy" aria-hidden="true">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="brand" aria-label="Medico Scientific Service Centre, home">
+          <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 64 64"><use href="assets/icons.svg#i-ecg"/></svg></span>
+          <span class="brand-text">
+            <span class="brand-name">Medico<span class="brand-dot">.</span></span>
+            <span class="brand-sub">Scientific Service Centre</span>
+          </span>
+        </a>
+        <p>Kashmir&rsquo;s trusted partner for clinical-grade respiratory and life-support equipment. Serving hospitals, clinics and families since 2000.</p>
+        <a href="https://wa.me/919419008453?text=Hello%20Medico%2C%20I%27d%20like%20to%20enquire%20about%20medical%20equipment." class="btn btn-outline btn-sm footer-cta" target="_blank" rel="noopener"><svg class="icon"><use href="assets/icons.svg#i-whatsapp"/></svg>Chat on WhatsApp</a>
+      </div>
+      <nav aria-label="Navigate">
+        <h3>Navigate</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="shop.html">Products</a></li>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="about.html">About us</a></li>
+          <li><a href="blog.html">Insights</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Equipment">
+        <h3>Equipment</h3>
+        <ul>
+          <li><a href="shop.html?category=Oxygen+Therapy">Oxygen therapy</a></li>
+          <li><a href="shop.html?category=Anaesthesia">Anaesthesia</a></li>
+          <li><a href="shop.html?category=Diagnostics+%26+Monitoring">Diagnostics &amp; monitoring</a></li>
+          <li><a href="shop.html?category=Emergency+%26+Resuscitation">Emergency &amp; resuscitation</a></li>
+          <li><a href="shop.html?category=Critical+Care">Critical care</a></li>
+          <li><a href="shop.html?category=Sleep+%26+NIV">Sleep &amp; NIV</a></li>
+          <li><a href="shop.html?category=Surgical+Equipment">Surgical equipment</a></li>
+        </ul>
+      </nav>
+      <div>
+        <h3>Contact</h3>
+        <ul class="footer-contact">
+          <li><svg class="icon"><use href="assets/icons.svg#i-pin"/></svg><a href="https://www.google.com/maps/search/?api=1&amp;query=Medico+Scientific+Service+Centre+Iqbal+Complex+Srinagar" target="_blank" rel="noopener">Iqbal Complex, Batamaloo, Srinagar 190009</a></li>
+          <li><svg class="icon"><use href="assets/icons.svg#i-mail"/></svg><a href="mailto:medicosgr@gmail.com">medicosgr@gmail.com</a></li>
+          <li><svg class="icon"><use href="assets/icons.svg#i-phone"/></svg><a href="tel:+919419008453">+91 94190 08453</a></li>
+          <li><svg class="icon"><use href="assets/icons.svg#i-clock"/></svg><span>Mon &ndash; Sun, 9:00 AM &ndash; 8:00 PM</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <span>&copy; <span class="current-year">2026</span> Medico Scientific Service Centre. GSTIN 01AALPI4731K1ZV</span>
+      <span class="footer-legal"><a href="privacy-policy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a><a href="admin-login.html" class="footer-admin">Admin</a></span>
+    </div>
+  </footer>
+  <!-- /@footer -->
+
+  <!-- @dialog -->
+  <dialog class="enquiry-dialog" id="enquiry-dialog" aria-labelledby="enquiry-title">
+    <form class="enquiry" id="enquiry-form" novalidate>
+      <button type="button" class="icon-btn enquiry-close" data-close-enquiry aria-label="Close"><svg class="icon"><use href="assets/icons.svg#i-x"/></svg></button>
+      <p class="eyebrow">Free consultation</p>
+      <h3 id="enquiry-title">Request a quote</h3>
+      <p class="enquiry-sub" id="enquiry-sub">Takes 30 seconds. We&rsquo;ll reply on WhatsApp.</p>
+
+      <div class="field">
+        <label for="f-name">Your name</label>
+        <input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="f-name-error">
+        <span class="field-error" id="f-name-error" role="alert"></span>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="f-type">Enquiring for</label>
+          <select id="f-type" name="type">
+            <option>Hospital</option>
+            <option>Nursing home</option>
+            <option>Clinic</option>
+            <option>Home care</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-equipment">Equipment</label>
+          <select id="f-equipment" name="equipment">
+            <option>Not sure yet</option>
+            <option>Oxygen therapy</option>
+            <option>CPAP / BiPAP</option>
+            <option>Critical care</option>
+            <option>Anaesthesia</option>
+            <option>Diagnostics</option>
+            <option>Emergency &amp; resuscitation</option>
+            <option>Surgical</option>
+            <option>Service / AMC</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="f-message">Details <span class="optional">(optional)</span></label>
+        <textarea id="f-message" name="message" rows="3" placeholder="e.g. 2 patient monitors for a 10-bed ICU in Baramulla"></textarea>
+      </div>
+      <button type="submit" class="btn btn-accent btn-lg btn-block"><svg class="icon"><use href="assets/icons.svg#i-whatsapp"/></svg>Send on WhatsApp</button>
+      <p class="enquiry-note">Prefer a call? <a href="tel:+919419008453">Call us</a> &middot; <a href="mailto:medicosgr@gmail.com">Email us</a></p>
+    </form>
+  </dialog>
+
+  <a href="https://wa.me/919419008453?text=Hello%20Medico%2C%20I%27d%20like%20to%20enquire%20about%20medical%20equipment." class="wa-fab" target="_blank" rel="noopener" aria-label="Chat with Medico on WhatsApp"><svg class="icon"><use href="assets/icons.svg#i-whatsapp"/></svg></a>
+
+  <div class="mobile-bar">
+    <a href="tel:+919419008453" class="btn btn-outline"><svg class="icon"><use href="assets/icons.svg#i-phone"/></svg>Call us</a>
+    <a href="https://wa.me/919419008453?text=Hello%20Medico%2C%20I%27d%20like%20to%20enquire%20about%20medical%20equipment." class="btn btn-accent" target="_blank" rel="noopener"><svg class="icon"><use href="assets/icons.svg#i-whatsapp"/></svg>WhatsApp us</a>
+  </div>
+  <!-- /@dialog -->
+
+  <script src="assets/js/blog-data.js" defer></script>
+  <script src="assets/js/blog.js" defer></script>
 </body>
 </html>

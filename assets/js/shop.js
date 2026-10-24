@@ -1,322 +1,168 @@
-/* =====================================================
-   Medico Scientific Service Centre — Products Screen (shop.js)
-   Interactive Filter, Search, Sorting, Grid & FAQ Controls
-   ===================================================== */
+// Medico products page: filters, search, sort, layout toggle, saved items.
+// Counts and filter options come from ProductsDB, so admin edits show up here.
+(() => {
+  const products = ProductsDB.getProducts();
+  const params = new URLSearchParams(window.location.search);
+  const state = {
+    category: params.get('category') || 'All',
+    search: (params.get('q') || '').trim().toLowerCase(),
+    availability: [],
+    brands: [],
+    sort: 'featured',
+  };
+  let saved = new Set();
+  try { saved = new Set(JSON.parse(localStorage.getItem('medico_favs') || '[]')); } catch { /* private mode */ }
 
-document.addEventListener('DOMContentLoaded', () => {
-    let currentCategory = 'All';
-    let currentSearch = '';
-    let selectedAvailability = [];
-    let selectedBrands = [];
-    let currentSort = 'featured';
-    let isListView = false;
-    let favourites = new Set(JSON.parse(localStorage.getItem('medico_favs') || '[]'));
+  const $ = (id) => document.getElementById(id);
+  const grid = $('product-grid');
+  const searchInput = $('equipment-search');
+  const categoryList = $('category-list');
+  const resultCount = $('result-count');
+  const filters = $('filters');
+  const filtersToggle = $('filters-toggle');
 
-    const searchInput = document.getElementById('equipmentSearch');
-    const productGrid = document.getElementById('productGrid');
-    const categoryList = document.getElementById('categoryFilterList');
-    const resetBtn = document.getElementById('resetFiltersBtn');
-    const sortSelect = document.getElementById('sortSelect');
-    const btnGridView = document.getElementById('btnGridView');
-    const btnListView = document.getElementById('btnListView');
+  const esc = (str) => String(str ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const icon = (id) => `<svg class="icon"><use href="assets/icons.svg#${id}"/></svg>`;
+  const countBy = (key) => products.reduce((m, p) => (p[key] ? m.set(p[key], (m.get(p[key]) || 0) + 1) : m), new Map());
 
-    // Parse URL parameter for direct category linking (e.g. shop.html?category=Oxygen+Therapy)
-    const urlParams = new URLSearchParams(window.location.search);
-    const catParam = urlParams.get('category');
-    if (catParam) {
-        currentCategory = catParam;
+  /* ---------- Sidebar ---------- */
+  function renderCategories() {
+    const counts = countBy('category');
+    const cats = ['All', ...ProductsDB.getCategories().filter((c) => counts.has(c))];
+    categoryList.innerHTML = cats.map((c) => `
+      <li><button type="button" class="category-btn${state.category === c ? ' is-active' : ''}" data-cat="${esc(c)}" aria-pressed="${state.category === c}">
+        <span>${c === 'All' ? 'All products' : esc(c)}</span><span class="count">${c === 'All' ? products.length : counts.get(c)}</span>
+      </button></li>`).join('');
+  }
+  function renderChecks(listId, name, key) {
+    const counts = countBy(key);
+    $(listId).innerHTML = [...counts.keys()].sort().map((v) => `
+      <li><label class="check-row"><input type="checkbox" name="${name}" value="${esc(v)}"><span>${esc(v)}</span><span class="count">${counts.get(v)}</span></label></li>`).join('');
+  }
+
+  categoryList.addEventListener('click', (e) => {
+    const btn = e.target.closest('.category-btn');
+    if (!btn) return;
+    state.category = btn.dataset.cat;
+    renderCategories();
+    apply();
+  });
+  document.addEventListener('change', (e) => {
+    if (e.target.name === 'availability' || e.target.name === 'brand') {
+      const picked = (name) => [...document.querySelectorAll(`input[name="${name}"]:checked`)].map((el) => el.value);
+      state.availability = picked('availability');
+      state.brands = picked('brand');
+      apply();
     }
+  });
+  searchInput.value = params.get('q') || '';
+  searchInput.addEventListener('input', () => { state.search = searchInput.value.trim().toLowerCase(); apply(); });
+  $('sort-select').addEventListener('change', (e) => { state.sort = e.target.value; apply(); });
+  $('reset-filters').addEventListener('click', () => {
+    Object.assign(state, { category: 'All', search: '', availability: [], brands: [], sort: 'featured' });
+    searchInput.value = '';
+    $('sort-select').value = 'featured';
+    document.querySelectorAll('.check-row input').forEach((cb) => { cb.checked = false; });
+    renderCategories();
+    apply();
+  });
 
-    // Initialize all data
-    function init() {
-        renderSidebarCategories();
-        bindFilterEvents();
-        bindFaqEvents();
-        bindViewSwitchers();
-        applyFilters();
+  /* ---------- Layout toggle ---------- */
+  const setLayout = (list) => {
+    grid.classList.toggle('is-list', list);
+    $('grid-view').classList.toggle('is-active', !list);
+    $('list-view').classList.toggle('is-active', list);
+    $('grid-view').setAttribute('aria-pressed', String(!list));
+    $('list-view').setAttribute('aria-pressed', String(list));
+  };
+  $('grid-view').addEventListener('click', () => setLayout(false));
+  $('list-view').addEventListener('click', () => setLayout(true));
+
+  /* ---------- Mobile filter sheet ---------- */
+  const setSheet = (open) => {
+    filters.classList.toggle('is-open', open);
+    filtersToggle.setAttribute('aria-expanded', String(open));
+  };
+  filtersToggle.addEventListener('click', () => setSheet(true));
+  $('filters-done').addEventListener('click', () => setSheet(false));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setSheet(false); });
+  document.addEventListener('click', (e) => {
+    if (filters.classList.contains('is-open') && !filters.contains(e.target) && !filtersToggle.contains(e.target)) setSheet(false);
+  });
+
+  /* ---------- Results ---------- */
+  function filtered() {
+    let list = products.filter((p) =>
+      (state.category === 'All' || p.category === state.category) &&
+      (!state.availability.length || state.availability.includes(p.stock)) &&
+      (!state.brands.length || state.brands.includes(p.brand)) &&
+      (!state.search || [p.title, p.category, p.brand, p.description].some((f) => f && f.toLowerCase().includes(state.search))));
+    if (state.sort === 'name-asc') list = [...list].sort((a, b) => a.title.localeCompare(b.title));
+    if (state.sort === 'name-desc') list = [...list].sort((a, b) => b.title.localeCompare(a.title));
+    return list;
+  }
+
+  function card(p, i) {
+    const onRequest = p.stock && p.stock !== 'In Stock';
+    const isSaved = saved.has(p.id);
+    const href = `product.html?id=${encodeURIComponent(p.id)}`;
+    return `
+      <article class="item-card" style="--i:${i}">
+        <div class="item-top">
+          <span class="pill ${onRequest ? 'pill-accent' : 'pill-ok'}">${onRequest ? esc(p.stock) : 'In stock'}</span>
+          <button type="button" class="fav-btn${isSaved ? ' is-saved' : ''}" data-fav="${esc(p.id)}" aria-pressed="${isSaved}" aria-label="Save ${esc(p.title)}">${icon('i-heart')}</button>
+        </div>
+        <a href="${href}" class="item-media" tabindex="-1" aria-hidden="true">
+          <img src="${esc(p.mainImage || 'images/products/oxygen.webp')}" alt="" loading="lazy">
+        </a>
+        <div class="item-body">
+          <h3><a href="${href}">${esc(p.title)}</a></h3>
+          <p>${esc(p.description)}</p>
+          <div class="item-foot">
+            ${p.brand ? `<span class="pill">${esc(p.brand)}</span>` : '<span></span>'}
+            <span class="item-link">View details${icon('i-arrow')}</span>
+          </div>
+        </div>
+      </article>`;
+  }
+
+  let firstRender = true;
+  function apply() {
+    const list = filtered();
+    resultCount.textContent = `${list.length} ${list.length === 1 ? 'product' : 'products'}`;
+    if (!list.length) {
+      grid.innerHTML = `
+        <div class="empty-state">
+          ${icon('i-search')}
+          <h3>No equipment matches</h3>
+          <p>Try a different search or clear the filters. Our team can also source equipment not listed here.</p>
+          <button type="button" class="btn btn-dark btn-sm" data-reset>Reset filters</button>
+        </div>`;
+      return;
     }
-
-    // Render Categories in Sidebar with real counts
-    function renderSidebarCategories() {
-        const products = ProductsDB.getProducts();
-        const categories = ProductsDB.getCategories();
-        
-        let html = `
-            <li>
-                <button type="button" class="category-btn ${currentCategory === 'All' ? 'is-active' : ''}" data-cat="All">
-                    <span>All Products</span>
-                    <span class="category-badge-count">${products.length} &rsaquo;</span>
-                </button>
-            </li>
-        `;
-
-        categories.forEach(cat => {
-            const count = products.filter(p => p.category === cat).length;
-            html += `
-                <li>
-                    <button type="button" class="category-btn ${currentCategory === cat ? 'is-active' : ''}" data-cat="${escapeHtml(cat)}">
-                        <span>${escapeHtml(cat)}</span>
-                        <span class="category-badge-count">${count}</span>
-                    </button>
-                </li>
-            `;
-        });
-
-        categoryList.innerHTML = html;
-
-        // Bind category button clicks
-        categoryList.querySelectorAll('.category-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                categoryList.querySelectorAll('.category-btn').forEach(b => b.classList.remove('is-active'));
-                btn.classList.add('is-active');
-                currentCategory = btn.dataset.cat;
-                applyFilters();
-            });
-        });
+    grid.innerHTML = list.map(card).join('');
+    if (firstRender) {
+      firstRender = false;
+      window.siteMotion.reveal(grid);
+    } else {
+      grid.querySelectorAll('.item-card').forEach((el) => el.classList.add('is-entering'));
+      window.siteMotion.refresh();
     }
+  }
 
-    // Bind Filter Event Listeners
-    function bindFilterEvents() {
-        // Search
-        if (searchInput) {
-            searchInput.addEventListener('input', (e) => {
-                currentSearch = e.target.value.trim().toLowerCase();
-                applyFilters();
-            });
-        }
+  grid.addEventListener('click', (e) => {
+    if (e.target.closest('[data-reset]')) { $('reset-filters').click(); return; }
+    const fav = e.target.closest('[data-fav]');
+    if (!fav) return;
+    const id = fav.dataset.fav;
+    if (saved.has(id)) saved.delete(id); else saved.add(id);
+    fav.classList.toggle('is-saved', saved.has(id));
+    fav.setAttribute('aria-pressed', String(saved.has(id)));
+    try { localStorage.setItem('medico_favs', JSON.stringify([...saved])); } catch { /* private mode */ }
+  });
 
-        // Availability checkboxes
-        document.querySelectorAll('input[name="availability"]').forEach(cb => {
-            cb.addEventListener('change', () => {
-                selectedAvailability = Array.from(document.querySelectorAll('input[name="availability"]:checked')).map(el => el.value);
-                applyFilters();
-            });
-        });
-
-        // Brand checkboxes
-        document.querySelectorAll('input[name="brand"]').forEach(cb => {
-            cb.addEventListener('change', () => {
-                selectedBrands = Array.from(document.querySelectorAll('input[name="brand"]:checked')).map(el => el.value);
-                applyFilters();
-            });
-        });
-
-        // Reset Filters button
-        if (resetBtn) {
-            resetBtn.addEventListener('click', () => {
-                if (searchInput) searchInput.value = '';
-                currentSearch = '';
-                currentCategory = 'All';
-                selectedAvailability = [];
-                selectedBrands = [];
-                currentSort = 'featured';
-                if (sortSelect) sortSelect.value = 'featured';
-
-                document.querySelectorAll('input[name="availability"]').forEach(cb => cb.checked = false);
-                document.querySelectorAll('input[name="brand"]').forEach(cb => cb.checked = false);
-
-                renderSidebarCategories();
-                applyFilters();
-            });
-        }
-
-        // Sort Select
-        if (sortSelect) {
-            sortSelect.addEventListener('change', (e) => {
-                currentSort = e.target.value;
-                applyFilters();
-            });
-        }
-    }
-
-    // View Switchers (Grid vs List)
-    function bindViewSwitchers() {
-        if (btnGridView && btnListView) {
-            btnGridView.addEventListener('click', () => {
-                btnGridView.classList.add('is-active');
-                btnListView.classList.remove('is-active');
-                productGrid.classList.remove('is-list-view');
-                isListView = false;
-            });
-
-            btnListView.addEventListener('click', () => {
-                btnListView.classList.add('is-active');
-                btnGridView.classList.remove('is-active');
-                productGrid.classList.add('is-list-view');
-                isListView = true;
-            });
-        }
-    }
-
-    // Filter, Sort and Render Products
-    function applyFilters() {
-        let products = ProductsDB.getProducts();
-
-        // 1. Category Filter
-        if (currentCategory !== 'All') {
-            products = products.filter(p => p.category === currentCategory);
-        }
-
-        // 2. Search Filter
-        if (currentSearch) {
-            products = products.filter(p => 
-                p.title.toLowerCase().includes(currentSearch) ||
-                p.category.toLowerCase().includes(currentSearch) ||
-                (p.brand && p.brand.toLowerCase().includes(currentSearch)) ||
-                (p.description && p.description.toLowerCase().includes(currentSearch))
-            );
-        }
-
-        // 3. Availability Filter
-        if (selectedAvailability.length > 0) {
-            products = products.filter(p => selectedAvailability.includes(p.stock));
-        }
-
-        // 4. Brand Filter
-        if (selectedBrands.length > 0) {
-            products = products.filter(p => p.brand && selectedBrands.includes(p.brand));
-        }
-
-        // 5. Sorting
-        if (currentSort === 'price-low') {
-            products.sort((a, b) => a.price - b.price);
-        } else if (currentSort === 'price-high') {
-            products.sort((a, b) => b.price - a.price);
-        } else if (currentSort === 'name-asc') {
-            products.sort((a, b) => a.title.localeCompare(b.title));
-        }
-
-        renderProducts(products);
-    }
-
-    // Render Product Cards
-    function renderProducts(items) {
-        if (!productGrid) return;
-
-        if (items.length === 0) {
-            productGrid.innerHTML = `
-                <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; background: #fff; border-radius: 16px; border: 1px dashed #cbd5e1;">
-                    <div style="font-size: 36px; margin-bottom: 12px;">🩺</div>
-                    <h3 style="font-size: 18px; font-weight: 700; color: #0b1220; margin-bottom: 8px;">No clinical equipment found</h3>
-                    <p style="font-size: 14px; color: #64748b; max-width: 400px; margin: 0 auto 20px;">Try adjusting your search query, clearing filters, or contacting our medical team directly.</p>
-                    <button type="button" class="btn-hero-primary" onclick="document.getElementById('resetFiltersBtn').click()">Reset Filters</button>
-                </div>
-            `;
-            return;
-        }
-
-        productGrid.innerHTML = items.map(p => {
-            const isFav = favourites.has(p.id);
-            const isOrder = p.stock === 'Order on Request';
-            const brandTag = p.brand ? `<span class="brand-pill-tag">${escapeHtml(p.brand)}</span>` : '';
-
-            return `
-                <article class="item-card" data-id="${p.id}">
-                    <div class="item-card-top">
-                        <span class="stock-pill ${isOrder ? 'is-order' : ''}">
-                            ${isOrder ? 'ORDER ON REQUEST' : 'IN STOCK'}
-                        </span>
-                        <button type="button" class="btn-wishlist-heart ${isFav ? 'is-favourited' : ''}" data-fav-id="${p.id}" aria-label="Save ${escapeHtml(p.title)}">
-                            <svg viewBox="0 0 24 24" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
-                        </button>
-                    </div>
-
-                    <div class="item-card-media">
-                        <img src="${escapeHtml(p.mainImage || 'images/products/oxygen.webp')}" alt="${escapeHtml(p.title)}" class="item-card-img" loading="lazy">
-                    </div>
-
-                    <div class="item-card-info">
-                        <h3 class="item-card-title">${escapeHtml(p.title)}</h3>
-                        <p class="item-card-desc">${escapeHtml(p.description || '')}</p>
-                        <div class="item-card-tags">
-                            ${brandTag}
-                        </div>
-                    </div>
-
-                    <a href="product.html?id=${p.id}" class="btn-item-details">
-                        <span>View details</span>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                    </a>
-                </article>
-            `;
-        }).join('');
-
-        // Bind heart wishlist clicks
-        productGrid.querySelectorAll('.btn-wishlist-heart').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                const id = btn.dataset.favId;
-                if (favourites.has(id)) {
-                    favourites.delete(id);
-                    btn.classList.remove('is-favourited');
-                    btn.querySelector('svg').setAttribute('fill', 'none');
-                } else {
-                    favourites.add(id);
-                    btn.classList.add('is-favourited');
-                    btn.querySelector('svg').setAttribute('fill', 'currentColor');
-                }
-                localStorage.setItem('medico_favs', JSON.stringify([...favourites]));
-            });
-        });
-    }
-
-    // FAQ Accordion Interaction
-    function bindFaqEvents() {
-        const accordionItems = document.querySelectorAll('.faq-accordion-item');
-        accordionItems.forEach(item => {
-            const header = item.querySelector('.faq-accordion-header');
-            if (header) {
-                header.addEventListener('click', () => {
-                    const isOpen = item.classList.contains('is-open');
-                    // Close others
-                    accordionItems.forEach(other => {
-                        if (other !== item) other.classList.remove('is-open');
-                    });
-                    item.classList.toggle('is-open', !isOpen);
-                });
-            }
-        });
-    }
-
-    // Helper: Escape HTML
-    function escapeHtml(str) {
-        if (!str) return '';
-        return String(str).replace(/[&<>"']/g, (c) => ({
-            '&': '&amp;',
-            '<': '&lt;',
-            '>': '&gt;',
-            '"': '&quot;',
-            "'": '&#39;'
-        }[c]));
-    }
-
-    // Site Header: Scroll Elevation & Mobile Menu Toggle
-    function bindHeaderEvents() {
-        const header = document.getElementById('site-header');
-        if (header) {
-            const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 8);
-            window.addEventListener('scroll', onScroll, { passive: true });
-            onScroll();
-        }
-
-        const menuToggle = document.getElementById('menu-toggle');
-        const nav = document.getElementById('main-nav');
-        if (menuToggle && nav) {
-            const root = document.documentElement;
-            const setMenu = (open) => {
-                root.classList.toggle('menu-open', open);
-                menuToggle.setAttribute('aria-expanded', String(open));
-                menuToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-            };
-            menuToggle.addEventListener('click', () => setMenu(!root.classList.contains('menu-open')));
-            nav.addEventListener('click', (e) => { if (e.target.closest('a, button')) setMenu(false); });
-            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
-            window.matchMedia('(min-width: 1081px)').addEventListener('change', (e) => { if (e.matches) setMenu(false); });
-        }
-    }
-
-    // Run init
-    init();
-    bindHeaderEvents();
-});
+  renderCategories();
+  renderChecks('availability-list', 'availability', 'stock');
+  renderChecks('brand-list', 'brand', 'brand');
+  apply();
+})();

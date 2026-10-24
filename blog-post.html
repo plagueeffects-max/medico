@@ -1,419 +1,269 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medico Scientific Service Centre | Blog</title>
-    <meta name="description" content="Medical equipment insights and healthcare updates from Medico Scientific Service Centre, Kashmir's trusted supplier since 2000.">
-    <link rel="canonical" href="https://medico-inky.vercel.app/blog-post.html">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Insights | Medico Scientific Service Centre</title>
+  <meta name="description" content="Medical equipment insights and healthcare updates from Medico Scientific Service Centre, Kashmir's trusted supplier since 2000.">
+  <link rel="canonical" href="https://medico-inky.vercel.app/blog-post.html">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="format-detection" content="telephone=no">
+  <meta property="og:title" content="Medico Insights">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://medico-inky.vercel.app/blog-post.html">
+  <meta property="og:image" content="https://medico-inky.vercel.app/images/medico-shop.webp">
+  <meta property="og:locale" content="en_IN">
+  <meta property="og:site_name" content="Medico Scientific Service Centre">
+  <meta name="twitter:card" content="summary_large_image">
 
-    <meta property="og:title" content="Medico Scientific Service Centre | Blog">
-    <meta property="og:type" content="article">
-    <meta property="og:url" content="https://medico-inky.vercel.app/blog-post.html">
-    <meta property="og:image" content="https://medico-inky.vercel.app/images/medico_shop.webp">
-    <meta property="og:locale" content="en_IN">
-    <meta property="og:site_name" content="Medico Scientific Service Centre">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Medico Scientific Service Centre | Blog">
-    <meta name="twitter:image" content="https://medico-inky.vercel.app/images/medico_shop.webp">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800;900&family=Space+Grotesk:wght@300;500;700;900&display=swap" rel="stylesheet">
-
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" href="assets/css/style.css">
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://medico-inky.vercel.app/" },
-        { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://medico-inky.vercel.app/blog.html" },
-        { "@type": "ListItem", "position": 3, "name": "Article", "item": "https://medico-inky.vercel.app/blog-post.html" }
-      ]
-    }
-    </script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      "publisher": { "@id": "https://medico-inky.vercel.app/#organization" },
-      "author": {
-        "@type": "Person",
-        "@id": "https://medico-inky.vercel.app/about.html#founder",
-        "name": "Syed Naseer Ahmad Andrabi",
-        "jobTitle": "Founder & Proprietor",
-        "url": "https://medico-inky.vercel.app/about.html"
-      },
-      "inLanguage": "en-IN"
-    }
-    </script>
-
-    <style>
-        .post-header {
-            padding: 150px 20px 60px;
-            background: var(--bg-pure);
-            text-align: center;
-        }
-
-        .post-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: clamp(2rem, 4vw, 3.5rem);
-            font-weight: 900;
-            letter-spacing: -1px;
-            color: var(--text-dark);
-            line-height: 1.1;
-            margin-bottom: 24px;
-        }
-
-        .post-meta-top {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            gap: 15px;
-            margin-bottom: 40px;
-        }
-
-        .post-author-avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: var(--accent-red);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        .post-meta-text {
-            text-align: left;
-        }
-        
-        .post-author {
-            font-weight: 600;
-            display: block;
-        }
-
-        .post-date {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        .gallery-layout {
-            display: flex;
-            gap: 15px;
-            max-width: 1000px;
-            margin: 0 auto 60px;
-            align-items: flex-start;
-        }
-
-        .main-display {
-            flex: 1;
-            position: relative;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-            background: var(--bg-pure);
-        }
-
-        .main-display img {
-            width: 100%;
-            height: auto;
-            max-height: 700px;
-            object-fit: cover;
-            display: block;
-            transition: opacity 0.2s ease-in-out;
-        }
-
-        .thumbnail-strip {
-            width: 80px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            max-height: 700px;
-            overflow-y: auto;
-            scrollbar-width: none;
-        }
-        .thumbnail-strip::-webkit-scrollbar {
-            display: none;
-        }
-
-        .thumbnail-strip img {
-            width: 100%;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 8px;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: var(--transition-fast);
-            background: #fff;
-        }
-
-        .thumbnail-strip img:hover {
-            opacity: 0.8;
-            transform: scale(0.95);
-        }
-
-        .thumbnail-strip img.active {
-            border-color: var(--accent-red);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        .gallery-index {
-            position: absolute;
-            bottom: 15px;
-            right: 15px;
-            background: rgba(0,0,0,0.6);
-            color: white;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            backdrop-filter: blur(4px);
-        }
-
-        .post-content {
-            max-width: 1000px;
-            margin: 0 auto;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #374151;
-            padding-bottom: 80px;
-        }
-
-        .post-content p {
-            margin-bottom: 24px;
-        }
-
-        .post-content h2, .post-content h3 {
-            color: var(--text-dark);
-            margin: 40px 0 20px;
-            font-family: 'Space Grotesk', sans-serif;
-        }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 600;
-            margin-bottom: 30px;
-            transition: var(--transition-fast);
-        }
-        .back-link:hover {
-            color: var(--accent-red);
-            transform: translateX(-5px);
-        }
-    </style>
-    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js" defer></script>
+  <!-- @head -->
+  <link rel="icon" type="image/svg+xml" href="favicon/icon.svg">
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
+  <link rel="shortcut icon" href="favicon/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+  <link rel="manifest" href="favicon/site.webmanifest">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script>document.documentElement.classList.add('js');</script>
+  <script src="assets/vendor/gsap.min.js" defer></script>
+  <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="assets/vendor/SplitText.min.js" defer></script>
+  <script src="assets/js/site.js" defer></script>
+  <!-- /@head -->
+  <link rel="stylesheet" href="assets/css/blog.css">
 </head>
-<body>
-    <a href="#main-content" class="skip-link" style="position:absolute; top:-100px; left:0; z-index:9999; background:#000; color:#fff; padding:10px;" onfocus="this.style.top='0'" onblur="this.style.top='-100px'">Skip to content</a>
-    <main id="main-content">
 
-    <nav id="navbar">
-        <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">Medico<span>.</span></a>
-        <div class="nav-links">
-            <a href="index.html#catalogue-grid" class="nav-link">Catalogue</a>
-            <a href="about.html" class="nav-link">About Us</a>
-            <a href="blog.html" class="nav-link" style="color: var(--text-dark);">Blog</a>
-            <a href="index.html#testimonials-section" class="nav-link">Testimonials</a>
-            <a href="admin-login.html" class="login-btn" style="text-decoration:none;">Admin Login</a>
+<body data-page="post">
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <!-- @header -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="Medico Scientific Service Centre, home">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 64 64"><use href="assets/icons.svg#i-ecg"/></svg></span>
+        <span class="brand-text">
+          <span class="brand-name">Medico<span class="brand-dot">.</span></span>
+          <span class="brand-sub">Scientific Service Centre</span>
+        </span>
+      </a>
+
+      <nav class="main-nav" id="main-nav" aria-label="Main">
+        <a href="shop.html">Products</a>
+        <a href="index.html#services">Services</a>
+        <a href="about.html">About Us</a>
+        <a href="blog.html" aria-current="page">Insights</a>
+        <a href="index.html#contact">Contact</a>
+        <div class="nav-mobile-ctas">
+          <a href="tel:+919419008453" class="btn btn-outline btn-block"><svg class="icon"><use href="assets/icons.svg#i-phone"/></svg>Call us</a>
+          <button type="button" class="btn btn-dark btn-block" data-open-enquiry>Get a quote<svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></button>
         </div>
-    </nav>
+      </nav>
 
-    <article class="container reveal">
-        <div style="max-width: 1000px; margin: 0 auto; padding-top: 100px;">
-            <a href="blog.html" class="back-link">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-                Back to Blogs
-            </a>
-            <div class="post-title" id="post-title">Loading...</div>
-            <div class="post-subheading" id="post-subheading" style="font-size: 1.2rem; color: var(--text-muted); text-align: left; margin-bottom: 30px; font-weight: 500;"></div>
-            <div class="post-meta-top">
-                <div class="post-author-avatar" id="post-avatar">M</div>
-                <div class="post-meta-text">
-                    <span class="post-author" id="post-author">...</span>
-                    <span class="post-date" id="post-date">...</span>
-                </div>
+      <div class="header-actions">
+        <button type="button" class="icon-btn header-search-btn" id="search-toggle" aria-label="Search equipment" aria-expanded="false" aria-controls="header-search"><svg class="icon"><use href="assets/icons.svg#i-search"/></svg></button>
+        <a href="tel:+919419008453" class="icon-btn header-call" aria-label="Call Medico"><svg class="icon"><use href="assets/icons.svg#i-phone"/></svg></a>
+        <button type="button" class="btn btn-dark btn-sm header-cta" data-open-enquiry>Get a quote<svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></button>
+        <button type="button" class="icon-btn menu-toggle" id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="main-nav">
+          <svg class="icon icon-open"><use href="assets/icons.svg#i-menu"/></svg>
+          <svg class="icon icon-close"><use href="assets/icons.svg#i-x"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="header-search" id="header-search">
+      <div class="container">
+        <form action="shop.html" method="get" role="search">
+          <svg class="icon"><use href="assets/icons.svg#i-search"/></svg>
+          <label for="header-search-input" class="visually-hidden">Search equipment</label>
+          <input id="header-search-input" name="q" type="search" placeholder="Search oxygen, CPAP, monitors…" autocomplete="off">
+          <button type="submit" class="btn btn-dark btn-sm">Search<svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></button>
+        </form>
+        <div class="header-search-hint">
+          <a href="shop.html?category=Oxygen+Therapy">Oxygen therapy</a>
+          <a href="shop.html?category=Sleep+%26+NIV">CPAP &amp; BiPAP</a>
+          <a href="shop.html?category=Critical+Care">Patient monitors</a>
+          <a href="shop.html?category=Emergency+%26+Resuscitation">Defibrillators</a>
+          <a href="shop.html?category=Anaesthesia">Anaesthesia</a>
+        </div>
+      </div>
+    </div>
+    <span class="scroll-progress" aria-hidden="true"></span>
+  </header>
+  <!-- /@header -->
+
+  <main id="main">
+    <article id="post" hidden>
+      <header class="post-hero">
+        <div class="container">
+          <nav class="breadcrumb" aria-label="Breadcrumb" data-hero>
+            <ol>
+              <li><a href="index.html"><svg class="icon"><use href="assets/icons.svg#i-home"/></svg>Home</a></li>
+              <li><a href="blog.html">Insights</a></li>
+              <li><span aria-current="page" id="crumb-title">Article</span></li>
+            </ol>
+          </nav>
+          <div class="post-head">
+            <span class="pill pill-accent" id="post-topic" data-hero></span>
+            <h1 class="post-title" id="post-title" data-hero-title></h1>
+            <p class="post-sub" id="post-sub" data-hero></p>
+            <div class="post-byline" data-hero>
+              <span class="post-avatar" id="post-avatar" aria-hidden="true">M</span>
+              <span><strong id="post-author">Medico Team</strong><span id="post-date"></span></span>
             </div>
-        </div>
-
-        <div class="gallery-layout reveal" id="gallery-layout" style="display: none;">
-            <div class="main-display">
-                <img id="main-display-image" src="" alt="Blog Main Image">
-                <div class="gallery-index" id="gallery-index">1/1</div>
+          </div>
+          <figure class="post-cover" id="post-cover" hidden data-hero-media>
+            <div class="post-cover-frame">
+              <img id="post-cover-img" src="" alt="">
+              <span class="pill pill-ink post-cover-count" id="post-cover-count" hidden></span>
             </div>
-            <div class="thumbnail-strip" id="thumbnail-strip">
-                <!-- Thumbnails -->
-            </div>
+            <div class="post-thumbs" id="post-thumbs" hidden></div>
+          </figure>
         </div>
+      </header>
 
-        <div class="post-content reveal" id="post-content">
-            <!-- Content -->
+      <div class="container post-body">
+        <div class="prose" id="post-content" data-reveal></div>
+        <div class="post-foot" data-reveal>
+          <a href="blog.html" class="link-arrow"><svg class="icon"><use href="assets/icons.svg#i-arrow-left"/></svg>All insights</a>
+          <button type="button" class="btn btn-outline btn-sm" id="share-btn"><svg class="icon"><use href="assets/icons.svg#i-share"/></svg>Share article</button>
         </div>
+      </div>
     </article>
 
-    <footer class="footer-premium">
-        <div class="footer-main">
-            <div class="footer-grid">
-                <div class="footer-col reveal" style="transition-delay:0.05s">
-                    <span class="footer-logo">Medico<span>.</span></span>
-                    <span class="footer-tagline">Caring &middot; Respirating</span>
-                    <p class="footer-desc">Kashmir&rsquo;s most trusted partner for clinical-grade respiratory and life-support equipment. Serving hospitals, clinics &amp; families since 2000.</p>
-                </div>
-                <div class="footer-col reveal" style="transition-delay:0.1s">
-                    <h4>Navigate</h4>
-                    <ul class="footer-links">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="index.html#catalogue-grid">Products</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="admin-login.html">Admin Login</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col reveal" style="transition-delay:0.2s">
-                    <h4>Explore</h4>
-                    <ul class="footer-links">
-                        <li><a href="blog.html">Blogs</a></li>
-                        <li><a href="#">Reviews</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col reveal" style="transition-delay:0.3s">
-                    <h4>Connect</h4>
-                    <div class="social-icons">
-                        <a href="#" class="social-icon" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
-                        <a href="#" class="social-icon" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg></a>
-                        <a href="#" class="social-icon" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
-                        <a href="#" class="social-icon" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="currentColor"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg></a>
-                        <a href="#" class="social-icon" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></a>
-                    </div>
-                    <div class="footer-accent-line"></div>
-                    <div class="footer-contact-text">
-                        <a href="mailto:medicosgr@gmail.com">medicosgr@gmail.com</a>
-                        <a href="tel:+919419008453">+91 94190 08453</a>
-                    </div>
-                </div>
-            </div>
+    <section class="container post-missing" id="post-missing" hidden>
+      <p class="eyebrow">Insights</p>
+      <h1 class="h2">We couldn&rsquo;t find that article.</h1>
+      <p>It may have been moved or removed.</p>
+      <a href="blog.html" class="btn btn-dark">Browse all insights<svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></a>
+    </section>
+
+    <section class="section section-soft" id="related" hidden>
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow" data-reveal>Keep reading</p>
+            <h2 class="h2" data-split>More from Medico Insights</h2>
+          </div>
+          <a href="blog.html" class="link-arrow" data-reveal>View all insights<svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></a>
         </div>
-        <div class="footer-bottom">
-            <span class="footer-bottom-left">&copy; <span class="current-year">2026</span> Medico Scientific Service Centre. All rights reserved.</span>
-            <div class="footer-bottom-right">
-                <a href="privacy-policy.html">Privacy Policy</a>
-                <a href="terms.html">Terms of Use</a>
-                <a href="sitemap.xml">Sitemap</a>
-            </div>
+        <div class="article-grid" id="related-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- @footer -->
+  <footer class="site-footer">
+    <img class="footer-bg" src="images/footer-bg.webp" alt="" width="1920" height="640" loading="lazy" aria-hidden="true">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="brand" aria-label="Medico Scientific Service Centre, home">
+          <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 64 64"><use href="assets/icons.svg#i-ecg"/></svg></span>
+          <span class="brand-text">
+            <span class="brand-name">Medico<span class="brand-dot">.</span></span>
+            <span class="brand-sub">Scientific Service Centre</span>
+          </span>
+        </a>
+        <p>Kashmir&rsquo;s trusted partner for clinical-grade respiratory and life-support equipment. Serving hospitals, clinics and families since 2000.</p>
+        <a href="https://wa.me/919419008453?text=Hello%20Medico%2C%20I%27d%20like%20to%20enquire%20about%20medical%20equipment." class="btn btn-outline btn-sm footer-cta" target="_blank" rel="noopener"><svg class="icon"><use href="assets/icons.svg#i-whatsapp"/></svg>Chat on WhatsApp</a>
+      </div>
+      <nav aria-label="Navigate">
+        <h3>Navigate</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="shop.html">Products</a></li>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="about.html">About us</a></li>
+          <li><a href="blog.html">Insights</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Equipment">
+        <h3>Equipment</h3>
+        <ul>
+          <li><a href="shop.html?category=Oxygen+Therapy">Oxygen therapy</a></li>
+          <li><a href="shop.html?category=Anaesthesia">Anaesthesia</a></li>
+          <li><a href="shop.html?category=Diagnostics+%26+Monitoring">Diagnostics &amp; monitoring</a></li>
+          <li><a href="shop.html?category=Emergency+%26+Resuscitation">Emergency &amp; resuscitation</a></li>
+          <li><a href="shop.html?category=Critical+Care">Critical care</a></li>
+          <li><a href="shop.html?category=Sleep+%26+NIV">Sleep &amp; NIV</a></li>
+          <li><a href="shop.html?category=Surgical+Equipment">Surgical equipment</a></li>
+        </ul>
+      </nav>
+      <div>
+        <h3>Contact</h3>
+        <ul class="footer-contact">
+          <li><svg class="icon"><use href="assets/icons.svg#i-pin"/></svg><a href="https://www.google.com/maps/search/?api=1&amp;query=Medico+Scientific+Service+Centre+Iqbal+Complex+Srinagar" target="_blank" rel="noopener">Iqbal Complex, Batamaloo, Srinagar 190009</a></li>
+          <li><svg class="icon"><use href="assets/icons.svg#i-mail"/></svg><a href="mailto:medicosgr@gmail.com">medicosgr@gmail.com</a></li>
+          <li><svg class="icon"><use href="assets/icons.svg#i-phone"/></svg><a href="tel:+919419008453">+91 94190 08453</a></li>
+          <li><svg class="icon"><use href="assets/icons.svg#i-clock"/></svg><span>Mon &ndash; Sun, 9:00 AM &ndash; 8:00 PM</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <span>&copy; <span class="current-year">2026</span> Medico Scientific Service Centre. GSTIN 01AALPI4731K1ZV</span>
+      <span class="footer-legal"><a href="privacy-policy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a><a href="admin-login.html" class="footer-admin">Admin</a></span>
+    </div>
+  </footer>
+  <!-- /@footer -->
+
+  <!-- @dialog -->
+  <dialog class="enquiry-dialog" id="enquiry-dialog" aria-labelledby="enquiry-title">
+    <form class="enquiry" id="enquiry-form" novalidate>
+      <button type="button" class="icon-btn enquiry-close" data-close-enquiry aria-label="Close"><svg class="icon"><use href="assets/icons.svg#i-x"/></svg></button>
+      <p class="eyebrow">Free consultation</p>
+      <h3 id="enquiry-title">Request a quote</h3>
+      <p class="enquiry-sub" id="enquiry-sub">Takes 30 seconds. We&rsquo;ll reply on WhatsApp.</p>
+
+      <div class="field">
+        <label for="f-name">Your name</label>
+        <input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="f-name-error">
+        <span class="field-error" id="f-name-error" role="alert"></span>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="f-type">Enquiring for</label>
+          <select id="f-type" name="type">
+            <option>Hospital</option>
+            <option>Nursing home</option>
+            <option>Clinic</option>
+            <option>Home care</option>
+            <option>Other</option>
+          </select>
         </div>
-    </footer>
+        <div class="field">
+          <label for="f-equipment">Equipment</label>
+          <select id="f-equipment" name="equipment">
+            <option>Not sure yet</option>
+            <option>Oxygen therapy</option>
+            <option>CPAP / BiPAP</option>
+            <option>Critical care</option>
+            <option>Anaesthesia</option>
+            <option>Diagnostics</option>
+            <option>Emergency &amp; resuscitation</option>
+            <option>Surgical</option>
+            <option>Service / AMC</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="f-message">Details <span class="optional">(optional)</span></label>
+        <textarea id="f-message" name="message" rows="3" placeholder="e.g. 2 patient monitors for a 10-bed ICU in Baramulla"></textarea>
+      </div>
+      <button type="submit" class="btn btn-accent btn-lg btn-block"><svg class="icon"><use href="assets/icons.svg#i-whatsapp"/></svg>Send on WhatsApp</button>
+      <p class="enquiry-note">Prefer a call? <a href="tel:+919419008453">Call us</a> &middot; <a href="mailto:medicosgr@gmail.com">Email us</a></p>
+    </form>
+  </dialog>
 
-    <script src="assets/js/blog-data.js" defer></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const navbar = document.getElementById('navbar');
-            window.addEventListener('scroll', () => {
-                if(window.scrollY > 50) {
-                    navbar.classList.add('scrolled');
-                } else {
-                    navbar.classList.remove('scrolled');
-                }
-            });
+  <a href="https://wa.me/919419008453?text=Hello%20Medico%2C%20I%27d%20like%20to%20enquire%20about%20medical%20equipment." class="wa-fab" target="_blank" rel="noopener" aria-label="Chat with Medico on WhatsApp"><svg class="icon"><use href="assets/icons.svg#i-whatsapp"/></svg></a>
 
-            setTimeout(() => {
-                document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
-            }, 100);
+  <div class="mobile-bar">
+    <a href="tel:+919419008453" class="btn btn-outline"><svg class="icon"><use href="assets/icons.svg#i-phone"/></svg>Call us</a>
+    <a href="https://wa.me/919419008453?text=Hello%20Medico%2C%20I%27d%20like%20to%20enquire%20about%20medical%20equipment." class="btn btn-accent" target="_blank" rel="noopener"><svg class="icon"><use href="assets/icons.svg#i-whatsapp"/></svg>WhatsApp us</a>
+  </div>
+  <!-- /@dialog -->
 
-            const urlParams = new URLSearchParams(window.location.search);
-            const blogId = urlParams.get('id');
-
-            if (!blogId) {
-                document.getElementById('post-content').innerHTML = DOMPurify.sanitize();
-                return;
-            }
-
-            const blog = BlogDB.getBlog(blogId);
-
-            if (!blog) {
-                document.getElementById('post-title').textContent = "Blog Not Found";
-                document.getElementById('post-content').innerHTML = DOMPurify.sanitize();
-                return;
-            }
-
-            document.title = `Medico Group | ${blog.title}`;
-            document.getElementById('post-title').textContent = blog.title;
-            if (blog.subheading) {
-                document.getElementById('post-subheading').textContent = blog.subheading;
-            } else {
-                document.getElementById('post-subheading').style.display = 'none';
-            }
-            
-            document.getElementById('post-author').textContent = blog.author || 'Medico Team';
-            document.getElementById('post-date').textContent = `${blog.date} ${blog.time ? 'at ' + blog.time : ''}`;
-            document.getElementById('post-avatar').textContent = blog.author ? blog.author.charAt(0).toUpperCase() : 'M';
-            
-            // Set up High-End Gallery
-            const galleryLayout = document.getElementById('gallery-layout');
-            const mainDisplayImg = document.getElementById('main-display-image');
-            const thumbnailStrip = document.getElementById('thumbnail-strip');
-            const galleryIndex = document.getElementById('gallery-index');
-
-            let allImages = [];
-            if (blog.image && blog.image !== 'images/medico_shop.webp') {
-                allImages.push(blog.image);
-            } else if (blog.image) {
-                allImages.push(blog.image);
-            }
-
-            if (blog.galleryImages && blog.galleryImages.length > 0) {
-                allImages = allImages.concat(blog.galleryImages);
-            }
-
-            if (allImages.length > 0) {
-                galleryLayout.style.display = 'flex';
-                mainDisplayImg.src = allImages[0];
-                
-                if (allImages.length > 1) {
-                    galleryIndex.style.display = 'block';
-                    galleryIndex.textContent = `1/${allImages.length}`;
-                    
-                    let thumbHtml = '';
-                    allImages.forEach((imgSrc, idx) => {
-                        thumbHtml += `<img src="${imgSrc}" class="${idx === 0 ? 'active' : ''}" data-idx="${idx}" alt="Thumb">`;
-                    });
-                    thumbnailStrip.innerHTML = DOMPurify.sanitize();
-                    
-                    // Add click listeners to thumbnails
-                    const thumbs = thumbnailStrip.querySelectorAll('img');
-                    thumbs.forEach(t => {
-                        t.addEventListener('click', function() {
-                            thumbs.forEach(img => img.classList.remove('active'));
-                            this.classList.add('active');
-                            const idx = parseInt(this.getAttribute('data-idx'));
-                            
-                            // Crossfade effect
-                            mainDisplayImg.style.opacity = 0;
-                            setTimeout(() => {
-                                mainDisplayImg.src = allImages[idx];
-                                mainDisplayImg.style.opacity = 1;
-                            }, 200);
-                            
-                            galleryIndex.textContent = `${idx + 1}/${allImages.length}`;
-                        });
-                    });
-                } else {
-                    galleryIndex.style.display = 'none';
-                    thumbnailStrip.style.display = 'none';
-                }
-            }
-
-            // Render Quill HTML content directly
-            document.getElementById('post-content').innerHTML = DOMPurify.sanitize();
-        });
-    </script>
-</main>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js" defer></script>
+  <script src="assets/js/blog-data.js" defer></script>
+  <script src="assets/js/post.js" defer></script>
 </body>
 </html>

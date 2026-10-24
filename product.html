@@ -1,489 +1,296 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medico Scientific Service Centre | Product Details</title>
-    <meta name="description" content="Clinical-grade medical equipment from Medico Scientific Service Centre, Srinagar. Authorised supplier for Philips, Schiller, and Shalya across Jammu & Kashmir.">
-    <link rel="canonical" href="https://medico-inky.vercel.app/product.html">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Product | Medico Scientific Service Centre</title>
+  <meta name="description" content="Clinical-grade medical equipment from Medico Scientific Service Centre, Srinagar. Authorised supplier for Philips, Schiller and Shalya across Jammu & Kashmir.">
+  <link rel="canonical" href="https://medico-inky.vercel.app/product.html">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="format-detection" content="telephone=no">
+  <meta property="og:title" content="Medico Scientific Service Centre | Medical Equipment">
+  <meta property="og:type" content="product">
+  <meta property="og:url" content="https://medico-inky.vercel.app/product.html">
+  <meta property="og:image" content="https://medico-inky.vercel.app/images/shop-hero.webp">
+  <meta property="og:locale" content="en_IN">
+  <meta property="og:site_name" content="Medico Scientific Service Centre">
+  <meta name="twitter:card" content="summary_large_image">
 
-    <meta property="og:title" content="Medico Scientific Service Centre | Medical Equipment">
-    <meta property="og:type" content="product">
-    <meta property="og:url" content="https://medico-inky.vercel.app/product.html">
-    <meta property="og:image" content="https://medico-inky.vercel.app/images/medico_shop.webp">
-    <meta property="og:locale" content="en_IN">
-    <meta property="og:site_name" content="Medico Scientific Service Centre">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Medico Scientific Service Centre | Medical Equipment">
-    <meta name="twitter:image" content="https://medico-inky.vercel.app/images/medico_shop.webp">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800;900&family=Space+Grotesk:wght@300;500;700;900&display=swap" rel="stylesheet">
-
-    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg">
-    <link rel="alternate icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <script src="assets/js/products-data.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js" defer></script>
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://medico-inky.vercel.app/" },
-        { "@type": "ListItem", "position": 2, "name": "Medical Equipment", "item": "https://medico-inky.vercel.app/shop.html" },
-        { "@type": "ListItem", "position": 3, "name": "Product", "item": "https://medico-inky.vercel.app/product.html" }
-      ]
-    }
-    </script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "@id": "https://medico-inky.vercel.app/#organization",
-      "name": "Medico Scientific Service Centre",
-      "url": "https://medico-inky.vercel.app/",
-      "telephone": "+91-9419008453"
-    }
-    </script>
-
-    <style>
-        .product-page-container {
-            max-width: 1400px;
-            margin: 120px auto 100px;
-            padding: 0 20px;
-        }
-
-        .back-link {
-            display: inline-block;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-weight: 500;
-            margin-bottom: 30px;
-            transition: var(--transition-fast);
-        }
-
-        .back-link:hover {
-            color: var(--accent-red);
-        }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            margin-bottom: 80px;
-        }
-
-        @media (max-width: 992px) {
-            .product-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .gallery-main {
-            background: var(--bg-offwhite);
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid var(--border-light);
-            aspect-ratio: 1 / 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 15px;
-            position: relative;
-        }
-
-        .gallery-main img, .gallery-main video {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            padding: 40px;
-            transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1);
-        }
-
-        .gallery-main:hover img {
-            cursor: crosshair;
-        }
-
-        .gallery-thumbs {
-            display: flex;
-            gap: 15px;
-            overflow-x: auto;
-            padding-bottom: 10px;
-        }
-
-        .thumb-item {
-            width: 80px;
-            height: 80px;
-            border-radius: 10px;
-            border: 2px solid transparent;
-            cursor: pointer;
-            overflow: hidden;
-            background: var(--bg-offwhite);
-            flex-shrink: 0;
-            transition: var(--transition-fast);
-        }
-
-        .thumb-item.active {
-            border-color: var(--accent-red);
-        }
-
-        .thumb-item img, .thumb-item video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .product-category {
-            color: var(--accent-red);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-        }
-
-        .product-title {
-            font-size: clamp(2rem, 4vw, 3rem);
-            line-height: 1.1;
-            margin-bottom: 10px;
-            color: var(--text-dark);
-        }
-
-        .product-meta {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            margin-bottom: 30px;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        .stock-badge {
-            background: rgba(22, 163, 74, 0.1);
-            color: #16a34a;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-weight: 600;
-        }
-        
-        .stock-badge.out { background: rgba(211, 47, 47, 0.1); color: var(--accent-red); }
-        .stock-badge.low { background: rgba(217, 119, 6, 0.1); color: #d97706; }
-
-        .product-price-container {
-            display: flex;
-            align-items: baseline;
-            gap: 15px;
-            margin-bottom: 30px;
-            padding-bottom: 30px;
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        .product-price {
-            font-size: 2.5rem;
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 700;
-            color: var(--text-dark);
-        }
-
-        .product-compare-price {
-            font-size: 1.5rem;
-            color: var(--text-muted);
-            text-decoration: line-through;
-        }
-
-        .product-short-desc {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: var(--text-muted);
-            margin-bottom: 40px;
-        }
-
-        .add-to-cart-btn {
-            background: var(--text-dark);
-            color: white;
-            border: none;
-            padding: 18px 40px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: var(--transition-fast);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-            max-width: 400px;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .add-to-cart-btn:hover {
-            background: var(--accent-red);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px var(--accent-glow);
-        }
-
-        .product-actions-extra {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 15px;
-            max-width: 400px;
-        }
-
-        .btn-extra {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            background: #ffffff;
-            border: 1px solid var(--border-light);
-            border-radius: 8px;
-            padding: 12px 5px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--text-dark);
-            text-decoration: none;
-            transition: var(--transition-fast);
-            cursor: pointer;
-        }
-
-        .btn-extra:hover {
-            border-color: var(--text-dark);
-            transform: translateY(-2px);
-        }
-
-        .btn-group-4 {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-        }
-
-        .tabs-container {
-            margin-top: 60px;
-            border: 1px solid var(--border-light);
-            border-radius: 16px;
-            background: var(--bg-pure);
-            overflow: hidden;
-        }
-
-        .tabs-header {
-            display: flex;
-            border-bottom: 1px solid var(--border-light);
-            background: var(--bg-offwhite);
-            overflow-x: auto;
-        }
-
-        .tab-btn {
-            padding: 20px 40px;
-            background: transparent;
-            border: none;
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: var(--transition-fast);
-            white-space: nowrap;
-        }
-
-        .tab-btn.active {
-            color: var(--text-dark);
-            background: var(--bg-pure);
-            border-bottom: 2px solid var(--accent-red);
-        }
-
-        .tab-content {
-            display: none;
-            padding: 40px;
-            font-size: 1.05rem;
-            line-height: 1.7;
-            color: var(--text-dark);
-        }
-
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.4s ease forwards;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        #errorContainer { text-align: center; padding: 150px 20px; display: none; }
-        .skip-link { position: absolute; top: -100px; left: 0; background: #000; color: #fff; padding: 10px; z-index: 9999; }
-        .skip-link:focus { top: 0; }
-    </style>
+  <!-- @head -->
+  <link rel="icon" type="image/svg+xml" href="favicon/icon.svg">
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
+  <link rel="shortcut icon" href="favicon/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+  <link rel="manifest" href="favicon/site.webmanifest">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script>document.documentElement.classList.add('js');</script>
+  <script src="assets/vendor/gsap.min.js" defer></script>
+  <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="assets/vendor/SplitText.min.js" defer></script>
+  <script src="assets/js/site.js" defer></script>
+  <!-- /@head -->
+  <link rel="stylesheet" href="assets/css/shop.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
 </head>
-<body>
 
-    <a href="#main-content" class="skip-link">Skip to content</a>
+<body data-page="product">
+  <a href="#main" class="skip-link">Skip to content</a>
 
-    <nav id="navbar" style="background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-light);">
-        <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">Medico<span>.</span></a>
-        <div class="nav-links">
-            <a href="index.html" class="nav-link">Home</a>
-            <a href="shop.html" class="nav-link" style="color: var(--accent-red);">Products</a>
-            <a href="about.html" class="nav-link">About Us</a>
-            <a href="blog.html" class="nav-link">Blog</a>
-            <a href="admin-login.html" class="login-btn">Admin Login</a>
+  <!-- @header -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="Medico Scientific Service Centre, home">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 64 64"><use href="assets/icons.svg#i-ecg"/></svg></span>
+        <span class="brand-text">
+          <span class="brand-name">Medico<span class="brand-dot">.</span></span>
+          <span class="brand-sub">Scientific Service Centre</span>
+        </span>
+      </a>
+
+      <nav class="main-nav" id="main-nav" aria-label="Main">
+        <a href="shop.html" aria-current="page">Products</a>
+        <a href="index.html#services">Services</a>
+        <a href="about.html">About Us</a>
+        <a href="blog.html">Insights</a>
+        <a href="index.html#contact">Contact</a>
+        <div class="nav-mobile-ctas">
+          <a href="tel:+919419008453" class="btn btn-outline btn-block"><svg class="icon"><use href="assets/icons.svg#i-phone"/></svg>Call us</a>
+          <button type="button" class="btn btn-dark btn-block" data-open-enquiry>Get a quote<svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></button>
         </div>
-    </nav>
+      </nav>
 
-    <main id="main-content">
-        <div id="errorContainer">
-            <h1>Product Not Found</h1>
-            <p>The product you are looking for does not exist.</p>
-            <a href="shop.html">Return to Shop</a>
+      <div class="header-actions">
+        <button type="button" class="icon-btn header-search-btn" id="search-toggle" aria-label="Search equipment" aria-expanded="false" aria-controls="header-search"><svg class="icon"><use href="assets/icons.svg#i-search"/></svg></button>
+        <a href="tel:+919419008453" class="icon-btn header-call" aria-label="Call Medico"><svg class="icon"><use href="assets/icons.svg#i-phone"/></svg></a>
+        <button type="button" class="btn btn-dark btn-sm header-cta" data-open-enquiry>Get a quote<svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></button>
+        <button type="button" class="icon-btn menu-toggle" id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="main-nav">
+          <svg class="icon icon-open"><use href="assets/icons.svg#i-menu"/></svg>
+          <svg class="icon icon-close"><use href="assets/icons.svg#i-x"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="header-search" id="header-search">
+      <div class="container">
+        <form action="shop.html" method="get" role="search">
+          <svg class="icon"><use href="assets/icons.svg#i-search"/></svg>
+          <label for="header-search-input" class="visually-hidden">Search equipment</label>
+          <input id="header-search-input" name="q" type="search" placeholder="Search oxygen, CPAP, monitors…" autocomplete="off">
+          <button type="submit" class="btn btn-dark btn-sm">Search<svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></button>
+        </form>
+        <div class="header-search-hint">
+          <a href="shop.html?category=Oxygen+Therapy">Oxygen therapy</a>
+          <a href="shop.html?category=Sleep+%26+NIV">CPAP &amp; BiPAP</a>
+          <a href="shop.html?category=Critical+Care">Patient monitors</a>
+          <a href="shop.html?category=Emergency+%26+Resuscitation">Defibrillators</a>
+          <a href="shop.html?category=Anaesthesia">Anaesthesia</a>
         </div>
+      </div>
+    </div>
+    <span class="scroll-progress" aria-hidden="true"></span>
+  </header>
+  <!-- /@header -->
 
-        <div class="product-page-container" id="productContainer" style="display: none;">
-            <a href="shop.html" class="back-link">← Back to Catalog</a>
+  <main id="main">
+    <section class="pd" id="product" hidden>
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb" data-hero>
+          <ol>
+            <li><a href="index.html"><svg class="icon"><use href="assets/icons.svg#i-home"/></svg>Home</a></li>
+            <li><a href="shop.html">Products</a></li>
+            <li><a href="shop.html" id="crumb-cat">Category</a></li>
+            <li><span aria-current="page" id="crumb-title">Product</span></li>
+          </ol>
+        </nav>
 
-            <div class="product-grid">
-                
-                <!-- Left: Gallery -->
-                <div class="product-gallery reveal">
-                    <div class="gallery-main" id="mainGalleryImage">
-                        <!-- Populated by JS -->
-                    </div>
-                    <div class="gallery-thumbs" id="galleryThumbs">
-                        <!-- Populated by JS -->
-                    </div>
-                </div>
+        <div class="pd-grid">
+          <div class="pd-gallery" data-hero-media>
+            <div class="pd-stage">
+              <span class="pill" id="pd-stock-pill"></span>
+              <img id="pd-image" src="" alt="">
+            </div>
+            <div class="pd-thumbs" id="pd-thumbs" hidden></div>
+          </div>
 
-                <!-- Right: Info -->
-                <div class="product-info reveal" style="transition-delay: 0.1s;">
-                    <div class="product-category" id="productCategory">Category</div>
-                    <h1 class="product-title" id="productTitle">Product Title</h1>
-                    
-                    <div class="product-meta">
-                        <span class="stock-badge" id="productStock">In Stock</span>
-                        <span id="productSku" style="display: none;">SKU: <span id="skuValue"></span></span>
-                    </div>
+          <div class="pd-info">
+            <p class="eyebrow" id="pd-category" data-hero></p>
+            <h1 class="pd-title" id="pd-title" data-hero-title></h1>
+            <div class="pd-meta" data-hero>
+              <span class="pill" id="pd-brand" hidden></span>
+              <span class="pill" id="pd-sku" hidden></span>
+            </div>
+            <p class="pd-desc" id="pd-desc" data-hero></p>
 
-                    <div class="product-price-container" id="priceContainer">
-                        <div class="product-price" id="productPrice">₹0</div>
-                        <div class="product-compare-price" id="productComparePrice" style="display: none;">₹0</div>
-                    </div>
+            <ul class="pd-features" id="pd-features" hidden data-hero></ul>
 
-                    <div class="product-short-desc" id="productShortDesc"></div>
-
-                    <button class="add-to-cart-btn" id="addToCartBtn">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-                        Add to Cart
-                    </button>
-
-                    <div class="product-actions-extra">
-                        <a href="#" id="downloadBrochureBtn" class="btn-extra" style="display: none; width:100%; padding:15px;" download>
-                            Download Brochure
-                        </a>
-                        <div class="btn-group-4">
-                            <a href="#" target="_blank" class="btn-extra" id="whatsappBtn">WhatsApp</a>
-                            <a href="tel:+919419008453" class="btn-extra">Phone</a>
-                            <a href="mailto:medicosgr@gmail.com" class="btn-extra" id="emailBtn">Email</a>
-                            <button onclick="navigator.share({title: document.title, url: window.location.href})" class="btn-extra">Share</button>
-                        </div>
-                    </div>
-                </div>
+            <div class="pd-price" id="pd-price-wrap" hidden data-hero>
+              <span class="pd-price-value" id="pd-price"></span>
+              <span class="pd-price-note">Indicative price. Final quote depends on configuration, installation and AMC.</span>
             </div>
 
-            <div class="tabs-container reveal" style="transition-delay: 0.2s;">
-                <div class="tabs-header">
-                    <button class="tab-btn active" onclick="switchTab('desc')">Description</button>
-                    <button class="tab-btn" onclick="switchTab('specs')" id="tabBtnSpecs">Specifications</button>
-                    <button class="tab-btn" onclick="switchTab('box')" id="tabBtnBox">What's in the Box</button>
-                </div>
-                <div class="tab-content active" id="tab-desc"></div>
-                <div class="tab-content" id="tab-specs"></div>
-                <div class="tab-content" id="tab-box"></div>
+            <div class="pd-actions" data-hero>
+              <button type="button" class="btn btn-dark btn-lg" id="pd-quote" data-open-enquiry>Request a quote<svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></button>
+              <a class="btn btn-outline btn-lg" id="pd-whatsapp" href="https://wa.me/919419008453" target="_blank" rel="noopener"><svg class="icon"><use href="assets/icons.svg#i-whatsapp"/></svg>WhatsApp</a>
             </div>
+
+            <ul class="pd-assure" data-hero>
+              <li><svg class="icon"><use href="assets/icons.svg#i-badge"/></svg>Genuine, manufacturer-authorised</li>
+              <li><svg class="icon"><use href="assets/icons.svg#i-settings"/></svg>Installation &amp; training included</li>
+              <li><svg class="icon"><use href="assets/icons.svg#i-headset"/></svg>7-day technical support</li>
+            </ul>
+          </div>
         </div>
-    </main>
+      </div>
+    </section>
 
-    <script>
-        function switchTab(id) {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            event.target.classList.add('active');
-            document.getElementById('tab-' + id).classList.add('active');
-        }
+    <section class="section pd-details" id="pd-details" hidden>
+      <div class="container container-narrow">
+        <div class="tabs" role="tablist" aria-label="Product information" data-reveal>
+          <button type="button" role="tab" id="tab-desc" aria-controls="panel-desc" aria-selected="true">Overview</button>
+          <button type="button" role="tab" id="tab-specs" aria-controls="panel-specs" aria-selected="false" tabindex="-1">Specifications</button>
+          <button type="button" role="tab" id="tab-box" aria-controls="panel-box" aria-selected="false" tabindex="-1">In the box</button>
+        </div>
+        <div class="tab-panel prose" role="tabpanel" id="panel-desc" aria-labelledby="tab-desc" data-reveal></div>
+        <div class="tab-panel" role="tabpanel" id="panel-specs" aria-labelledby="tab-specs" hidden></div>
+        <div class="tab-panel prose" role="tabpanel" id="panel-box" aria-labelledby="tab-box" hidden></div>
+      </div>
+    </section>
 
-        function setMainMedia(src) {
-            const ext = src.split('.').pop().toLowerCase();
-            const isVideo = ext === 'webm' || src.startsWith('data:video');
-            const el = document.getElementById('mainGalleryImage');
-            el.innerHTML = isVideo ? `<video src="${src}" autoplay loop muted playsinline controls></video>` : `<img src="${src}" onerror="this.src='images/medico_shop.webp'">`;
-        }
+    <section class="container post-missing" id="pd-missing" hidden>
+      <p class="eyebrow">Products</p>
+      <h1 class="h2">We couldn&rsquo;t find that product.</h1>
+      <p>It may have been renamed or removed from the catalogue.</p>
+      <a href="shop.html" class="btn btn-dark">Browse all equipment<svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></a>
+    </section>
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const id = new URLSearchParams(window.location.search).get('id');
-            const p = ProductsDB.getProducts().find(x => x.id === id);
-            if (!p) { document.getElementById('errorContainer').style.display = 'block'; return; }
-            
-            document.getElementById('productContainer').style.display = 'block';
-            document.getElementById('productTitle').textContent = p.title;
-            document.getElementById('productCategory').textContent = p.category;
-            document.getElementById('productShortDesc').textContent = p.description;
-            document.getElementById('productPrice').textContent = `₹${p.price.toLocaleString()}`;
-            
-            if (p.sku) {
-                document.getElementById('productSku').style.display = 'inline';
-                document.getElementById('skuValue').textContent = p.sku;
-            }
+    <section class="section section-soft" id="pd-related" hidden>
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow" data-reveal>You may also need</p>
+            <h2 class="h2" data-split>Related equipment</h2>
+          </div>
+          <a href="shop.html" class="link-arrow" data-reveal>View catalogue<svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></a>
+        </div>
+        <div class="item-grid" id="pd-related-grid"></div>
+      </div>
+    </section>
+  </main>
 
-            const stock = document.getElementById('productStock');
-            stock.textContent = p.stock || 'In Stock';
-            if(p.stock === 'Out of Stock') stock.className = 'stock-badge out';
-            else if(p.stock === 'Low Stock') stock.className = 'stock-badge low';
+  <!-- @footer -->
+  <footer class="site-footer">
+    <img class="footer-bg" src="images/footer-bg.webp" alt="" width="1920" height="640" loading="lazy" aria-hidden="true">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="brand" aria-label="Medico Scientific Service Centre, home">
+          <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 64 64"><use href="assets/icons.svg#i-ecg"/></svg></span>
+          <span class="brand-text">
+            <span class="brand-name">Medico<span class="brand-dot">.</span></span>
+            <span class="brand-sub">Scientific Service Centre</span>
+          </span>
+        </a>
+        <p>Kashmir&rsquo;s trusted partner for clinical-grade respiratory and life-support equipment. Serving hospitals, clinics and families since 2000.</p>
+        <a href="https://wa.me/919419008453?text=Hello%20Medico%2C%20I%27d%20like%20to%20enquire%20about%20medical%20equipment." class="btn btn-outline btn-sm footer-cta" target="_blank" rel="noopener"><svg class="icon"><use href="assets/icons.svg#i-whatsapp"/></svg>Chat on WhatsApp</a>
+      </div>
+      <nav aria-label="Navigate">
+        <h3>Navigate</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="shop.html">Products</a></li>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="about.html">About us</a></li>
+          <li><a href="blog.html">Insights</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Equipment">
+        <h3>Equipment</h3>
+        <ul>
+          <li><a href="shop.html?category=Oxygen+Therapy">Oxygen therapy</a></li>
+          <li><a href="shop.html?category=Anaesthesia">Anaesthesia</a></li>
+          <li><a href="shop.html?category=Diagnostics+%26+Monitoring">Diagnostics &amp; monitoring</a></li>
+          <li><a href="shop.html?category=Emergency+%26+Resuscitation">Emergency &amp; resuscitation</a></li>
+          <li><a href="shop.html?category=Critical+Care">Critical care</a></li>
+          <li><a href="shop.html?category=Sleep+%26+NIV">Sleep &amp; NIV</a></li>
+          <li><a href="shop.html?category=Surgical+Equipment">Surgical equipment</a></li>
+        </ul>
+      </nav>
+      <div>
+        <h3>Contact</h3>
+        <ul class="footer-contact">
+          <li><svg class="icon"><use href="assets/icons.svg#i-pin"/></svg><a href="https://www.google.com/maps/search/?api=1&amp;query=Medico+Scientific+Service+Centre+Iqbal+Complex+Srinagar" target="_blank" rel="noopener">Iqbal Complex, Batamaloo, Srinagar 190009</a></li>
+          <li><svg class="icon"><use href="assets/icons.svg#i-mail"/></svg><a href="mailto:medicosgr@gmail.com">medicosgr@gmail.com</a></li>
+          <li><svg class="icon"><use href="assets/icons.svg#i-phone"/></svg><a href="tel:+919419008453">+91 94190 08453</a></li>
+          <li><svg class="icon"><use href="assets/icons.svg#i-clock"/></svg><span>Mon &ndash; Sun, 9:00 AM &ndash; 8:00 PM</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <span>&copy; <span class="current-year">2026</span> Medico Scientific Service Centre. GSTIN 01AALPI4731K1ZV</span>
+      <span class="footer-legal"><a href="privacy-policy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a><a href="admin-login.html" class="footer-admin">Admin</a></span>
+    </div>
+  </footer>
+  <!-- /@footer -->
 
-            setMainMedia(p.mainImage || 'images/medico_shop.webp');
-            
-            // Render thumbs if gallery exists
-            const thumbs = document.getElementById('galleryThumbs');
-            if (p.galleryImages && p.galleryImages.length > 0) {
-                const allImages = [p.mainImage, ...p.galleryImages].filter(Boolean);
-                thumbs.innerHTML = allImages.map(img => `
-                    <div class="thumb-item" onclick="setMainMedia('${img}')">
-                        <img src="${img}" onerror="this.src='images/medico_shop.webp'">
-                    </div>
-                `).join('');
-            }
-            
-            // XSS Protection with DOMPurify
-            document.getElementById('tab-desc').innerHTML = typeof DOMPurify !== 'undefined' ? DOMPurify.sanitize(p.longDescription || p.description) : (p.longDescription || p.description);
-            
-            if(p.specifications && p.specifications.length > 0) {
-                document.getElementById('tab-specs').innerHTML = p.specifications.map(s => `
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; padding:10px 0; border-bottom:1px solid #eee;">
-                        <span style="font-weight:600;">${s.label}</span>
-                        <span>${s.value}</span>
-                    </div>
-                `).join('');
-            } else {
-                document.getElementById('tabBtnSpecs').style.display = 'none';
-            }
+  <!-- @dialog -->
+  <dialog class="enquiry-dialog" id="enquiry-dialog" aria-labelledby="enquiry-title">
+    <form class="enquiry" id="enquiry-form" novalidate>
+      <button type="button" class="icon-btn enquiry-close" data-close-enquiry aria-label="Close"><svg class="icon"><use href="assets/icons.svg#i-x"/></svg></button>
+      <p class="eyebrow">Free consultation</p>
+      <h3 id="enquiry-title">Request a quote</h3>
+      <p class="enquiry-sub" id="enquiry-sub">Takes 30 seconds. We&rsquo;ll reply on WhatsApp.</p>
 
-            if(p.inTheBox) {
-                document.getElementById('tab-box').innerHTML = typeof DOMPurify !== 'undefined' ? DOMPurify.sanitize(p.inTheBox) : p.inTheBox;
-            } else {
-                document.getElementById('tabBtnBox').style.display = 'none';
-            }
+      <div class="field">
+        <label for="f-name">Your name</label>
+        <input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="f-name-error">
+        <span class="field-error" id="f-name-error" role="alert"></span>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="f-type">Enquiring for</label>
+          <select id="f-type" name="type">
+            <option>Hospital</option>
+            <option>Nursing home</option>
+            <option>Clinic</option>
+            <option>Home care</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-equipment">Equipment</label>
+          <select id="f-equipment" name="equipment">
+            <option>Not sure yet</option>
+            <option>Oxygen therapy</option>
+            <option>CPAP / BiPAP</option>
+            <option>Critical care</option>
+            <option>Anaesthesia</option>
+            <option>Diagnostics</option>
+            <option>Emergency &amp; resuscitation</option>
+            <option>Surgical</option>
+            <option>Service / AMC</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="f-message">Details <span class="optional">(optional)</span></label>
+        <textarea id="f-message" name="message" rows="3" placeholder="e.g. 2 patient monitors for a 10-bed ICU in Baramulla"></textarea>
+      </div>
+      <button type="submit" class="btn btn-accent btn-lg btn-block"><svg class="icon"><use href="assets/icons.svg#i-whatsapp"/></svg>Send on WhatsApp</button>
+      <p class="enquiry-note">Prefer a call? <a href="tel:+919419008453">Call us</a> &middot; <a href="mailto:medicosgr@gmail.com">Email us</a></p>
+    </form>
+  </dialog>
 
-            // CTA Links
-            document.getElementById('whatsappBtn').href = `https://wa.me/919419008453?text=I'm interested in ${encodeURIComponent(p.title)}`;
-            document.getElementById('emailBtn').href = `mailto:medicosgr@gmail.com?subject=Enquiry about ${encodeURIComponent(p.title)}`;
-            
-            // Reveal animations
-            setTimeout(() => {
-                document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
-            }, 100);
-        });
-    </script>
+  <a href="https://wa.me/919419008453?text=Hello%20Medico%2C%20I%27d%20like%20to%20enquire%20about%20medical%20equipment." class="wa-fab" target="_blank" rel="noopener" aria-label="Chat with Medico on WhatsApp"><svg class="icon"><use href="assets/icons.svg#i-whatsapp"/></svg></a>
+
+  <div class="mobile-bar">
+    <a href="tel:+919419008453" class="btn btn-outline"><svg class="icon"><use href="assets/icons.svg#i-phone"/></svg>Call us</a>
+    <a href="https://wa.me/919419008453?text=Hello%20Medico%2C%20I%27d%20like%20to%20enquire%20about%20medical%20equipment." class="btn btn-accent" target="_blank" rel="noopener"><svg class="icon"><use href="assets/icons.svg#i-whatsapp"/></svg>WhatsApp us</a>
+  </div>
+  <!-- /@dialog -->
+
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js" defer></script>
+  <script src="assets/js/products-data.js" defer></script>
+  <script src="assets/js/product.js" defer></script>
 </body>
 </html>
