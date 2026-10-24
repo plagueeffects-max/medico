@@ -263,7 +263,7 @@
 .consult-copy p { margin-bottom: 28px; font-size: 17px; color: var(--text); }
 
 /* ---------- FAQ ---------- */
-.faq-2col { grid-template-columns: 1fr 1fr; align-items: start; }
+.shop-faq-wrap { max-width: 1100px; margin: 0 auto; }
 
 /* =====================================================
    Responsive
@@ -297,7 +297,6 @@
   .filters.is-open { visibility: visible; transform: none; transition: transform 0.45s var(--ease); }
   .filters-done { display: inline-flex; position: sticky; bottom: 0; box-shadow: 0 -12px 24px 8px #fff; }
   .filters-toggle { display: inline-flex; }
-  .faq-2col { grid-template-columns: 1fr; }
   .consult-card::before { background: linear-gradient(90deg, rgba(234, 241, 249, 0.96) 0%, rgba(234, 241, 249, 0.85) 100%); }
 }
 

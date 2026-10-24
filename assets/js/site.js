@@ -4,18 +4,10 @@ const root = document.documentElement;
 const WHATSAPP = '919419008453';
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/* ---------- Header: scrolled state, hide on scroll down ---------- */
+/* ---------- Header: soft shadow once scrolled (always visible) ---------- */
 const header = document.getElementById('site-header');
 if (header) {
-  let lastY = window.scrollY;
-  const onScroll = () => {
-    const y = window.scrollY;
-    header.classList.toggle('is-scrolled', y > 8);
-    // Hide only after the hero, and only while travelling down; small steps change nothing
-    if (y < 480 || y < lastY - 4) header.classList.remove('is-hidden');
-    else if (y > lastY + 4) header.classList.add('is-hidden');
-    lastY = y;
-  };
+  const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 8);
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 }
@@ -165,7 +157,7 @@ function initMotion() {
   const heroBits = $$('[data-hero], [data-hero-title]');
   gsap.set('[data-hero], [data-hero-title], [data-hero-media], [data-tagline], [data-hero-badge]', { autoAlpha: 1, animation: 'none' });
   const tl = gsap.timeline({ delay: 0.05 });
-  // Fade only: an inline transform would override the CSS hide-on-scroll transform
+  // Fade only: an inline transform on the sticky header would break the menu sheet's positioning
   if (header) tl.from(['.topbar', header], { autoAlpha: 0, duration: 0.7, clearProps: 'opacity,visibility' }, 0);
   $$('[data-hero-media]').forEach((el) => {
     tl.from(el, { scale: 1 + 0.06 * move, autoAlpha: 0, duration: 1.6, ease: 'power2.out' }, 0.1);
