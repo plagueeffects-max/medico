@@ -35,6 +35,7 @@
   if (images.length) {
     const cover = $('post-cover-img');
     cover.src = images[0];
+    cover.parentElement.classList.toggle('is-product', /\/products\//.test(images[0]));
     cover.alt = blog.title;
     $('post-cover').hidden = false;
     if (images.length > 1) {
@@ -80,7 +81,7 @@
   if (related.length) {
     $('related-grid').innerHTML = related.map((b) => `
       <article class="article-card">
-        <a href="blog-post.html?id=${encodeURIComponent(b.id)}" class="article-media" tabindex="-1" aria-hidden="true"><img src="${esc(safeUrl(b.image) || 'images/medico-shop.webp')}" alt="" loading="lazy"></a>
+        <a href="blog-post.html?id=${encodeURIComponent(b.id)}" class="article-media${/\/products\//.test(b.image || '') ? ' is-product' : ''}" tabindex="-1" aria-hidden="true"><img src="${esc(safeUrl(b.image) || 'images/medico-shop.webp')}" alt="" loading="lazy"></a>
         <div class="article-body">
           <div class="article-meta"><span class="pill pill-accent">${esc(topicOf(b))}</span><span class="article-time">${icon('i-clock')}${readTime(b)} min read</span></div>
           <h3><a href="blog-post.html?id=${encodeURIComponent(b.id)}">${esc(b.title)}</a></h3>

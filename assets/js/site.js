@@ -25,6 +25,8 @@ const menuToggle = document.getElementById('menu-toggle');
 const nav = document.getElementById('main-nav');
 const setMenu = (open) => {
   if (!menuToggle) return;
+  // The top strip may still be on screen, so the sheet starts at the header's real bottom edge
+  if (open && header) root.style.setProperty('--menu-top', `${Math.max(0, header.getBoundingClientRect().bottom)}px`);
   root.classList.toggle('menu-open', open);
   menuToggle.setAttribute('aria-expanded', String(open));
   menuToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
@@ -58,7 +60,8 @@ const form = document.getElementById('enquiry-form');
 let isCallback = false;
 
 document.querySelectorAll('[data-open-enquiry]').forEach((btn) => {
-  btn.addEventListener('click', () => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
     isCallback = btn.hasAttribute('data-callback');
     if (dialog && typeof dialog.showModal === 'function') {
       document.getElementById('enquiry-title').textContent = isCallback ? 'Request a callback' : 'Request a quote';
@@ -162,7 +165,8 @@ function initMotion() {
   const heroBits = $$('[data-hero], [data-hero-title]');
   gsap.set('[data-hero], [data-hero-title], [data-hero-media], [data-tagline], [data-hero-badge]', { autoAlpha: 1, animation: 'none' });
   const tl = gsap.timeline({ delay: 0.05 });
-  if (header) tl.from(header, { y: -24 * move, autoAlpha: 0, duration: 0.8 }, 0);
+  // Fade only: an inline transform would override the CSS hide-on-scroll transform
+  if (header) tl.from(['.topbar', header], { autoAlpha: 0, duration: 0.7, clearProps: 'opacity,visibility' }, 0);
   $$('[data-hero-media]').forEach((el) => {
     tl.from(el, { scale: 1 + 0.06 * move, autoAlpha: 0, duration: 1.6, ease: 'power2.out' }, 0.1);
   });
@@ -326,5 +330,6 @@ function initMotion() {
 // Cap the wait so a slow font never holds the hero back.
 // Also wait for DOMContentLoaded, so page scripts have rendered their markup.
 const fontsReady = document.fonts ? document.fonts.ready : Promise.resolve();
-const domReady = new Promise((r) => (document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', r, { once: true }) : r()));
+// readyState is already 'interactive' while deferred scripts run, so wait for the event itself
+const domReady = new Promise((r) => (document.readyState === 'complete' ? r() : document.addEventListener('DOMContentLoaded', r, { once: true })));
 Promise.all([domReady, Promise.race([fontsReady, new Promise((r) => setTimeout(r, 1200))])]).then(initMotion);

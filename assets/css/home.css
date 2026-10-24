@@ -69,12 +69,10 @@
   opacity: 0;
   animation: pulse 2.2s var(--ease) infinite;
 }
-@keyframes pulse { 0% { transform: scale(0.6); opacity: 0.7; } 100% { transform: scale(1.8); opacity: 0; } }
 
 .hero-copy .display { margin-bottom: 24px; }
 .hero-copy .lead { margin-bottom: 36px; }
 
-.cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
 
 .hero-proof { display: flex; align-items: center; gap: 16px; margin-top: 40px; }
 .avatar-stack { display: inline-flex; align-items: center; }
@@ -235,20 +233,6 @@
   color: var(--muted);
 }
 
-/* ---------- Sections ---------- */
-.section { position: relative; padding-top: var(--section); padding-bottom: var(--section); }
-.section-tight { padding-top: clamp(24px, 3vw, 40px); padding-bottom: clamp(24px, 3vw, 40px); }
-.section-soft { background: var(--bg-soft); }
-
-.section-head {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px 64px;
-  margin-bottom: 56px;
-}
-.section-aside { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; max-width: 380px; }
-.section-aside p { font-size: 15px; line-height: 1.65; color: var(--muted); }
 
 /* ---------- Equipment ---------- */
 .product-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
@@ -1012,7 +996,6 @@
 
   .service-grid { grid-template-columns: repeat(2, 1fr); gap: 32px 24px; }
   .brands-header { grid-template-columns: 1fr; gap: 16px; }
-  .brands-grid { grid-template-columns: 1fr; }
   .reviews-badge-banner { flex-direction: column; align-items: flex-start; gap: 12px; }
   .insight-grid { grid-template-columns: repeat(2, 1fr); }
   .insight-more { grid-column: 1 / -1; }
@@ -1084,9 +1067,15 @@
   .about-grid { grid-template-columns: 1fr; }
   .about-media { aspect-ratio: 4 / 3; }
   .about-values { grid-template-columns: repeat(2, 1fr); }
-  .brand-card { padding: 24px 20px; }
-  .brand-logo-frame { height: 48px; }
-  .brand-logo-frame img { max-height: 38px; }
+  .brands-wrapper { gap: 24px; }
+  .brands-header-desc { margin-top: 4px; font-size: 15px; }
+  .brands-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .brand-card { gap: 12px; padding: 20px 10px 16px; border-radius: var(--r-lg); }
+  .brand-logo-frame { height: 36px; }
+  .brand-logo-frame img { max-height: 26px; max-width: 100%; }
+  .brand-details { padding-top: 12px; }
+  .brand-specialty { font-size: 11.5px; line-height: 1.35; }
+  .about-actions .btn { flex: 1 1 100%; }
 }
 
 @media (max-width: 600px) {
@@ -1140,6 +1129,12 @@
   }
   .services-top { flex-direction: column; margin-bottom: 40px; }
 
+  .insight-grid { grid-template-columns: 1fr; gap: 16px; }
+  .insight-more { grid-column: auto; }
+  .insight-body { padding: 22px 20px; }
+  .cta-features { gap: 8px; }
+  .cta-features li { padding: 6px 14px 6px 6px; font-size: 13px; }
+  .cta-features li span { width: 28px; height: 28px; }
   .reviews-track { grid-auto-columns: 86%; }
   .review { padding: 24px; }
   .review blockquote { font-size: 16px; }

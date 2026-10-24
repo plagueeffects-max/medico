@@ -140,6 +140,11 @@
 .is-wide .article-body h3 { font-size: 24px; }
 .article-media { display: block; overflow: hidden; aspect-ratio: 16 / 10; background: var(--bg-soft); }
 .article-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--ease); }
+/* Product cut-outs sit on a soft stage instead of being cropped */
+.article-media.is-product { background: radial-gradient(120% 90% at 50% 100%, #edf1f6 0%, #f8fafc 62%); }
+.article-media.is-product img { padding: 8% 0 4%; object-fit: contain; }
+.featured-media.is-product { background: radial-gradient(120% 90% at 50% 100%, #edf1f6 0%, #f8fafc 62%); }
+.featured-media.is-product img { padding: 6% 0; object-fit: contain; }
 .article-card:hover .article-media img { transform: scale(1.05); }
 .article-body { display: flex; flex: 1; flex-direction: column; gap: 10px; padding: 22px 24px 24px; }
 .article-meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
@@ -246,6 +251,8 @@
 .post-cover { max-width: 1100px; margin: clamp(32px, 4vw, 48px) auto 0; }
 .post-cover-frame { position: relative; overflow: hidden; aspect-ratio: 16 / 8; border-radius: var(--r-xl); background: var(--bg-soft); box-shadow: var(--shadow-lg); }
 .post-cover-frame img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.35s var(--ease); }
+.post-cover-frame.is-product { background: radial-gradient(120% 90% at 50% 100%, #edf1f6 0%, #f8fafc 62%); }
+.post-cover-frame.is-product img { padding: 5% 0; object-fit: contain; }
 .post-cover-count { position: absolute; right: 16px; bottom: 16px; }
 .post-thumbs { display: flex; gap: 10px; margin-top: 14px; overflow-x: auto; scrollbar-width: none; }
 .post-thumbs button {
@@ -294,7 +301,7 @@
 @media (max-width: 600px) {
   .article-grid { grid-template-columns: 1fr; }
   .article-card.is-wide { grid-column: auto; flex-direction: column; }
-  .is-wide .article-media { aspect-ratio: 16 / 10; }
+  .is-wide .article-media { flex: none; min-height: 0; aspect-ratio: 16 / 10; }
   .is-wide .article-body { padding: 22px 24px 24px; }
   .is-wide .article-body h3 { font-size: 18px; }
   .topic { padding: 10px 14px 10px 10px; }

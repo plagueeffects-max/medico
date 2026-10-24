@@ -33,7 +33,7 @@
         <p class="featured-desc" data-reveal>${esc(featured.subheading)}</p>
         <a href="${url(featured)}" class="btn btn-dark" data-reveal>Read full article${icon('i-arrow')}</a>
       </div>
-      <a href="${url(featured)}" class="featured-media" tabindex="-1" aria-hidden="true" data-clip>
+      <a href="${url(featured)}" class="featured-media${/\/products\//.test(featured.image || '') ? ' is-product' : ''}" tabindex="-1" aria-hidden="true" data-clip>
         <img src="${esc(featured.image || 'images/medico-shop.webp')}" alt="" loading="lazy">
         <span class="featured-meta"><span class="pill pill-accent">${esc(topicOf(featured))}</span><span class="pill">${icon('i-clock')}${readTime(featured)} min read</span></span>
       </a>`;
@@ -54,7 +54,7 @@
   const counter = document.getElementById('article-count');
   const card = (b, i, list) => `
     <article class="article-card${i === 0 && list.length > 3 && list.length % 3 === 1 ? ' is-wide' : ''}" style="--i:${i}">
-      <a href="${url(b)}" class="article-media" tabindex="-1" aria-hidden="true">
+      <a href="${url(b)}" class="article-media${/\/products\//.test(b.image || '') ? ' is-product' : ''}" tabindex="-1" aria-hidden="true">
         <img src="${esc(b.image || 'images/medico-shop.webp')}" alt="" loading="lazy">
       </a>
       <div class="article-body">

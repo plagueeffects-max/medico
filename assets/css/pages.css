@@ -305,6 +305,9 @@
   .why-grid { grid-template-columns: 1fr; }
   .number { padding: 24px 4px; }
   .number:nth-child(even) { padding-left: 20px; }
+  .founder-photo { max-width: 280px; margin: 0 auto; }
+  .founder-photo::before { inset: -10px; }
+  .founder-copy { text-align: left; }
   .since-badge { bottom: -20px; padding: 10px 16px 10px 10px; }
   .since-year { font-size: 18px; padding: 8px 10px; }
   .visit-map,
