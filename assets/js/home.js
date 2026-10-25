@@ -21,6 +21,11 @@
 (() => {
   const heroVideo = document.getElementById('hero-video');
   if (!heroVideo) return;
+  // One file per device (<source media> is ignored by Chrome, which fetched both).
+  // Data-saver users keep the poster frame instead.
+  if (navigator.connection && navigator.connection.saveData) return;
+  heroVideo.src = window.matchMedia('(min-width: 901px)').matches ? heroVideo.dataset.srcLg : heroVideo.dataset.srcSm;
+  heroVideo.preload = 'auto';
   heroVideo.muted = true;
   const play = () => { const p = heroVideo.play(); if (p) p.catch(() => {}); };
   if (heroVideo.readyState >= 2) play();

@@ -1014,38 +1014,37 @@
   /* Tagline on mobile: hidden to avoid clutter */
   .hero-tagline { display: none; }
 
-  /* Hero: copy first, then the video as its own stage below it.
-     Behind the copy it had to be washed out to stay readable; as a stage it plays at full strength. */
-  .hero { display: flex; flex-direction: column; background: #fff; }
+  /* Hero: one full first screen. The video fills the top and fades out
+     behind the headline; the copy sits at the bottom, so both are seen at once. */
+  .hero { background: #fff; }
   .hero-inner {
-    order: 1;
     flex-direction: column;
+    justify-content: flex-end;
     align-items: flex-start;
-    min-height: 0;
-    padding-top: 28px;
-    padding-bottom: 0;
+    /* One screen = viewport minus top strip (34px), header and the sticky action bar (70px) */
+    min-height: calc(100svh - var(--header-h) - 34px - 70px - env(safe-area-inset-bottom));
+    padding-top: 0;
+    padding-bottom: 28px;
   }
   .hero-media {
-    order: 2;
-    position: relative;
-    inset: auto;
-    z-index: 0;
-    width: 100%;
-    aspect-ratio: 16 / 10;
-    max-height: 70svh;
-    margin-top: 8px;
-    left: auto;
-    background-position: 80% center;
-    /* Soft top and bottom edges so the stage melts into the page */
-    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 78%, transparent 100%);
-    mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 78%, transparent 100%);
+    inset: 0 0 auto;
+    left: 0;
+    height: 64%;
+    background-position: 80% 40%;
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 52%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 0%, #000 52%, transparent 100%);
   }
   .hero-media::after { display: none; }
-  .hero-video { object-position: 80% center; }
+  .hero-video { object-position: 80% 40%; }
   .hero-badge { display: none; }
+  /* Faint halo keeps small copy crisp where it crosses the lungs */
+  .hero-copy { text-shadow: 0 0 18px rgba(255, 255, 255, 0.9), 0 0 2px rgba(255, 255, 255, 0.6); }
+  .hero-copy .btn { text-shadow: none; }
+  /* The sticky Call / WhatsApp bar covers this on phones; dropping it keeps the hero to one screen */
+  .hero-cta-secondary { display: none; }
   .hero-proof { margin-top: 24px; }
 
-  .stats-wrap { margin-top: -48px; }
+  .stats-wrap { margin-top: 8px; }
   .reviews-meta { align-items: flex-start; }
   .faq-grid { grid-template-columns: 1fr; }
   .faq-intro { position: static; }
@@ -1072,8 +1071,7 @@
 
 @media (max-width: 600px) {
   .hero-eyebrow { font-size: 11.5px; letter-spacing: 0.08em; margin-bottom: 18px; }
-  .hero-media { aspect-ratio: 1 / 1; }
-  .hero-copy .display { margin-bottom: 18px; }
+  .hero-copy .display { margin-bottom: 16px; font-size: clamp(2.25rem, 9.6vw, 2.75rem); }
   .hero-copy .lead { margin-bottom: 28px; font-size: 1.0625rem; }
   .hero-proof { margin-top: 22px; }
 
@@ -1134,4 +1132,19 @@
   .track-controls { display: none; }
   .rating-pill { flex-wrap: wrap; row-gap: 4px; }
 
+}
+
+/* Landscape phones: too short for stacking, so copy left and video right */
+@media (max-width: 900px) and (orientation: landscape) and (max-height: 520px) {
+  .hero-inner { justify-content: center; min-height: 0; padding-top: 32px; padding-bottom: 40px; }
+  .hero-copy { max-width: 56%; }
+  .hero-media {
+    inset: 0;
+    left: 46%;
+    height: auto;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 30%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 30%);
+  }
+  .hero-copy .display { font-size: 2.5rem; }
+  .hero-cta-secondary { display: inline-flex; }
 }

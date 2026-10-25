@@ -1095,3 +1095,12 @@ ul, ol { list-style: none; }
   .footer-bg { opacity: 0.4; }
   .footer-bottom { flex-direction: column; }
 }
+
+/* Short landscape screens (phones on their side): drop the top strip and the
+   sticky action bar, which would eat most of the height; the round WhatsApp button stays */
+@media (max-width: 900px) and (orientation: landscape) and (max-height: 520px) {
+  .topbar,
+  .mobile-bar { display: none; }
+  body { padding-bottom: 0; }
+  .wa-fab { display: inline-flex; width: 50px; height: 50px; }
+}

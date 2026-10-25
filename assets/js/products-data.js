@@ -139,7 +139,7 @@ const ProductsDB = {
             originalPrice: 70000,
             stock: "In Stock",
             description: "Compact 5-liter clinical stationary oxygen concentrator with ultra-low power consumption.",
-            mainImage: "images/products/oxygenConc.png",
+            mainImage: "images/products/oxygen-conc.webp",
             features: ["Lightweight 14kg footprint", "OPI oxygen percentage indicator", "Low maintenance design"]
         },
         {
@@ -199,7 +199,7 @@ const ProductsDB = {
             originalPrice: 60000,
             stock: "Order on Request",
             description: "Rugged mobile non-invasive ventilation device designed for transit care and high altitude use.",
-            mainImage: "images/products/sleep.png",
+            mainImage: "images/products/sleep.webp",
             features: ["Internal rechargeable battery", "Leak compensation technology", "Target tidal volume assurance"]
         }
     ]
