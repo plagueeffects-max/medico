@@ -753,6 +753,7 @@ ul, ol { list-style: none; }
 .pill .icon { width: 13px; height: 13px; }
 .pill-ok { background: var(--ok-tint); color: var(--ok); }
 .pill-accent { background: var(--accent-tint); color: var(--accent); }
+.pill-warn { background: #fef3c7; color: #92400e; }
 .pill-ink { background: var(--ink); color: #fff; }
 
 /* ---------- Footer ---------- */
@@ -802,15 +803,25 @@ ul, ol { list-style: none; }
 .footer-contact .icon { width: 18px; height: 18px; margin-top: 2px; color: var(--muted-2); }
 
 .footer-bottom {
+  position: relative;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 12px 24px;
   padding-top: 24px;
   padding-bottom: 28px;
-  border-top: 1px solid var(--line);
   font-size: 13.5px;
   color: var(--muted);
+}
+/* Divider sits inside the gutters so it lines up with the columns above */
+.footer-bottom::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: max(var(--gutter), env(safe-area-inset-left));
+  right: max(var(--gutter), env(safe-area-inset-right));
+  height: 1px;
+  background: var(--line);
 }
 .footer-legal { display: flex; flex-wrap: wrap; gap: 8px 24px; }
 .footer-legal a { transition: color 0.2s var(--ease); }

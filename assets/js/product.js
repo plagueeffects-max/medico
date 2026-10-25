@@ -25,7 +25,7 @@
   const onRequest = p.stock && p.stock !== 'In Stock';
   const stock = $('pd-stock-pill');
   stock.textContent = onRequest ? p.stock : 'In stock';
-  stock.classList.add(onRequest ? 'pill-accent' : 'pill-ok');
+  stock.classList.add(onRequest ? 'pill-warn' : 'pill-ok');
   if (p.brand) { $('pd-brand').hidden = false; $('pd-brand').textContent = p.brand; }
   if (p.sku) { $('pd-sku').hidden = false; $('pd-sku').textContent = `SKU ${p.sku}`; }
   if (Array.isArray(p.features) && p.features.length) {
@@ -119,7 +119,7 @@
       const req = r.stock && r.stock !== 'In Stock';
       return `
       <article class="item-card">
-        <div class="item-top"><span class="pill ${req ? 'pill-accent' : 'pill-ok'}">${req ? esc(r.stock) : 'In stock'}</span></div>
+        <div class="item-top"><span class="pill ${req ? 'pill-warn' : 'pill-ok'}">${req ? esc(r.stock) : 'In stock'}</span></div>
         <a href="${href}" class="item-media" tabindex="-1" aria-hidden="true"><img src="${esc(safeUrl(r.mainImage) || FALLBACK)}" alt="" loading="lazy"></a>
         <div class="item-body">
           <h3><a href="${href}">${esc(r.title)}</a></h3>

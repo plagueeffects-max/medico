@@ -107,8 +107,8 @@ const homeMotion = () => {
   const move = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1;
 
   // Stats card rises out of the hero, then its cells follow
-  gsap.from('[data-stats]', { y: 50 * move, autoAlpha: 0, duration: 1.1, delay: 0.9 * move });
-  gsap.from('.stat', { y: 20 * move, autoAlpha: 0, stagger: 0.1, delay: 1.1 * move });
+  gsap.fromTo('[data-stats]', { y: 50 * move, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1.1, delay: 0.9 * move });
+  gsap.fromTo('.stat', { y: 20 * move, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: 0.1, delay: 1.1 * move });
 
   if (move) {
     // Hero video drifts slower than the page

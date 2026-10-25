@@ -160,7 +160,7 @@ function initMotion() {
   // Fade only: an inline transform on the sticky header would break the menu sheet's positioning
   if (header) tl.from(['.topbar', header], { autoAlpha: 0, duration: 0.7, clearProps: 'opacity,visibility' }, 0);
   $$('[data-hero-media]').forEach((el) => {
-    tl.from(el, { scale: 1 + 0.06 * move, autoAlpha: 0, duration: 1.6, ease: 'power2.out' }, 0.1);
+    tl.fromTo(el, { scale: 1 + 0.06 * move, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 1.6, ease: 'power2.out' }, 0.1);
   });
   heroBits.forEach((el, i) => {
     const at = 0.2 + i * 0.12;
@@ -168,13 +168,13 @@ function initMotion() {
       const split = splitLines(el);
       tl.from(split.lines, { ...lineFrom, duration: 1.1, stagger: 0.09, ease: 'power4.out', onComplete: split.revert }, at);
     } else {
-      tl.from(el, { y: 22 * move, autoAlpha: 0 }, at);
+      tl.fromTo(el, { y: 22 * move, autoAlpha: 0 }, { y: 0, autoAlpha: 1 }, at);
     }
   });
   const heroEnd = 0.3 + heroBits.length * 0.12;
   if (document.querySelector('.tagline-bar')) tl.from('.tagline-bar', { scaleX: 0, transformOrigin: 'right center', duration: 0.8 }, heroEnd - 0.2);
-  if (document.querySelector('[data-tagline]')) tl.from('[data-tagline]', { x: 30 * move, autoAlpha: 0, stagger: 0.12 }, heroEnd - 0.1);
-  if (document.querySelector('[data-hero-badge]')) tl.from('[data-hero-badge]', { y: 24 * move, scale: 1 - 0.06 * move, autoAlpha: 0, ease: 'back.out(1.6)' }, heroEnd);
+  if (document.querySelector('[data-tagline]')) tl.fromTo('[data-tagline]', { x: 30 * move, autoAlpha: 0 }, { x: 0, autoAlpha: 1, stagger: 0.12 }, heroEnd - 0.1);
+  if (document.querySelector('[data-hero-badge]')) tl.fromTo('[data-hero-badge]', { y: 24 * move, scale: 1 - 0.06 * move, autoAlpha: 0 }, { y: 0, scale: 1, autoAlpha: 1, ease: 'back.out(1.6)' }, heroEnd);
 
   /* ---------- Scroll reveals ---------- */
   $$('[data-split]').forEach((el) => {
@@ -190,24 +190,26 @@ function initMotion() {
     right: { x: 40 * move },
     scale: { scale: 1 - 0.06 * move },
   };
+  // fromTo with explicit end values everywhere: from() reads the resting position at
+  // start-up, and elements with a CSS transform transition (hover lifts) report a
+  // mid-transition value, which left whole card grids parked 48px low.
   $$('[data-reveal]').forEach((el) => {
-    gsap.from(el, {
-      y: el.dataset.reveal ? 0 : 28 * move, ...revealFrom[el.dataset.reveal], autoAlpha: 0,
+    gsap.fromTo(el, { y: el.dataset.reveal ? 0 : 28 * move, ...revealFrom[el.dataset.reveal], autoAlpha: 0 }, {
+      x: 0, y: 0, scale: 1, autoAlpha: 1,
       scrollTrigger: { trigger: el, start: 'top 90%', once: true },
     });
   });
 
   $$('[data-stagger]').forEach((group) => {
-    gsap.from(group.children, {
-      y: 48 * move, autoAlpha: 0, duration: 1, stagger: 0.09,
+    gsap.fromTo(group.children, { y: 48 * move, autoAlpha: 0 }, {
+      y: 0, autoAlpha: 1, duration: 1, stagger: 0.09,
       scrollTrigger: { trigger: group, start: 'top 85%', once: true },
     });
   });
 
   $$('[data-clip]').forEach((el) => {
-    gsap.from(el, {
-      clipPath: reducedMotion ? 'inset(0% 0% 0% 0% round 28px)' : 'inset(12% 12% 12% 12% round 28px)',
-      autoAlpha: 0, duration: 1.4, ease: 'power3.inOut',
+    gsap.fromTo(el, { clipPath: reducedMotion ? 'inset(0% 0% 0% 0% round 28px)' : 'inset(12% 12% 12% 12% round 28px)', autoAlpha: 0 }, {
+      clipPath: 'inset(0% 0% 0% 0% round 28px)', autoAlpha: 1, duration: 1.4, ease: 'power3.inOut', clearProps: 'clipPath',
       scrollTrigger: { trigger: el, start: 'top 85%', once: true },
     });
   });
@@ -224,8 +226,8 @@ function initMotion() {
 
   // Footer columns rise in together
   $$('.footer-grid').forEach((grid) => {
-    gsap.from(grid.children, {
-      y: 24 * move, autoAlpha: 0, stagger: 0.08,
+    gsap.fromTo(grid.children, { y: 24 * move, autoAlpha: 0 }, {
+      y: 0, autoAlpha: 1, stagger: 0.08,
       scrollTrigger: { trigger: grid, start: 'top 92%', once: true },
     });
   });
@@ -257,7 +259,7 @@ function initMotion() {
   });
   mm.add('(max-width: 1023px), (prefers-reduced-motion: reduce)', () => {
     $$('[data-scrub-scale]').forEach((el) => {
-      gsap.from(el, { y: 40 * move, autoAlpha: 0, duration: 1.1, scrollTrigger: { trigger: el, start: 'top 90%', once: true } });
+      gsap.fromTo(el, { y: 40 * move, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1.1, scrollTrigger: { trigger: el, start: 'top 90%', once: true } });
     });
   });
   mm.add('(prefers-reduced-motion: no-preference)', () => {
@@ -315,7 +317,7 @@ function initMotion() {
   });
 
   /* WhatsApp button pops in after the hero settles */
-  if (document.querySelector('.wa-fab')) gsap.from('.wa-fab', { scale: 0, autoAlpha: 0, delay: 1.4, duration: 0.7, ease: 'back.out(2)' });
+  if (document.querySelector('.wa-fab')) gsap.fromTo('.wa-fab', { scale: 0, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, delay: 1.4, duration: 0.7, ease: 'back.out(2)', clearProps: 'transform' });
 
   // Images loading late can shift trigger positions
   window.addEventListener('load', () => ScrollTrigger.refresh());

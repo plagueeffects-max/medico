@@ -109,7 +109,7 @@
     return `
       <article class="item-card" style="--i:${i}">
         <div class="item-top">
-          <span class="pill ${onRequest ? 'pill-accent' : 'pill-ok'}">${onRequest ? esc(p.stock) : 'In stock'}</span>
+          <span class="pill ${onRequest ? 'pill-warn' : 'pill-ok'}">${onRequest ? esc(p.stock) : 'In stock'}</span>
           <button type="button" class="fav-btn${isSaved ? ' is-saved' : ''}" data-fav="${esc(p.id)}" aria-pressed="${isSaved}" aria-label="Save ${esc(p.title)}">${icon('i-heart')}</button>
         </div>
         <a href="${href}" class="item-media" tabindex="-1" aria-hidden="true">
