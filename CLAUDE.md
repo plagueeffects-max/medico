@@ -17,7 +17,7 @@
 
 ## Project Context
 - **Business:** Medico Scientific Service Centre - Medical Equipment Supplier in J&K.
-- **Business Details:** Refer to `llms.txt` for contact info, product categories, and services.
+- **Business Details:** Contact info and business facts live in `api/_lib/settings.js` (defaults) and Admin > Settings; `/llms.txt` is generated from them.
 - **Core Pages:** `index.html`, `shop.html`, `about.html`, `blog.html`
 
 
