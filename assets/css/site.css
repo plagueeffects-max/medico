@@ -51,7 +51,7 @@
   --shadow-lg: 0 24px 50px -16px rgba(11, 18, 32, 0.16);
 
   --gutter: clamp(16px, 4vw, 40px);
-  --section: clamp(72px, 9vw, 120px);
+  --section: clamp(56px, 7vw, 96px);
   --header-h: 76px;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -994,11 +994,11 @@ ul, ol { list-style: none; }
 
 /* ---------- Enquiry dialog ---------- */
 .enquiry-dialog {
-  width: min(520px, calc(100vw - 32px));
+  width: min(940px, calc(100vw - 32px));
   max-height: calc(100svh - 32px);
   padding: 0;
   border: 1px solid rgba(11, 18, 32, 0.08);
-  border-radius: var(--r-xl);
+  border-radius: 20px;
   background: #fff;
   color: var(--text);
   box-shadow: 0 32px 72px -20px rgba(9, 13, 22, 0.35), 0 1px 3px rgba(11, 18, 32, 0.06);
@@ -1010,11 +1010,54 @@ ul, ol { list-style: none; }
 @keyframes dialog-in { from { opacity: 0; transform: translateY(20px) scale(0.98); } }
 @keyframes fade-in { from { opacity: 0; } }
 
-.enquiry { position: relative; padding: clamp(28px, 5vw, 40px); }
-.enquiry-close { position: absolute; top: 16px; right: 16px; }
-.enquiry .eyebrow { margin-bottom: 14px; }
-.enquiry h3 { margin-bottom: 4px; font-size: 26px; font-weight: 800; letter-spacing: -0.035em; color: var(--ink); }
+/* Wide two-pane dialog: who you reach on the left, the form on the right */
+.enquiry { position: relative; display: grid; grid-template-columns: 300px minmax(0, 1fr); min-height: 520px; }
+.enquiry-close { position: absolute; top: 14px; right: 14px; z-index: 2; }
+.enquiry-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 36px 28px 28px;
+  background: var(--ink);
+  color: rgba(255, 255, 255, 0.72);
+}
+.enquiry-aside .eyebrow { margin-bottom: 4px; }
+.enquiry-aside h3 { outline: none; font-size: 28px; font-weight: 800; line-height: 1.1; letter-spacing: -0.035em; color: #fff; }
+.enquiry-aside .enquiry-sub { margin: 0; font-size: 14.5px; line-height: 1.6; color: rgba(255, 255, 255, 0.7); }
+.enquiry-contacts { display: grid; gap: 2px; margin-top: auto; padding-top: 20px; border-top: 1px dashed rgba(255, 255, 255, 0.16); }
+.enquiry-contacts a { display: flex; align-items: center; gap: 12px; padding: 8px 6px; margin: 0 -6px; border-radius: 10px; font-size: 14px; font-weight: 600; color: #fff; transition: background-color 0.2s var(--ease); }
+.enquiry-contacts a:hover { background: rgba(255, 255, 255, 0.06); }
+.enquiry-contacts small { display: block; font-size: 11.5px; font-weight: 500; color: rgba(255, 255, 255, 0.5); }
+.ec-icon { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; flex: none; border-radius: 9px; background: rgba(255, 255, 255, 0.08); }
+.ec-icon .icon { width: 16px; height: 16px; }
+.enquiry-hours { display: flex; align-items: flex-start; gap: 8px; font-size: 12.5px; line-height: 1.5; color: rgba(255, 255, 255, 0.5); }
+.enquiry-hours .icon { width: 14px; height: 14px; margin-top: 2px; }
+.enquiry-main { padding: 36px 32px 28px; }
 .enquiry-sub { margin-bottom: 24px; font-size: 14.5px; color: var(--muted); }
+.chip-field { margin: 0 0 16px; padding: 0; border: 0; }
+.chip-field legend { margin-bottom: 8px; padding: 0; font-size: 13.5px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { position: relative; cursor: pointer; }
+.chip input { position: absolute; opacity: 0; pointer-events: none; }
+.chip span { display: inline-flex; align-items: center; height: 38px; padding: 0 14px; border-radius: 8px; border: 1px solid rgba(11, 18, 32, 0.12); background: #fff; font-size: 13.5px; font-weight: 500; color: var(--text); transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease), color 0.2s var(--ease); }
+.chip:hover span { border-color: rgba(11, 18, 32, 0.3); }
+.chip input:checked + span { background: var(--ink); border-color: var(--ink); color: #fff; }
+.chip input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+.enquiry-actions { display: flex; align-items: center; gap: 16px; margin-top: 8px; }
+.enquiry-actions .btn { margin-top: 0; flex: none; }
+.enquiry-actions .enquiry-note { margin: 0; text-align: left; }
+@media (max-width: 760px) {
+  .enquiry { grid-template-columns: 1fr; min-height: 0; }
+  .enquiry-aside { gap: 8px; padding: 24px 56px 22px 22px; }
+  .enquiry-aside h3 { font-size: 23px; }
+  .enquiry-aside .enquiry-sub { font-size: 13.5px; }
+  .enquiry-contacts, .enquiry-hours { display: none; }
+  .enquiry-close { color: #fff; }
+  .enquiry-close:hover { background: rgba(255, 255, 255, 0.1); }
+  .enquiry-main { padding: 22px 20px 22px; }
+  .enquiry-actions { position: sticky; bottom: -22px; z-index: 1; flex-direction: column; align-items: stretch; gap: 8px; margin: 8px -20px -22px; padding: 12px 20px 16px; background: #fff; border-top: 1px solid var(--line); }
+  .enquiry-actions .enquiry-note { text-align: center; }
+}
 
 .field { display: flex; flex-direction: column; gap: 6px; min-width: 0; margin-bottom: 16px; }
 .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -1311,4 +1354,46 @@ ul, ol { list-style: none; }
   .mobile-bar { display: none; }
   body { padding-bottom: 0; }
   .wa-fab { display: inline-flex; width: 50px; height: 50px; }
+}
+
+/* "Show more" under long lists (FAQs) */
+.show-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 10px 4px;
+  border: 0;
+  background: none;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+}
+.show-more .icon { width: 16px; height: 16px; transition: transform 0.3s var(--ease); }
+.show-more[aria-expanded='true'] .icon { transform: rotate(180deg); }
+.show-more:hover { color: var(--accent); }
+
+/* Phones: card rows swipe sideways instead of stacking into a tall column */
+@media (max-width: 700px) {
+  .insight-grid,
+  .partners-bento-grid {
+    display: grid;
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 80%;
+    gap: 12px;
+    margin-inline: calc(-1 * max(var(--gutter), env(safe-area-inset-left)));
+    padding-inline: max(var(--gutter), env(safe-area-inset-left));
+    padding-bottom: 6px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: max(var(--gutter), env(safe-area-inset-left));
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+  }
+  .insight-grid::-webkit-scrollbar,
+  .partners-bento-grid::-webkit-scrollbar { display: none; }
+  .insight-grid > *,
+  .partners-bento-grid > * { scroll-snap-align: start; grid-column: auto !important; }
 }

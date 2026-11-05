@@ -241,8 +241,8 @@
 }
 .founder-split-card {
   display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
-  border-radius: 28px;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  border-radius: 24px;
   overflow: hidden;
   background: #ffffff;
   border: 1px solid rgba(9, 13, 22, 0.08);
@@ -254,7 +254,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: clamp(48px, 6vw, 88px) 32px;
+  padding: clamp(32px, 4vw, 48px) 24px;
   background: #090e18;
   overflow: hidden;
 }
@@ -279,7 +279,7 @@
 .founder-photo-frame {
   position: relative;
   z-index: 2;
-  width: min(100%, 240px);
+  width: min(100%, 184px);
   aspect-ratio: 1;
   border-radius: 50%;
   border: 4px solid #ffffff;
@@ -327,7 +327,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(36px, 5vw, 68px);
+  padding: clamp(28px, 3.5vw, 44px) clamp(24px, 4vw, 52px);
 }
 .founder-name {
   font-size: clamp(1.85rem, 1.4rem + 1.6vw, 2.75rem);
@@ -343,7 +343,7 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ab-crimson);
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 .founder-bio p {
   font-size: 15px;
@@ -358,8 +358,8 @@
 .founder-pill-badges {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 32px;
+  gap: 10px;
+  margin-top: 22px;
   list-style: none;
   padding: 0;
 }
@@ -409,16 +409,19 @@
 }
 
 .journey-timeline {
+  --jgap: clamp(24px, 4vw, 48px);
   position: relative;
   margin-top: 24px;
 }
+/* Dots sit at the start of each of the 3 columns; centre of a dot is 9px in.
+   The line spans first dot centre to last dot centre. */
 .journey-track {
   position: absolute;
   top: 12px;
-  left: 36px;
-  right: 36px;
+  left: 9px;
+  right: calc((100% - 2 * var(--jgap)) / 3 - 9px);
   height: 2px;
-  background: rgba(225, 29, 72, 0.25);
+  background: rgba(224, 36, 27, 0.2);
   border-radius: 2px;
   z-index: 1;
 }
@@ -434,7 +437,7 @@
   z-index: 2;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: clamp(24px, 4vw, 48px);
+  gap: var(--jgap);
   list-style: none;
   padding: 0;
   margin: 0;
@@ -457,7 +460,7 @@
 .journey-marker.is-today {
   background: var(--ab-crimson);
   border-color: var(--ab-crimson);
-  box-shadow: 0 0 0 4px #ffffff, 0 0 0 9px rgba(225, 29, 72, 0.2);
+  box-shadow: 0 0 0 4px #ffffff, 0 0 0 9px rgba(224, 36, 27, 0.18);
 }
 .journey-year {
   display: block;
@@ -497,8 +500,8 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: clamp(32px, 4.5vw, 52px);
-  border-radius: 28px;
+  padding: clamp(26px, 3.5vw, 40px);
+  border-radius: 24px;
   background: #090e18;
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 20px 48px -12px rgba(9, 14, 24, 0.4);
@@ -516,13 +519,13 @@
   letter-spacing: 0.08em;
   color: #ffffff;
   align-self: flex-start;
-  margin-bottom: 32px;
+  margin-bottom: 20px;
 }
 .vision-pill-tag .icon { width: 14px; height: 14px; }
 .vision-quote-text {
-  font-size: clamp(1.35rem, 1rem + 1vw, 1.8rem);
+  font-size: clamp(1.2rem, 0.95rem + 0.8vw, 1.6rem);
   font-weight: 600;
-  line-height: 1.42;
+  line-height: 1.4;
   letter-spacing: -0.025em;
   color: #ffffff;
 }
@@ -530,8 +533,8 @@
 .purpose-bento-mission {
   display: flex;
   flex-direction: column;
-  padding: clamp(32px, 4.5vw, 52px);
-  border-radius: 28px;
+  padding: clamp(26px, 3.5vw, 40px);
+  border-radius: 24px;
   background: #ffffff;
   border: 1px solid rgba(9, 13, 22, 0.08);
   box-shadow: 0 12px 36px -12px rgba(12, 19, 34, 0.06), 0 1px 3px rgba(12, 19, 34, 0.03);
@@ -542,14 +545,14 @@
   gap: 8px;
   padding: 6px 14px;
   border-radius: 9999px;
-  background: rgba(225, 29, 72, 0.08);
-  border: 1px solid rgba(225, 29, 72, 0.2);
+  background: rgba(224, 36, 27, 0.07);
+  border: 1px solid rgba(224, 36, 27, 0.18);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.08em;
   color: var(--ab-crimson);
   align-self: flex-start;
-  margin-bottom: 28px;
+  margin-bottom: 18px;
 }
 .mission-pill-tag .icon { width: 14px; height: 14px; }
 .mission-numbered-list {
@@ -562,8 +565,8 @@
   display: flex;
   align-items: baseline;
   gap: 16px;
-  padding: 16px 0;
-  border-top: 1px solid rgba(9, 13, 22, 0.06);
+  padding: 12px 0;
+  border-top: 1px dashed rgba(9, 13, 22, 0.1);
   font-size: 15px;
   font-weight: 500;
   line-height: 1.5;
@@ -607,8 +610,8 @@
 .partner-logo-box {
   display: grid;
   place-items: center;
-  height: 110px;
-  border-radius: 16px;
+  height: 88px;
+  border-radius: 14px;
   background: #f8fafc;
   border: 1px solid rgba(9, 13, 22, 0.05);
   margin-bottom: 20px;
@@ -876,20 +879,20 @@
 @media (max-width: 900px) {
   .ab-hero-equipment-stage img { width: 112%; margin: 0 -6%; }
 
-  .journey-track {
-    top: 8px;
-    bottom: 8px;
+  .journey-track { display: none; }
+  .journey-node:not(:last-child)::after {
+    content: '';
+    position: absolute;
     left: 8px;
-    right: auto;
+    top: 22px;
+    bottom: calc(-1 * var(--jgap) + 4px);
     width: 2px;
-    height: auto;
+    border-radius: 2px;
+    background: var(--ab-crimson);
   }
-  .journey-line-fill {
-    transform-origin: top center;
-  }
+  .journey-timeline { --jgap: 36px; }
   .journey-nodes {
     grid-template-columns: 1fr;
-    gap: 36px;
   }
   .journey-node {
     padding-top: 0;

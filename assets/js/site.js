@@ -109,6 +109,8 @@ document.addEventListener('click', (e) => {
   const product = btn.dataset.product;
   if (product && form) form.elements.message.value = `Interested in: ${product}`;
   dialog.showModal();
+  // Start on the title so no control flashes a focus ring and phones do not pop the keyboard
+  document.getElementById('enquiry-title').focus({ preventScroll: true });
 });
 
 if (dialog && form) {
@@ -140,6 +142,7 @@ if (dialog && form) {
     const data = {
       name: name.value.trim(),
       phone: phone.value.trim(),
+      email: form.elements.email.value.trim(),
       organisation: form.elements.organisation.value,
       interest: form.elements.interest.value,
       message: form.elements.message.value.trim(),
@@ -157,20 +160,89 @@ if (dialog && form) {
     submit.classList.add('is-loading');
     status.textContent = '';
     try {
-      const res = await fetch('/api/inquiry', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
-      const out = await res.json().catch(() => ({}));
-      if ((res.status === 400 || res.status === 429) && out.message) { status.textContent = out.message; return; }
-      if (!res.ok || !out.success) throw new Error(out.message || 'failed');
+      // 1. Admin inbox. It validates and rate-limits, so a rejection stops here.
+      let saved = false;
+      try {
+        const res = await fetch('/api/inquiry', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+        const out = await res.json().catch(() => ({}));
+        if ((res.status === 400 || res.status === 429) && out.message) { status.textContent = out.message; return; }
+        saved = res.ok && out.success;
+      } catch { /* network or server down: the email below still gets through */ }
+
+      // 2. Email alert via Web3Forms. Skipped for bots caught by the honeypot.
+      const emailed = data.website ? true : await sendEmailAlert(data);
+      if (!saved && !emailed) throw new Error('not delivered');
       form.reset();
       showStep('done');
       form.querySelector('[data-step="done"] h3').focus();
-    } catch (err) {
-      // Never lose an enquiry: hand it to WhatsApp if the server can't take it
-      status.innerHTML = `We couldn't send that just now. <a href="${waLink(lines)}" target="_blank" rel="noopener">Send it on WhatsApp instead</a> or call +91 94190 08453.`;
+    } catch {
+      // Never lose an enquiry: hand it to WhatsApp or the phone
+      status.innerHTML = `We couldn't send that just now. <a href="${waLink(lines)}" target="_blank" rel="noopener">Send it on WhatsApp</a> or call <a href="tel:+919419008453">+91 94190 08453</a>.`;
     } finally {
       submit.disabled = false;
       submit.classList.remove('is-loading');
     }
+  });
+}
+
+/* ---------- Email alert for every enquiry (Web3Forms) ----------
+   The access key is public by design: Web3Forms only ever delivers to the
+   inbox registered with it. Swap it here when moving off the testing key. */
+const WEB3FORMS_KEY = '52fa89c9-2f99-4dfc-8eb1-97453357d54a';
+async function sendEmailAlert(d) {
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        access_key: WEB3FORMS_KEY,
+        subject: `New Medico enquiry: ${d.name} (${d.interest || 'General'})`,
+        from_name: 'Medico website',
+        name: d.name,
+        phone: d.phone,
+        ...(d.email ? { email: d.email, replyto: d.email } : {}),
+        organisation: d.organisation,
+        topic: d.interest,
+        message: d.message || '(no details given)',
+        page: d.page,
+      }),
+    });
+    return (await res.json().catch(() => ({}))).success === true;
+  } catch {
+    return false;
+  }
+}
+
+/* ---------- Long lists: show the first N, the rest behind "Show more" ----------
+   <div data-show="4">…</div>. Hidden items stay in the HTML for search engines. */
+document.querySelectorAll('[data-show]').forEach((list) => {
+  const limit = Number(list.dataset.show) || 4;
+  const extra = [...list.children].slice(limit);
+  if (!extra.length) return;
+  extra.forEach((el) => { el.hidden = true; });
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'show-more';
+  btn.setAttribute('aria-expanded', 'false');
+  const label = (open) => `${open ? 'Show fewer' : `Show ${extra.length} more`}<svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-chevron-down"/></svg>`;
+  btn.innerHTML = label(false);
+  btn.addEventListener('click', () => {
+    const open = btn.getAttribute('aria-expanded') !== 'true';
+    extra.forEach((el) => { el.hidden = !open; if (open) el.classList.add('is-entering'); });
+    btn.setAttribute('aria-expanded', String(open));
+    btn.innerHTML = label(open);
+    if (open) extra[0].querySelector('summary, a, button')?.focus({ preventScroll: true });
+    window.siteMotion?.refresh();
+  });
+  list.after(btn);
+});
+
+/* ---------- Years since founding (January 2000) ---------- */
+{
+  const years = new Date().getFullYear() - 2000;
+  document.querySelectorAll('[data-experience-years]').forEach((el) => {
+    el.textContent = years;
+    if (el.hasAttribute('data-count')) el.dataset.count = years;
   });
 }
 

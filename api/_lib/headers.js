@@ -8,7 +8,7 @@ const CSP = [
   // https: for Google review avatars and cover-photo candidates shown in the admin
   "img-src 'self' data: blob: https:",
   "media-src 'self' data: blob:",
-  "connect-src 'self'",
+  "connect-src 'self' https://api.web3forms.com",
   'frame-src https://www.google.com https://maps.google.com',
   "frame-ancestors 'self'",
   "base-uri 'self'",

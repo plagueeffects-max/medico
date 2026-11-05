@@ -29,14 +29,14 @@
   <link rel="manifest" href="/favicon/site.webmanifest">
   <link rel="preload" href="/assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/inter-800.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/css/site.css?v=6">
+  <link rel="stylesheet" href="/assets/css/site.css?v=7">
   <script>document.documentElement.classList.add('js');</script>
   <script src="/assets/vendor/gsap.min.js" defer></script>
   <script src="/assets/vendor/ScrollTrigger.min.js" defer></script>
   <script src="/assets/vendor/SplitText.min.js" defer></script>
-  <script src="/assets/js/site.js?v=6" defer></script>
+  <script src="/assets/js/site.js?v=7" defer></script>
   <!-- /@head -->
-  <link rel="stylesheet" href="/assets/css/pages.css?v=6">
+  <link rel="stylesheet" href="/assets/css/pages.css?v=7">
 
   <script type="application/ld+json">
   {
@@ -97,7 +97,7 @@
   <!-- @header -->
   <div class="topbar">
     <div class="container topbar-inner">
-      <p class="topbar-note"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-pin"/></svg><span data-copy="chrome.topbar.note">Iqbal Complex, Srinagar<span class="topbar-hide-md"> &middot; Open 7 days, 9 AM &ndash; 8 PM</span></span></p>
+      <p class="topbar-note"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-pin"/></svg><span data-copy="chrome.topbar.address">Iqbal Complex, Srinagar</span><span class="topbar-hide-md"> &middot; <span data-copy="chrome.topbar.hours">Open 7 days, 9 AM – 8 PM</span></span></p>
       <div class="topbar-links">
         <a href="tel:+919419008453"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-phone"/></svg><span data-copy="chrome.topbar.phone">+91 94190 08453</span></a>
         <a href="https://wa.me/919419008453" class="topbar-cta" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-whatsapp"/></svg><span data-copy="chrome.topbar.cta">WhatsApp us</span></a>
@@ -208,7 +208,7 @@
         <div class="ab-hero-grid">
           <div class="ab-hero-copy">
             <p class="eyebrow" data-hero data-copy="about.hero.eyebrow">About Medico</p>
-            <h1 class="ab-title" data-hero-title>25 years of showing up <span class="text-crimson">for care</span></h1>
+            <h1 class="ab-title" data-hero-title><span data-experience-years>26</span> years of showing up <span class="text-crimson">for care</span></h1>
             <p class="ab-lead" data-hero>From a single counter in Srinagar to Kashmir&rsquo;s trusted partner for respiratory and life-support equipment, supplied, installed and serviced by people who answer the phone.</p>
             <div class="ab-hero-cta" data-hero>
               <button type="button" class="btn btn-dark-pill" data-open-enquiry data-mode="contact">Talk to our team<svg class="icon"><use href="/assets/icons.svg#i-arrow"/></svg></button>
@@ -500,11 +500,19 @@
   <dialog class="enquiry-dialog" id="enquiry-dialog" aria-labelledby="enquiry-title">
     <form class="enquiry" id="enquiry-form" novalidate>
       <button type="button" class="icon-btn enquiry-close" data-close-enquiry aria-label="Close"><svg class="icon"><use href="/assets/icons.svg#i-x"/></svg></button>
-      <div class="enquiry-step" data-step="form">
-        <p class="eyebrow" id="enquiry-eyebrow">Free consultation</p>
-        <h3 id="enquiry-title">Request a quote</h3>
+      <aside class="enquiry-aside">
+        <p class="eyebrow eyebrow-light" id="enquiry-eyebrow">Free consultation</p>
+        <h3 id="enquiry-title" tabindex="-1">Request a quote</h3>
         <p class="enquiry-sub" id="enquiry-sub">Tell us what you need. A specialist calls you back, usually the same day.</p>
-
+        <ul class="enquiry-contacts">
+          <li><a href="tel:+919419008453"><span class="ec-icon"><svg class="icon"><use href="/assets/icons.svg#i-phone"/></svg></span><span><small>Call</small>+91 94190 08453</span></a></li>
+          <li><a href="https://wa.me/919419008453" target="_blank" rel="noopener"><span class="ec-icon"><svg class="icon"><use href="/assets/icons.svg#i-whatsapp"/></svg></span><span><small>WhatsApp</small>Message us</span></a></li>
+          <li><a href="mailto:medicosgr@gmail.com"><span class="ec-icon"><svg class="icon"><use href="/assets/icons.svg#i-mail"/></svg></span><span><small>Email</small>medicosgr@gmail.com</span></a></li>
+        </ul>
+        <p class="enquiry-hours"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-clock"/></svg>Open 7 days, 9 AM &ndash; 8 PM &middot; Iqbal Complex, Srinagar</p>
+      </aside>
+      <div class="enquiry-main">
+      <div class="enquiry-step" data-step="form">
         <div class="field-row">
           <div class="field">
             <label for="f-name">Your name</label>
@@ -517,17 +525,17 @@
             <span class="field-error" id="f-phone-error" role="alert"></span>
           </div>
         </div>
-        <div class="field-row">
-          <div class="field">
-            <label for="f-type">Enquiring for</label>
-            <select id="f-type" name="organisation">
-              <option>Hospital</option>
-              <option>Nursing home</option>
-              <option>Clinic</option>
-              <option>Home care</option>
-              <option>Other</option>
-            </select>
+        <fieldset class="field chip-field">
+          <legend>Enquiring for</legend>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="organisation" value="Hospital" checked><span>Hospital</span></label>
+            <label class="chip"><input type="radio" name="organisation" value="Nursing home"><span>Nursing home</span></label>
+            <label class="chip"><input type="radio" name="organisation" value="Clinic"><span>Clinic</span></label>
+            <label class="chip"><input type="radio" name="organisation" value="Home care"><span>Home care</span></label>
+            <label class="chip"><input type="radio" name="organisation" value="Other"><span>Other</span></label>
           </div>
+        </fieldset>
+        <div class="field-row">
           <div class="field">
             <label for="f-equipment">Topic</label>
             <select id="f-equipment" name="interest">
@@ -542,15 +550,21 @@
               <option>Service / AMC / repair</option>
             </select>
           </div>
+          <div class="field">
+            <label for="f-email">Email <span class="optional">(optional)</span></label>
+            <input id="f-email" name="email" type="email" autocomplete="email" maxlength="120" placeholder="you@hospital.in">
+          </div>
         </div>
         <div class="field">
           <label for="f-message">Details <span class="optional">(optional)</span></label>
           <textarea id="f-message" name="message" rows="3" maxlength="2000" placeholder="e.g. 2 patient monitors for a 10-bed ICU in Baramulla"></textarea>
         </div>
         <div class="hp-field" aria-hidden="true"><label for="f-website">Website</label><input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
-        <button type="submit" class="btn btn-accent btn-lg btn-block" id="enquiry-submit"><span>Send enquiry</span><svg class="icon"><use href="/assets/icons.svg#i-arrow"/></svg></button>
+        <div class="enquiry-actions">
+          <button type="submit" class="btn btn-accent btn-lg" id="enquiry-submit"><span>Send enquiry</span><svg class="icon"><use href="/assets/icons.svg#i-arrow"/></svg></button>
+          <p class="enquiry-note">We reply within working hours. No spam, ever.</p>
+        </div>
         <p class="form-status" id="enquiry-status" role="status"></p>
-        <p class="enquiry-note">Rather talk now? <a href="tel:+919419008453">Call +91 94190 08453</a> &middot; <a href="https://wa.me/919419008453" target="_blank" rel="noopener">WhatsApp</a></p>
       </div>
       <div class="enquiry-step enquiry-done" data-step="done" hidden>
         <span class="enquiry-done-icon" aria-hidden="true"><svg class="icon"><use href="/assets/icons.svg#i-check"/></svg></span>
@@ -558,6 +572,7 @@
         <p class="enquiry-sub">A specialist will call you back. If it is urgent, message us on WhatsApp and we will pick it up there.</p>
         <a class="btn btn-outline btn-block" id="enquiry-wa" href="https://wa.me/919419008453" target="_blank" rel="noopener"><svg class="icon"><use href="/assets/icons.svg#i-whatsapp"/></svg>Also send on WhatsApp</a>
         <button type="button" class="btn btn-dark btn-block" data-close-enquiry>Done</button>
+      </div>
       </div>
     </form>
   </dialog>

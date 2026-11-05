@@ -50,11 +50,11 @@ const icon = (id, cls = 'icon') => `<svg class="${cls}"><use href="/assets/icons
   const marquee = document.getElementById('reviews-marquee');
   const track = document.getElementById('reviews-track');
   if (!marquee || !track) return;
-  const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Reduced-motion users still get the strip, at half speed; it pauses on hover, focus and touch
+  const speed = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 22 : 45;
 
   const build = () => {
     track.querySelectorAll('[data-clone]').forEach((el) => el.remove());
-    if (still) return;
     const originals = [...track.children];
     originals.forEach((el) => {
       const c = el.cloneNode(true);
@@ -66,7 +66,7 @@ const icon = (id, cls = 'icon') => `<svg class="${cls}"><use href="/assets/icons
     // ~45px per second whatever the card count or screen width
     const setWidth = track.scrollWidth / 2;
     track.style.setProperty('--loop', `${setWidth}px`);
-    track.style.setProperty('--duration', `${Math.max(30, setWidth / 45)}s`);
+    track.style.setProperty('--duration', `${Math.max(30, setWidth / speed)}s`);
     marquee.classList.add('is-running');
   };
 
@@ -113,8 +113,23 @@ const icon = (id, cls = 'icon') => `<svg class="${cls}"><use href="/assets/icons
           : `<span class="avatar avatar-${(i % 5) + 1}" aria-hidden="true">${escapeHtml(initials)}</span>`;
         const text = r.text.length > 260 ? `${r.text.slice(0, 250).replace(/\s+\S*$/, '')}…` : r.text;
         return `<figure class="review" role="listitem">
-          <blockquote>&ldquo;${escapeHtml(text)}&rdquo;</blockquote>
-          <figcaption>${avatar}<span class="reviewer-meta"><span class="reviewer-name-row"><strong>${escapeHtml(r.author)}</strong>${icon('i-verified', 'icon-verified')}</span><small>${escapeHtml(r.time || 'Google review')}</small></span></figcaption>
+          <blockquote class="review-quote">&ldquo;${escapeHtml(text)}&rdquo;</blockquote>
+          <div class="review-footer">
+            <div class="review-author-col">
+              ${avatar}
+              <div class="reviewer-meta">
+                <div class="reviewer-name-row">
+                  <strong>${escapeHtml(r.author)}</strong>
+                  ${icon('i-verified', 'icon-verified')}
+                </div>
+                <small>${escapeHtml(r.time || 'Verified Google Review')}</small>
+              </div>
+            </div>
+            <div class="review-divider" aria-hidden="true"></div>
+            <div class="review-brand-col">
+              <svg class="g-logo" style="width:20px;height:20px"><use href="/assets/icons.svg#i-google"/></svg>
+            </div>
+          </div>
         </figure>`;
       }).join('');
 
