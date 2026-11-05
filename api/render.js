@@ -64,7 +64,7 @@ async function renderPost(ed, slug, res) {
   if (row === undefined) return null; // database down: serve the template, post.js uses its fallback
   if (!row) {
     ed.attrs(ed.$('#post-missing'), { hidden: null });
-    setHead(ed, { title: 'Article not found | Medico Insights', description: 'This article may have been moved or removed.', canonical: `${siteUrl()}/blog.html`, image: abs('/images/medico-shop.webp'), type: 'website', robots: 'noindex, follow' });
+    setHead(ed, { title: 'Article not found | Medico blog', description: 'This article may have been moved or removed.', canonical: `${siteUrl()}/blog.html`, image: abs('/images/medico-shop.webp'), type: 'website', robots: 'noindex, follow' });
     return 404;
   }
   if (row.slug !== slug) { res.setHeader('Location', `/blog/${encodeURIComponent(row.slug)}`); return 301; }
@@ -82,7 +82,7 @@ function fillPost(ed, row, all, s) {
   const indexable = isIndexable(row);
 
   setHead(ed, {
-    title: `${p.metaTitle} | Medico Insights`,
+    title: `${p.metaTitle} | Medico blog`,
     description: p.metaDescription || plainText(p.subheading),
     canonical: url, image, type: 'article',
     // Unreviewed AI articles: readable, links followed, kept out of search results
@@ -100,7 +100,7 @@ function fillPost(ed, row, all, s) {
         author: /team/i.test(author) ? { '@type': 'Organization', name: s.business_name, url: `${siteUrl()}/` } : { '@type': 'Person', name: author },
         publisher: orgLd(s),
       })
-      + breadcrumb([['Home', '/'], ['Insights', '/blog.html'], [p.title, `/blog/${p.slug}`]])
+      + breadcrumb([['Home', '/'], ['Blog', '/blog.html'], [p.title, `/blog/${p.slug}`]])
       + (Array.isArray(row.faq) && row.faq.length ? ld({
         '@type': 'FAQPage',
         mainEntity: row.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),

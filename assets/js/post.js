@@ -25,7 +25,7 @@
     return;
   }
 
-  document.title = `${blog.title} | Medico Insights`;
+  document.title = `${blog.title} | Medico blog`;
   $('crumb-title').textContent = blog.title;
   $('post-topic').textContent = topicOf(blog);
   $('post-title').textContent = blog.title;

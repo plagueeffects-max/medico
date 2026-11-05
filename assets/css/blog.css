@@ -5,31 +5,20 @@
 /* ---------- Hero Section ---------- */
 .blog-hero {
   position: relative;
-  padding-top: clamp(24px, 3.5vw, 40px);
-  padding-bottom: clamp(44px, 5.5vw, 72px);
-  background: radial-gradient(circle at 75% 40%, rgba(224, 242, 254, 0.65) 0%, rgba(240, 249, 255, 0.35) 50%, #ffffff 80%);
+  padding-top: clamp(20px, 3vw, 32px);
+  padding-bottom: clamp(32px, 4vw, 56px);
+  background: #fff;
   overflow: hidden;
 }
 .blog-hero .page-hero-grid {
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
   gap: clamp(32px, 5vw, 64px);
   align-items: center;
+  padding-top: clamp(24px, 3vw, 40px);
+  padding-bottom: 0;
 }
-.blog-hero .eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11.5px;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #e11d48;
-  margin-bottom: 14px;
-}
-.blog-hero .bullet {
-  color: #e11d48;
-}
+.blog-hero .page-hero-copy { min-width: 0; }
 .blog-hero .display-md {
   font-size: clamp(2.4rem, 1.6rem + 3vw, 3.8rem);
   font-weight: 800;
@@ -60,14 +49,12 @@
 .blog-hero-monitor-stage img {
   display: block;
   width: 100%;
-  max-width: 480px;
+  max-width: 520px;
   height: auto;
   object-fit: contain;
-  filter: drop-shadow(0 20px 32px rgba(12, 19, 34, 0.09));
-  transition: transform 0.4s var(--ease);
-}
-.blog-hero-monitor-stage:hover img {
-  transform: translateY(-4px);
+  /* The studio backdrop fades into the page instead of showing as a box */
+  -webkit-mask-image: radial-gradient(ellipse 66% 64% at 50% 52%, #000 58%, transparent 100%);
+  mask-image: radial-gradient(ellipse 66% 64% at 50% 52%, #000 58%, transparent 100%);
 }
 
 /* Hero Search Bar */
@@ -75,6 +62,7 @@
   position: relative;
   display: flex;
   align-items: center;
+  width: 100%;
   max-width: 500px;
   height: 56px;
   padding: 0 8px 0 20px;
@@ -124,7 +112,7 @@
   flex: none;
 }
 .blog-search-btn:hover {
-  background: #e11d48;
+  background: var(--accent);
   transform: translateX(2px);
 }
 .blog-search-btn .icon {
@@ -600,14 +588,17 @@
 }
 
 /* ---------- Responsive Breakpoints ---------- */
-@media (max-width: 1024px) {
+@media (max-width: 860px) {
   .blog-hero .page-hero-grid {
     grid-template-columns: 1fr;
-    gap: 36px;
+    gap: 16px;
   }
   .blog-hero-monitor-stage img {
-    max-width: 380px;
+    max-width: 440px;
+    margin-inline: auto;
   }
+}
+@media (max-width: 1024px) {
   .featured-card {
     grid-template-columns: 1fr;
   }

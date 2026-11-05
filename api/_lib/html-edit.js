@@ -12,7 +12,7 @@ const PAGES = {
   index: { file: 'index.html', label: 'Home' },
   about: { file: 'about.html', label: 'About' },
   shop: { file: 'shop.html', label: 'Products' },
-  blog: { file: 'blog.html', label: 'Insights' },
+  blog: { file: 'blog.html', label: 'Blog' },
   post: { file: 'blog-post.html', label: 'Article page' },
   product: { file: 'product.html', label: 'Product page' },
   privacy: { file: 'privacy-policy.html', label: 'Privacy policy' },
