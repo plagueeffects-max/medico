@@ -1,7 +1,8 @@
 // Medico shared layer: header, menu, search, enquiry dialog + GSAP motion engine.
 // Every query is null-safe so any page can load this file.
 const root = document.documentElement;
-const WHATSAPP = '919419008453';
+// The server swaps in the number from Admin > Settings, so read it back from the page
+const WHATSAPP = (document.querySelector('a[href*="wa.me/"]')?.href.match(/wa\.me\/(\d+)/) || [])[1] || '919419008453';
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ---------- Header: soft shadow once scrolled (always visible) ---------- */

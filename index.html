@@ -557,7 +557,7 @@
             <p class="body-lg reviews-lead" data-reveal data-copy="home.reviews.lead">What people tell us after the equipment is installed and running.</p>
           </div>
           <div class="reviews-meta" data-reveal>
-            <div class="rating-pill" id="rating-pill">
+            <div class="rating-pill" id="rating-pill" hidden>
               <svg class="g-logo" id="rating-google" hidden><use href="/assets/icons.svg#i-google"/></svg>
               <span class="rating-value" id="rating-value">5.0</span>
               <span class="stars-inline" aria-hidden="true"><svg class="icon"><use href="/assets/icons.svg#i-star"/></svg><svg class="icon"><use href="/assets/icons.svg#i-star"/></svg><svg class="icon"><use href="/assets/icons.svg#i-star"/></svg><svg class="icon"><use href="/assets/icons.svg#i-star"/></svg><svg class="icon"><use href="/assets/icons.svg#i-star"/></svg></span>
@@ -567,7 +567,7 @@
         </div>
 
         <div class="reviews-layout">
-          <div class="reviews-marquee" id="reviews-marquee" data-reveal>
+          <div class="reviews-marquee" id="reviews-marquee" tabindex="0" aria-label="Customer reviews, scrolling. Focus or hover to pause." data-reveal>
           <div class="reviews-track" id="reviews-track" role="list" aria-label="Customer reviews">
             <figure class="review" role="listitem">
               <blockquote>&ldquo;<mark class="quote-highlight">Best for CPAP, BIPAP, and critical medical equipments</mark> in the Srinagar region. Unmatched expertise.&rdquo;</blockquote>
@@ -891,8 +891,9 @@
   <a href="https://wa.me/919419008453?text=Hello%20Medico%2C%20I%27d%20like%20to%20enquire%20about%20medical%20equipment." class="wa-fab" target="_blank" rel="noopener" aria-label="Chat with Medico on WhatsApp"><svg class="icon"><use href="/assets/icons.svg#i-whatsapp"/></svg></a>
 
   <div class="mobile-bar">
-    <a href="tel:+919419008453" class="btn btn-outline"><svg class="icon"><use href="/assets/icons.svg#i-phone"/></svg>Call us</a>
-    <button type="button" class="btn btn-accent" data-open-enquiry data-mode="quote">Get a quote<svg class="icon"><use href="/assets/icons.svg#i-arrow"/></svg></button>
+    <a href="tel:+919419008453" class="btn btn-outline"><svg class="icon"><use href="/assets/icons.svg#i-phone"/></svg>Call</a>
+    <a href="https://wa.me/919419008453?text=Hello%20Medico%2C%20I%27d%20like%20to%20enquire%20about%20medical%20equipment." class="btn btn-outline" target="_blank" rel="noopener"><svg class="icon"><use href="/assets/icons.svg#i-whatsapp"/></svg>WhatsApp</a>
+    <button type="button" class="btn btn-accent" data-open-enquiry data-mode="quote">Get a quote</button>
   </div>
   <!-- /@dialog -->
 

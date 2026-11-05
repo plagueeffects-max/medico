@@ -1262,13 +1262,14 @@ ul, ol { list-style: none; }
     bottom: 0;
     z-index: 45;
     display: grid;
-    grid-template-columns: 1fr 1.3fr;
-    gap: 10px;
+    grid-template-columns: 1fr 1.25fr 1.25fr;
+    gap: 8px;
     padding: 10px max(16px, env(safe-area-inset-left)) calc(10px + env(safe-area-inset-bottom));
     background: #fff;
     border-top: 1px solid var(--line);
     box-shadow: 0 -10px 30px -24px rgba(11, 18, 32, 0.4);
   }
+  .mobile-bar .btn { padding: 0 10px; font-size: 14px; gap: 6px; }
   body { padding-bottom: calc(70px + env(safe-area-inset-bottom)); }
 }
 

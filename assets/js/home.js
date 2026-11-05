@@ -121,6 +121,7 @@ const icon = (id, cls = 'icon') => `<svg class="${cls}"><use href="/assets/icons
       document.getElementById('rating-value').textContent = Number(data.rating).toFixed(1);
       document.getElementById('rating-label').textContent = `on Google · ${data.count} reviews`;
       document.getElementById('rating-google').hidden = false;
+      document.getElementById('rating-pill').hidden = false;
       if (data.url) {
         document.getElementById('reviews-source-link').href = data.url;
         document.getElementById('reviews-source').hidden = false;

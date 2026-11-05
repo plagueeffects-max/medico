@@ -192,12 +192,58 @@ module.exports = async (req, res) => {
     }
     applyCopy(ed, await copyOverrides());
     const headers = status === 404 ? { ...CACHE, 'Cache-Control': 'public, s-maxage=60' } : CACHE;
-    return send(res, status, withDomain(ed.edits.length ? ed.toString() : html), headers);
+    const s = await getSettingsSafe();
+    return send(res, status, withDomain(finalize(ed.edits.length ? ed.toString() : html, page, s)), headers);
   } catch (err) {
     console.error('[render]', err);
     return send(res, 200, withDomain(html), CACHE);
   }
 };
+
+// Contact links and the homepage schema follow Admin > Settings and Admin > Site text,
+// so an edited phone number or FAQ never leaves a stale link or stale structured data behind.
+const BUILT_IN = { tel: 'tel:+919419008453', wa: 'wa.me/919419008453', mail: 'mailto:medicosgr@gmail.com' };
+function finalize(out, page, s) {
+  const tel = `tel:+${String(s.phone).replace(/\D/g, '')}`;
+  const wa = `wa.me/${String(s.whatsapp).replace(/\D/g, '')}`;
+  const mail = `mailto:${s.email}`;
+  if (tel !== BUILT_IN.tel) out = out.split(BUILT_IN.tel).join(tel);
+  if (wa !== BUILT_IN.wa) out = out.split(BUILT_IN.wa).join(wa);
+  if (mail !== BUILT_IN.mail) out = out.split(BUILT_IN.mail).join(mail);
+  if (page !== 'index') return out;
+
+  const scripts = /<script type="application\/ld\+json">([\s\S]*?)<\/script>/g;
+  return out.replace(scripts, (whole, body) => {
+    let data;
+    try { data = JSON.parse(body); } catch { return whole; }
+    const types = [].concat(data['@type']);
+    if (types.includes('LocalBusiness')) {
+      const org = orgLd(s);
+      const merged = {
+        '@context': 'https://schema.org', ...data, ...org,
+        image: data.image,
+        founder: { ...(data.founder || {}), '@type': 'Person', name: s.founder },
+        openingHoursSpecification: { ...(data.openingHoursSpecification || {}), opens: s.opens, closes: s.closes },
+        contactPoint: { ...(data.contactPoint || {}), telephone: org.telephone },
+      };
+      return `<script type="application/ld+json">\n${ldJson(merged)}\n  </script>`;
+    }
+    if (types.includes('FAQPage')) {
+      // Read the questions back out of the rendered page, overrides included
+      const pairs = [];
+      for (let i = 1; i <= 30; i++) {
+        const q = out.match(new RegExp(`data-copy="home\\.faq\\.${i}\\.q">([\\s\\S]*?)</span>`));
+        const a = out.match(new RegExp(`data-copy="home\\.faq\\.${i}\\.a">([\\s\\S]*?)</p>`));
+        if (!q || !a) break;
+        pairs.push([plainText(q[1]), plainText(a[1])]);
+      }
+      if (!pairs.length) return whole;
+      const faq = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: pairs.map(([name, text]) => ({ '@type': 'Question', name, acceptedAnswer: { '@type': 'Answer', text } })) };
+      return `<script type="application/ld+json">\n${ldJson(faq)}\n  </script>`;
+    }
+    return whole;
+  });
+}
 
 // The static pages carry the preview domain in canonicals, OG tags and JSON-LD;
 // swap it for SITE_URL so a custom domain needs no HTML edits.
