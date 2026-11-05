@@ -1,222 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medico Group | Admin Login</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800;900&family=Space+Grotesk:wght@300;500;700;900&display=swap" rel="stylesheet">
-    
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" href="assets/css/style.css">
-
-    <style>
-        body {
-            background: var(--bg-grey);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-        }
-
-        .skip-link {
-            position: absolute;
-            top: -40px;
-            left: 0;
-            background: var(--text-dark);
-            color: white;
-            padding: 8px 15px;
-            z-index: 9999;
-            transition: top 0.2s;
-            text-decoration: none;
-            font-size: 0.9rem;
-            border-bottom-right-radius: 8px;
-        }
-        .skip-link:focus { top: 0; }
-
-        .login-card {
-            background: #ffffff;
-            padding: 50px 40px;
-            border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-            width: 100%;
-            max-width: 450px;
-            text-align: center;
-            border: 1px solid var(--border-light);
-        }
-
-        .login-brand {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: var(--text-dark);
-            margin-bottom: 10px;
-        }
-        .login-brand span {
-            color: var(--accent-red);
-        }
-
-        .login-subtitle {
-            color: var(--text-muted);
-            margin-bottom: 40px;
-            font-size: 1rem;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-            text-align: left;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: var(--text-dark);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 14px 16px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            transition: var(--transition-fast);
-            background: #f9fafb;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--text-dark);
-            background: #ffffff;
-            box-shadow: 0 0 0 4px rgba(0,0,0,0.05);
-        }
-
-        .login-btn-submit {
-            width: 100%;
-            background: var(--text-dark);
-            color: #ffffff;
-            border: none;
-            padding: 16px;
-            border-radius: 8px;
-            font-size: 1.05rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition-fast);
-            margin-top: 10px;
-        }
-
-        .login-btn-submit:hover {
-            background: var(--accent-red);
-            box-shadow: 0 10px 20px var(--accent-glow);
-            transform: translateY(-2px);
-        }
-
-        .error-msg {
-            color: var(--accent-red);
-            font-size: 0.9rem;
-            margin-top: 15px;
-            display: none;
-            font-weight: 500;
-        }
-
-        .back-home {
-            display: inline-block;
-            margin-top: 30px;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: var(--transition-fast);
-        }
-        .back-home:hover {
-            color: var(--text-dark);
-        }
-    </style>
-    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Sign in | Medico Admin</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon/icon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="/assets/css/admin.css?v=1">
 </head>
 <body>
-
-    <a href="#main-content" class="skip-link">Skip to login form</a>
-
-    <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
-        <symbol id="i-ecg" viewBox="0 0 64 64"><path d="M8 34h9l3.5-6 4.5 11 6.5-25 6.5 33 4.5-17 3 4h10"/></symbol>
-    </svg>
-
-    <main id="main-content">
-        <div class="login-card reveal active">
-            <a href="index.html" class="brand" style="display:inline-flex; align-items:center; gap:10px; margin-bottom:16px; text-decoration:none;">
-                <span class="brand-mark" style="display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:12px; background:#fff; box-shadow:0 0 0 1px #e2e8f0, 0 4px 12px -6px rgba(11,18,32,0.25);">
-                    <svg style="width:32px; height:32px; fill:none; stroke:#e5181f; stroke-width:5; stroke-linecap:round; stroke-linejoin:round;"><use href="#i-ecg"/></svg>
-                </span>
-                <span class="brand-text" style="display:flex; flex-direction:column; line-height:1; text-align:left;">
-                    <span class="brand-name" style="font-size:24px; font-weight:800; letter-spacing:-0.04em; color:#0b1220;">Medico<span style="color:#e5181f;">.</span></span>
-                    <span class="brand-sub" style="margin-top:4px; font-size:8.5px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#64748b;">Scientific Service Centre</span>
-                </span>
-            </a>
-            <div class="login-subtitle">Admin Portal Access</div>
-
-            <form id="loginForm">
-                <div class="form-group">
-                    <label class="form-label" for="email">Email Address</label>
-                    <input type="email" id="email" class="form-control" placeholder="admin@medicojk.com" required autocomplete="email">
-                </div>
-                <div class="form-group">
-                    <label class="form-label" for="password">Password</label>
-                    <input type="password" id="password" class="form-control" placeholder="••••••••" required autocomplete="current-password">
-                </div>
-                
-                <div id="errorMsg" class="error-msg">Invalid email or password.</div>
-
-                <button type="submit" class="login-btn-submit" style="border-radius:9999px;">Sign In</button>
-            </form>
-
-            <a href="index.html" class="back-home">← Back to Website</a>
-        </div>
-    </main>
-
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const errorMsg = document.getElementById('errorMsg');
-            const submitBtn = document.querySelector('.login-btn-submit');
-            
-            submitBtn.textContent = 'Verifying...';
-            submitBtn.disabled = true;
-            errorMsg.style.display = 'none';
-
-            try {
-                const response = await fetch('/api/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password })
-                });
-
-                const data = await response.json();
-
-                if (response.ok && data.success && data.token) {
-                    sessionStorage.setItem('medico_admin_auth', data.token);
-                    window.location.href = 'admin-dashboard.html';
-                } else {
-                    errorMsg.textContent = data.message || 'Access denied. Check credentials.';
-                    errorMsg.style.display = 'block';
-                    submitBtn.textContent = 'Sign In';
-                    submitBtn.disabled = false;
-                }
-            } catch (err) {
-                console.error(err);
-                errorMsg.textContent = 'Auth server offline.';
-                errorMsg.style.display = 'block';
-                submitBtn.textContent = 'Sign In';
-                submitBtn.disabled = false;
-            }
+  <main class="login">
+    <form class="login-card" id="login-form" novalidate>
+      <span class="brand-mark" aria-hidden="true"><svg class="i" viewBox="0 0 24 24"><path d="M3 12h4l2-6 4 12 2-6h6"/></svg></span>
+      <h1>Medico admin</h1>
+      <p>Sign in to manage articles, products, inquiries and site text.</p>
+      <div class="field">
+        <label for="email">Email</label>
+        <input class="input" id="email" name="email" type="email" autocomplete="username" required autofocus>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input class="input" id="password" name="password" type="password" autocomplete="current-password" required>
+      </div>
+      <p class="form-error" id="error" role="alert"></p>
+      <button class="btn btn-primary" type="submit" id="submit" style="width:100%">Sign in</button>
+      <p class="small muted" style="margin:16px 0 0"><a href="/">Back to the website</a></p>
+    </form>
+  </main>
+  <script>
+    (async () => {
+      // Already signed in? Go straight to the dashboard.
+      try { const r = await fetch('/api/admin/me', { credentials: 'same-origin' }); if (r.ok) location.replace('/admin-dashboard.html'); } catch { /* offline */ }
+    })();
+    const form = document.getElementById('login-form');
+    const error = document.getElementById('error');
+    const submit = document.getElementById('submit');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      error.textContent = '';
+      if (!form.email.value.trim() || !form.password.value) { error.textContent = 'Please enter your email and password.'; return; }
+      submit.classList.add('is-busy');
+      try {
+        const res = await fetch('/api/admin/login', {
+          method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: form.email.value.trim(), password: form.password.value }),
         });
-    </script>
-    
+        const json = await res.json().catch(() => ({}));
+        if (!res.ok || !json.ok) throw new Error(json.error || 'Sign-in failed. Please try again.');
+        const next = new URLSearchParams(location.search).get('next');
+        location.replace(next && next.startsWith('/admin-dashboard.html') ? next : '/admin-dashboard.html');
+      } catch (err) {
+        error.textContent = err.message;
+        form.password.select();
+      } finally { submit.classList.remove('is-busy'); }
+    });
+  </script>
 </body>
 </html>

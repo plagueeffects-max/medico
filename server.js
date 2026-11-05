@@ -1,81 +1,65 @@
-const express = require('express');
-const path = require('path');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const crypto = require('crypto');
+// Local dev server. Mirrors vercel.json: the same handlers, the same routes, the same headers.
+//   npm run dev            (PORT defaults to 8082)
 require('dotenv').config();
+const path = require('path');
+const express = require('express');
 
+const publicApi = require('./api/public');
+const adminApi = require('./api/admin');
+const render = require('./api/render');
+const cron = require('./api/cron');
+const { SECURITY_HEADERS } = require('./api/_lib/headers');
 
 const app = express();
 const PORT = process.env.PORT || 8082;
+app.disable('x-powered-by');
 
-// Middleware
-app.use(cors());
-app.use(bodyParser.json({ limit: '50mb' }));
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
-
-// Admin URL route
-app.get(['/admin', '/admin/'], (req, res) => {
-    res.sendFile(path.join(__dirname, 'admin-login.html'));
+// No body parser: handlers read the body themselves (4 MB cap), exactly as on Vercel.
+app.use((req, res, next) => {
+  for (const [k, v] of Object.entries(SECURITY_HEADERS)) res.setHeader(k, v);
+  if (/^\/admin/.test(req.path)) res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+  next();
 });
 
-// Serve static files
-app.use(express.static(path.join(__dirname, './')));
-app.use('/assets', express.static(path.join(__dirname, 'assets')));
-app.use('/images', express.static(path.join(__dirname, 'images')));
-app.use('/Products', express.static(path.join(__dirname, 'Products')));
-app.use('/Blog Assets', express.static(path.join(__dirname, 'Blog Assets')));
+/** Mount a handler with fixed params (like a vercel.json route dest query). */
+const via = (handler, params = {}) => (req, res) => {
+  req.medicoParams = { ...params, ...(req.params.slug ? { slug: req.params.slug } : {}), ...(req.params.file ? { file: req.params.file } : {}) };
+  return handler(req, res);
+};
 
-// Helper: Generate Token (Same as Vercel API)
-function generateToken() {
-    if (!process.env.ADMIN_PASSWORD) return null;
-    return crypto.createHash('sha256').update(process.env.ADMIN_PASSWORD).digest('hex');
+// Pages (rendered so site-copy edits and article/product content are in the HTML)
+app.get(['/', '/index.html'], via(render, { page: 'index' }));
+for (const p of ['about', 'shop', 'blog', 'terms']) app.get(`/${p}.html`, via(render, { page: p }));
+app.get('/privacy-policy.html', via(render, { page: 'privacy' }));
+app.get('/blog-post.html', via(render, { page: 'post' }));
+app.get('/product.html', via(render, { page: 'product' }));
+app.get(['/blog/:slug', '/blog/:slug/'], via(render, { page: 'post' }));
+app.get(['/product/:slug', '/product/:slug/'], via(render, { page: 'product' }));
+
+// SEO files and media
+app.get('/sitemap.xml', via(publicApi, { r: 'sitemap' }));
+app.get('/robots.txt', via(publicApi, { r: 'robots' }));
+app.get('/llms.txt', via(publicApi, { r: 'llms' }));
+app.get('/indexnow-key.txt', via(publicApi, { r: 'indexnow-key' }));
+app.get('/media/:file', via(publicApi, { r: 'media' }));
+
+// APIs
+for (const r of ['posts', 'products', 'inquiry', 'google-reviews']) app.all(`/api/${r}`, via(publicApi, { r }));
+app.all('/api/admin/:route', (req, res) => via(adminApi, { r: req.params.route })(req, res));
+app.all('/api/cron', via(cron));
+
+// Admin shell
+app.get(['/admin', '/admin/'], (req, res) => res.sendFile(path.join(__dirname, 'admin-login.html')));
+
+// Static files (dotfiles such as .env are never served)
+// Only public folders and root-level pages; source, docs and tooling stay private
+for (const dir of ['assets', 'images', 'favicon', 'Products', 'Blog Assets']) {
+  app.use(`/${dir}`, express.static(path.join(__dirname, dir), { dotfiles: 'ignore', index: false }));
 }
-
-// --- LOCAL API ROUTES (Mirroring Vercel) ---
-
-// Login Endpoint
-app.post('/api/login', (req, res) => {
-    const { email, password } = req.body;
-    
-    if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
-        const token = generateToken();
-        return res.json({ success: true, token });
-    }
-    
-    res.status(401).json({ success: false, message: 'Invalid credentials' });
+app.get(/^\/[\w-]+\.(?:html|ico|txt|xml)$/, (req, res, next) => {
+  const file = path.join(__dirname, path.basename(req.path));
+  require('fs').access(file, (err) => (err ? next() : res.sendFile(file)));
 });
+app.use((req, res) => res.status(404).type('text/plain').send('Not found'));
 
-// Verify Token Endpoint
-app.post('/api/verify-token', (req, res) => {
-    const { token } = req.body;
-    const validToken = generateToken();
-    
-    if (token && token === validToken) {
-        return res.json({ success: true });
-    }
-    
-    res.status(401).json({ success: false, message: 'Invalid session' });
-});
-
-// Google reviews (same handler as Vercel; needs GOOGLE_PLACES_API_KEY in .env)
-app.get('/api/google-reviews', require('./api/google-reviews'));
-
-// Save Blog/Product (Local mock)
-app.post('/api/save-blog', (req, res) => {
-    res.json({ success: true, message: 'Saved to local session (On Vercel this uses Serverless logic)' });
-});
-
-app.post('/api/save-product', (req, res) => {
-    res.json({ success: true, message: 'Saved to local session' });
-});
-
-// Start Server
-app.listen(PORT, () => {
-    console.log(`
-🚀 Medico Local Server Running!
--------------------------------
-URL: http://localhost:${PORT}
-Admin Email: ${process.env.ADMIN_EMAIL}
-    `);
-});
+app.listen(PORT, () => console.log(`Medico local server: http://localhost:${PORT}  (admin: /admin)`));

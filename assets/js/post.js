@@ -1,22 +1,27 @@
-// Medico article page: renders one BlogDB entry by ?id=.
-// Article HTML is admin-authored, so it is always sanitised before insertion.
-(() => {
+// Medico article page: renders one article from /blog/<slug> (or legacy ?id=).
+// The server already renders the article into the page; this script adds the gallery,
+// share button and related articles. Article HTML is sanitised server-side and again here.
+(async () => {
   const $ = (id) => document.getElementById(id);
   const esc = (str) => String(str ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  const icon = (id) => `<svg class="icon"><use href="assets/icons.svg#${id}"/></svg>`;
+  const icon = (id) => `<svg class="icon"><use href="/assets/icons.svg#${id}"/></svg>`;
   const topicOf = (b) => b.category || 'Industry News';
-  const readTime = (b) => Math.max(2, Math.round(String(b.content || '').replace(/<[^>]*>/g, ' ').split(/\s+/).length / 200));
+  const readTime = (b) => parseInt(b.readTime, 10) || Math.max(2, Math.round(String(b.content || '').replace(/<[^>]*>/g, ' ').split(/\s+/).length / 200));
   const fmtDate = (d) => {
     const date = new Date(`${d}T00:00:00`);
     return Number.isNaN(date.getTime()) ? '' : date.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
   };
-  const safeUrl = (u) => (/^(https?:|data:image\/|images\/|assets\/|Blog Assets\/|Products\/)/i.test(String(u)) ? u : '');
+  const safeUrl = (u) => (/^(https?:|data:image\/|\/(?!\/))/i.test(String(u)) ? u : '');
 
-  const id = new URLSearchParams(window.location.search).get('id');
-  const blogs = BlogDB.getBlogs();
-  const blog = id && blogs.find((b) => b.id === id);
+  const fromPath = window.location.pathname.match(/^\/blog\/([^/]+)/);
+  const id = fromPath ? decodeURIComponent(fromPath[1]) : new URLSearchParams(window.location.search).get('id');
+  let ssr = null;
+  try { ssr = JSON.parse(document.getElementById('ssr-post').textContent).post; } catch { /* not server-rendered */ }
+  const blogs = await BlogDB.load();
+  const blog = ssr || (id && blogs.find((b) => b.id === id || b.slug === id));
   if (!blog) {
-    $('post-missing').hidden = false;
+    // Server-rendered content stays visible even if the client lookup misses
+    if ($('post').hidden) $('post-missing').hidden = false;
     return;
   }
 
@@ -58,9 +63,22 @@
   }
 
   // DOMPurify loads from a CDN; without it, fall back to plain text rather than raw HTML
+  // Photo credit for sourced cover images (new element: .post-cover-credit)
+  if (blog.coverCredit && blog.coverCredit.text && !document.querySelector('.post-cover-credit')) {
+    const credit = document.createElement('figcaption');
+    credit.className = 'post-cover-credit';
+    credit.innerHTML = /^https:\/\//.test(blog.coverCredit.url || '')
+      ? `<a href="${esc(blog.coverCredit.url)}" target="_blank" rel="noopener nofollow">${esc(blog.coverCredit.text)}</a>`
+      : esc(blog.coverCredit.text);
+    $('post-cover').appendChild(credit);
+  }
+
+  // Server-rendered content is already in place; only fill it when rendering client-side
   const content = $('post-content');
-  if (window.DOMPurify) content.innerHTML = window.DOMPurify.sanitize(blog.content || '');
-  else content.textContent = String(blog.content || '').replace(/<[^>]*>/g, ' ');
+  if (!ssr) {
+    if (window.DOMPurify) content.innerHTML = window.DOMPurify.sanitize(blog.content || '');
+    else content.textContent = String(blog.content || '').replace(/<[^>]*>/g, ' ');
+  }
   $('post').hidden = false;
 
   // Share
@@ -75,16 +93,16 @@
 
   // Related articles: same topic first, then newest
   const related = blogs
-    .filter((b) => b.id !== blog.id)
+    .filter((b) => b.id !== blog.id && b.slug !== blog.slug)
     .sort((a, b) => (topicOf(b) === topicOf(blog)) - (topicOf(a) === topicOf(blog)) || String(b.date).localeCompare(String(a.date)))
     .slice(0, 3);
   if (related.length) {
     $('related-grid').innerHTML = related.map((b) => `
       <article class="article-card">
-        <a href="blog-post.html?id=${encodeURIComponent(b.id)}" class="article-media${/\/products\//.test(b.image || '') ? ' is-product' : ''}" tabindex="-1" aria-hidden="true"><img src="${esc(safeUrl(b.image) || 'images/medico-shop.webp')}" alt="" loading="lazy"></a>
+        <a href="${BlogDB.url(b)}" class="article-media${/\/products\//.test(b.image || '') ? ' is-product' : ''}" tabindex="-1" aria-hidden="true"><img src="${esc(safeUrl(b.image) || '/images/medico-shop.webp')}" alt="" loading="lazy"></a>
         <div class="article-body">
           <div class="article-meta"><span class="pill pill-accent">${esc(topicOf(b))}</span><span class="article-time">${icon('i-clock')}${readTime(b)} min read</span></div>
-          <h3><a href="blog-post.html?id=${encodeURIComponent(b.id)}">${esc(b.title)}</a></h3>
+          <h3><a href="${BlogDB.url(b)}">${esc(b.title)}</a></h3>
           <p>${esc(b.subheading)}</p>
           <span class="article-link">Read more${icon('i-arrow')}</span>
         </div>

@@ -1,0 +1,16 @@
+# Without legacy "builds", every file in the repo would be served statically.
+# Keep source, tooling and docs off the public site.
+server.js
+scripts/
+tools/
+docs/
+design/
+mySkills/
+partials/
+CLAUDE.md
+README.md
+.claude/
+.gstack/
+.code-review-graph/
+.playwright-mcp/
+.vscode/

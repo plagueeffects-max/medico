@@ -1,20 +1,24 @@
-// Medico product page: renders one ProductsDB entry by ?id=.
+// Medico product page: renders one product from /product/<id> (or legacy ?id=).
+// The server pre-renders the main fields; this script fills the rest.
 // Text is escaped; admin-authored HTML (overview, in-the-box) is sanitised.
-(() => {
+(async () => {
   const $ = (id) => document.getElementById(id);
   const esc = (str) => String(str ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  const icon = (id) => `<svg class="icon"><use href="assets/icons.svg#${id}"/></svg>`;
-  const safeUrl = (u) => (/^(https?:|data:(image|video)\/|images\/|assets\/|Products\/)/i.test(String(u)) ? u : '');
+  const icon = (id) => `<svg class="icon"><use href="/assets/icons.svg#${id}"/></svg>`;
+  const safeUrl = (u) => (/^(https?:|data:(image|video)\/|\/(?!\/))/i.test(String(u)) ? u : '');
   const sanitize = (html) => (window.DOMPurify ? window.DOMPurify.sanitize(html) : esc(String(html).replace(/<[^>]*>/g, ' ')));
-  const FALLBACK = 'images/products/oxygen.webp';
+  const FALLBACK = '/images/products/oxygen.webp';
 
-  const id = new URLSearchParams(window.location.search).get('id');
-  const all = ProductsDB.getProducts();
-  const p = all.find((x) => x.id === id);
-  if (!p) { $('pd-missing').hidden = false; return; }
+  const fromPath = window.location.pathname.match(/^\/product\/([^/]+)/);
+  const id = fromPath ? decodeURIComponent(fromPath[1]) : new URLSearchParams(window.location.search).get('id');
+  let ssr = null;
+  try { ssr = JSON.parse(document.getElementById('ssr-product').textContent).product; } catch { /* not server-rendered */ }
+  const all = await ProductsDB.load();
+  const p = ssr || all.find((x) => x.id === id);
+  if (!p) { if ($('product').hidden) $('pd-missing').hidden = false; return; }
 
   document.title = `${p.title} | Medico Scientific Service Centre`;
-  const catUrl = `shop.html?category=${encodeURIComponent(p.category)}`;
+  const catUrl = `/shop.html?category=${encodeURIComponent(p.category)}`;
   $('crumb-cat').textContent = p.category;
   $('crumb-cat').href = catUrl;
   $('crumb-title').textContent = p.title;
@@ -115,7 +119,7 @@
     .slice(0, 3);
   if (related.length) {
     $('pd-related-grid').innerHTML = related.map((r) => {
-      const href = `product.html?id=${encodeURIComponent(r.id)}`;
+      const href = ProductsDB.url(r);
       const req = r.stock && r.stock !== 'In Stock';
       return `
       <article class="item-card">

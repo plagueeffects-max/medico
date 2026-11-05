@@ -1,50 +1,50 @@
 {
-  "version": 2,
-  "builds": [
-    { "src": "api/*.js", "use": "@vercel/node" },
-    { "src": "*.html", "use": "@vercel/static" },
-    { "src": "assets/**", "use": "@vercel/static" },
-    { "src": "images/**", "use": "@vercel/static" },
-    { "src": "Products/**", "use": "@vercel/static" },
-    { "src": "Blog Assets/**", "use": "@vercel/static" }
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "api/render.js": { "includeFiles": "*.html", "maxDuration": 10 },
+    "api/public.js": { "maxDuration": 15 },
+    "api/admin.js": { "includeFiles": "*.html", "maxDuration": 60 },
+    "api/cron.js": { "maxDuration": 60 }
+  },
+  "crons": [
+    { "path": "/api/cron", "schedule": "30 0 * * *" }
   ],
   "routes": [
-    { "src": "/robots.txt", "dest": "/robots.txt" },
-    { "src": "/sitemap.xml", "dest": "/sitemap.xml" },
-    { "src": "/llms.txt", "dest": "/llms.txt" },
-    { "src": "/admin/?$", "dest": "/admin-login.html" },
-    { "src": "/api/(.*)", "dest": "/api/$1.js" },
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/index.html" }
-  ],
-  "headers": [
     {
-      "source": "/images/(.*)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
-      ]
+      "src": "/(.*)",
+      "headers": {
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+        "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' data: blob:; connect-src 'self'; frame-src https://www.google.com https://maps.google.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'"
+      },
+      "continue": true
     },
-    {
-      "source": "/assets/(.*)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
-      ]
-    },
-    {
-      "source": "/Products/(.*)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
-      ]
-    },
-    {
-      "source": "/(.*)",
-      "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" },
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.quilljs.com https://cdn.jsdelivr.net https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.quilljs.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' data:; connect-src 'self'; frame-src https://www.google.com https://maps.google.com;" }
-      ]
-    }
+    { "src": "/(images|Products|Blog Assets|Blog%20Assets|favicon)/(.*)", "headers": { "Cache-Control": "public, max-age=31536000, immutable" }, "continue": true },
+    { "src": "/assets/(.*)", "headers": { "Cache-Control": "public, max-age=0, must-revalidate" }, "continue": true },
+    { "src": "/admin(-[a-z]+\\.html)?/?", "headers": { "X-Robots-Tag": "noindex, nofollow", "Cache-Control": "no-store" }, "continue": true },
+
+    { "src": "/admin/?", "dest": "/admin-login.html" },
+
+    { "src": "/", "dest": "/api/render?page=index" },
+    { "src": "/index\\.html", "dest": "/api/render?page=index" },
+    { "src": "/(about|shop|blog|terms)\\.html", "dest": "/api/render?page=$1" },
+    { "src": "/privacy-policy\\.html", "dest": "/api/render?page=privacy" },
+    { "src": "/blog-post\\.html", "dest": "/api/render?page=post" },
+    { "src": "/product\\.html", "dest": "/api/render?page=product" },
+    { "src": "/blog/([^/]+)/?", "dest": "/api/render?page=post&slug=$1" },
+    { "src": "/product/([^/]+)/?", "dest": "/api/render?page=product&slug=$1" },
+
+    { "src": "/sitemap\\.xml", "dest": "/api/public?r=sitemap" },
+    { "src": "/robots\\.txt", "dest": "/api/public?r=robots" },
+    { "src": "/llms\\.txt", "dest": "/api/public?r=llms" },
+    { "src": "/indexnow-key\\.txt", "dest": "/api/public?r=indexnow-key" },
+    { "src": "/media/([^/]+)", "dest": "/api/public?r=media&file=$1" },
+
+    { "src": "/api/(posts|products|inquiry|google-reviews)/?", "dest": "/api/public?r=$1" },
+    { "src": "/api/admin/([a-z-]+)/?", "dest": "/api/admin?r=$1" },
+
+    { "handle": "filesystem" }
   ]
 }

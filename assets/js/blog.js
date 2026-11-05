@@ -1,5 +1,5 @@
-// Medico Insights: Renders articles from BlogDB, topic filter, search, subscribe.
-(() => {
+// Medico Insights: Renders articles from BlogDB (API with bundled fallback), topic filter, search, subscribe.
+(async () => {
   const TOPICS = [
     'All',
     'Clinical Insights',
@@ -10,7 +10,7 @@
   ];
 
   const esc = (str) => String(str ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  const icon = (id) => `<svg class="icon"><use href="assets/icons.svg#${id}"/></svg>`;
+  const icon = (id) => `<svg class="icon"><use href="/assets/icons.svg#${id}"/></svg>`;
   const topicOf = (b) => b.category || 'Industry News';
   const readTimeOf = (b) => b.readTime || `${Math.max(2, Math.round(String(b.content || '').replace(/<[^>]*>/g, ' ').split(/\s+/).length / 200))} min read`;
   const fmtDate = (d) => {
@@ -18,9 +18,9 @@
     const date = new Date(`${d}T00:00:00`);
     return Number.isNaN(date.getTime()) ? d : date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   };
-  const url = (b) => `blog-post.html?id=${encodeURIComponent(b.id)}`;
+  const url = (b) => BlogDB.url(b);
 
-  const blogs = BlogDB.getBlogs().slice();
+  const blogs = (await BlogDB.load()).slice();
   const featured = blogs.find((b) => b.featured) || blogs[0];
   const rest = blogs.filter((b) => b.id !== featured?.id);
 
@@ -46,7 +46,7 @@
         </div>
       </div>
       <a href="${url(featured)}" class="featured-media-stage" tabindex="-1" aria-hidden="true">
-        <img src="${esc(featured.image || 'images/blog-featured-icu.webp')}" alt="${esc(featured.title)}" loading="lazy">
+        <img src="${esc(featured.image || '/images/blog-featured-icu.webp')}" alt="${esc(featured.title)}" loading="lazy">
       </a>`;
     document.getElementById('featured-wrap').hidden = false;
   }
@@ -67,7 +67,7 @@
   const card = (b, i) => `
     <article class="blog-card" style="--i:${i}">
       <a href="${url(b)}" class="blog-card-media${/\/products\//.test(b.image || '') ? ' is-product' : ''}" tabindex="-1" aria-hidden="true">
-        <img src="${esc(b.image || 'images/blog-featured-icu.webp')}" alt="${esc(b.title)}" loading="lazy">
+        <img src="${esc(b.image || '/images/blog-featured-icu.webp')}" alt="${esc(b.title)}" loading="lazy">
       </a>
       <div class="blog-card-body">
         <div class="blog-card-meta">

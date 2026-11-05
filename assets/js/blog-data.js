@@ -1,11 +1,9 @@
-// Blog Data Management Module for Medico Insights
+// Blog data for Medico Insights.
+// Articles come from the API (/api/posts). The bundled defaultBlogs below are only a
+// fallback for when the API is unreachable (opened from disk, database down).
 
-// Force cache refresh to load updated 12 articles with exact category counts
-if (localStorage.getItem('medico_blogs_v5') !== 'true') {
-    localStorage.removeItem('medico_blogs');
-    localStorage.removeItem('medico_blogs_seeded');
-    localStorage.setItem('medico_blogs_v5', 'true');
-}
+// The old localStorage copy of the articles is no longer used; free the space.
+try { ['medico_blogs', 'medico_blogs_seeded', 'medico_blogs_v5'].forEach((k) => localStorage.removeItem(k)); } catch (e) { /* private mode */ }
 
 const detailedContent = `
     <p>We are thrilled to announce our participation in the upcoming <strong>RE ALFA SKIMS 2025</strong> symposium. This event promises to be a landmark gathering for respiratory care professionals, focusing on the latest advancements in pulmonary diagnostics and therapeutic interventions.</p>
@@ -222,59 +220,37 @@ const defaultBlogs = [
 ];
 
 const BlogDB = {
-    key: 'medico_blogs',
+  _promise: null,
 
-    init() {
-        const seededKey = 'medico_blogs_seeded';
-        let stored = [];
-        try { stored = JSON.parse(localStorage.getItem(this.key)) || []; } catch (e) { stored = []; }
-        if (!stored || stored.length === 0) {
-            this.saveBlogs(defaultBlogs);
-            localStorage.setItem(seededKey, JSON.stringify(defaultBlogs.map(b => b.id)));
+  /** All published articles, newest first. Resolves to the bundled defaults if the API fails. */
+  load() {
+    if (this._promise) return this._promise;
+    const root = (u) => (!u || /^(https?:|data:|\/)/i.test(u) ? u : `/${u}`);
+    const norm = (b) => ({ ...b, image: root(b.image), galleryImages: (b.galleryImages || []).map(root) });
+    this._promise = (async () => {
+      try {
+        const ssr = document.getElementById('ssr-posts') || document.getElementById('ssr-post');
+        if (ssr) {
+          const data = JSON.parse(ssr.textContent);
+          if (Array.isArray(data.posts) && data.posts.length) return data.posts.map(norm);
         }
-    },
+      } catch (e) { /* fall through to the API */ }
+      try {
+        const res = await fetch('/api/posts', { headers: { Accept: 'application/json' } });
+        const json = await res.json();
+        if (json.success && Array.isArray(json.posts) && json.posts.length) return json.posts.map(norm);
+      } catch (e) { /* offline or API down */ }
+      return defaultBlogs.map(norm);
+    })();
+    return this._promise;
+  },
 
-    getBlogs() {
-        this.init();
-        const data = localStorage.getItem(this.key);
-        return data ? JSON.parse(data) : defaultBlogs;
-    },
+  async getBlog(idOrSlug) {
+    return (await this.load()).find((b) => b.id === idOrSlug || b.slug === idOrSlug);
+  },
 
-    saveBlogs(blogs) {
-        try {
-            localStorage.setItem(this.key, JSON.stringify(blogs));
-        } catch (e) {
-            console.error("Storage error:", e);
-        }
-    },
-
-    getBlog(id) {
-        return this.getBlogs().find(b => b.id === id);
-    },
-
-    addBlog(blog) {
-        const blogs = this.getBlogs();
-        blog.id = Date.now().toString();
-        blogs.unshift(blog);
-        this.saveBlogs(blogs);
-        return blog;
-    },
-
-    updateBlog(id, updatedBlog) {
-        let blogs = this.getBlogs();
-        const index = blogs.findIndex(b => b.id === id);
-        if (index !== -1) {
-            blogs[index] = { ...blogs[index], ...updatedBlog };
-            this.saveBlogs(blogs);
-        }
-    },
-
-    deleteBlog(id) {
-        let blogs = this.getBlogs();
-        blogs = blogs.filter(b => b.id !== id);
-        this.saveBlogs(blogs);
-    }
+  /** Canonical article URL. */
+  url(b) {
+    return `/blog/${encodeURIComponent(b.slug || b.id)}`;
+  }
 };
-
-// Initialize DB immediately
-BlogDB.init();

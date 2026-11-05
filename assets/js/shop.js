@@ -1,7 +1,7 @@
 // Medico products page: filters, search, sort, layout toggle, saved items.
-// Counts and filter options come from ProductsDB, so admin edits show up here.
-(() => {
-  const products = ProductsDB.getProducts();
+// Counts and filter options come from ProductsDB (API with bundled fallback), so admin edits show up here.
+(async () => {
+  const products = await ProductsDB.load();
   const params = new URLSearchParams(window.location.search);
   const state = {
     category: params.get('category') || 'All',
@@ -22,7 +22,7 @@
   const filtersToggle = $('filters-toggle');
 
   const esc = (str) => String(str ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  const icon = (id) => `<svg class="icon"><use href="assets/icons.svg#${id}"/></svg>`;
+  const icon = (id) => `<svg class="icon"><use href="/assets/icons.svg#${id}"/></svg>`;
   const countBy = (key) => products.reduce((m, p) => (p[key] ? m.set(p[key], (m.get(p[key]) || 0) + 1) : m), new Map());
 
   /* ---------- Sidebar ---------- */
@@ -105,7 +105,7 @@
   function card(p, i) {
     const onRequest = p.stock && p.stock !== 'In Stock';
     const isSaved = saved.has(p.id);
-    const href = `product.html?id=${encodeURIComponent(p.id)}`;
+    const href = ProductsDB.url(p);
     return `
       <article class="item-card" style="--i:${i}">
         <div class="item-top">
@@ -113,7 +113,7 @@
           <button type="button" class="fav-btn${isSaved ? ' is-saved' : ''}" data-fav="${esc(p.id)}" aria-pressed="${isSaved}" aria-label="Save ${esc(p.title)}">${icon('i-heart')}</button>
         </div>
         <a href="${href}" class="item-media" tabindex="-1" aria-hidden="true">
-          <img src="${esc(p.mainImage || 'images/products/oxygen.webp')}" alt="" loading="lazy">
+          <img src="${esc(p.mainImage || '/images/products/oxygen.webp')}" alt="" loading="lazy">
         </a>
         <div class="item-body">
           <h3><a href="${href}">${esc(p.title)}</a></h3>

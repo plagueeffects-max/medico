@@ -1,44 +1,44 @@
+// Product data for the Medico catalogue.
+// Products come from the API (/api/products). defaultProducts below are only a fallback
+// for when the API is unreachable (opened from disk, database down).
+
+// The old localStorage copy of the catalogue is no longer used; free the space.
+try { localStorage.removeItem('medico_products_v5'); } catch (e) { /* private mode */ }
+
 const ProductsDB = {
-    STORAGE_KEY: 'medico_products_v5',
+    _promise: null,
 
-    getProducts: function() {
-        const data = localStorage.getItem(this.STORAGE_KEY);
-        return data ? JSON.parse(data) : this.defaultProducts;
+    /** All visible products. Resolves to the bundled defaults if the API fails. */
+    load: function() {
+        if (this._promise) return this._promise;
+        const root = (u) => (!u || /^(https?:|data:|\/)/i.test(u) ? u : '/' + u);
+        const norm = (p) => ({ ...p, mainImage: root(p.mainImage), galleryImages: (p.galleryImages || []).map(root) });
+        this._promise = (async () => {
+            try {
+                // Server-rendered pages carry the catalogue inline (crawlers cannot fetch /api/)
+                const ssr = document.getElementById('ssr-products');
+                if (ssr) {
+                    const data = JSON.parse(ssr.textContent);
+                    if (Array.isArray(data.products) && data.products.length) return data.products.map(norm);
+                }
+            } catch (e) { /* fall through to the API */ }
+            try {
+                const res = await fetch('/api/products', { headers: { Accept: 'application/json' } });
+                const json = await res.json();
+                if (json.success && Array.isArray(json.products) && json.products.length) return json.products.map(norm);
+            } catch (e) { /* offline or API down */ }
+            return this.defaultProducts.map(norm);
+        })();
+        return this._promise;
     },
 
-    saveProducts: function(products) {
-        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(products));
+    getProduct: async function(id) {
+        return (await this.load()).find(p => p.id === id);
     },
 
-    addProduct: function(product) {
-        const products = this.getProducts();
-        product.id = Date.now().toString();
-        product.createdAt = new Date().toISOString();
-        products.push(product);
-        this.saveProducts(products);
-        return product;
-    },
-
-    updateProduct: function(id, updatedData) {
-        const products = this.getProducts();
-        const index = products.findIndex(p => p.id === id);
-        if (index !== -1) {
-            products[index] = { ...products[index], ...updatedData, updatedAt: new Date().toISOString() };
-            this.saveProducts(products);
-            return products[index];
-        }
-        return null;
-    },
-
-    deleteProduct: function(id) {
-        let products = this.getProducts();
-        products = products.filter(p => p.id !== id);
-        this.saveProducts(products);
-    },
-
-    getProduct: function(id) {
-        const products = this.getProducts();
-        return products.find(p => p.id === id);
+    /** Canonical product URL. */
+    url: function(p) {
+        return '/product/' + encodeURIComponent(p.id);
     },
 
     getCategories: function() {
@@ -204,10 +204,3 @@ const ProductsDB = {
         }
     ]
 };
-
-// Seed or update database
-(function() {
-    if (!localStorage.getItem(ProductsDB.STORAGE_KEY)) {
-        ProductsDB.saveProducts(ProductsDB.defaultProducts);
-    }
-})();
