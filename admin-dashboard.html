@@ -2,19 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f8f9fa">
   <meta name="robots" content="noindex, nofollow">
-  <title>Medico Admin</title>
+  <title>Overview | Admin | Medico</title>
   <link rel="icon" type="image/svg+xml" href="/favicon/icon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="/assets/css/admin.css?v=1">
+  <link rel="stylesheet" href="/assets/css/admin.css?v=3">
 </head>
 <body>
   <div class="app" id="app">
     <aside class="side" id="side" aria-label="Admin navigation">
-      <a href="#overview" class="brand"><span class="brand-mark" aria-hidden="true"><svg class="i" viewBox="0 0 24 24"><path d="M3 12h4l2-6 4 12 2-6h6"/></svg></span><span>Medico<small>Admin</small></span></a>
+      <a href="#overview" class="brand">
+        <span class="brand-mark" aria-hidden="true"><svg class="i" viewBox="0 0 24 24"><path d="M3 12h4l2-6 4 12 2-6h6"/></svg></span>
+        <span class="brand-info">
+          <span class="brand-title">Medico</span>
+          <small class="brand-sub">Website admin</small>
+        </span>
+      </a>
       <nav class="nav" id="nav"></nav>
       <div class="side-foot nav">
         <a href="/" target="_blank" rel="noopener" data-icon="external"><span>View website</span></a>
@@ -24,22 +31,24 @@
     </aside>
     <div class="main">
       <header class="topbar">
-        <button class="btn btn-ghost btn-icon mobile-only" id="menu" aria-label="Open menu" data-icon="menu"></button>
-        <h1 id="title">Overview</h1>
+        <div class="topbar-title-wrap">
+          <h1 id="title">Overview</h1>
+        </div>
         <div class="topbar-actions">
           <div id="actions" class="row"></div>
-          <button class="search-trigger" id="open-palette" type="button" aria-label="Search and commands" data-icon="search"><span class="label-text">Search or jump to…</span><kbd class="kbd" id="kbd-hint">Ctrl K</kbd></button>
+          <button class="search-trigger" id="open-palette" type="button" aria-label="Search or go to a page" data-icon="search"><span class="label-text">Search or go to…</span><kbd class="kbd" id="kbd-hint">Ctrl K</kbd></button>
         </div>
       </header>
       <main class="view" id="view" tabindex="-1"></main>
     </div>
+    <nav class="tabbar" id="tabbar" aria-label="Main sections"></nav>
   </div>
   <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
-  <dialog class="palette" id="palette" aria-label="Command palette">
-    <input id="palette-input" type="text" placeholder="Type a page, an action or an article title…" autocomplete="off" aria-label="Search">
+  <dialog class="palette" id="palette" aria-label="Search">
+    <div class="palette-head"><input id="palette-input" type="search" placeholder="Search pages, articles or products" autocomplete="off" aria-label="Search"><button type="button" class="btn btn-ghost" id="palette-close">Close</button></div>
     <ul id="palette-list" role="listbox"></ul>
   </dialog>
-  <script src="/assets/js/admin.js?v=1"></script>
-  <script src="/assets/js/admin-content.js?v=1"></script>
+  <script src="/assets/js/admin.js?v=3"></script>
+  <script src="/assets/js/admin-content.js?v=3"></script>
 </body>
 </html>

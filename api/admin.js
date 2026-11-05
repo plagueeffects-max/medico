@@ -50,6 +50,7 @@ async function overview(req, res) {
       (SELECT count(*)::int FROM medico_blog_posts WHERE status = 'published' AND published_at > now() - interval '30 days') AS posts_month,
       (SELECT count(*)::int FROM medico_blog_posts WHERE status = 'draft') AS posts_draft,
       (SELECT count(*)::int FROM medico_blog_posts WHERE ai_generated AND reviewed_at IS NULL) AS posts_unreviewed,
+      (SELECT count(*)::int FROM medico_blog_posts WHERE status = 'draft' OR (ai_generated AND reviewed_at IS NULL)) AS posts_waiting,
       (SELECT count(*)::int FROM medico_products WHERE is_visible) AS products_live,
       (SELECT count(*)::int FROM medico_products) AS products_total,
       (SELECT count(*)::int FROM medico_blog_topics WHERE is_active) AS topics,
@@ -309,7 +310,7 @@ async function inquiries(req, res, q) {
   if (req.method === 'DELETE') { await query('DELETE FROM medico_inquiries WHERE id = $1', [q.id]); return ok(res); }
   const b = await readBody(req);
   const status = ['new', 'handled', 'archived'].includes(b.status) ? b.status : 'handled';
-  const [row] = await query(`UPDATE medico_inquiries SET status = $2, notes = COALESCE($3, notes), handled_at = CASE WHEN $2 = 'new' THEN NULL ELSE COALESCE(handled_at, now()) END
+  const [row] = await query(`UPDATE medico_inquiries SET status = $2::varchar, notes = COALESCE($3::text, notes), handled_at = CASE WHEN $2::varchar = 'new' THEN NULL ELSE COALESCE(handled_at, now()) END
     WHERE id = $1 RETURNING id, status, notes, handled_at`, [str(b.id, 40), status, typeof b.notes === 'string' ? b.notes.slice(0, 2000) : null]);
   return row ? ok(res, row) : fail(res, 'Inquiry not found.', 404);
 }
