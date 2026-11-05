@@ -46,66 +46,130 @@ if (searchBtn) {
 }
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { setMenu(false); setSearch(false); } });
 
-/* ---------- Enquiry dialog (falls back to WhatsApp) ---------- */
+/* ---------- Active page in the shared nav ---------- */
+const page = document.body.dataset.page;
+const navFor = { home: 'home', shop: 'shop', product: 'shop', about: 'about', blog: 'blog', post: 'blog' }[page];
+if (navFor) document.querySelector(`.nav-link[data-nav="${navFor}"]`)?.setAttribute('aria-current', 'page');
+// On the homepage, Services lights up while its section is on screen
+if (page === 'home' && 'IntersectionObserver' in window) {
+  const homeLink = document.querySelector('.nav-link[data-nav="home"]');
+  const servicesLink = document.querySelector('.nav-link[data-nav="services"]');
+  const services = document.getElementById('services');
+  if (services && servicesLink) {
+    new IntersectionObserver(([entry]) => {
+      const [on, off] = entry.isIntersecting ? [servicesLink, homeLink] : [homeLink, servicesLink];
+      on?.setAttribute('aria-current', 'page');
+      off?.removeAttribute('aria-current');
+    }, { rootMargin: '-45% 0px -50% 0px' }).observe(services);
+  }
+}
+
+/* ---------- Nav glider: one pill that slides between links (pointer devices) ---------- */
+const glider = nav && nav.querySelector('.nav-glider');
+if (glider && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  const links = [...nav.querySelectorAll(':scope > .nav-link, :scope > .nav-item > .nav-link')];
+  const moveTo = (el) => {
+    if (!el) { glider.classList.remove('is-on'); return; }
+    const n = nav.getBoundingClientRect();
+    const r = el.getBoundingClientRect();
+    glider.style.setProperty('--gx', `${r.left - n.left}px`);
+    glider.style.setProperty('--gw', `${r.width}px`);
+    glider.classList.add('is-on');
+  };
+  links.forEach((a) => a.addEventListener('pointerenter', () => moveTo(a)));
+  nav.addEventListener('pointerleave', () => moveTo(null));
+}
+
+/* ---------- Enquiry dialog: saves to /api/inquiry, WhatsApp as fallback ---------- */
 const dialog = document.getElementById('enquiry-dialog');
 const form = document.getElementById('enquiry-form');
-let isCallback = false;
+const MODES = {
+  quote: { eyebrow: 'Free consultation', title: 'Request a quote', sub: 'Tell us what you need. A specialist calls you back, usually the same day.' },
+  callback: { eyebrow: 'Callback', title: 'Request a callback', sub: 'Leave your number and a good time to call. We will ring you back.' },
+  contact: { eyebrow: 'Contact us', title: 'How can we help?', sub: 'Equipment, pricing, service or a repair. Send a note and the right person replies.' },
+};
+let mode = 'quote';
 
-document.querySelectorAll('[data-open-enquiry]').forEach((btn) => {
-  btn.addEventListener('click', (e) => {
-    e.preventDefault();
-    isCallback = btn.hasAttribute('data-callback');
-    if (dialog && typeof dialog.showModal === 'function') {
-      document.getElementById('enquiry-title').textContent = isCallback ? 'Request a callback' : 'Request a quote';
-      document.getElementById('enquiry-sub').textContent = isCallback
-        ? 'Leave your details and we’ll call you back.'
-        : 'Takes 30 seconds. We’ll reply on WhatsApp.';
-      const product = btn.dataset.product;
-      if (product && form) form.elements.message.value = `Interested in: ${product}`;
-      dialog.showModal();
-    } else {
-      window.open(`https://wa.me/${WHATSAPP}`, '_blank');
-    }
-  });
+const waLink = (lines) => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lines.join('\n'))}`;
+const showStep = (name) => form.querySelectorAll('.enquiry-step').forEach((s) => { s.hidden = s.dataset.step !== name; });
+
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-open-enquiry]');
+  if (!btn) return;
+  if (!dialog || typeof dialog.showModal !== 'function') return; // link falls through to /#contact or WhatsApp
+  e.preventDefault();
+  setMenu(false);
+  mode = btn.dataset.mode || (btn.hasAttribute('data-callback') ? 'callback' : 'quote');
+  const copy = MODES[mode] || MODES.quote;
+  document.getElementById('enquiry-eyebrow').textContent = copy.eyebrow;
+  document.getElementById('enquiry-title').textContent = copy.title;
+  document.getElementById('enquiry-sub').textContent = copy.sub;
+  showStep('form');
+  const product = btn.dataset.product;
+  if (product && form) form.elements.message.value = `Interested in: ${product}`;
+  dialog.showModal();
 });
 
 if (dialog && form) {
-  dialog.querySelector('[data-close-enquiry]').addEventListener('click', () => dialog.close());
+  dialog.querySelectorAll('[data-close-enquiry]').forEach((b) => b.addEventListener('click', () => dialog.close()));
   dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
 
-  const name = form.elements.name;
-  const nameError = document.getElementById('f-name-error');
-  form.addEventListener('submit', (e) => {
+  const status = document.getElementById('enquiry-status');
+  const submit = document.getElementById('enquiry-submit');
+  const fail = (input, msg) => {
+    input.closest('.field').classList.add('has-error');
+    document.getElementById(`${input.id}-error`).textContent = msg;
+  };
+  const clear = (input) => {
+    input.closest('.field').classList.remove('has-error');
+    document.getElementById(`${input.id}-error`).textContent = '';
+  };
+  ['name', 'phone'].forEach((n) => form.elements[n].addEventListener('input', () => clear(form.elements[n])));
+
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const field = name.closest('.field');
-    if (!name.value.trim()) {
-      field.classList.add('has-error');
-      nameError.textContent = 'Please enter your name so we know who to reply to.';
-      name.focus();
-      return;
-    }
-    field.classList.remove('has-error');
-    nameError.textContent = '';
+    const { name, phone } = form.elements;
+    const digits = phone.value.replace(/\D/g, '');
+    clear(name); clear(phone);
+    let first = null;
+    if (name.value.trim().length < 2) { fail(name, 'Please add your name so we know who to call.'); first = first || name; }
+    if (digits.length < 7 || digits.length > 15) { fail(phone, 'Please add a phone number we can reach you on.'); first = first || phone; }
+    if (first) { first.focus(); return; }
 
+    const data = {
+      name: name.value.trim(),
+      phone: phone.value.trim(),
+      organisation: form.elements.organisation.value,
+      interest: form.elements.interest.value,
+      message: form.elements.message.value.trim(),
+      website: form.elements.website.value,
+      page: `${location.pathname}${mode !== 'quote' ? ` (${mode})` : ''}`,
+    };
     const lines = [
-      isCallback ? 'Hello Medico, please call me back.' : 'Hello Medico, I would like a quote.',
-      `Name: ${name.value.trim()}`,
-      `Enquiring for: ${form.elements.type.value}`,
-      `Equipment: ${form.elements.equipment.value}`,
+      mode === 'callback' ? 'Hello Medico, please call me back.' : 'Hello Medico, I would like some help.',
+      `Name: ${data.name}`, `Phone: ${data.phone}`, `For: ${data.organisation}`, `Topic: ${data.interest}`,
     ];
-    const details = form.elements.message.value.trim();
-    if (details) lines.push(`Details: ${details}`);
+    if (data.message) lines.push(`Details: ${data.message}`);
+    document.getElementById('enquiry-wa').href = waLink(lines);
 
-    const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lines.join('\n'))}`;
-    const win = window.open(url, '_blank');
-    if (win) win.opener = null;
-    else window.location.href = url; // popup blocked (some in-app browsers)
-    dialog.close();
-  });
-  name.addEventListener('input', () => {
-    if (!name.value.trim()) return;
-    name.closest('.field').classList.remove('has-error');
-    nameError.textContent = '';
+    submit.disabled = true;
+    submit.classList.add('is-loading');
+    status.textContent = '';
+    try {
+      const res = await fetch('/api/inquiry', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+      const out = await res.json().catch(() => ({}));
+      if ((res.status === 400 || res.status === 429) && out.message) { status.textContent = out.message; return; }
+      if (!res.ok || !out.success) throw new Error(out.message || 'failed');
+      form.reset();
+      showStep('done');
+      form.querySelector('[data-step="done"] h3').focus();
+    } catch (err) {
+      // Never lose an enquiry: hand it to WhatsApp if the server can't take it
+      status.innerHTML = `We couldn't send that just now. <a href="${waLink(lines)}" target="_blank" rel="noopener">Send it on WhatsApp instead</a> or call +91 94190 08453.`;
+    } finally {
+      submit.disabled = false;
+      submit.classList.remove('is-loading');
+    }
   });
 }
 
@@ -214,6 +278,20 @@ function initMotion() {
     });
   });
 
+  // Image frames: the picture rises out of its frame and settles from a slight zoom
+  $$('[data-media]').forEach((el) => {
+    const img = el.querySelector('img, video');
+    const tl = gsap.timeline({ scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
+    tl.fromTo(el, { clipPath: reducedMotion ? 'inset(0% 0% 0% 0%)' : 'inset(18% 0% 0% 0%)', autoAlpha: 0 },
+      { clipPath: 'inset(0% 0% 0% 0%)', autoAlpha: 1, duration: 1.1, ease: 'power3.out', clearProps: 'clipPath' });
+    if (img && move) tl.fromTo(img, { scale: 1.16, yPercent: 6 }, { scale: 1, yPercent: 0, duration: 1.5, ease: 'power3.out', clearProps: 'transform' }, 0);
+  });
+
+  // Section labels: the short rule draws in as the label arrives
+  $$('.eyebrow').forEach((el) => {
+    ScrollTrigger.create({ trigger: el, start: 'top 92%', once: true, onEnter: () => el.classList.add('is-in') });
+  });
+
   $$('[data-count]').forEach((el) => {
     const target = Number(el.dataset.count);
     const counter = { v: 0 };
@@ -229,6 +307,14 @@ function initMotion() {
     gsap.fromTo(grid.children, { y: 24 * move, autoAlpha: 0 }, {
       y: 0, autoAlpha: 1, stagger: 0.08,
       scrollTrigger: { trigger: grid, start: 'top 92%', once: true },
+    });
+  });
+
+  // Footer wordmark rises from below the fold line as the page ends
+  $$('.footer-wordmark').forEach((el) => {
+    gsap.fromTo(el, { yPercent: 45 * move, autoAlpha: 0 }, {
+      yPercent: 0, autoAlpha: 1, ease: 'none',
+      scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom bottom', scrub: 0.5 },
     });
   });
 

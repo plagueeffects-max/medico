@@ -43,36 +43,18 @@
   gap: 8px;
   padding: 6px 14px;
   margin-bottom: 24px;
-  border-radius: 9999px;
+  border-radius: 8px;
   background: #ffffff;
-  border: 1px solid rgba(11, 18, 32, 0.08);
-  box-shadow: 0 1px 2px rgba(11, 18, 32, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  box-shadow: 0 1px 2px rgba(11, 18, 32, 0.06), 0 0 0 1px rgba(11, 18, 32, 0.09);
   font-size: 13px;
   font-weight: 600;
   color: #475569;
-  transition: all 0.25s var(--ease);
-  cursor: default;
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
 }
 .hero-badge:hover {
   border-color: rgba(11, 18, 32, 0.16);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px -2px rgba(11, 18, 32, 0.08);
-}
-.hero-badge-tag {
-  display: inline-flex;
-  align-items: center;
-  padding: 2px 7px;
-  border-radius: 9999px;
-  background: rgba(224, 36, 27, 0.08);
-  color: var(--accent);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-.hero-badge-sep {
-  color: #cbd5e1;
-  font-size: 10px;
 }
 .hero-badge-text {
   color: var(--ink);
@@ -86,69 +68,13 @@
   transition: transform 0.25s var(--ease);
 }
 .hero-badge:hover .hero-badge-arrow {
-  transform: translateX(2px);
-  color: var(--accent);
+  transform: translateX(3px);
+  color: var(--ink);
 }
-
-.hero-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
-  margin-bottom: 24px;
-  border-radius: 9999px;
-  background: #ffffff;
-  border: 1px solid rgba(11, 18, 32, 0.08);
-  box-shadow: 0 1px 2px rgba(11, 18, 32, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  font-size: 12.5px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  color: #475569;
-}
-.pulse-dot { display: none; }
 
 .hero-copy .display { margin-bottom: 24px; }
 .hero-copy .lead { margin-bottom: 36px; }
 
-.hero-proof { display: flex; align-items: center; gap: 16px; margin-top: 40px; }
-.avatar-stack { display: inline-flex; align-items: center; }
-.avatar-stack .avatar {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  margin-left: -10px;
-  border: 2px solid #ffffff;
-  font-size: 11.5px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  color: #ffffff;
-  box-shadow: 0 2px 6px rgba(11, 18, 32, 0.12);
-  position: relative;
-  transition: transform 0.25s var(--ease);
-}
-.avatar-stack .avatar:first-child { margin-left: 0; }
-.avatar-stack .avatar:hover { transform: translateY(-2px) scale(1.08); z-index: 2; }
-.hero-proof-text { display: flex; flex-direction: column; gap: 4px; font-size: 13.5px; color: var(--muted); }
-.hero-proof-text strong { color: var(--ink); font-weight: 700; }
-.hero-proof-text .stars-inline { display: inline-flex; gap: 2px; color: #f59e0b; }
-.hero-proof-text .stars-inline .icon { width: 14px; height: 14px; }
-
-.hero-tagline {
-  position: absolute;
-  top: 64px;
-  right: max(var(--gutter), env(safe-area-inset-right));
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 2px;
-  text-align: right;
-}
-.tagline-bar { width: 40px; height: 3px; margin-bottom: 14px; border-radius: 3px; background: var(--accent); }
-.tagline-line { font-size: clamp(1.125rem, 0.9rem + 0.6vw, 1.5rem); font-weight: 500; letter-spacing: -0.02em; line-height: 1.25; color: var(--text); }
-.tagline-strong { font-weight: 800; color: var(--ink); }
 
 /* ---------- Stats ---------- */
 .stats-wrap { position: relative; z-index: 2; margin-top: -88px; }
@@ -400,6 +326,7 @@
   background: var(--accent);
   border-color: var(--accent);
 }
+.service-num { position: absolute; top: 22px; right: 22px; font-family: var(--font-mono); font-size: 12px; color: rgba(255, 255, 255, 0.35); }
 .service h3 { margin-bottom: 8px; font-size: 16.5px; font-weight: 700; letter-spacing: -0.015em; color: #fff; }
 .service p { font-size: 14px; line-height: 1.6; color: #94a3b8; }
 
@@ -459,10 +386,17 @@
   width: auto;
   height: auto;
   object-fit: contain;
-  transition: transform 0.35s var(--ease), opacity 0.35s var(--ease);
+  filter: grayscale(1);
+  opacity: 0.62;
+  transition: transform 0.35s var(--ease), opacity 0.35s var(--ease), filter 0.35s var(--ease);
 }
 .brand-card:hover .brand-logo-frame img {
-  transform: scale(1.05);
+  filter: none;
+  opacity: 1;
+  transform: scale(1.04);
+}
+@media (hover: none) {
+  .brand-logo-frame img { filter: none; opacity: 1; }
 }
 .brand-details {
   display: flex;
@@ -567,37 +501,6 @@
   font-weight: 500;
   color: #64748b;
 }
-.badge-status-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #10b981;
-}
-.about-badge-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 6px 14px;
-  border-radius: 9999px;
-  background: #090d16;
-  color: #ffffff;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  text-decoration: none;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
-  transition: background 0.2s var(--ease), transform 0.2s var(--ease);
-}
-.about-badge-btn .icon {
-  width: 12px;
-  height: 12px;
-}
-.about-badge-btn:hover {
-  background: var(--accent);
-  color: #ffffff;
-  transform: translateY(-1px);
-}
-
 .about-copy .h2 { margin-bottom: 20px; }
 .about-copy .body-lg { margin-bottom: 12px; }
 .about-copy .body { margin-bottom: 28px; }
@@ -727,25 +630,36 @@
 .g-logo[hidden] { display: none; }
 .rating-value { font-size: 20px; font-weight: 800; letter-spacing: -0.03em; color: var(--ink); }
 .rating-label { font-size: 13.5px; color: var(--muted); }
-.track-controls { display: flex; gap: 10px; }
-
 .stars-inline { display: inline-flex; gap: 4px; color: #f59e0b; }
 .stars-inline .icon { width: 18px; height: 18px; }
 
 .reviews-layout { display: block; width: 100%; margin-top: 36px; }
-.reviews-track {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: min(440px, calc(100% - 32px));
-  gap: 24px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  overscroll-behavior-x: contain;
-  scrollbar-width: none;
-  padding: 16px 8px 24px;
+/* Full-bleed strip that fades out at both edges */
+.reviews-marquee {
+  margin-inline: calc(50% - 50vw);
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
 }
-.reviews-track::-webkit-scrollbar { display: none; }
+.reviews-track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  padding: 16px 12px 28px;
+}
+.reviews-track > .review { width: min(420px, 82vw); flex: none; margin-right: 0; }
+.reviews-marquee.is-running .reviews-track { animation: reviews-loop var(--duration, 60s) linear infinite; }
+.reviews-marquee.is-running:hover .reviews-track,
+.reviews-marquee.is-running:focus-within .reviews-track,
+.reviews-marquee.is-held .reviews-track,
+.reviews-marquee.is-offscreen .reviews-track { animation-play-state: paused; }
+/* Half the track width is exactly one set of cards plus its gaps */
+@keyframes reviews-loop { to { transform: translateX(calc(-1 * var(--loop))); } }
+/* Reduced motion: a plain swipeable row instead */
+@media (prefers-reduced-motion: reduce) {
+  .reviews-marquee { overflow-x: auto; scroll-snap-type: x mandatory; -webkit-mask-image: none; mask-image: none; }
+  .reviews-track > .review { scroll-snap-align: center; }
+}
 
 .review {
   display: flex;
@@ -757,7 +671,6 @@
   background: #ffffff;
   border: 1px solid rgba(11, 18, 32, 0.08);
   box-shadow: 0px 2px 3px -1px rgba(0, 0, 0, 0.04), 0px 1px 0px 0px rgba(25, 28, 33, 0.02), 0px 0px 0px 1px rgba(25, 28, 33, 0.06), 0 12px 30px -10px rgba(11, 18, 32, 0.06);
-  scroll-snap-align: start;
   transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), border-color 0.35s var(--ease);
 }
 .review:hover {
@@ -765,13 +678,6 @@
   border-color: rgba(11, 18, 32, 0.16);
   box-shadow: 0px 2px 3px -1px rgba(0, 0, 0, 0.04), 0 20px 45px -12px rgba(11, 18, 32, 0.12);
 }
-
-.review-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.review-top .g-logo { width: 18px; height: 18px; }
 
 .review blockquote {
   flex: 1;
@@ -835,22 +741,6 @@
   font-size: 13px;
   color: #64748b;
   font-weight: 500;
-}
-
-.reviews-indicator {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 24px;
-}
-.reviews-indicator-pill {
-  display: block;
-  width: 38px;
-  height: 5px;
-  border-radius: 999px;
-  background: #64748b;
-  opacity: 0.5;
-  transition: opacity 0.3s var(--ease);
 }
 
 .reviews-source { margin-top: 16px; text-align: center; }
@@ -1038,7 +928,6 @@
   }
   .hero-media::after { background: linear-gradient(0deg, #fff 0%, rgba(255, 255, 255, 0) 22%); }
   .hero-copy { max-width: min(560px, 54vw); }
-  .tagline-line { font-size: 18px; }
 }
 
 @media (max-width: 1024px) {
@@ -1067,7 +956,6 @@
   .hero-copy { max-width: none; }
 
   /* Tagline on mobile: hidden to avoid clutter */
-  .hero-tagline { display: none; }
 
   /* Hero: one full first screen. The video fills the top and fades out
      behind the headline; the copy sits at the bottom, so both are seen at once. */
@@ -1096,7 +984,6 @@
   .hero-copy .btn { text-shadow: none; }
   /* The sticky Call / WhatsApp bar covers this on phones; dropping it keeps the hero to one screen */
   .hero-cta-secondary { display: none; }
-  .hero-proof { margin-top: 24px; }
 
   .stats-wrap { margin-top: 8px; }
   .reviews-meta { align-items: flex-start; }
@@ -1129,7 +1016,6 @@
   .hero-eyebrow { font-size: 11.5px; letter-spacing: 0.08em; margin-bottom: 18px; }
   .hero-copy .display { margin-bottom: 16px; font-size: clamp(2.25rem, 9.6vw, 2.75rem); }
   .hero-copy .lead { margin-bottom: 28px; font-size: 1.0625rem; }
-  .hero-proof { margin-top: 22px; }
 
   .stats-card { padding: 4px; border-radius: var(--r-lg); }
   .stat { flex-direction: column; align-items: flex-start; gap: 12px; padding: 18px 16px; }
@@ -1166,7 +1052,8 @@
     width: 18px;
     height: 18px;
   }
-  .service h3 {
+  .service-num { position: absolute; top: 22px; right: 22px; font-family: var(--font-mono); font-size: 12px; color: rgba(255, 255, 255, 0.35); }
+.service h3 {
     font-size: 14px;
     font-weight: 700;
     line-height: 1.25;
@@ -1185,7 +1072,6 @@
   .reviews-track { grid-auto-columns: 86%; }
   .review { padding: 24px; }
   .review blockquote { font-size: 16px; }
-  .track-controls { display: none; }
   .rating-pill { flex-wrap: wrap; row-gap: 4px; }
 
 }

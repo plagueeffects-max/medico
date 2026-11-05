@@ -1,0 +1,71 @@
+  <dialog class="enquiry-dialog" id="enquiry-dialog" aria-labelledby="enquiry-title">
+    <form class="enquiry" id="enquiry-form" novalidate>
+      <button type="button" class="icon-btn enquiry-close" data-close-enquiry aria-label="Close"><svg class="icon"><use href="/assets/icons.svg#i-x"/></svg></button>
+      <div class="enquiry-step" data-step="form">
+        <p class="eyebrow" id="enquiry-eyebrow">Free consultation</p>
+        <h3 id="enquiry-title">Request a quote</h3>
+        <p class="enquiry-sub" id="enquiry-sub">Tell us what you need. A specialist calls you back, usually the same day.</p>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="f-name">Your name</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" maxlength="80" required aria-describedby="f-name-error">
+            <span class="field-error" id="f-name-error" role="alert"></span>
+          </div>
+          <div class="field">
+            <label for="f-phone">Phone or WhatsApp</label>
+            <input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" placeholder="+91" required aria-describedby="f-phone-error">
+            <span class="field-error" id="f-phone-error" role="alert"></span>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="f-type">Enquiring for</label>
+            <select id="f-type" name="organisation">
+              <option>Hospital</option>
+              <option>Nursing home</option>
+              <option>Clinic</option>
+              <option>Home care</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-equipment">Topic</label>
+            <select id="f-equipment" name="interest">
+              <option>Not sure yet</option>
+              <option>Oxygen therapy</option>
+              <option>CPAP / BiPAP</option>
+              <option>Critical care</option>
+              <option>Anaesthesia</option>
+              <option>Diagnostics</option>
+              <option>Emergency &amp; resuscitation</option>
+              <option>Surgical</option>
+              <option>Service / AMC / repair</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-message">Details <span class="optional">(optional)</span></label>
+          <textarea id="f-message" name="message" rows="3" maxlength="2000" placeholder="e.g. 2 patient monitors for a 10-bed ICU in Baramulla"></textarea>
+        </div>
+        <div class="hp-field" aria-hidden="true"><label for="f-website">Website</label><input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+        <button type="submit" class="btn btn-accent btn-lg btn-block" id="enquiry-submit"><span>Send enquiry</span><svg class="icon"><use href="/assets/icons.svg#i-arrow"/></svg></button>
+        <p class="form-status" id="enquiry-status" role="status"></p>
+        <p class="enquiry-note">Rather talk now? <a href="tel:+919419008453">Call +91 94190 08453</a> &middot; <a href="https://wa.me/919419008453" target="_blank" rel="noopener">WhatsApp</a></p>
+      </div>
+      <div class="enquiry-step enquiry-done" data-step="done" hidden>
+        <span class="enquiry-done-icon" aria-hidden="true"><svg class="icon"><use href="/assets/icons.svg#i-check"/></svg></span>
+        <h3 tabindex="-1">Thanks, we have it</h3>
+        <p class="enquiry-sub">A specialist will call you back. If it is urgent, message us on WhatsApp and we will pick it up there.</p>
+        <a class="btn btn-outline btn-block" id="enquiry-wa" href="https://wa.me/919419008453" target="_blank" rel="noopener"><svg class="icon"><use href="/assets/icons.svg#i-whatsapp"/></svg>Also send on WhatsApp</a>
+        <button type="button" class="btn btn-dark btn-block" data-close-enquiry>Done</button>
+      </div>
+    </form>
+  </dialog>
+
+  <a href="https://wa.me/919419008453?text=Hello%20Medico%2C%20I%27d%20like%20to%20enquire%20about%20medical%20equipment." class="wa-fab" target="_blank" rel="noopener" aria-label="Chat with Medico on WhatsApp"><svg class="icon"><use href="/assets/icons.svg#i-whatsapp"/></svg></a>
+
+  <div class="mobile-bar">
+    <a href="tel:+919419008453" class="btn btn-outline"><svg class="icon"><use href="/assets/icons.svg#i-phone"/></svg>Call us</a>
+    <button type="button" class="btn btn-accent" data-open-enquiry data-mode="quote">Get a quote<svg class="icon"><use href="/assets/icons.svg#i-arrow"/></svg></button>
+  </div>

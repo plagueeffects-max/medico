@@ -6,9 +6,9 @@
 /* =========== About (1:1 High-Craft System) =========== */
 
 :root {
-  --ab-crimson: #e11d48;
-  --ab-crimson-tint: rgba(225, 29, 72, 0.08);
-  --ab-crimson-border: rgba(225, 29, 72, 0.2);
+  --ab-crimson: var(--accent);
+  --ab-crimson-tint: rgba(224, 36, 27, 0.08);
+  --ab-crimson-border: rgba(224, 36, 27, 0.2);
   --ab-obsidian: #0b111e;
   --ab-slate: #64748b;
   --ab-ink: #090d16;
@@ -129,12 +129,13 @@
   position: relative;
   padding-top: clamp(24px, 3vw, 40px);
   padding-bottom: clamp(48px, 6vw, 80px);
-  background: radial-gradient(circle at 75% 35%, rgba(219, 234, 254, 0.65) 0%, rgba(239, 246, 255, 0.35) 50%, rgba(255, 255, 255, 0) 75%), #ffffff;
+  overflow: hidden;
+  background: #fff;
 }
 .ab-hero-grid {
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: clamp(32px, 5vw, 64px);
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(24px, 3vw, 48px);
   align-items: center;
 }
 .ab-hero-copy {
@@ -185,23 +186,20 @@
   margin: 0;
 }
 .ab-hero-equipment-stage img {
-  width: 100%;
-  max-width: 520px;
+  width: 128%;
+  max-width: none;
   height: auto;
-  max-height: 480px;
-  object-fit: contain;
-  filter: drop-shadow(0 20px 32px rgba(12, 19, 34, 0.08));
-  transition: transform 0.4s var(--ease);
-}
-.ab-hero-equipment-stage:hover img {
-  transform: translateY(-4px);
+  margin-right: -28%;
+  /* The studio backdrop melts into the white page instead of showing a box */
+  -webkit-mask-image: radial-gradient(ellipse 60% 68% at 52% 54%, #000 46%, transparent 100%);
+  mask-image: radial-gradient(ellipse 60% 68% at 52% 54%, #000 46%, transparent 100%);
 }
 
 /* Floating Stats Bar */
 .ab-stats-bar {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  margin-top: clamp(48px, 6vw, 72px);
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: clamp(32px, 4vw, 56px);
   padding: 24px 16px;
   border-radius: 24px;
   background: #ffffff;
@@ -876,12 +874,7 @@
 }
 
 @media (max-width: 900px) {
-  .ab-stats-bar {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
-  .ab-stat-item:nth-child(3) { border-left: 0; }
-  .ab-stat-item:nth-child(n+3) { border-top: 1px solid rgba(9, 13, 22, 0.08); }
+  .ab-hero-equipment-stage img { width: 112%; margin: 0 -6%; }
 
   .journey-track {
     top: 8px;
@@ -919,8 +912,9 @@
     padding: 8px;
   }
   .ab-stat-val {
-    font-size: 2rem;
+    font-size: 1.75rem;
   }
+  .ab-stat-lbl { font-size: 10px; letter-spacing: 0.04em; }
   .founder-founded-badge {
     bottom: 16px;
     left: 16px;

@@ -39,29 +39,61 @@
   ['touchstart', 'pointerdown'].forEach((evt) => window.addEventListener(evt, play, { once: true, passive: true }));
 })();
 
-/* ---------- Reviews carousel + live Google reviews ---------- */
+/* ---------- Reviews: endless strip + live Google reviews ----------
+   The cards are cloned once (clones hidden from screen readers) and the pair
+   slides by exactly one set width, so the loop never jumps. It pauses while a
+   card is hovered, focused or touched. Reduced motion keeps a plain swipe row. */
+const escapeHtml = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const icon = (id, cls = 'icon') => `<svg class="${cls}"><use href="/assets/icons.svg#${id}"/></svg>`;
+
+(() => {
+  const marquee = document.getElementById('reviews-marquee');
+  const track = document.getElementById('reviews-track');
+  if (!marquee || !track) return;
+  const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const build = () => {
+    track.querySelectorAll('[data-clone]').forEach((el) => el.remove());
+    if (still) return;
+    const originals = [...track.children];
+    originals.forEach((el) => {
+      const c = el.cloneNode(true);
+      c.setAttribute('data-clone', '');
+      c.setAttribute('aria-hidden', 'true');
+      c.removeAttribute('role');
+      track.appendChild(c);
+    });
+    // ~45px per second whatever the card count or screen width
+    const setWidth = track.scrollWidth / 2;
+    track.style.setProperty('--loop', `${setWidth}px`);
+    track.style.setProperty('--duration', `${Math.max(30, setWidth / 45)}s`);
+    marquee.classList.add('is-running');
+  };
+
+  // Touch: pause on press, resume a moment after the finger lifts
+  let resume;
+  marquee.addEventListener('pointerdown', (e) => {
+    if (e.pointerType === 'mouse') return;
+    clearTimeout(resume);
+    marquee.classList.add('is-held');
+  });
+  ['pointerup', 'pointercancel'].forEach((evt) => marquee.addEventListener(evt, () => {
+    clearTimeout(resume);
+    resume = setTimeout(() => marquee.classList.remove('is-held'), 2500);
+  }));
+  // Off-screen: stop painting it
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([en]) => marquee.classList.toggle('is-offscreen', !en.isIntersecting)).observe(marquee);
+  }
+  let rw;
+  window.addEventListener('resize', () => { clearTimeout(rw); rw = setTimeout(build, 250); });
+  build();
+  window.medicoReviews = { rebuild: build };
+})();
+
 (() => {
   const track = document.getElementById('reviews-track');
   if (!track) return;
-  const scrollButtons = document.querySelectorAll('[data-scroll]');
-  const updateArrows = () => {
-    const max = track.scrollWidth - track.clientWidth - 2;
-    scrollButtons[0].disabled = track.scrollLeft <= 2;
-    scrollButtons[1].disabled = track.scrollLeft >= max;
-  };
-  scrollButtons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const card = track.querySelector('.review');
-      const step = card ? card.getBoundingClientRect().width + 20 : track.clientWidth;
-      track.scrollBy({ left: step * Number(btn.dataset.scroll), behavior: 'smooth' });
-    });
-  });
-  track.addEventListener('scroll', updateArrows, { passive: true });
-  window.addEventListener('resize', updateArrows);
-  updateArrows();
-
-  const escapeHtml = (s) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  const icon = (id, cls = 'icon') => `<svg class="${cls}"><use href="assets/icons.svg#${id}"/></svg>`;
 
   // Falls back to the static reviews on any failure
   (async () => {
@@ -79,9 +111,9 @@
         const avatar = r.photo
           ? `<span class="avatar"><img src="${escapeHtml(r.photo)}" alt="" width="44" height="44" loading="lazy" referrerpolicy="no-referrer"></span>`
           : `<span class="avatar avatar-${(i % 5) + 1}" aria-hidden="true">${escapeHtml(initials)}</span>`;
-        return `<figure class="review">
-          <div class="review-top"><span class="stars-inline" role="img" aria-label="${r.rating} out of 5 stars">${icon('i-star').repeat(r.rating)}</span><svg class="g-logo" aria-label="Google review"><use href="assets/icons.svg#i-google"/></svg></div>
-          <blockquote>&ldquo;${escapeHtml(r.text)}&rdquo;</blockquote>
+        const text = r.text.length > 260 ? `${r.text.slice(0, 250).replace(/\s+\S*$/, '')}…` : r.text;
+        return `<figure class="review" role="listitem">
+          <blockquote>&ldquo;${escapeHtml(text)}&rdquo;</blockquote>
           <figcaption>${avatar}<span class="reviewer-meta"><span class="reviewer-name-row"><strong>${escapeHtml(r.author)}</strong>${icon('i-verified', 'icon-verified')}</span><small>${escapeHtml(r.time || 'Google review')}</small></span></figcaption>
         </figure>`;
       }).join('');
@@ -93,12 +125,38 @@
         document.getElementById('reviews-source-link').href = data.url;
         document.getElementById('reviews-source').hidden = false;
       }
-      updateArrows();
-      window.siteMotion.reveal(track);
+      window.medicoReviews?.rebuild();
     } catch {
       // Keep the static reviews
     }
   })();
+})();
+
+/* ---------- Latest articles from the blog API (static cards stay as fallback) ---------- */
+(async () => {
+  const grid = document.querySelector('.insight-grid');
+  if (!grid) return;
+  try {
+    const res = await fetch('/api/posts');
+    if (!res.ok) return;
+    const { success, posts } = await res.json();
+    if (!success || !Array.isArray(posts) || posts.length < 2) return;
+    const latest = posts.slice().sort((a, b) => String(b.date).localeCompare(String(a.date))).slice(0, 2);
+    const cards = grid.querySelectorAll('.insight:not(.insight-more)');
+    latest.forEach((p, i) => {
+      const card = cards[i];
+      if (!card) return;
+      const url = p.slug ? `/blog/${encodeURIComponent(p.slug)}` : `/blog-post.html?id=${encodeURIComponent(p.id)}`;
+      const img = p.image ? (/^(https?:)?\//.test(p.image) ? p.image : `/${p.image}`) : '';
+      const d = new Date(`${p.date}T00:00:00`);
+      const when = Number.isNaN(d.getTime()) ? '' : d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+      card.href = url;
+      card.innerHTML = `<div class="insight-media" data-media>${img ? `<img src="${escapeHtml(img)}" alt="" width="900" height="676" loading="lazy">` : ''}${when ? `<time datetime="${escapeHtml(p.date)}">${when}</time>` : ''}</div>
+        <div class="insight-body"><span class="insight-tag">${escapeHtml(p.category || 'Article')}</span><h3>${escapeHtml(p.title)}</h3><p>${escapeHtml(p.subheading || '')}</p><span class="read-link">Read article${icon('i-arrow')}</span></div>`;
+    });
+  } catch {
+    // Static cards stay
+  }
 })();
 
 /* ---------- Home-only motion ---------- */

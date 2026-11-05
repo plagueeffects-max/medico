@@ -18,20 +18,22 @@
   <meta name="twitter:card" content="summary_large_image">
 
   <!-- @head -->
-  <link rel="icon" type="image/svg+xml" href="favicon/icon.svg">
-  <link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
-  <link rel="shortcut icon" href="favicon/favicon.ico">
-  <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
-  <link rel="manifest" href="favicon/site.webmanifest">
-  <link rel="stylesheet" href="assets/css/site.css">
+  <link rel="icon" type="image/svg+xml" href="/favicon/icon.svg">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png">
+  <link rel="shortcut icon" href="/favicon/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+  <link rel="manifest" href="/favicon/site.webmanifest">
+  <link rel="preload" href="/assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter-800.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css?v=6">
   <script>document.documentElement.classList.add('js');</script>
-  <script src="assets/vendor/gsap.min.js" defer></script>
-  <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
-  <script src="assets/vendor/SplitText.min.js" defer></script>
-  <script src="assets/js/site.js" defer></script>
+  <script src="/assets/vendor/gsap.min.js" defer></script>
+  <script src="/assets/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="/assets/vendor/SplitText.min.js" defer></script>
+  <script src="/assets/js/site.js?v=6" defer></script>
   <!-- /@head -->
-  <link rel="stylesheet" href="assets/css/shop.css?v=4">
-  <link rel="stylesheet" href="assets/css/pages.css?v=4">
+  <link rel="stylesheet" href="/assets/css/shop.css?v=4">
+  <link rel="stylesheet" href="/assets/css/pages.css?v=4">
 </head>
 
 <body data-page="product">
@@ -40,18 +42,17 @@
   <!-- @header -->
   <div class="topbar">
     <div class="container topbar-inner">
-      <p class="topbar-note"><span class="live-dot" aria-hidden="true"></span><span><strong>Authorised</strong> Philips, Schiller &amp; Shalya distributor<span class="topbar-hide-md"> across Jammu &amp; Kashmir</span></span></p>
+      <p class="topbar-note"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-pin"/></svg><span data-copy="chrome.topbar.note">Iqbal Complex, Srinagar<span class="topbar-hide-md"> &middot; Open 7 days, 9 AM &ndash; 8 PM</span></span></p>
       <div class="topbar-links">
-        <span class="topbar-hide-md"><svg class="icon"><use href="assets/icons.svg#i-clock"/></svg>Mon &ndash; Sun, 9 AM &ndash; 8 PM</span>
-        <a href="tel:+919419008453"><svg class="icon"><use href="assets/icons.svg#i-phone"/></svg>+91 94190 08453</a>
-        <a href="#" class="topbar-cta" data-open-enquiry>Speak to a specialist<svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></a>
+        <a href="tel:+919419008453"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-phone"/></svg><span data-copy="chrome.topbar.phone">+91 94190 08453</span></a>
+        <a href="https://wa.me/919419008453" class="topbar-cta" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-whatsapp"/></svg><span data-copy="chrome.topbar.cta">WhatsApp us</span></a>
       </div>
     </div>
   </div>
   <header class="site-header" id="site-header">
     <div class="container header-inner">
-      <a href="index.html" class="brand" aria-label="Medico Scientific Service Centre, home">
-        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 64 64"><use href="assets/icons.svg#i-ecg"/></svg></span>
+      <a href="/" class="brand" aria-label="Medico Scientific Service Centre, home">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 64 64"><use href="/assets/icons.svg#i-ecg"/></svg></span>
         <span class="brand-text">
           <span class="brand-name">Medico<span class="brand-dot">.</span></span>
           <span class="brand-sub">Scientific Service Centre</span>
@@ -59,64 +60,77 @@
       </a>
 
       <nav class="main-nav" id="main-nav" aria-label="Main">
-        <a class="nav-link" href="index.html">Home</a>
+        <span class="nav-glider" aria-hidden="true"></span>
+        <a class="nav-link" href="/" data-nav="home">Home</a>
         <div class="nav-item">
-          <a class="nav-link" href="shop.html" aria-current="page">Products<svg class="icon"><use href="assets/icons.svg#i-chevron-down"/></svg></a>
+          <a class="nav-link" href="/shop.html" data-nav="shop" aria-haspopup="true">Products<svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-chevron-down"/></svg></a>
           <div class="nav-menu">
             <div class="nav-menu-panel">
-              <a href="shop.html?category=Oxygen+Therapy"><span class="nm-icon"><svg class="icon"><use href="assets/icons.svg#i-wind"/></svg></span><span class="nm-text"><strong>Oxygen Therapy</strong><small>Concentrators &amp; cylinders</small></span></a>
-              <a href="shop.html?category=Sleep+%26+NIV"><span class="nm-icon"><svg class="icon"><use href="assets/icons.svg#i-moon"/></svg></span><span class="nm-text"><strong>Sleep &amp; NIV</strong><small>CPAP &amp; BiPAP</small></span></a>
-              <a href="shop.html?category=Critical+Care"><span class="nm-icon"><svg class="icon"><use href="assets/icons.svg#i-bed"/></svg></span><span class="nm-text"><strong>Critical Care</strong><small>ICU monitoring &amp; life support</small></span></a>
-              <a href="shop.html?category=Diagnostics+%26+Monitoring"><span class="nm-icon"><svg class="icon"><use href="assets/icons.svg#i-heart-pulse"/></svg></span><span class="nm-text"><strong>Diagnostics &amp; Monitoring</strong><small>ECG &amp; stress testing</small></span></a>
-              <a href="shop.html?category=Emergency+%26+Resuscitation"><span class="nm-icon"><svg class="icon"><use href="assets/icons.svg#i-zap"/></svg></span><span class="nm-text"><strong>Emergency &amp; Resuscitation</strong><small>Defibrillators</small></span></a>
-              <a href="shop.html?category=Anaesthesia"><span class="nm-icon"><svg class="icon"><use href="assets/icons.svg#i-activity"/></svg></span><span class="nm-text"><strong>Anaesthesia</strong><small>Workstations &amp; vaporisers</small></span></a>
-              <a href="shop.html?category=Surgical+Equipment"><span class="nm-icon"><svg class="icon"><use href="assets/icons.svg#i-scissors"/></svg></span><span class="nm-text"><strong>Surgical Equipment</strong><small>Laparoscopy &amp; OT</small></span></a>
-              <a href="shop.html" class="nm-all">View all equipment<svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></a>
+              <div class="nm-list">
+                <p class="nm-label">Equipment by department</p>
+                <a href="/shop.html?category=Oxygen+Therapy"><span class="nm-icon"><svg class="icon"><use href="/assets/icons.svg#i-wind"/></svg></span><span class="nm-text"><strong>Oxygen Therapy</strong><small>Concentrators, portable oxygen, cylinders</small></span></a>
+                <a href="/shop.html?category=Sleep+%26+NIV"><span class="nm-icon"><svg class="icon"><use href="/assets/icons.svg#i-moon"/></svg></span><span class="nm-text"><strong>Sleep &amp; NIV</strong><small>CPAP, BiPAP, masks</small></span></a>
+                <a href="/shop.html?category=Critical+Care"><span class="nm-icon"><svg class="icon"><use href="/assets/icons.svg#i-bed"/></svg></span><span class="nm-text"><strong>Critical Care</strong><small>ICU monitors, life support</small></span></a>
+                <a href="/shop.html?category=Diagnostics+%26+Monitoring"><span class="nm-icon"><svg class="icon"><use href="/assets/icons.svg#i-heart-pulse"/></svg></span><span class="nm-text"><strong>Diagnostics &amp; Monitoring</strong><small>ECG, stress testing, PFT</small></span></a>
+                <a href="/shop.html?category=Emergency+%26+Resuscitation"><span class="nm-icon"><svg class="icon"><use href="/assets/icons.svg#i-zap"/></svg></span><span class="nm-text"><strong>Emergency &amp; Resuscitation</strong><small>Defibrillators, AEDs</small></span></a>
+                <a href="/shop.html?category=Anaesthesia"><span class="nm-icon"><svg class="icon"><use href="/assets/icons.svg#i-activity"/></svg></span><span class="nm-text"><strong>Anaesthesia</strong><small>Workstations, vaporisers</small></span></a>
+                <a href="/shop.html?category=Surgical+Equipment"><span class="nm-icon"><svg class="icon"><use href="/assets/icons.svg#i-scissors"/></svg></span><span class="nm-text"><strong>Surgical Equipment</strong><small>Laparoscopy, OT systems</small></span></a>
+                <a href="/shop.html" class="nm-all"><span>View the full catalogue</span><svg class="icon"><use href="/assets/icons.svg#i-arrow"/></svg></a>
+              </div>
+              <aside class="nm-aside">
+                <p class="nm-label">Not sure what fits?</p>
+                <p class="nm-aside-title" data-copy="chrome.menu.title">Tell us the ward, the patient or the budget.</p>
+                <p class="nm-aside-body" data-copy="chrome.menu.body">A specialist will suggest the right model, explain running costs and arrange a demo.</p>
+                <button type="button" class="btn btn-dark btn-sm" data-open-enquiry data-mode="quote">Ask a specialist<svg class="icon"><use href="/assets/icons.svg#i-arrow"/></svg></button>
+                <a href="/#services" class="nm-aside-link">Service, AMC &amp; repairs<svg class="icon"><use href="/assets/icons.svg#i-arrow"/></svg></a>
+              </aside>
             </div>
           </div>
         </div>
-        <a class="nav-link" href="index.html#services">Services</a>
-        <a class="nav-link" href="about.html">About</a>
-        <a class="nav-link" href="blog.html">Blog</a>
-        <a class="nav-link" href="index.html#contact">Contact</a>
+        <a class="nav-link" href="/#services" data-nav="services">Services</a>
+        <a class="nav-link" href="/about.html" data-nav="about">About</a>
+        <a class="nav-link" href="/blog.html" data-nav="blog">Blog</a>
+        <a class="nav-link" href="/#contact" data-nav="contact" data-open-enquiry data-mode="contact">Contact</a>
         <div class="nav-mobile-cats">
-          <a href="shop.html?category=Oxygen+Therapy">Oxygen Therapy</a>
-          <a href="shop.html?category=Sleep+%26+NIV">Sleep &amp; NIV</a>
-          <a href="shop.html?category=Critical+Care">Critical Care</a>
-          <a href="shop.html?category=Diagnostics+%26+Monitoring">Diagnostics &amp; Monitoring</a>
-          <a href="shop.html?category=Emergency+%26+Resuscitation">Emergency &amp; Resuscitation</a>
+          <a href="/shop.html?category=Oxygen+Therapy">Oxygen Therapy</a>
+          <a href="/shop.html?category=Sleep+%26+NIV">Sleep &amp; NIV</a>
+          <a href="/shop.html?category=Critical+Care">Critical Care</a>
+          <a href="/shop.html?category=Diagnostics+%26+Monitoring">Diagnostics</a>
+          <a href="/shop.html?category=Emergency+%26+Resuscitation">Emergency</a>
+          <a href="/shop.html?category=Anaesthesia">Anaesthesia</a>
+          <a href="/shop.html?category=Surgical+Equipment">Surgical</a>
         </div>
         <div class="nav-mobile-ctas">
-          <a href="tel:+919419008453" class="btn btn-outline btn-block"><svg class="icon"><use href="assets/icons.svg#i-phone"/></svg>Call us</a>
-          <button type="button" class="btn btn-dark btn-block" data-open-enquiry>Get a quote<svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></button>
+          <a href="tel:+919419008453" class="btn btn-outline btn-block"><svg class="icon"><use href="/assets/icons.svg#i-phone"/></svg>Call us</a>
+          <button type="button" class="btn btn-dark btn-block" data-open-enquiry data-mode="quote">Get a quote<svg class="icon"><use href="/assets/icons.svg#i-arrow"/></svg></button>
         </div>
       </nav>
 
       <div class="header-actions">
-        <button type="button" class="icon-btn header-search-btn" id="search-toggle" aria-label="Search equipment" aria-expanded="false" aria-controls="header-search"><svg class="icon"><use href="assets/icons.svg#i-search"/></svg></button>
-        <a href="tel:+919419008453" class="icon-btn header-call" aria-label="Call Medico"><svg class="icon"><use href="assets/icons.svg#i-phone"/></svg></a>
-        <button type="button" class="btn btn-dark btn-sm header-cta" data-open-enquiry>Get a quote<svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></button>
+        <button type="button" class="icon-btn header-search-btn" id="search-toggle" aria-label="Search equipment" aria-expanded="false" aria-controls="header-search"><svg class="icon"><use href="/assets/icons.svg#i-search"/></svg></button>
+        <a href="tel:+919419008453" class="icon-btn header-call" aria-label="Call Medico"><svg class="icon"><use href="/assets/icons.svg#i-phone"/></svg></a>
+        <button type="button" class="btn btn-dark btn-sm header-cta" data-open-enquiry data-mode="quote">Get a quote<svg class="icon"><use href="/assets/icons.svg#i-arrow"/></svg></button>
         <button type="button" class="icon-btn menu-toggle" id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="main-nav">
-          <svg class="icon icon-open"><use href="assets/icons.svg#i-menu"/></svg>
-          <svg class="icon icon-close"><use href="assets/icons.svg#i-x"/></svg>
+          <svg class="icon icon-open"><use href="/assets/icons.svg#i-menu"/></svg>
+          <svg class="icon icon-close"><use href="/assets/icons.svg#i-x"/></svg>
         </button>
       </div>
     </div>
 
     <div class="header-search" id="header-search">
       <div class="container">
-        <form action="shop.html" method="get" role="search">
-          <svg class="icon"><use href="assets/icons.svg#i-search"/></svg>
+        <form action="/shop.html" method="get" role="search">
+          <svg class="icon"><use href="/assets/icons.svg#i-search"/></svg>
           <label for="header-search-input" class="visually-hidden">Search equipment</label>
           <input id="header-search-input" name="q" type="search" placeholder="Search oxygen, CPAP, monitors…" autocomplete="off">
-          <button type="submit" class="btn btn-dark btn-sm">Search<svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></button>
+          <button type="submit" class="btn btn-dark btn-sm">Search<svg class="icon"><use href="/assets/icons.svg#i-arrow"/></svg></button>
         </form>
         <div class="header-search-hint">
-          <a href="shop.html?category=Oxygen+Therapy">Oxygen therapy</a>
-          <a href="shop.html?category=Sleep+%26+NIV">CPAP &amp; BiPAP</a>
-          <a href="shop.html?category=Critical+Care">Patient monitors</a>
-          <a href="shop.html?category=Emergency+%26+Resuscitation">Defibrillators</a>
-          <a href="shop.html?category=Anaesthesia">Anaesthesia</a>
+          <a href="/shop.html?category=Oxygen+Therapy">Oxygen therapy</a>
+          <a href="/shop.html?category=Sleep+%26+NIV">CPAP &amp; BiPAP</a>
+          <a href="/shop.html?category=Critical+Care">Patient monitors</a>
+          <a href="/shop.html?category=Emergency+%26+Resuscitation">Defibrillators</a>
+          <a href="/shop.html?category=Anaesthesia">Anaesthesia</a>
         </div>
       </div>
     </div>
@@ -129,9 +143,9 @@
       <div class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb" data-hero>
           <ol>
-            <li><a href="index.html"><svg class="icon"><use href="assets/icons.svg#i-home"/></svg>Home</a></li>
-            <li><a href="shop.html">Products</a></li>
-            <li><a href="shop.html" id="crumb-cat">Category</a></li>
+            <li><a href="/index.html"><svg class="icon"><use href="/assets/icons.svg#i-home"/></svg>Home</a></li>
+            <li><a href="/shop.html">Products</a></li>
+            <li><a href="/shop.html" id="crumb-cat">Category</a></li>
             <li><span aria-current="page" id="crumb-title">Product</span></li>
           </ol>
         </nav>
@@ -162,14 +176,14 @@
             </div>
 
             <div class="pd-actions" data-hero>
-              <button type="button" class="btn btn-dark btn-lg" id="pd-quote" data-open-enquiry>Request a quote<svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></button>
-              <a class="btn btn-outline btn-lg" id="pd-whatsapp" href="https://wa.me/919419008453" target="_blank" rel="noopener"><svg class="icon"><use href="assets/icons.svg#i-whatsapp"/></svg>WhatsApp</a>
+              <button type="button" class="btn btn-dark btn-lg" id="pd-quote" data-open-enquiry>Request a quote<svg class="icon"><use href="/assets/icons.svg#i-arrow"/></svg></button>
+              <a class="btn btn-outline btn-lg" id="pd-whatsapp" href="https://wa.me/919419008453" target="_blank" rel="noopener"><svg class="icon"><use href="/assets/icons.svg#i-whatsapp"/></svg>WhatsApp</a>
             </div>
 
             <ul class="pd-assure" data-hero>
-              <li><svg class="icon"><use href="assets/icons.svg#i-badge"/></svg>Genuine, manufacturer-authorised</li>
-              <li><svg class="icon"><use href="assets/icons.svg#i-settings"/></svg>Installation &amp; training included</li>
-              <li><svg class="icon"><use href="assets/icons.svg#i-headset"/></svg>7-day technical support</li>
+              <li><svg class="icon"><use href="/assets/icons.svg#i-badge"/></svg>Genuine, manufacturer-authorised</li>
+              <li><svg class="icon"><use href="/assets/icons.svg#i-settings"/></svg>Installation &amp; training included</li>
+              <li><svg class="icon"><use href="/assets/icons.svg#i-headset"/></svg>7-day technical support</li>
             </ul>
           </div>
         </div>
@@ -193,7 +207,7 @@
       <p class="eyebrow">Products</p>
       <h1 class="h2">We couldn&rsquo;t find that product.</h1>
       <p>It may have been renamed or removed from the catalogue.</p>
-      <a href="shop.html" class="btn btn-dark">Browse all equipment<svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></a>
+      <a href="/shop.html" class="btn btn-dark">Browse all equipment<svg class="icon"><use href="/assets/icons.svg#i-arrow"/></svg></a>
     </section>
 
     <section class="section section-soft" id="pd-related" hidden>
@@ -203,7 +217,7 @@
             <p class="eyebrow" data-reveal>You may also need</p>
             <h2 class="h2" data-split>Related equipment</h2>
           </div>
-          <a href="shop.html" class="link-arrow" data-reveal>View catalogue<svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></a>
+          <a href="/shop.html" class="link-arrow" data-reveal>View catalogue<svg class="icon"><use href="/assets/icons.svg#i-arrow"/></svg></a>
         </div>
         <div class="item-grid" id="pd-related-grid"></div>
       </div>
@@ -212,55 +226,56 @@
 
   <!-- @footer -->
   <footer class="site-footer">
-    <img class="footer-bg" src="images/footer-bg.webp" alt="" width="1920" height="640" loading="lazy" aria-hidden="true">
+    <img class="footer-bg" src="/images/footer-bg.webp" alt="" width="1920" height="640" loading="lazy" decoding="async" aria-hidden="true">
     <div class="container footer-grid">
       <div class="footer-brand">
-        <a href="index.html" class="brand" aria-label="Medico Scientific Service Centre, home">
-          <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 64 64"><use href="assets/icons.svg#i-ecg"/></svg></span>
+        <a href="/" class="brand" aria-label="Medico Scientific Service Centre, home">
+          <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 64 64"><use href="/assets/icons.svg#i-ecg"/></svg></span>
           <span class="brand-text">
             <span class="brand-name">Medico<span class="brand-dot">.</span></span>
             <span class="brand-sub">Scientific Service Centre</span>
           </span>
         </a>
-        <p>Kashmir&rsquo;s trusted partner for clinical-grade respiratory and life-support equipment. Serving hospitals, clinics and families since 2000.</p>
-        <a href="https://wa.me/919419008453?text=Hello%20Medico%2C%20I%27d%20like%20to%20enquire%20about%20medical%20equipment." class="btn btn-outline btn-sm footer-cta" target="_blank" rel="noopener"><svg class="icon"><use href="assets/icons.svg#i-whatsapp"/></svg>Chat on WhatsApp</a>
+        <p data-copy="chrome.footer.about">Authorised Philips, Schiller and Shalya partner in Srinagar. We supply, install and service clinical equipment for hospitals, clinics and families across Jammu &amp; Kashmir.</p>
+        <a href="https://wa.me/919419008453?text=Hello%20Medico%2C%20I%27d%20like%20to%20enquire%20about%20medical%20equipment." class="btn btn-outline btn-sm footer-cta" target="_blank" rel="noopener"><svg class="icon"><use href="/assets/icons.svg#i-whatsapp"/></svg>Chat on WhatsApp</a>
       </div>
-      <nav aria-label="Navigate">
+      <nav aria-label="Footer">
         <h3>Navigate</h3>
         <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="shop.html">Products</a></li>
-          <li><a href="index.html#services">Services</a></li>
-          <li><a href="about.html">About us</a></li>
-          <li><a href="blog.html">Blog</a></li>
-          <li><a href="index.html#contact">Contact</a></li>
+          <li><a href="/">Home</a></li>
+          <li><a href="/shop.html">Products</a></li>
+          <li><a href="/#services">Services</a></li>
+          <li><a href="/about.html">About us</a></li>
+          <li><a href="/blog.html">Blog</a></li>
+          <li><a href="/#contact" data-open-enquiry data-mode="contact">Contact</a></li>
         </ul>
       </nav>
       <nav aria-label="Equipment">
         <h3>Equipment</h3>
         <ul>
-          <li><a href="shop.html?category=Oxygen+Therapy">Oxygen therapy</a></li>
-          <li><a href="shop.html?category=Anaesthesia">Anaesthesia</a></li>
-          <li><a href="shop.html?category=Diagnostics+%26+Monitoring">Diagnostics &amp; monitoring</a></li>
-          <li><a href="shop.html?category=Emergency+%26+Resuscitation">Emergency &amp; resuscitation</a></li>
-          <li><a href="shop.html?category=Critical+Care">Critical care</a></li>
-          <li><a href="shop.html?category=Sleep+%26+NIV">Sleep &amp; NIV</a></li>
-          <li><a href="shop.html?category=Surgical+Equipment">Surgical equipment</a></li>
+          <li><a href="/shop.html?category=Oxygen+Therapy">Oxygen therapy</a></li>
+          <li><a href="/shop.html?category=Sleep+%26+NIV">Sleep &amp; NIV</a></li>
+          <li><a href="/shop.html?category=Critical+Care">Critical care</a></li>
+          <li><a href="/shop.html?category=Diagnostics+%26+Monitoring">Diagnostics &amp; monitoring</a></li>
+          <li><a href="/shop.html?category=Emergency+%26+Resuscitation">Emergency &amp; resuscitation</a></li>
+          <li><a href="/shop.html?category=Anaesthesia">Anaesthesia</a></li>
+          <li><a href="/shop.html?category=Surgical+Equipment">Surgical equipment</a></li>
         </ul>
       </nav>
       <div>
-        <h3>Contact</h3>
+        <h3>Visit or call</h3>
         <ul class="footer-contact">
-          <li><svg class="icon"><use href="assets/icons.svg#i-pin"/></svg><a href="https://www.google.com/maps/search/?api=1&amp;query=Medico+Scientific+Service+Centre+Iqbal+Complex+Shergarhi+Srinagar+190008" target="_blank" rel="noopener">2nd Floor, Iqbal Complex, Opposite Iqbal Park, Shergarhi, Srinagar 190008</a></li>
-          <li><svg class="icon"><use href="assets/icons.svg#i-mail"/></svg><a href="mailto:medicosgr@gmail.com">medicosgr@gmail.com</a></li>
-          <li><svg class="icon"><use href="assets/icons.svg#i-phone"/></svg><a href="tel:+919419008453">+91 94190 08453</a></li>
-          <li><svg class="icon"><use href="assets/icons.svg#i-clock"/></svg><span>Mon &ndash; Sun, 9:00 AM &ndash; 8:00 PM</span></li>
+          <li><svg class="icon"><use href="/assets/icons.svg#i-pin"/></svg><a href="https://www.google.com/maps/search/?api=1&amp;query=Medico+Scientific+Service+Centre+Iqbal+Complex+Srinagar" target="_blank" rel="noopener" data-copy="chrome.footer.address">2nd Floor, Iqbal Complex, Opposite Iqbal Park, Shergarhi, Srinagar 190008</a></li>
+          <li><svg class="icon"><use href="/assets/icons.svg#i-phone"/></svg><a href="tel:+919419008453" data-copy="chrome.footer.phone">+91 94190 08453</a></li>
+          <li><svg class="icon"><use href="/assets/icons.svg#i-mail"/></svg><a href="mailto:medicosgr@gmail.com" data-copy="chrome.footer.email">medicosgr@gmail.com</a></li>
+          <li><svg class="icon"><use href="/assets/icons.svg#i-clock"/></svg><span data-copy="chrome.footer.hours">Open 7 days, 9:00 AM &ndash; 8:00 PM</span></li>
         </ul>
       </div>
     </div>
+    <p class="footer-wordmark" aria-hidden="true">Medico<span>.</span></p>
     <div class="container footer-bottom">
-      <span>&copy; <span class="current-year">2026</span> Medico Scientific Service Centre. GSTIN 01AALPI4731K1ZV</span>
-      <span class="footer-legal"><a href="privacy-policy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a><a href="admin-login.html" class="footer-admin">Admin</a></span>
+      <span>&copy; <span class="current-year">2026</span> Medico Scientific Service Centre &middot; GSTIN 01AALPI4731K1ZV</span>
+      <span class="footer-legal"><a href="/privacy-policy.html">Privacy</a><a href="/terms.html">Terms</a></span>
     </div>
   </footer>
   <!-- /@footer -->
@@ -268,61 +283,79 @@
   <!-- @dialog -->
   <dialog class="enquiry-dialog" id="enquiry-dialog" aria-labelledby="enquiry-title">
     <form class="enquiry" id="enquiry-form" novalidate>
-      <button type="button" class="icon-btn enquiry-close" data-close-enquiry aria-label="Close"><svg class="icon"><use href="assets/icons.svg#i-x"/></svg></button>
-      <p class="eyebrow">Free consultation</p>
-      <h3 id="enquiry-title">Request a quote</h3>
-      <p class="enquiry-sub" id="enquiry-sub">Takes 30 seconds. We&rsquo;ll reply on WhatsApp.</p>
+      <button type="button" class="icon-btn enquiry-close" data-close-enquiry aria-label="Close"><svg class="icon"><use href="/assets/icons.svg#i-x"/></svg></button>
+      <div class="enquiry-step" data-step="form">
+        <p class="eyebrow" id="enquiry-eyebrow">Free consultation</p>
+        <h3 id="enquiry-title">Request a quote</h3>
+        <p class="enquiry-sub" id="enquiry-sub">Tell us what you need. A specialist calls you back, usually the same day.</p>
 
-      <div class="field">
-        <label for="f-name">Your name</label>
-        <input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="f-name-error">
-        <span class="field-error" id="f-name-error" role="alert"></span>
-      </div>
-      <div class="field-row">
-        <div class="field">
-          <label for="f-type">Enquiring for</label>
-          <select id="f-type" name="type">
-            <option>Hospital</option>
-            <option>Nursing home</option>
-            <option>Clinic</option>
-            <option>Home care</option>
-            <option>Other</option>
-          </select>
+        <div class="field-row">
+          <div class="field">
+            <label for="f-name">Your name</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" maxlength="80" required aria-describedby="f-name-error">
+            <span class="field-error" id="f-name-error" role="alert"></span>
+          </div>
+          <div class="field">
+            <label for="f-phone">Phone or WhatsApp</label>
+            <input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" placeholder="+91" required aria-describedby="f-phone-error">
+            <span class="field-error" id="f-phone-error" role="alert"></span>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="f-type">Enquiring for</label>
+            <select id="f-type" name="organisation">
+              <option>Hospital</option>
+              <option>Nursing home</option>
+              <option>Clinic</option>
+              <option>Home care</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-equipment">Topic</label>
+            <select id="f-equipment" name="interest">
+              <option>Not sure yet</option>
+              <option>Oxygen therapy</option>
+              <option>CPAP / BiPAP</option>
+              <option>Critical care</option>
+              <option>Anaesthesia</option>
+              <option>Diagnostics</option>
+              <option>Emergency &amp; resuscitation</option>
+              <option>Surgical</option>
+              <option>Service / AMC / repair</option>
+            </select>
+          </div>
         </div>
         <div class="field">
-          <label for="f-equipment">Equipment</label>
-          <select id="f-equipment" name="equipment">
-            <option>Not sure yet</option>
-            <option>Oxygen therapy</option>
-            <option>CPAP / BiPAP</option>
-            <option>Critical care</option>
-            <option>Anaesthesia</option>
-            <option>Diagnostics</option>
-            <option>Emergency &amp; resuscitation</option>
-            <option>Surgical</option>
-            <option>Service / AMC</option>
-          </select>
+          <label for="f-message">Details <span class="optional">(optional)</span></label>
+          <textarea id="f-message" name="message" rows="3" maxlength="2000" placeholder="e.g. 2 patient monitors for a 10-bed ICU in Baramulla"></textarea>
         </div>
+        <div class="hp-field" aria-hidden="true"><label for="f-website">Website</label><input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+        <button type="submit" class="btn btn-accent btn-lg btn-block" id="enquiry-submit"><span>Send enquiry</span><svg class="icon"><use href="/assets/icons.svg#i-arrow"/></svg></button>
+        <p class="form-status" id="enquiry-status" role="status"></p>
+        <p class="enquiry-note">Rather talk now? <a href="tel:+919419008453">Call +91 94190 08453</a> &middot; <a href="https://wa.me/919419008453" target="_blank" rel="noopener">WhatsApp</a></p>
       </div>
-      <div class="field">
-        <label for="f-message">Details <span class="optional">(optional)</span></label>
-        <textarea id="f-message" name="message" rows="3" placeholder="e.g. 2 patient monitors for a 10-bed ICU in Baramulla"></textarea>
+      <div class="enquiry-step enquiry-done" data-step="done" hidden>
+        <span class="enquiry-done-icon" aria-hidden="true"><svg class="icon"><use href="/assets/icons.svg#i-check"/></svg></span>
+        <h3 tabindex="-1">Thanks, we have it</h3>
+        <p class="enquiry-sub">A specialist will call you back. If it is urgent, message us on WhatsApp and we will pick it up there.</p>
+        <a class="btn btn-outline btn-block" id="enquiry-wa" href="https://wa.me/919419008453" target="_blank" rel="noopener"><svg class="icon"><use href="/assets/icons.svg#i-whatsapp"/></svg>Also send on WhatsApp</a>
+        <button type="button" class="btn btn-dark btn-block" data-close-enquiry>Done</button>
       </div>
-      <button type="submit" class="btn btn-accent btn-lg btn-block"><svg class="icon"><use href="assets/icons.svg#i-whatsapp"/></svg>Send on WhatsApp</button>
-      <p class="enquiry-note">Prefer a call? <a href="tel:+919419008453">Call us</a> &middot; <a href="mailto:medicosgr@gmail.com">Email us</a></p>
     </form>
   </dialog>
 
-  <a href="https://wa.me/919419008453?text=Hello%20Medico%2C%20I%27d%20like%20to%20enquire%20about%20medical%20equipment." class="wa-fab" target="_blank" rel="noopener" aria-label="Chat with Medico on WhatsApp"><svg class="icon"><use href="assets/icons.svg#i-whatsapp"/></svg></a>
+  <a href="https://wa.me/919419008453?text=Hello%20Medico%2C%20I%27d%20like%20to%20enquire%20about%20medical%20equipment." class="wa-fab" target="_blank" rel="noopener" aria-label="Chat with Medico on WhatsApp"><svg class="icon"><use href="/assets/icons.svg#i-whatsapp"/></svg></a>
 
   <div class="mobile-bar">
-    <a href="tel:+919419008453" class="btn btn-outline"><svg class="icon"><use href="assets/icons.svg#i-phone"/></svg>Call us</a>
-    <a href="https://wa.me/919419008453?text=Hello%20Medico%2C%20I%27d%20like%20to%20enquire%20about%20medical%20equipment." class="btn btn-accent" target="_blank" rel="noopener"><svg class="icon"><use href="assets/icons.svg#i-whatsapp"/></svg>WhatsApp us</a>
+    <a href="tel:+919419008453" class="btn btn-outline"><svg class="icon"><use href="/assets/icons.svg#i-phone"/></svg>Call us</a>
+    <button type="button" class="btn btn-accent" data-open-enquiry data-mode="quote">Get a quote<svg class="icon"><use href="/assets/icons.svg#i-arrow"/></svg></button>
   </div>
   <!-- /@dialog -->
 
   <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js" defer></script>
-  <script src="assets/js/products-data.js?v=3" defer></script>
-  <script src="assets/js/product.js?v=4" defer></script>
+  <script src="/assets/js/products-data.js?v=3" defer></script>
+  <script src="/assets/js/product.js?v=4" defer></script>
 </body>
 </html>
