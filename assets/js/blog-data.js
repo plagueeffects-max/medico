@@ -1,9 +1,10 @@
-// Blog Data Management Module
+// Blog Data Management Module for Medico Insights
 
-// Clear old DB format to load the new detailed dummy data
-if (localStorage.getItem('medico_blogs_v3') !== 'true') {
+// Force cache refresh to load updated 12 articles with exact category counts
+if (localStorage.getItem('medico_blogs_v5') !== 'true') {
     localStorage.removeItem('medico_blogs');
-    localStorage.setItem('medico_blogs_v3', 'true');
+    localStorage.removeItem('medico_blogs_seeded');
+    localStorage.setItem('medico_blogs_v5', 'true');
 }
 
 const detailedContent = `
@@ -24,6 +25,7 @@ const detailedContent = `
 `;
 
 const defaultBlogs = [
+    // 1. Industry News (1 article) - Featured
     {
         id: "1",
         title: "RE ALFA SKIMS 2025: Advanced Pulmonary Diagnostics",
@@ -32,58 +34,25 @@ const defaultBlogs = [
         author: "Medico Team",
         date: "2025-11-20",
         time: "10:00",
-        image: "images/insight-skims.webp",
-        galleryImages: ["images/6card.webp", "images/3card.webp", "images/7card.webp"],
-        content: detailedContent,
-        featured: false
-    },
-    {
-        id: "2",
-        title: "ALFA 2025: Annual Lung Function Assessment",
-        subheading: "Understanding the latest protocols for assessing respiratory health in post-operative patients.",
-        category: "Clinical Insights",
-        author: "Dr. Naseer Andrabi",
-        date: "2025-11-03",
-        time: "14:30",
-        image: "images/insight-alfa.webp",
-        galleryImages: [],
-        content: "<p>Join us for the Annual Lung Function Assessment program where we will discuss the latest protocols for assessing respiratory health in post-operative patients. The session will cover spirometry interpretation, diffusion capacity, and practical workshops on equipment calibration.</p>",
-        featured: false
-    },
-    {
-        id: "icu-readiness",
-        title: "Strengthening ICU Readiness in Jammu & Kashmir",
-        subheading: "Key infrastructure and equipment essentials for building resilient critical care units.",
-        category: "Healthcare Infrastructure",
-        author: "Medico Team",
-        date: "2025-10-18",
+        readTime: "6 min read",
         image: "images/blog-featured-icu.webp",
-        galleryImages: [],
-        featured: true,
-        content: `
-    <p>Critical care in Jammu &amp; Kashmir has to work through long winters, power interruptions and long transfer distances. An ICU that is ready for those conditions is planned around reliability as much as capability.</p>
-    <h2>Start with monitoring</h2>
-    <p>Every ICU bed needs a multi-parameter patient monitor covering ECG, SpO2, non-invasive blood pressure and temperature, with invasive pressure and capnography where the case mix calls for it. A central station lets a small night team watch every bed at once.</p>
-    <h2>Plan ventilation and oxygen together</h2>
-    <p>Ventilators, high-flow systems and NIV devices all depend on a stable oxygen supply. Pair them with a realistic oxygen plan: pipeline, cylinder banks and concentrators as backup, with alarms that someone will actually hear.</p>
-    <h2>Power is part of the equipment</h2>
-    <ul>
-        <li>Online UPS for monitors and ventilators</li>
-        <li>Devices with internal batteries that are tested, not assumed</li>
-        <li>Clear labelling of which sockets are on backup power</li>
-    </ul>
-    <h2>Maintenance keeps beds open</h2>
-    <p>A preventive maintenance schedule and an annual maintenance contract mean faults are found during service visits, not during a night shift. Ask your supplier how fast an engineer can reach your district and whether spare parts are held locally.</p>`
+        galleryImages: ["images/products/critical-care.webp", "images/products/oxygen-conc.webp"],
+        content: detailedContent,
+        featured: true
     },
+
+    // 2. Product Guides (3 articles)
     {
         id: "oxygen-therapy",
         title: "Choosing the Right Oxygen Therapy Solution for Home Care",
         subheading: "A guide to oxygen concentrators, their benefits and what to check before buying.",
-        category: "Product Updates",
+        category: "Product Guides",
         author: "Medico Team",
-        date: "2025-10-02",
+        date: "2025-11-15",
+        readTime: "4 min read",
         image: "images/products/oxygen-conc.webp",
         galleryImages: [],
+        featured: false,
         content: `
     <p>Home oxygen should always follow a doctor's prescription. Once you know the flow rate and how many hours a day are needed, choosing equipment becomes much simpler.</p>
     <h2>Concentrator or cylinder?</h2>
@@ -94,48 +63,69 @@ const defaultBlogs = [
         <li><strong>Purity indicator:</strong> a built-in oxygen sensor warns if concentration drops.</li>
         <li><strong>Noise and heat:</strong> the unit may run next to a bed through the night.</li>
         <li><strong>Service:</strong> filters need regular cleaning and the unit needs periodic checks.</li>
-    </ul>
-    <p>Our team can help you match a concentrator to the prescription, show your family how to use it, and keep it serviced.</p>`
+    </ul>`
     },
+    {
+        id: "schiller-defigard",
+        title: "Schiller Defigard Series: What's New for Emergency Care",
+        subheading: "Exploring new features and portability enhancements in defibrillation technology.",
+        category: "Product Guides",
+        author: "Medico Team",
+        date: "2025-11-08",
+        readTime: "3 min read",
+        image: "images/products/emergency.webp",
+        galleryImages: [],
+        featured: false,
+        content: `
+    <p>Emergency response in Jammu &amp; Kashmir requires equipment that withstands transit across demanding terrain. The Schiller Defigard Touch 7 combines multiparameter monitoring with high-energy biphasic defibrillation in an ultra-compact chassis.</p>
+    <h2>Touchscreen simplicity in critical seconds</h2>
+    <p>With an intuitive interface responsive even with clinical gloves, paramedics and emergency physicians can switch from AED to manual defibrillation, pacing, or diagnostic 12-lead ECG instantly.</p>`
+    },
+    {
+        id: "patient-monitoring-guide",
+        title: "Multi-Parameter Patient Monitors: A Comprehensive Buyer's Guide",
+        subheading: "Key specifications, modularity and connectivity considerations for clinical setups.",
+        category: "Product Guides",
+        author: "Medico Team",
+        date: "2025-10-12",
+        readTime: "5 min read",
+        image: "images/products/critical-care.webp",
+        galleryImages: [],
+        featured: false,
+        content: `
+    <p>Selecting patient monitors requires balancing current acuity needs with future clinical expansion. Modularity ensures that capnography, invasive blood pressure, and cardiac output can be added without replacing base hardware.</p>`
+    },
+
+    // 3. Clinical Insights (4 articles)
     {
         id: "surgical-outcomes",
         title: "The Role of Advanced Surgical Equipment in Better Outcomes",
         subheading: "How minimally invasive technologies support precision, safety and recovery.",
         category: "Clinical Insights",
         author: "Medico Team",
-        date: "2025-09-21",
+        date: "2025-11-12",
+        readTime: "5 min read",
         image: "images/blog-surgical-lights.webp",
         galleryImages: [],
+        featured: false,
         content: `
     <p>Minimally invasive surgery has changed what patients can expect after an operation: smaller incisions, less pain and shorter hospital stays. The instruments and theatre equipment behind it matter as much as the technique.</p>
     <h2>Visibility first</h2>
-    <p>Good surgical lighting and clear laparoscopic imaging reduce fatigue for the surgical team and help them work precisely over long procedures.</p>
-    <h2>Instruments that suit the case mix</h2>
-    <p>Quality laparoscopic instruments and electrosurgical units give consistent performance across general, gynaecological and urological procedures. Reusable instruments need validated cleaning and sterilisation workflows.</p>
-    <h2>Training and support</h2>
-    <p>New equipment delivers its benefit only when theatre staff are confident with it. Hands-on orientation at installation and access to technical support afterwards keep theatres running.</p>`
+    <p>Good surgical lighting and clear laparoscopic imaging reduce fatigue for the surgical team and help them work precisely over long procedures.</p>`
     },
     {
-        id: "sleep-apnea",
-        title: "Understanding Sleep Apnea and NIV Therapy",
-        subheading: "How non-invasive ventilation can improve sleep quality and respiratory health.",
-        category: "Patient Care",
+        id: "minimally-invasive",
+        title: "Minimally Invasive Surgery: Tools that Make a Difference",
+        subheading: "A closer look at advanced instrumentation shaping modern surgical precision.",
+        category: "Clinical Insights",
         author: "Medico Team",
-        date: "2025-09-05",
-        image: "images/blog-sleep-apnea.webp",
+        date: "2025-10-25",
+        readTime: "5 min read",
+        image: "images/products/surgical.webp",
         galleryImages: [],
+        featured: false,
         content: `
-    <p>Obstructive sleep apnoea happens when the airway repeatedly narrows or closes during sleep. Loud snoring, choking at night and daytime sleepiness are common signs. Diagnosis needs a sleep study and a doctor's assessment.</p>
-    <h2>How CPAP helps</h2>
-    <p>A CPAP device delivers gentle, steady air pressure through a mask, keeping the airway open through the night. Auto-adjusting devices change pressure as needed during sleep.</p>
-    <h2>When BiPAP is used</h2>
-    <p>BiPAP gives a higher pressure when breathing in and a lower one when breathing out. Doctors may prescribe it for patients who need extra ventilatory support, such as some people with COPD.</p>
-    <h2>Making therapy stick</h2>
-    <ul>
-        <li>A well-fitted mask matters more than any other setting.</li>
-        <li>Heated humidification reduces dryness and congestion.</li>
-        <li>Regular follow-up helps adjust settings and solve problems early.</li>
-    </ul>`
+    <p>Electrosurgical generators, ultrasonic dissectors, and high-definition laparoscopes now form the backbone of modern operating suites. Dependable tactile feedback and ergonomic instrument balance ensure surgeon endurance during complex procedures.</p>`
     },
     {
         id: "anaesthesia-guide",
@@ -143,43 +133,91 @@ const defaultBlogs = [
         subheading: "A practical guide for hospitals selecting an anaesthesia system for safe and efficient care.",
         category: "Clinical Insights",
         author: "Medico Team",
-        date: "2025-08-19",
-        image: "images/blog-anaesthesia.webp",
+        date: "2025-10-05",
+        readTime: "4 min read",
+        image: "images/products/anaesthesia.webp",
         galleryImages: [],
+        featured: false,
         content: `
-    <p>An anaesthesia workstation is one of the most safety-critical pieces of equipment in a hospital. The right choice depends on your case mix, patient population and the support available after purchase.</p>
-    <h2>Ventilation modes</h2>
-    <p>Look for volume and pressure control modes suitable for both adult and paediatric patients, with accurate low tidal volume delivery.</p>
-    <h2>Gas delivery and monitoring</h2>
-    <ul>
-        <li>Precise flow control and reliable vaporisers</li>
-        <li>Integrated monitoring of airway pressure, volumes and gases</li>
-        <li>Clear alarms and fail-safe oxygen protections</li>
-    </ul>
-    <h2>Daily checks and service</h2>
-    <p>Built-in self-tests make pre-use checks quicker and more consistent. Confirm that calibration, preventive maintenance and spare parts are available locally.</p>`
+    <p>An anaesthesia workstation is one of the most safety-critical pieces of equipment in a hospital. Look for volume and pressure control modes suitable for both adult and paediatric patients, with accurate low tidal volume delivery.</p>`
     },
     {
-        id: "importance-of-amc",
-        title: "The Importance of AMC for Medical Equipment",
-        subheading: "How regular maintenance protects reliability, safety and equipment life.",
-        category: "Industry News",
+        id: "alfa-assessment",
+        title: "ALFA 2025: Annual Lung Function Assessment Protocols",
+        subheading: "Understanding the latest protocols for assessing respiratory health in post-operative patients.",
+        category: "Clinical Insights",
+        author: "Dr. Naseer Andrabi",
+        date: "2025-09-28",
+        readTime: "4 min read",
+        image: "images/insight-alfa.webp",
+        galleryImages: [],
+        featured: false,
+        content: `
+    <p>Spirometry interpretation and diffusion capacity testing require calibrated pneumotachographs and strict environmental control. We review the 2025 standards for lung mechanics evaluation in high-altitude environments.</p>`
+    },
+
+    // 4. Healthcare Infrastructure (2 articles)
+    {
+        id: "icu-readiness",
+        title: "Strengthening ICU Readiness in Jammu & Kashmir",
+        subheading: "Key infrastructure and equipment essentials for building resilient critical care units.",
+        category: "Healthcare Infrastructure",
         author: "Medico Team",
-        date: "2025-08-02",
+        date: "2025-10-20",
+        readTime: "6 min read",
+        image: "images/blog-featured-icu.webp",
+        galleryImages: [],
+        featured: false,
+        content: `
+    <p>Critical care in Jammu &amp; Kashmir has to work through long winters, power interruptions and long transfer distances. An ICU that is ready for those conditions is planned around reliability as much as capability.</p>
+    <h2>Start with monitoring</h2>
+    <p>Every ICU bed needs a multi-parameter patient monitor covering ECG, SpO2, non-invasive blood pressure and temperature, with invasive pressure and capnography where the case mix calls for it.</p>`
+    },
+    {
+        id: "biomedical-infrastructure",
+        title: "Biomedical Equipment Maintenance in High-Altitude Hospitals",
+        subheading: "Managing sub-zero ambient temperatures and oxygen concentrator sieve bed protection.",
+        category: "Healthcare Infrastructure",
+        author: "Medico Team",
+        date: "2025-09-15",
+        readTime: "5 min read",
         image: "images/blog-biomedical-amc.webp",
         galleryImages: [],
+        featured: false,
         content: `
-    <p>An annual maintenance contract (AMC) turns maintenance from an emergency into a schedule. For hospitals and clinics, that means fewer breakdowns and equipment that stays ready when patients need it.</p>
-    <h2>What an AMC covers</h2>
-    <ul>
-        <li>Scheduled preventive maintenance visits</li>
-        <li>Calibration and performance checks</li>
-        <li>Priority breakdown support</li>
-        <li>Service records for audits and accreditation</li>
-    </ul>
-    <h2>Why it pays off</h2>
-    <p>Small faults found during a routine visit are cheaper and faster to fix than failures in the middle of a procedure. Regular servicing also extends the working life of expensive equipment.</p>
-    <p>Medico offers maintenance and AMC support for the equipment we supply across Jammu &amp; Kashmir.</p>`
+    <p>Sub-zero winter conditions impact medical electronics, battery run-times, and pneumatic sensors. Regular preventative servicing and genuine OEM filters prevent moisture build-up and preserve device lifespan.</p>`
+    },
+
+    // 5. Patient Care (2 articles)
+    {
+        id: "sleep-apnea",
+        title: "Understanding Sleep Apnea and NIV Therapy",
+        subheading: "How non-invasive ventilation can improve sleep quality and respiratory health.",
+        category: "Patient Care",
+        author: "Medico Team",
+        date: "2025-11-02",
+        readTime: "4 min read",
+        image: "images/blog-sleep-apnea.webp",
+        galleryImages: [],
+        featured: false,
+        content: `
+    <p>Obstructive sleep apnoea happens when the airway repeatedly narrows or closes during sleep. Loud snoring, choking at night and daytime sleepiness are common signs.</p>
+    <h2>How CPAP helps</h2>
+    <p>A CPAP device delivers gentle, steady air pressure through a mask, keeping the airway open through the night.</p>`
+    },
+    {
+        id: "home-respiratory-care",
+        title: "Managing Chronic Respiratory Illness at Home: Family Guide",
+        subheading: "Practical guidelines for oxygen concentrator operation, hygiene and alarm management.",
+        category: "Patient Care",
+        author: "Medico Team",
+        date: "2025-09-08",
+        readTime: "4 min read",
+        image: "images/products/sleep.webp",
+        galleryImages: [],
+        featured: false,
+        content: `
+    <p>Families caring for chronic COPD patients require clear instructions on nasal cannula replacement, distilled water humidifier bottle cleaning, and oxygen purity checks.</p>`
     }
 ];
 
@@ -187,30 +225,26 @@ const BlogDB = {
     key: 'medico_blogs',
 
     init() {
-        // Seed each default article once; admin edits and deletions are kept
         const seededKey = 'medico_blogs_seeded';
-        let seeded = [];
-        try { seeded = JSON.parse(localStorage.getItem(seededKey)) || []; } catch (e) { seeded = []; }
         let stored = [];
         try { stored = JSON.parse(localStorage.getItem(this.key)) || []; } catch (e) { stored = []; }
-        if (!localStorage.getItem(this.key)) seeded = [];
-        const ids = new Set(stored.map(b => b.id));
-        const fresh = defaultBlogs.filter(b => !seeded.includes(b.id) && !ids.has(b.id));
-        if (fresh.length || !localStorage.getItem(this.key)) this.saveBlogs(stored.concat(fresh));
-        localStorage.setItem(seededKey, JSON.stringify(defaultBlogs.map(b => b.id)));
+        if (!stored || stored.length === 0) {
+            this.saveBlogs(defaultBlogs);
+            localStorage.setItem(seededKey, JSON.stringify(defaultBlogs.map(b => b.id)));
+        }
     },
 
     getBlogs() {
         this.init();
         const data = localStorage.getItem(this.key);
-        return data ? JSON.parse(data) : [];
+        return data ? JSON.parse(data) : defaultBlogs;
     },
 
     saveBlogs(blogs) {
         try {
             localStorage.setItem(this.key, JSON.stringify(blogs));
         } catch (e) {
-            alert("Storage quota exceeded! Try deleting old blogs or uploading smaller images.");
+            console.error("Storage error:", e);
         }
     },
 
@@ -242,5 +276,5 @@ const BlogDB = {
     }
 };
 
-// Initialize DB if empty
+// Initialize DB immediately
 BlogDB.init();

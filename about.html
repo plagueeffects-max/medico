@@ -34,7 +34,7 @@
   <script src="assets/vendor/SplitText.min.js" defer></script>
   <script src="assets/js/site.js" defer></script>
   <!-- /@head -->
-  <link rel="stylesheet" href="assets/css/pages.css?v=4">
+  <link rel="stylesheet" href="assets/css/pages.css?v=5">
 
   <script type="application/ld+json">
   {
@@ -50,10 +50,10 @@
     "founder": { "@id": "https://medico-inky.vercel.app/about.html#founder" },
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "2nd Floor, Iqbal Complex, Opposite Iqbal Park, Central Market, Batamaloo",
+      "streetAddress": "2nd Floor, Iqbal Complex, Opposite Iqbal Park, Shergarhi",
       "addressLocality": "Srinagar",
       "addressRegion": "Jammu and Kashmir",
-      "postalCode": "190009",
+      "postalCode": "190008",
       "addressCountry": "IN"
     },
     "geo": { "@type": "GeoCoordinates", "latitude": "34.0836", "longitude": "74.7973" },
@@ -181,260 +181,249 @@
 
   <main id="main">
 
-    <!-- ============ Hero ============ -->
+    <!-- ============ 1. Hero (Two-Column Split + Standalone Stats) ============ -->
     <section class="ab-hero">
       <div class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb" data-hero>
           <ol>
             <li><a href="index.html"><svg class="icon"><use href="assets/icons.svg#i-home"/></svg>Home</a></li>
-            <li><span aria-current="page">About us</span></li>
+            <li><span aria-current="page">About Us</span></li>
           </ol>
         </nav>
-        <div class="ab-hero-copy">
-          <p class="eyebrow" data-hero>About Medico &middot; Since 2000</p>
-          <h1 class="ab-title" data-hero-title>25 years of showing up <span class="text-accent">for care.</span></h1>
-          <p class="lead" data-hero>From a single counter in Srinagar to Kashmir&rsquo;s trusted partner for respiratory and life-support equipment, supplied, installed and serviced by people who answer the phone.</p>
-          <div class="cta-row" data-hero>
-            <button type="button" class="btn btn-dark btn-lg" data-open-enquiry>Talk to our team<svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></button>
-            <a href="#visit" class="btn btn-outline btn-lg"><svg class="icon"><use href="assets/icons.svg#i-pin"/></svg>Visit the centre</a>
+
+        <div class="ab-hero-grid">
+          <div class="ab-hero-copy">
+            <p class="ab-eyebrow" data-hero><span class="bullet">&bull;</span> ABOUT MEDICO <span class="bullet">&bull;</span> SINCE 2000</p>
+            <h1 class="ab-title" data-hero-title>25 years of showing up <span class="text-crimson">for care</span></h1>
+            <p class="ab-lead" data-hero>From a single counter in Srinagar to Kashmir&rsquo;s trusted partner for respiratory and life-support equipment, supplied, installed and serviced by people who answer the phone.</p>
+            <div class="ab-hero-cta" data-hero>
+              <button type="button" class="btn btn-dark-pill" data-open-enquiry>Talk to our team<svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></button>
+              <a href="#visit" class="btn btn-white-pill"><svg class="icon"><use href="assets/icons.svg#i-pin"/></svg>Visit the centre</a>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="container ab-hero-stage">
-        <figure class="ab-hero-frame" data-hero-media>
-          <img src="images/medico-shop.webp" alt="Medico Scientific Service Centre at Iqbal Complex, Batamaloo, Srinagar" width="1600" height="899" fetchpriority="high" data-parallax>
-          <figcaption class="ab-hero-caption"><span class="live-dot" aria-hidden="true"></span>Iqbal Complex, Batamaloo &middot; Open 7 days</figcaption>
-        </figure>
-        <div class="ab-stats" data-stagger>
-          <div class="ab-stat"><span class="ab-stat-num"><span data-count="25">25</span>+</span><span class="ab-stat-label">Years serving J&amp;K</span></div>
-          <div class="ab-stat"><span class="ab-stat-num"><span data-count="100">100</span>+</span><span class="ab-stat-label">Healthcare partners</span></div>
-          <div class="ab-stat"><span class="ab-stat-num"><span data-count="7">7</span></span><span class="ab-stat-label">Days a week support</span></div>
-          <div class="ab-stat"><span class="ab-stat-num"><span data-count="3">3</span></span><span class="ab-stat-label">Authorised global brands</span></div>
-        </div>
-      </div>
-    </section>
 
-    <!-- ============ Belief ============ -->
-    <section class="section ab-belief">
-      <div class="container">
-        <p class="eyebrow" data-reveal>Our belief</p>
-        <p class="statement-text" data-scrub-words>Only the best solutions are good enough for saving lives. That belief has guided every product we supply, every installation we finish and every call we answer.</p>
-        <p class="ab-belief-sign" data-reveal><span aria-hidden="true"></span>Syed Naseer Ahmad Andrabi, Founder</p>
-      </div>
-    </section>
-
-    <!-- ============ Founder ============ -->
-    <section class="section section-tight" id="founder">
-      <div class="container">
-        <article class="founder-card" data-scrub-scale>
-          <div class="founder-visual">
-            <figure class="founder-photo" data-reveal="scale">
-              <img src="images/founder.webp" alt="Mr. Syed Naseer Ahmad Andrabi, founder of Medico" width="900" height="911" loading="lazy">
+          <div class="ab-hero-media" data-hero-media>
+            <figure class="ab-hero-equipment-stage">
+              <img src="images/about-hero-equipment-clean.webp" alt="Clinical medical equipment lineup including Mindray anesthesia workstation, ICU patient monitors, Philips DreamStation CPAP, and biphasic defibrillator" width="480" height="380" fetchpriority="high">
             </figure>
-            <span class="founder-chip"><strong>2000</strong>Founded Medico</span>
           </div>
-          <div class="founder-copy">
-            <p class="eyebrow" data-reveal>Meet the founder</p>
-            <h2 class="h2" data-split>Mr. Syed Naseer Ahmad Andrabi</h2>
-            <p class="founder-role" data-reveal>Founder &amp; Proprietor</p>
-            <p class="body-lg" data-reveal>Mr. Andrabi began this journey in 2000 with a commitment to bring the best medical equipment and service to the healthcare sector of Jammu &amp; Kashmir.</p>
-            <p class="body" data-reveal>Under his leadership, Medico has grown from repairing electronic medical devices into an authorised partner for Philips, Schiller and Shalya, and a name hospitals across the region associate with quality, reliability and care.</p>
-            <ul class="founder-facts" data-stagger>
-              <li><svg class="icon"><use href="assets/icons.svg#i-badge"/></svg>Authorised distributor</li>
-              <li><svg class="icon"><use href="assets/icons.svg#i-pin"/></svg>Rooted in Srinagar</li>
-              <li><svg class="icon"><use href="assets/icons.svg#i-file-text"/></svg>GST registered</li>
+        </div>
+
+        <!-- Floating Stats Bar -->
+        <div class="ab-stats-bar" data-stagger>
+          <div class="ab-stat-item">
+            <span class="ab-stat-val"><span data-count="25">25</span>+</span>
+            <span class="ab-stat-lbl">YEARS SERVING J&amp;K</span>
+          </div>
+          <div class="ab-stat-item">
+            <span class="ab-stat-val"><span data-count="100">100</span>+</span>
+            <span class="ab-stat-lbl">HEALTHCARE PARTNERS</span>
+          </div>
+          <div class="ab-stat-item">
+            <span class="ab-stat-val"><span data-count="7">7</span></span>
+            <span class="ab-stat-lbl">DAYS A WEEK SUPPORT</span>
+          </div>
+          <div class="ab-stat-item">
+            <span class="ab-stat-val"><span data-count="3">3</span></span>
+            <span class="ab-stat-lbl">AUTHORISED GLOBAL BRANDS</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 2. Meet The Founder ============ -->
+    <section class="section ab-founder-section" id="founder">
+      <div class="container">
+        <article class="founder-split-card" data-scrub-scale>
+          <div class="founder-stage-left">
+            <div class="radar-rings" aria-hidden="true">
+              <div class="ring ring-1"></div>
+              <div class="ring ring-2"></div>
+              <div class="ring ring-3"></div>
+            </div>
+            <figure class="founder-photo-frame" data-reveal="scale">
+              <img src="images/founder.webp" alt="Mr. Syed Naseer Ahmad Andrabi, Founder of Medico" width="400" height="400" loading="lazy">
+            </figure>
+            <div class="founder-founded-badge">
+              <span class="badge-year">2000</span>
+              <span class="badge-txt">Founded Medico</span>
+            </div>
+          </div>
+
+          <div class="founder-profile-right">
+            <p class="ab-eyebrow" data-reveal><span class="bullet">&bull;</span> MEET THE FOUNDER</p>
+            <h2 class="founder-name" data-split>Mr. Syed Naseer Ahmad Andrabi</h2>
+            <p class="founder-designation" data-reveal>FOUNDER &amp; PROPRIETOR</p>
+            <div class="founder-bio" data-reveal>
+              <p>Mr. Andrabi began this journey in 2000 with a commitment to bring the best medical equipment and service to the healthcare sector of Jammu &amp; Kashmir.</p>
+              <p>Under his leadership, Medico has grown from repairing electronic medical devices into an authorised partner for Philips, Schiller and Shalya, and a name hospitals across the region associate with quality, reliability and care.</p>
+            </div>
+            <ul class="founder-pill-badges" data-stagger>
+              <li><span class="pill-icon-circle"><svg class="icon"><use href="assets/icons.svg#i-check"/></svg></span>Authorised distributor</li>
+              <li><span class="pill-icon-circle"><svg class="icon"><use href="assets/icons.svg#i-pin"/></svg></span>Rooted in Srinagar</li>
+              <li><span class="pill-icon-circle"><svg class="icon"><use href="assets/icons.svg#i-file-text"/></svg></span>GST registered</li>
             </ul>
           </div>
         </article>
       </div>
     </section>
 
-    <!-- ============ Journey ============ -->
-    <section class="section">
+    <!-- ============ 3. Our Journey ============ -->
+    <section class="section ab-journey-section">
       <div class="container">
-        <div class="section-head">
+        <div class="section-head-split">
           <div>
-            <p class="eyebrow" data-reveal>Our journey</p>
-            <h2 class="h2" data-split>From a repair bench <span class="text-muted">to Kashmir&rsquo;s trusted partner.</span></h2>
+            <p class="ab-eyebrow" data-reveal><span class="bullet">&bull;</span> OUR JOURNEY</p>
+            <h2 class="h2" data-split>From a repair bench <span class="text-slate">to Kashmir&rsquo;s trusted partner</span></h2>
           </div>
-          <p class="section-aside" data-reveal>Three chapters, one constant: equipment that works when a patient needs it.</p>
+          <p class="section-aside-text" data-reveal>Three chapters, one constant: equipment that works when a patient needs it.</p>
         </div>
-        <div class="milestones">
-          <span class="milestones-line" aria-hidden="true"><span data-draw="x"></span></span>
-          <ol class="milestone-list" data-stagger>
-            <li class="milestone">
-              <span class="milestone-dot" aria-hidden="true"></span>
-              <span class="milestone-year">2000</span>
+
+        <div class="journey-timeline">
+          <div class="journey-track" aria-hidden="true"><div class="journey-line-fill" data-draw="x"></div></div>
+          <ol class="journey-nodes" data-stagger>
+            <li class="journey-node">
+              <span class="journey-marker" aria-hidden="true"></span>
+              <span class="journey-year">2000</span>
               <h3>Foundation</h3>
               <p>A first-of-its-kind venture in Kashmir, repairing and selling electronic medical devices.</p>
             </li>
-            <li class="milestone">
-              <span class="milestone-dot" aria-hidden="true"></span>
-              <span class="milestone-year">Growth</span>
+            <li class="journey-node">
+              <span class="journey-marker" aria-hidden="true"></span>
+              <span class="journey-year">Growth</span>
               <h3>Specialising in life support</h3>
               <p>A trusted distributor of respiratory and life-support devices, authorised by Philips, Schiller and Shalya.</p>
             </li>
-            <li class="milestone">
-              <span class="milestone-dot is-now" aria-hidden="true"></span>
-              <span class="milestone-year">Today</span>
+            <li class="journey-node is-current">
+              <span class="journey-marker is-today" aria-hidden="true"></span>
+              <span class="journey-year">Today</span>
               <h3>Equipment and service across J&amp;K</h3>
               <p>Supplying, installing and servicing equipment for 100+ hospitals, clinics and families, seven days a week.</p>
             </li>
           </ol>
         </div>
-        <figure class="team-band" data-clip>
-          <img src="images/team-schiller.webp" alt="The Medico team with partners at a Schiller Healthcare exhibition stand" width="1600" height="1157" loading="lazy" data-parallax>
-          <figcaption><span class="pill pill-ink">In the field</span>With our partners at Schiller Healthcare</figcaption>
-        </figure>
       </div>
     </section>
 
-    <!-- ============ Vision & mission ============ -->
-    <section class="section section-soft">
+    <!-- ============ 4. Our Purpose ============ -->
+    <section class="section ab-purpose-section">
       <div class="container">
-        <div class="section-head">
-          <div>
-            <p class="eyebrow" data-reveal>Purpose</p>
-            <h2 class="h2" data-split>What we&rsquo;re here <span class="text-muted">to do.</span></h2>
-          </div>
+        <div class="section-head-simple">
+          <p class="ab-eyebrow" data-reveal><span class="bullet">&bull;</span> OUR PURPOSE</p>
+          <h2 class="h2" data-split>What we&rsquo;re here to do</h2>
         </div>
-        <div class="purpose-grid" data-stagger>
-          <article class="purpose-card purpose-vision">
-            <span class="purpose-tag"><svg class="icon"><use href="assets/icons.svg#i-eye"/></svg>Our vision</span>
-            <p class="purpose-statement">To be the most reliable healthcare equipment partner in Jammu &amp; Kashmir, so every institution, big or small, has access to advanced, affordable and trusted medical technology.</p>
+
+        <div class="purpose-bento-grid" data-stagger>
+          <article class="purpose-bento-vision">
+            <span class="vision-pill-tag"><svg class="icon"><use href="assets/icons.svg#i-eye"/></svg>OUR VISION</span>
+            <p class="vision-quote-text">&ldquo;To be the most reliable healthcare equipment partner in Jammu &amp; Kashmir, so every institution, big or small, has access to advanced, affordable and trusted medical technology.&rdquo;</p>
           </article>
-          <article class="purpose-card">
-            <span class="purpose-tag"><svg class="icon"><use href="assets/icons.svg#i-target"/></svg>Our mission</span>
-            <ol class="mission-list">
-              <li><span>01</span>Deliver top-tier medical solutions that improve patient care</li>
-              <li><span>02</span>Provide after-sales support for uninterrupted service</li>
-              <li><span>03</span>Keep upgrading with the latest technology</li>
-              <li><span>04</span>Build long-lasting relationships on trust and professionalism</li>
+
+          <article class="purpose-bento-mission">
+            <span class="mission-pill-tag"><svg class="icon"><use href="assets/icons.svg#i-target"/></svg>OUR MISSION</span>
+            <ol class="mission-numbered-list">
+              <li><span class="mission-num">01</span><span>Deliver top-tier medical solutions that improve patient care</span></li>
+              <li><span class="mission-num">02</span><span>Provide after-sales support for uninterrupted service</span></li>
+              <li><span class="mission-num">03</span><span>Keep upgrading with the latest technology</span></li>
+              <li><span class="mission-num">04</span><span>Build long-lasting relationships on trust and professionalism</span></li>
             </ol>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- ============ Brands ============ -->
-    <section class="section">
+    <!-- ============ 5. Our Partners ============ -->
+    <section class="section ab-partners-section">
       <div class="container">
-        <div class="section-head">
+        <div class="section-head-split">
           <div>
-            <p class="eyebrow" data-reveal>Alliance brands</p>
-            <h2 class="h2" data-split>Global technology. <span class="text-muted">Local expertise.</span></h2>
+            <p class="ab-eyebrow" data-reveal><span class="bullet">&bull;</span> OUR PARTNERS</p>
+            <h2 class="h2" data-split>Global technology. <span class="text-slate">Local expertise</span></h2>
           </div>
-          <p class="section-aside" data-reveal>Manufacturer-authorised distribution for Kashmir, with certified installation and genuine spare parts.</p>
+          <p class="section-aside-text" data-reveal>Manufacturer-authorised distribution for Kashmir, with certified installation and genuine spare parts.</p>
         </div>
-        <div class="partner-grid" data-stagger>
-          <div class="partner-card">
-            <div class="partner-logo"><img src="images/brand-philips.webp" alt="Philips" width="480" height="160" loading="lazy"></div>
-            <span class="partner-tag">Respiratory &amp; sleep therapy</span>
+
+        <div class="partners-bento-grid" data-stagger>
+          <div class="partner-showcase-card">
+            <div class="partner-logo-box"><img src="images/brand-philips.webp" alt="Philips Healthcare" width="480" height="160" loading="lazy"></div>
+            <span class="partner-specialty-tag">RESPIRATORY &amp; SLEEP THERAPY</span>
             <p>Clinical solutions for sleep apnoea and continuous respiratory care.</p>
           </div>
-          <div class="partner-card">
-            <div class="partner-logo"><img src="images/brand-schiller.webp" alt="Schiller" width="480" height="160" loading="lazy"></div>
-            <span class="partner-tag">Cardiology &amp; diagnostics</span>
+          <div class="partner-showcase-card">
+            <div class="partner-logo-box"><img src="images/brand-schiller.webp" alt="Schiller Healthcare" width="480" height="160" loading="lazy"></div>
+            <span class="partner-specialty-tag">CARDIOLOGY &amp; DIAGNOSTICS</span>
             <p>Precision pulmonary function, ECG and stress testing systems.</p>
           </div>
-          <div class="partner-card">
-            <div class="partner-logo"><img src="images/brand-shalya.webp" alt="Shalya" width="480" height="160" loading="lazy"></div>
-            <span class="partner-tag">Surgical &amp; OT systems</span>
+          <div class="partner-showcase-card">
+            <div class="partner-logo-box"><img src="images/brand-shalya.webp" alt="Shalya OT Systems" width="480" height="160" loading="lazy"></div>
+            <span class="partner-specialty-tag">SURGICAL &amp; OT SYSTEMS</span>
             <p>Dependable surgical and operating theatre equipment.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ============ What we do + why ============ -->
-    <section class="section section-tight">
+    <!-- ============ 6. Visit Us ============ -->
+    <section class="section ab-visit-section" id="visit">
       <div class="container">
-        <div class="why-card" data-scrub-scale>
-          <div class="why-head">
-            <div>
-              <p class="eyebrow eyebrow-light" data-reveal>What we do</p>
-              <h2 class="h2 h2-light" data-split>Everything after the sale, <span class="text-muted-light">handled.</span></h2>
-            </div>
-            <a href="shop.html" class="btn btn-light" data-reveal>Browse equipment<svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></a>
-          </div>
-          <ol class="why-services" data-stagger>
-            <li><span class="why-icon"><svg class="icon"><use href="assets/icons.svg#i-package"/></svg></span><h3>Sales &amp; supply</h3><p>Equipment for clinics, nursing homes and hospitals.</p></li>
-            <li><span class="why-icon"><svg class="icon"><use href="assets/icons.svg#i-graduation"/></svg></span><h3>Installation &amp; training</h3><p>Professional setup with hands-on staff training.</p></li>
-            <li><span class="why-icon"><svg class="icon"><use href="assets/icons.svg#i-wrench"/></svg></span><h3>Maintenance &amp; repair</h3><p>Expert servicing and AMC for long-lasting performance.</p></li>
-            <li><span class="why-icon"><svg class="icon"><use href="assets/icons.svg#i-headset"/></svg></span><h3>After-sales support</h3><p>A dedicated support team, seven days a week.</p></li>
-          </ol>
-          <ul class="why-grid" data-stagger>
-            <li><svg class="icon"><use href="assets/icons.svg#i-check"/></svg>25+ years of experience</li>
-            <li><svg class="icon"><use href="assets/icons.svg#i-check"/></svg>Equipment from global leaders</li>
-            <li><svg class="icon"><use href="assets/icons.svg#i-check"/></svg>Trusted by leading hospitals</li>
-            <li><svg class="icon"><use href="assets/icons.svg#i-check"/></svg>Competitive, transparent pricing</li>
-            <li><svg class="icon"><use href="assets/icons.svg#i-check"/></svg>Quick, reliable service</li>
-            <li><svg class="icon"><use href="assets/icons.svg#i-check"/></svg>GST registered &amp; compliant</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ Visit ============ -->
-    <section class="section" id="visit">
-      <div class="container">
-        <div class="section-head">
+        <div class="section-head-split">
           <div>
-            <p class="eyebrow" data-reveal>Visit us</p>
-            <h2 class="h2" data-split>Find us in <span class="text-muted">Batamaloo, Srinagar.</span></h2>
+            <p class="ab-eyebrow" data-reveal><span class="bullet">&bull;</span> VISIT US</p>
+            <h2 class="h2" data-split>Find us in <span class="text-slate">Shergarhi, Srinagar</span></h2>
           </div>
-          <a href="https://www.google.com/maps/search/?api=1&amp;query=Medico+Scientific+Service+Centre+Iqbal+Complex+Srinagar" class="link-arrow" target="_blank" rel="noopener" data-reveal>Open in Google Maps<svg class="icon"><use href="assets/icons.svg#i-arrow-up-right"/></svg></a>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Medico+Scientific+Service+Centre+Iqbal+Complex+Shergarhi+Srinagar+190008" class="link-arrow-maps" target="_blank" rel="noopener" data-reveal>Open in Google Maps <svg class="icon"><use href="assets/icons.svg#i-arrow-up-right"/></svg></a>
         </div>
-        <div class="visit-card" data-reveal>
-          <div class="visit-map">
-            <iframe title="Map to Medico Scientific Service Centre" src="https://www.google.com/maps?q=Medico+Scientific+Service+Centre,+Iqbal+Complex,+Batamaloo,+Srinagar&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
-          </div>
-          <ul class="visit-list">
-            <li>
-              <span class="visit-icon"><svg class="icon"><use href="assets/icons.svg#i-pin"/></svg></span>
-              <div><h3>Address</h3><p>2nd Floor, Iqbal Complex, Opposite Iqbal Park, Central Market, Batamaloo, Srinagar, J&amp;K 190009</p></div>
-            </li>
-            <li>
-              <span class="visit-icon"><svg class="icon"><use href="assets/icons.svg#i-clock"/></svg></span>
-              <div><h3>Working hours</h3><p>Monday &ndash; Sunday, 9:00 AM &ndash; 8:00 PM</p></div>
-            </li>
-            <li>
-              <span class="visit-icon"><svg class="icon"><use href="assets/icons.svg#i-phone"/></svg></span>
-              <div><h3>Phone</h3><p><a href="tel:+919419008453">+91 94190 08453</a></p></div>
-            </li>
-            <li>
-              <span class="visit-icon"><svg class="icon"><use href="assets/icons.svg#i-mail"/></svg></span>
-              <div><h3>Email</h3><p><a href="mailto:medicosgr@gmail.com">medicosgr@gmail.com</a></p></div>
-            </li>
-            <li>
-              <span class="visit-icon"><svg class="icon"><use href="assets/icons.svg#i-file-text"/></svg></span>
-              <div><h3>GST registration</h3><p>01AALPI4731K1ZV</p></div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </section>
 
-    <!-- ============ CTA ============ -->
-    <section class="section section-tight" id="contact">
-      <div class="container">
-        <div class="cta-card" data-scrub-scale>
-          <img class="cta-bg" src="images/cta-bg.webp" alt="" width="1920" height="640" loading="lazy" aria-hidden="true" data-parallax>
-          <div class="cta-content">
-            <div class="cta-copy">
-              <p class="eyebrow eyebrow-light" data-reveal>Get in touch</p>
-              <h2 class="h2 h2-light" data-split>Let&rsquo;s equip a healthier tomorrow.</h2>
-              <p class="cta-desc" data-reveal>Join 100+ healthcare partners who trust Medico for their equipment and service.</p>
-              <div class="cta-row" data-reveal>
-                <button type="button" class="btn btn-accent btn-lg" data-open-enquiry>Contact a specialist<svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></button>
-                <a href="shop.html" class="btn btn-ghost-light btn-lg">Browse products</a>
+        <div class="visit-compound-card" data-reveal>
+          <div class="visit-map-container">
+            <iframe title="Map to Medico Scientific Service Centre" src="https://www.google.com/maps?q=Medico+Scientific+Service+Centre,+Iqbal+Complex,+Opposite+Iqbal+Park,+Shergarhi,+Srinagar+190008&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+          </div>
+          <div class="visit-details-container">
+            <div class="visit-rating-badge" data-reveal>
+              <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#i-star"/></svg>
+              <span>4.8 &starf; (58 Google Reviews) &middot; Medical Equipment Supplier</span>
+            </div>
+            <div class="visit-info-row">
+              <span class="visit-icon-circle"><svg class="icon"><use href="assets/icons.svg#i-pin"/></svg></span>
+              <div class="visit-info-content">
+                <span class="visit-info-title">ADDRESS</span>
+                <p>2nd Floor, Iqbal Complex, Opposite Iqbal Park, Shergarhi, Srinagar, J&amp;K 190008</p>
               </div>
             </div>
-            <ul class="cta-features" data-stagger>
-              <li><span><svg class="icon"><use href="assets/icons.svg#i-chat"/></svg></span>Quick response</li>
-              <li><span><svg class="icon"><use href="assets/icons.svg#i-badge"/></svg></span>Expert guidance</li>
-              <li><span><svg class="icon"><use href="assets/icons.svg#i-pin"/></svg></span>On-site support</li>
-            </ul>
+            <div class="visit-info-row">
+              <span class="visit-icon-circle"><svg class="icon"><use href="assets/icons.svg#i-clock"/></svg></span>
+              <div class="visit-info-content">
+                <span class="visit-info-title">WORKING HOURS</span>
+                <p>Monday &ndash; Sunday, 9:00 AM &ndash; 8:00 PM</p>
+              </div>
+            </div>
+            <div class="visit-info-row">
+              <span class="visit-icon-circle"><svg class="icon"><use href="assets/icons.svg#i-phone"/></svg></span>
+              <div class="visit-info-content">
+                <span class="visit-info-title">PHONE</span>
+                <p><a href="tel:+919419008453">+91 94190 08453</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 7. CTA Banner ============ -->
+    <section class="section ab-cta-section" id="contact">
+      <div class="container">
+        <div class="ab-cta-banner" data-scrub-scale>
+          <div class="cta-banner-content">
+            <h2 class="cta-banner-title" data-split>Let&rsquo;s build better care, together</h2>
+            <p class="cta-banner-desc" data-reveal>Talk to our team for product recommendations, service support or a site visit.</p>
+            <div class="cta-banner-btn-wrap" data-reveal>
+              <button type="button" class="btn btn-dark-pill" data-open-enquiry>Contact us<svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></button>
+            </div>
+          </div>
+          <div class="cta-banner-media" data-reveal="scale">
+            <figure>
+              <img src="images/about-cta-stethoscope.webp" alt="Medical stethoscope on clinical diagnostic glass surface" width="1024" height="341" loading="lazy">
+            </figure>
           </div>
         </div>
       </div>
@@ -442,8 +431,7 @@
   </main>
 
   <!-- @footer -->
-  <footer class="site-footer">
-    <img class="footer-bg" src="images/footer-bg.webp" alt="" width="1920" height="640" loading="lazy" aria-hidden="true">
+  <footer class="site-footer ab-site-footer">
     <div class="container footer-grid">
       <div class="footer-brand">
         <a href="index.html" class="brand" aria-label="Medico Scientific Service Centre, home">
@@ -453,45 +441,47 @@
             <span class="brand-sub">Scientific Service Centre</span>
           </span>
         </a>
-        <p>Kashmir&rsquo;s trusted partner for clinical-grade respiratory and life-support equipment. Serving hospitals, clinics and families since 2000.</p>
-        <a href="https://wa.me/919419008453?text=Hello%20Medico%2C%20I%27d%20like%20to%20enquire%20about%20medical%20equipment." class="btn btn-outline btn-sm footer-cta" target="_blank" rel="noopener"><svg class="icon"><use href="assets/icons.svg#i-whatsapp"/></svg>Chat on WhatsApp</a>
+        <p>A trusted supplier of high-end medical equipment and hospital infrastructure across Jammu &amp; Kashmir.</p>
+        <div class="footer-social-row">
+          <a href="#" aria-label="LinkedIn" class="social-circle-link">in</a>
+          <a href="#" aria-label="Facebook" class="social-circle-link">f</a>
+          <a href="#" aria-label="YouTube" class="social-circle-link">&#9654;</a>
+          <a href="#" aria-label="Instagram" class="social-circle-link">&#9679;</a>
+        </div>
       </div>
-      <nav aria-label="Navigate">
-        <h3>Navigate</h3>
+      <nav aria-label="Products">
+        <h3>Products</h3>
         <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="shop.html">Products</a></li>
-          <li><a href="index.html#services">Services</a></li>
-          <li><a href="about.html">About us</a></li>
-          <li><a href="blog.html">Blog</a></li>
-          <li><a href="index.html#contact">Contact</a></li>
+          <li><a href="shop.html?category=Oxygen+Therapy">Oxygen Therapy</a></li>
+          <li><a href="shop.html?category=Anaesthesia">Anaesthesia</a></li>
+          <li><a href="shop.html?category=Diagnostics+%26+Monitoring">Diagnostics &amp; Monitoring</a></li>
+          <li><a href="shop.html?category=Emergency+%26+Resuscitation">Emergency &amp; Resuscitation</a></li>
+          <li><a href="shop.html?category=Critical+Care">Critical Care</a></li>
+          <li><a href="shop.html?category=Sleep+%26+NIV">Sleep &amp; NIV</a></li>
+          <li><a href="shop.html?category=Surgical+Equipment">Surgical Equipment</a></li>
         </ul>
       </nav>
-      <nav aria-label="Equipment">
-        <h3>Equipment</h3>
+      <nav aria-label="Services">
+        <h3>Services</h3>
         <ul>
-          <li><a href="shop.html?category=Oxygen+Therapy">Oxygen therapy</a></li>
-          <li><a href="shop.html?category=Anaesthesia">Anaesthesia</a></li>
-          <li><a href="shop.html?category=Diagnostics+%26+Monitoring">Diagnostics &amp; monitoring</a></li>
-          <li><a href="shop.html?category=Emergency+%26+Resuscitation">Emergency &amp; resuscitation</a></li>
-          <li><a href="shop.html?category=Critical+Care">Critical care</a></li>
-          <li><a href="shop.html?category=Sleep+%26+NIV">Sleep &amp; NIV</a></li>
-          <li><a href="shop.html?category=Surgical+Equipment">Surgical equipment</a></li>
+          <li><a href="index.html#services">Supply &amp; Installation</a></li>
+          <li><a href="index.html#services">Maintenance &amp; AMC</a></li>
+          <li><a href="index.html#services">Clinical Staff Training</a></li>
+          <li><a href="index.html#services">Technical Support</a></li>
         </ul>
       </nav>
       <div>
-        <h3>Contact</h3>
+        <h3>Contact Us</h3>
         <ul class="footer-contact">
-          <li><svg class="icon"><use href="assets/icons.svg#i-pin"/></svg><a href="https://www.google.com/maps/search/?api=1&amp;query=Medico+Scientific+Service+Centre+Iqbal+Complex+Srinagar" target="_blank" rel="noopener">Iqbal Complex, Batamaloo, Srinagar 190009</a></li>
-          <li><svg class="icon"><use href="assets/icons.svg#i-mail"/></svg><a href="mailto:medicosgr@gmail.com">medicosgr@gmail.com</a></li>
+          <li><svg class="icon"><use href="assets/icons.svg#i-pin"/></svg><a href="https://www.google.com/maps/search/?api=1&amp;query=Medico+Scientific+Service+Centre+Iqbal+Complex+Shergarhi+Srinagar+190008" target="_blank" rel="noopener">2nd Floor, Iqbal Complex, Opposite Iqbal Park, Shergarhi, Srinagar 190008</a></li>
           <li><svg class="icon"><use href="assets/icons.svg#i-phone"/></svg><a href="tel:+919419008453">+91 94190 08453</a></li>
-          <li><svg class="icon"><use href="assets/icons.svg#i-clock"/></svg><span>Mon &ndash; Sun, 9:00 AM &ndash; 8:00 PM</span></li>
+          <li><svg class="icon"><use href="assets/icons.svg#i-mail"/></svg><a href="mailto:info@medicojk.com">info@medicojk.com</a></li>
         </ul>
       </div>
     </div>
     <div class="container footer-bottom">
-      <span>&copy; <span class="current-year">2026</span> Medico Scientific Service Centre. GSTIN 01AALPI4731K1ZV</span>
-      <span class="footer-legal"><a href="privacy-policy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a><a href="admin-login.html" class="footer-admin">Admin</a></span>
+      <span>&copy; <span class="current-year">2026</span> Medico. All rights reserved.</span>
+      <span class="footer-legal"><a href="privacy-policy.html">Privacy Policy</a><span class="sep">|</span><a href="terms.html">Terms of Service</a><span class="sep">|</span><a href="sitemap.html">Sitemap</a></span>
     </div>
   </footer>
   <!-- /@footer -->

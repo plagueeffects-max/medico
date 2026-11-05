@@ -19,7 +19,7 @@
   <meta property="og:site_name" content="Medico Scientific Service Centre">
   <meta name="twitter:card" content="summary_large_image">
 
-  <link rel="preload" as="image" href="images/blog-doctor-hero.webp" fetchpriority="high">
+  <link rel="preload" as="image" href="images/products/critical-care.webp" fetchpriority="high">
   <!-- @head -->
   <link rel="icon" type="image/svg+xml" href="favicon/icon.svg">
   <link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
@@ -33,7 +33,7 @@
   <script src="assets/vendor/SplitText.min.js" defer></script>
   <script src="assets/js/site.js" defer></script>
   <!-- /@head -->
-  <link rel="stylesheet" href="assets/css/blog.css?v=4">
+  <link rel="stylesheet" href="assets/css/blog.css?v=5">
 
   <script type="application/ld+json">
   {
@@ -150,20 +150,20 @@
         </nav>
         <div class="page-hero-grid">
           <div class="page-hero-copy">
-            <p class="eyebrow" data-hero>Medico insights</p>
+            <p class="eyebrow" data-hero><span class="bullet">&bull;</span> MEDICO INSIGHTS</p>
             <h1 class="display-md" data-hero-title>Knowledge for better healthcare.</h1>
             <p class="lead" data-hero>Expert perspectives, clinical insights and equipment guides to support better care across Jammu &amp; Kashmir.</p>
             <form class="blog-search" role="search" id="blog-search" data-hero>
               <svg class="icon"><use href="assets/icons.svg#i-search"/></svg>
-              <label for="blog-search-input" class="visually-hidden">Search articles</label>
+              <label for="blog-search-input" class="visually-hidden">Search articles, topics or keywords</label>
               <input type="search" id="blog-search-input" placeholder="Search articles, topics or keywords…" autocomplete="off">
-              <button type="submit" class="icon-btn" aria-label="Search articles"><svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></button>
+              <button type="submit" class="blog-search-btn" aria-label="Search articles"><svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></button>
             </form>
           </div>
           <div class="page-hero-media" data-hero-media>
-            <div class="page-hero-photo">
-              <img src="images/blog-doctor-hero.webp" alt="Doctor reviewing clinical notes on a tablet" width="1200" height="670">
-            </div>
+            <figure class="blog-hero-monitor-stage">
+              <img src="images/products/critical-care.webp" alt="Mindray multi-parameter patient monitor" width="900" height="600" fetchpriority="high">
+            </figure>
           </div>
         </div>
       </div>
@@ -198,22 +198,23 @@
     </section>
 
     <!-- ============ Stay informed ============ -->
-    <section class="section section-tight">
+    <section class="section section-tight blog-newsletter-section">
       <div class="container">
-        <div class="newsletter" data-scrub-scale>
-          <div>
-            <p class="eyebrow" data-reveal>Stay informed</p>
+        <div class="blog-newsletter-banner" data-scrub-scale>
+          <div class="blog-newsletter-copy">
+            <p class="eyebrow" data-reveal><span class="bullet">&bull;</span> STAY INFORMED</p>
             <h2 class="h3-display" data-split>Get the latest healthcare insights.</h2>
             <p class="newsletter-desc" data-reveal>New articles, product updates and workshop dates, sent to you on WhatsApp.</p>
-          </div>
-          <div data-reveal>
-            <form class="newsletter-form" id="newsletter-form" novalidate>
+            <form class="newsletter-form-pill" id="newsletter-form" novalidate data-reveal>
               <svg class="icon"><use href="assets/icons.svg#i-mail"/></svg>
               <label for="newsletter-email" class="visually-hidden">Email address</label>
               <input type="email" id="newsletter-email" placeholder="Enter your email address" autocomplete="email" required>
-              <button type="submit" class="btn btn-dark">Subscribe<svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></button>
+              <button type="submit" class="btn btn-dark-pill">Subscribe<svg class="icon"><use href="assets/icons.svg#i-arrow"/></svg></button>
             </form>
-            <p class="newsletter-note" id="newsletter-note">No spam. Unsubscribe anytime.</p>
+            <p class="newsletter-note" id="newsletter-note" data-reveal>No spam. Unsubscribe anytime.</p>
+          </div>
+          <div class="blog-newsletter-media" data-reveal="scale">
+            <img src="images/about-cta-stethoscope.webp" alt="Medical stethoscope on clinical diagnostic glass surface" width="1024" height="341" loading="lazy">
           </div>
         </div>
       </div>
@@ -261,7 +262,7 @@
       <div>
         <h3>Contact</h3>
         <ul class="footer-contact">
-          <li><svg class="icon"><use href="assets/icons.svg#i-pin"/></svg><a href="https://www.google.com/maps/search/?api=1&amp;query=Medico+Scientific+Service+Centre+Iqbal+Complex+Srinagar" target="_blank" rel="noopener">Iqbal Complex, Batamaloo, Srinagar 190009</a></li>
+          <li><svg class="icon"><use href="assets/icons.svg#i-pin"/></svg><a href="https://www.google.com/maps/search/?api=1&amp;query=Medico+Scientific+Service+Centre+Iqbal+Complex+Shergarhi+Srinagar+190008" target="_blank" rel="noopener">2nd Floor, Iqbal Complex, Opposite Iqbal Park, Shergarhi, Srinagar 190008</a></li>
           <li><svg class="icon"><use href="assets/icons.svg#i-mail"/></svg><a href="mailto:medicosgr@gmail.com">medicosgr@gmail.com</a></li>
           <li><svg class="icon"><use href="assets/icons.svg#i-phone"/></svg><a href="tel:+919419008453">+91 94190 08453</a></li>
           <li><svg class="icon"><use href="assets/icons.svg#i-clock"/></svg><span>Mon &ndash; Sun, 9:00 AM &ndash; 8:00 PM</span></li>
@@ -331,7 +332,7 @@
   </div>
   <!-- /@dialog -->
 
-  <script src="assets/js/blog-data.js?v=2" defer></script>
-  <script src="assets/js/blog.js?v=4" defer></script>
+  <script src="assets/js/blog-data.js?v=5" defer></script>
+  <script src="assets/js/blog.js?v=5" defer></script>
 </body>
 </html>
