@@ -84,6 +84,201 @@ if (glider && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
 /* ---------- Enquiry dialog: saves to /api/inquiry, WhatsApp as fallback ---------- */
 const dialog = document.getElementById('enquiry-dialog');
 const form = document.getElementById('enquiry-form');
+
+/* ---------- Custom Apple-grade select dropdown component ---------- */
+function initCustomSelect(selectEl) {
+  if (!selectEl || selectEl.dataset.customized) return;
+  selectEl.dataset.customized = '1';
+  selectEl.classList.add('visually-hidden-select');
+
+  const wrap = document.createElement('div');
+  wrap.className = 'custom-select-wrap';
+
+  selectEl.parentNode.insertBefore(wrap, selectEl);
+  wrap.appendChild(selectEl);
+
+  const trigger = document.createElement('button');
+  trigger.type = 'button';
+  trigger.className = 'custom-select-trigger';
+  trigger.setAttribute('aria-haspopup', 'listbox');
+  trigger.setAttribute('aria-expanded', 'false');
+
+  const labelSpan = document.createElement('span');
+  labelSpan.className = 'custom-select-label';
+  labelSpan.textContent = selectEl.options[selectEl.selectedIndex]?.text || selectEl.options[0]?.text || 'Select...';
+
+  const chevronSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  chevronSvg.setAttribute('class', 'custom-select-chevron');
+  chevronSvg.setAttribute('viewBox', '0 0 24 24');
+  chevronSvg.setAttribute('fill', 'none');
+  chevronSvg.setAttribute('stroke', 'currentColor');
+  chevronSvg.setAttribute('stroke-width', '2');
+  chevronSvg.setAttribute('stroke-linecap', 'round');
+  chevronSvg.setAttribute('stroke-linejoin', 'round');
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+  path.setAttribute('points', '6 9 12 15 18 9');
+  chevronSvg.appendChild(path);
+
+  trigger.appendChild(labelSpan);
+  trigger.appendChild(chevronSvg);
+  wrap.appendChild(trigger);
+
+  const menu = document.createElement('div');
+  menu.className = 'custom-select-menu';
+  menu.setAttribute('role', 'listbox');
+
+  function renderOptions() {
+    menu.innerHTML = '';
+    Array.from(selectEl.options).forEach((opt, idx) => {
+      const optEl = document.createElement('div');
+      optEl.className = 'custom-select-option' + (opt.selected ? ' is-selected' : '');
+      optEl.setAttribute('role', 'option');
+      optEl.setAttribute('aria-selected', opt.selected ? 'true' : 'false');
+      optEl.dataset.value = opt.value;
+      optEl.dataset.index = idx;
+
+      const optText = document.createElement('span');
+      optText.textContent = opt.text;
+
+      const checkSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      checkSvg.setAttribute('class', 'custom-select-check');
+      checkSvg.setAttribute('viewBox', '0 0 24 24');
+      checkSvg.setAttribute('fill', 'none');
+      checkSvg.setAttribute('stroke', 'currentColor');
+      checkSvg.setAttribute('stroke-width', '2.5');
+      checkSvg.setAttribute('stroke-linecap', 'round');
+      checkSvg.setAttribute('stroke-linejoin', 'round');
+      const checkPoly = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+      checkPoly.setAttribute('points', '20 6 9 17 4 12');
+      checkSvg.appendChild(checkPoly);
+
+      optEl.appendChild(optText);
+      optEl.appendChild(checkSvg);
+
+      optEl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        selectOption(idx);
+        closeMenu();
+        trigger.focus();
+      });
+
+      menu.appendChild(optEl);
+    });
+  }
+
+  function selectOption(index) {
+    if (index < 0 || index >= selectEl.options.length) return;
+    selectEl.selectedIndex = index;
+    labelSpan.textContent = selectEl.options[index].text;
+    Array.from(menu.children).forEach((child, i) => {
+      const isSel = i === index;
+      child.classList.toggle('is-selected', isSel);
+      child.setAttribute('aria-selected', isSel ? 'true' : 'false');
+    });
+    selectEl.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+
+  function openMenu() {
+    document.querySelectorAll('.custom-select-wrap.is-open').forEach((w) => {
+      if (w !== wrap) {
+        w.classList.remove('is-open');
+        w.querySelector('.custom-select-trigger')?.setAttribute('aria-expanded', 'false');
+      }
+    });
+    // Smart flip: open upwards if near bottom of viewport or modal
+    const rect = trigger.getBoundingClientRect();
+    const spaceBelow = window.innerHeight - rect.bottom;
+    if (spaceBelow < 230 && rect.top > 230) {
+      wrap.classList.add('open-up');
+    } else {
+      wrap.classList.remove('open-up');
+    }
+    renderOptions();
+    wrap.classList.add('is-open');
+    trigger.setAttribute('aria-expanded', 'true');
+    const selected = menu.querySelector('.custom-select-option.is-selected');
+    if (selected) {
+      setTimeout(() => selected.scrollIntoView({ block: 'nearest' }), 30);
+    }
+  }
+
+  function closeMenu() {
+    wrap.classList.remove('is-open');
+    trigger.setAttribute('aria-expanded', 'false');
+  }
+
+  function toggleMenu() {
+    if (wrap.classList.contains('is-open')) closeMenu();
+    else openMenu();
+  }
+
+  trigger.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleMenu();
+  });
+
+  trigger.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      if (!wrap.classList.contains('is-open')) {
+        openMenu();
+      } else {
+        const cur = selectEl.selectedIndex;
+        if (e.key === 'ArrowDown') selectOption(Math.min(cur + 1, selectEl.options.length - 1));
+        if (e.key === 'ArrowUp') selectOption(Math.max(cur - 1, 0));
+        if (e.key === 'Enter' || e.key === ' ') closeMenu();
+      }
+    } else if (e.key === 'Escape') {
+      closeMenu();
+    }
+  });
+
+  renderOptions();
+  wrap.appendChild(menu);
+
+  const sync = () => {
+    labelSpan.textContent = selectEl.options[selectEl.selectedIndex]?.text || '';
+    renderOptions();
+  };
+  selectEl.addEventListener('change', sync);
+  // form.reset() changes the value without a change event; resync after it runs
+  selectEl.form?.addEventListener('reset', () => setTimeout(sync));
+}
+
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.custom-select-wrap')) {
+    document.querySelectorAll('.custom-select-wrap.is-open').forEach((w) => {
+      w.classList.remove('is-open');
+      w.querySelector('.custom-select-trigger')?.setAttribute('aria-expanded', 'false');
+    });
+  }
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.custom-select-wrap.is-open').forEach((w) => {
+      w.classList.remove('is-open');
+      w.querySelector('.custom-select-trigger')?.setAttribute('aria-expanded', 'false');
+    });
+  }
+});
+
+/* Accordion behavior for FAQ sections (exclusive expansion) */
+document.querySelectorAll('.shop-faq-stack, .faq-list').forEach((stack) => {
+  stack.addEventListener('toggle', (e) => {
+    if (e.target.open) {
+      stack.querySelectorAll('details').forEach((d) => {
+        if (d !== e.target && d.open) d.open = false;
+      });
+    }
+  }, true);
+});
+
+// Initialize on f-equipment and sort-select
+const equipSelect = document.getElementById('f-equipment');
+if (equipSelect) initCustomSelect(equipSelect);
+const sortSelect = document.getElementById('sort-select');
+if (sortSelect) initCustomSelect(sortSelect);
 const MODES = {
   quote: { eyebrow: 'Free consultation', title: 'Request a quote', sub: 'Tell us what you need. A specialist calls you back, usually the same day.' },
   callback: { eyebrow: 'Callback', title: 'Request a callback', sub: 'Leave your number and a good time to call. We will ring you back.' },

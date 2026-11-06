@@ -133,26 +133,5 @@
     });
   }
 
-  /* ---------- Subscribe Form ---------- */
-  const form = document.getElementById('newsletter-form');
-  const note = document.getElementById('newsletter-note');
-  if (form) {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const email = document.getElementById('newsletter-email');
-      if (!email.checkValidity() || !email.value.trim()) {
-        form.classList.add('has-error');
-        if (note) note.textContent = 'Please enter a valid email address.';
-        email.focus();
-        return;
-      }
-      form.classList.remove('has-error');
-      if (note) note.textContent = 'Opening WhatsApp to confirm your subscription…';
-      const msg = `Hello Medico, please add me to your insights updates. Email: ${email.value.trim()}`;
-      const win = window.open(`https://wa.me/919419008453?text=${encodeURIComponent(msg)}`, '_blank');
-      if (win) win.opener = null;
-    });
-  }
-
   render();
 })();

@@ -792,9 +792,11 @@
 .faq-title { color: var(--ink); }
 .faq-title-sub { color: #334155; display: block; }
 .faq-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: clamp(40px, 6vw, 96px); align-items: start; }
-.faq-intro { position: sticky; top: calc(var(--header-h) + 32px); }
+.faq-intro { position: sticky; top: calc(var(--header-h) + 32px); display: flex; flex-direction: column; align-items: flex-start; }
 .faq-intro .h2 { margin-bottom: 20px; }
 .faq-intro .body-lg { margin-bottom: 24px; max-width: 26em; }
+.faq-intro .link-arrow { margin-top: 4px; }
+.faq-accordion-col { display: flex; flex-direction: column; align-items: stretch; min-width: 0; }
 
 /* ---------- Insights (Apple Newsroom / Editorial) ---------- */
 .insight-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }

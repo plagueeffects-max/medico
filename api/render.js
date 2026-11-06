@@ -259,6 +259,32 @@ async function previewPost(row) {
   const [s, all] = await Promise.all([getSettingsSafe(), getPublishedPostRows().catch(() => [])]);
   fillPost(ed, { ...row, ai_generated: true, reviewed_at: null }, all, s);
   applyCopy(ed, await copyOverrides());
-  return ed.toString();
+  
+  // Inject live preview viewport helper styles to prevent header bleed in iPhone chassis
+  const previewStyles = `
+    <style id="medico-live-preview-viewport-styles">
+      @media (max-width: 640px) {
+        .topbar { display: none !important; }
+        .site-header {
+          padding-top: 32px !important;
+          background: rgba(255, 255, 255, 0.94) !important;
+          backdrop-filter: blur(24px) !important;
+          -webkit-backdrop-filter: blur(24px) !important;
+          box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06) !important;
+        }
+      }
+      /* Hardware clipping & ultra-slim scrollbar to stay inside device mockup */
+      html {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(0, 0, 0, 0.18) transparent;
+      }
+      ::-webkit-scrollbar { width: 4px; height: 4px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.18); border-radius: 99px; }
+      ::-webkit-scrollbar-thumb:hover { background: rgba(0, 0, 0, 0.35); }
+    </style>
+  `;
+  const rendered = ed.toString();
+  return rendered.replace('</head>', `${previewStyles}\n</head>`);
 }
 module.exports.previewPost = previewPost;

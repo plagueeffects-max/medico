@@ -29,14 +29,14 @@
   <link rel="manifest" href="/favicon/site.webmanifest">
   <link rel="preload" href="/assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/inter-800.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/css/site.css?v=7">
+  <link rel="stylesheet" href="/assets/css/site.css?v=8">
   <script>document.documentElement.classList.add('js');</script>
   <script src="/assets/vendor/gsap.min.js" defer></script>
   <script src="/assets/vendor/ScrollTrigger.min.js" defer></script>
   <script src="/assets/vendor/SplitText.min.js" defer></script>
-  <script src="/assets/js/site.js?v=7" defer></script>
+  <script src="/assets/js/site.js?v=8" defer></script>
   <!-- /@head -->
-  <link rel="stylesheet" href="/assets/css/pages.css?v=7">
+  <link rel="stylesheet" href="/assets/css/pages.css?v=8">
 
   <script type="application/ld+json">
   {
@@ -323,20 +323,73 @@
           <h2 class="h2" data-split>What we&rsquo;re here to do</h2>
         </div>
 
-        <div class="purpose-bento-grid" data-stagger>
-          <article class="purpose-bento-vision">
-            <span class="vision-pill-tag"><svg class="icon"><use href="/assets/icons.svg#i-eye"/></svg>OUR VISION</span>
-            <p class="vision-quote-text">&ldquo;To be the most reliable healthcare equipment partner in Jammu &amp; Kashmir, so every institution, big or small, has access to advanced, affordable and trusted medical technology.&rdquo;</p>
+        <div class="purpose-cards-grid" data-stagger>
+          <!-- Left Card: Vision -->
+          <article class="purpose-card purpose-card-vision">
+            <div class="purpose-card-inner">
+              <div class="purpose-card-tag-row">
+                <span class="purpose-pill-tag tag-crimson"><svg class="icon"><use href="/assets/icons.svg#i-eye"/></svg>OUR VISION</span>
+                <span class="purpose-state-badge" data-copy="about.purpose.badge">Serving J&amp;K since 2000</span>
+              </div>
+              <blockquote class="purpose-vision-quote" data-copy="about.purpose.vision">&ldquo;To be the most reliable healthcare equipment partner in Jammu &amp; Kashmir, so every hospital, clinic and patient family can count on certified, dependable life-support technology.&rdquo;</blockquote>
+              <p class="purpose-vision-desc" data-copy="about.purpose.vision_body">From ICUs in Srinagar to district clinics across the valley, we pair manufacturer-trained engineering with prompt, on-ground support, seven days a week.</p>
+              <div class="purpose-vision-metrics">
+                <div class="p-metric-item">
+                  <span class="p-metric-num">100+</span>
+                  <span class="p-metric-lbl" data-copy="about.purpose.metric1">Hospitals &amp; clinics</span>
+                </div>
+                <div class="p-metric-sep"></div>
+                <div class="p-metric-item">
+                  <span class="p-metric-num" data-copy="about.purpose.metric2_num">20</span>
+                  <span class="p-metric-lbl" data-copy="about.purpose.metric2">Districts served</span>
+                </div>
+                <div class="p-metric-sep"></div>
+                <div class="p-metric-item">
+                  <span class="p-metric-num" data-copy="about.purpose.metric3_num">7 days</span>
+                  <span class="p-metric-lbl" data-copy="about.purpose.metric3">Service and support</span>
+                </div>
+              </div>
+            </div>
           </article>
 
-          <article class="purpose-bento-mission">
-            <span class="mission-pill-tag"><svg class="icon"><use href="/assets/icons.svg#i-target"/></svg>OUR MISSION</span>
-            <ol class="mission-numbered-list">
-              <li><span class="mission-num">01</span><span>Deliver top-tier medical solutions that improve patient care</span></li>
-              <li><span class="mission-num">02</span><span>Provide after-sales support for uninterrupted service</span></li>
-              <li><span class="mission-num">03</span><span>Keep upgrading with the latest technology</span></li>
-              <li><span class="mission-num">04</span><span>Build long-lasting relationships on trust and professionalism</span></li>
-            </ol>
+          <!-- Right Card: Mission -->
+          <article class="purpose-card purpose-card-mission">
+            <div class="purpose-card-inner">
+              <div class="purpose-card-tag-row">
+                <span class="purpose-pill-tag tag-slate"><svg class="icon"><use href="/assets/icons.svg#i-target"/></svg>OUR MISSION</span>
+                <span class="purpose-state-caption" data-copy="about.purpose.mission_caption">Four commitments</span>
+              </div>
+              <div class="mission-stack">
+                <div class="mission-row">
+                  <span class="mission-row-num">01</span>
+                  <div class="mission-row-content">
+                    <h4 data-copy="about.mission.1.title">Clinical precision</h4>
+                    <p data-copy="about.mission.1.body">Genuine, manufacturer-authorised devices, calibrated and tested before they reach a ward or a home.</p>
+                  </div>
+                </div>
+                <div class="mission-row">
+                  <span class="mission-row-num">02</span>
+                  <div class="mission-row-content">
+                    <h4 data-copy="about.mission.2.title">Support that shows up</h4>
+                    <p data-copy="about.mission.2.body">Engineers on the ground, preventive maintenance, calibration and AMCs that keep equipment running.</p>
+                  </div>
+                </div>
+                <div class="mission-row">
+                  <span class="mission-row-num">03</span>
+                  <div class="mission-row-content">
+                    <h4 data-copy="about.mission.3.title">Modern technology</h4>
+                    <p data-copy="about.mission.3.body">Bring current ICU, OT and home-care technology to doctors and hospitals in Kashmir.</p>
+                  </div>
+                </div>
+                <div class="mission-row">
+                  <span class="mission-row-num">04</span>
+                  <div class="mission-row-content">
+                    <h4 data-copy="about.mission.4.title">Lasting trust</h4>
+                    <p data-copy="about.mission.4.body">Clear advice, honest pricing and verified quality for healthcare teams and families.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </article>
         </div>
       </div>

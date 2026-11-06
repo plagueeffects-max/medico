@@ -423,7 +423,9 @@ module.exports = async (req, res) => {
     return await fn(req, res, q, user);
   } catch (err) {
     console.error(`[admin api] ${req.method} ${name}`, err);
-    const msg = err.status ? err.message : err.code === '23505' ? 'Something with that name or address already exists.' : /DATABASE_URL/.test(err.message) ? 'The database is not connected.' : 'Something went wrong. Please try again.';
+    const msg = err.status ? err.message : err.code === '23505' ? 'Something with that name or address already exists.' : /DATABASE_URL/.test(err.message) ? 'The database is not connected.'
+      // Signed-in admins see the real reason (handy when debugging); anonymous callers never see internals
+      : (user && err.message) || 'Something went wrong. Please try again.';
     return fail(res, msg, err.status || 500);
   }
 };

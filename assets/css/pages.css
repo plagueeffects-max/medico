@@ -241,12 +241,12 @@
 }
 .founder-split-card {
   display: grid;
-  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-  border-radius: 24px;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.25fr);
+  border-radius: 28px;
   overflow: hidden;
   background: #ffffff;
   border: 1px solid rgba(9, 13, 22, 0.08);
-  box-shadow: 0 20px 48px -12px rgba(12, 19, 34, 0.08), 0 1px 3px rgba(12, 19, 34, 0.04);
+  box-shadow: 0 24px 60px -15px rgba(12, 19, 34, 0.1), 0 1px 3px rgba(12, 19, 34, 0.04);
 }
 .founder-stage-left {
   position: relative;
@@ -254,9 +254,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: clamp(32px, 4vw, 48px) 24px;
-  background: #090e18;
+  padding: clamp(40px, 5vw, 64px) clamp(24px, 3vw, 40px);
+  background: radial-gradient(circle at center, #111a2e 0%, #080d16 100%);
   overflow: hidden;
+  min-height: 420px;
 }
 /* Concentric Radar Rings */
 .radar-rings {
@@ -269,28 +270,28 @@
 .radar-rings .ring {
   position: absolute;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
-.radar-rings .ring-1 { width: 280px; height: 280px; }
-.radar-rings .ring-2 { width: 380px; height: 380px; border-style: dashed; }
-.radar-rings .ring-3 { width: 480px; height: 480px; }
+.radar-rings .ring-1 { width: 340px; height: 340px; }
+.radar-rings .ring-2 { width: 440px; height: 440px; border-style: dashed; }
+.radar-rings .ring-3 { width: 560px; height: 560px; }
 
-/* Circular portrait frame */
+/* Circular portrait frame - significantly enlarged */
 .founder-photo-frame {
   position: relative;
   z-index: 2;
-  width: min(100%, 184px);
-  aspect-ratio: 1;
+  width: min(100%, 270px);
+  height: 270px;
   border-radius: 50%;
-  border: 4px solid #ffffff;
+  border: 5px solid rgba(255, 255, 255, 0.95);
   overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.2);
 }
 .founder-photo-frame img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center 15%;
 }
 
 /* 2000 Founded Medico Pill */
@@ -486,93 +487,188 @@
 }
 
 /* =====================================================
-   4. Our Purpose (Obsidian Vision + White Mission Bento)
+   4. Our Purpose (Balanced Apple-grade Vision & Mission)
    ===================================================== */
 .section-head-simple {
-  margin-bottom: clamp(32px, 4vw, 48px);
+  margin-bottom: clamp(28px, 3.5vw, 44px);
 }
-.purpose-bento-grid {
+.purpose-cards-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(20px, 2.5vw, 28px);
+  align-items: stretch;
 }
-.purpose-bento-vision {
+.purpose-card {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 20px;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.02);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: clamp(26px, 3.5vw, 40px);
-  border-radius: 24px;
-  background: #090e18;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 20px 48px -12px rgba(9, 14, 24, 0.4);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+  overflow: hidden;
 }
-.vision-pill-tag {
-  display: inline-flex;
+.purpose-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(15, 23, 42, 0.14);
+  box-shadow: 0 16px 36px -8px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(15, 23, 42, 0.03);
+}
+.purpose-card-inner {
+  padding: clamp(26px, 3.5vw, 36px);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.purpose-card-tag-row {
+  display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.09);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: #ffffff;
-  align-self: flex-start;
+  justify-content: space-between;
+  gap: 12px;
   margin-bottom: 20px;
 }
-.vision-pill-tag .icon { width: 14px; height: 14px; }
-.vision-quote-text {
-  font-size: clamp(1.2rem, 0.95rem + 0.8vw, 1.6rem);
-  font-weight: 600;
-  line-height: 1.4;
-  letter-spacing: -0.025em;
-  color: #ffffff;
-}
-
-.purpose-bento-mission {
-  display: flex;
-  flex-direction: column;
-  padding: clamp(26px, 3.5vw, 40px);
-  border-radius: 24px;
-  background: #ffffff;
-  border: 1px solid rgba(9, 13, 22, 0.08);
-  box-shadow: 0 12px 36px -12px rgba(12, 19, 34, 0.06), 0 1px 3px rgba(12, 19, 34, 0.03);
-}
-.mission-pill-tag {
+.purpose-pill-tag {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
+  gap: 7px;
+  padding: 5px 12px;
   border-radius: 9999px;
-  background: rgba(224, 36, 27, 0.07);
-  border: 1px solid rgba(224, 36, 27, 0.18);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.08em;
-  color: var(--ab-crimson);
-  align-self: flex-start;
-  margin-bottom: 18px;
 }
-.mission-pill-tag .icon { width: 14px; height: 14px; }
-.mission-numbered-list {
+.purpose-pill-tag .icon { width: 13px; height: 13px; }
+.purpose-pill-tag.tag-crimson {
+  background: rgba(224, 36, 27, 0.07);
+  color: var(--ab-crimson);
+  border: 1px solid rgba(224, 36, 27, 0.18);
+}
+.purpose-pill-tag.tag-slate {
+  background: rgba(15, 23, 42, 0.05);
+  color: #0f172a;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+}
+.purpose-state-badge {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #64748b;
+  background: #f8fafc;
+  border: 1px solid rgba(15, 23, 42, 0.07);
+  padding: 3px 10px;
+  border-radius: 99px;
+}
+.purpose-state-caption {
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+/* Vision card details */
+.purpose-card-vision {
+  background: linear-gradient(175deg, #ffffff 0%, #fafbfd 100%);
+}
+.purpose-vision-quote {
+  font-size: clamp(1.18rem, 0.95rem + 0.6vw, 1.45rem);
+  font-weight: 600;
+  line-height: 1.48;
+  letter-spacing: -0.02em;
+  color: #0f172a;
+  margin: 0 0 14px;
+}
+.purpose-vision-desc {
+  font-size: 14px;
+  line-height: 1.62;
+  color: #475569;
+  margin: 0 0 24px;
+}
+.purpose-vision-metrics {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: #f8fafc;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  border-radius: 14px;
+  margin-top: auto;
+}
+.p-metric-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.p-metric-num {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #0f172a;
+}
+.p-metric-lbl {
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748b;
+}
+.p-metric-sep {
+  width: 1px;
+  height: 28px;
+  background: rgba(15, 23, 42, 0.09);
+}
+
+/* Mission card stack */
+.mission-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: auto;
+}
+.mission-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px solid rgba(15, 23, 42, 0.05);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.mission-row:hover {
+  background: #ffffff;
+  border-color: rgba(15, 23, 42, 0.12);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+  transform: translateX(2px);
+}
+.mission-row-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  color: #0f172a;
+  font-size: 12px;
+  font-weight: 700;
   display: grid;
-  list-style: none;
-  padding: 0;
+  place-items: center;
+  flex: none;
+  margin-top: 1px;
+  transition: all 0.2s;
+}
+.mission-row:hover .mission-row-num {
+  background: var(--ab-crimson);
+  color: #ffffff;
+  border-color: var(--ab-crimson);
+}
+.mission-row-content h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+  margin-bottom: 2px;
+}
+.mission-row-content p {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #475569;
   margin: 0;
 }
-.mission-numbered-list li {
-  display: flex;
-  align-items: baseline;
-  gap: 16px;
-  padding: 12px 0;
-  border-top: 1px dashed rgba(9, 13, 22, 0.1);
-  font-size: 15px;
-  font-weight: 500;
-  line-height: 1.5;
-  color: var(--ink);
-}
-.mission-numbered-list li:first-child {
   border-top: 0;
   padding-top: 0;
 }
@@ -862,6 +958,7 @@
 @media (max-width: 1024px) {
   .ab-hero-grid,
   .founder-split-card,
+  .purpose-cards-grid,
   .purpose-bento-grid,
   .visit-compound-card,
   .ab-cta-banner {

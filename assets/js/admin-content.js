@@ -356,14 +356,14 @@
             <span>Live preview</span>
           </div>
           <div class="preview-viewport-toggle">
-            <button type="button" class="preview-viewport-btn is-active" data-vp="desktop" title="Computer view">${icon('monitor')} Computer</button>
-            <button type="button" class="preview-viewport-btn" data-vp="mobile" title="Phone view">${icon('smartphone')} Phone</button>
+            <button type="button" class="preview-viewport-btn" data-vp="desktop" title="Computer view">${icon('monitor')} Computer</button>
+            <button type="button" class="preview-viewport-btn is-active" data-vp="mobile" title="Phone view">${icon('smartphone')} Phone</button>
           </div>
           <button type="button" class="btn btn-sm btn-ghost btn-icon" data-preview-reload title="Reload live preview">${icon('refresh')}</button>
           <button type="button" class="btn btn-sm btn-ghost btn-icon" data-preview-external title="Open full preview in new tab">${icon('external')}</button>
         </div>
         <div class="preview-frame-container">
-          <div class="device-stage is-macbook" data-frame-wrap>
+          <div class="device-stage is-iphone" data-frame-wrap>
             <!-- EldoraUI MacBook Pro Device Frame -->
             <div class="mockup-macbook">
               <div class="macbook-lid">
@@ -371,9 +371,7 @@
                   <span class="macbook-lens"></span>
                   <span class="macbook-sensor"></span>
                 </div>
-                <div class="macbook-screen">
-                  <iframe class="preview-frame" title="Live Article Preview" sandbox="allow-scripts allow-same-origin"></iframe>
-                </div>
+                <div class="macbook-screen"></div>
               </div>
               <div class="macbook-base" aria-hidden="true">
                 <div class="macbook-thumb-notch"></div>
@@ -393,7 +391,9 @@
                     <span class="island-camera"></span>
                     <span class="island-sensor"></span>
                   </div>
-                  <div class="iphone-screen-viewport" data-iphone-screen></div>
+                  <div class="iphone-screen-viewport" data-iphone-screen>
+                    <iframe class="preview-frame" title="Live Article Preview" sandbox="allow-scripts allow-same-origin"></iframe>
+                  </div>
                   <div class="iphone-home-indicator" aria-hidden="true"></div>
                 </div>
               </div>
@@ -670,7 +670,7 @@
     </section>`;
 
   async function writerFlow(pane, W, regenId) {
-    const s = { keywords: '', type: '', details: {}, guessed: [], outline: null, news: [], useNews: false, outlineFirst: false, postId: regenId };
+    const s = { keywords: '', tags: new Set(), type: '', details: {}, guessed: [], outline: null, news: [], useNews: false, outlineFirst: false, postId: regenId };
     if (regenId) {
       try {
         const p = (await api('GET', `posts?id=${encodeURIComponent(regenId)}`)).data;
@@ -680,38 +680,142 @@
     try {
       const pre = JSON.parse(sessionStorage.getItem('medico_writer_prefill') || 'null');
       sessionStorage.removeItem('medico_writer_prefill');
-      if (pre) Object.assign(s, { keywords: pre.keywords || '', type: pre.type || '' });
+      if (pre) {
+        Object.assign(s, { keywords: pre.keywords || '', type: pre.type || '' });
+        if (pre.keywords) {
+          pre.keywords.split(/[,·+]/).map(k => k.trim()).filter(Boolean).forEach(k => s.tags.add(k));
+        }
+      }
     } catch { /* ignore */ }
     const typeOf = (id) => W.types.find((t) => t.id === id);
     const ai = W.configured;
+
+    const KEYWORD_CATEGORIES = [
+      {
+        name: 'Clinical Equipment',
+        tags: [
+          'Oxygen Concentrator',
+          'Philips EverFlo',
+          'BiPAP & CPAP Systems',
+          'ICU Patient Monitor',
+          'Defibrillator / AED',
+          'Schiller ECG 12-Channel',
+          'Anaesthesia Workstation',
+          'OT Cautery / Diathermy',
+          'Pulse Oximeter & Nebulizer',
+          'Hospital ICU Bed'
+        ]
+      },
+      {
+        name: 'Regional Context (J&K)',
+        tags: [
+          'Kashmir Winter Readiness',
+          'Sub-zero Temperature Care',
+          'Power Cuts & Inverter Sizing',
+          'Srinagar Home Care Setup',
+          'District Hospitals & Clinics',
+          '24/7 Biomedical Support'
+        ]
+      },
+      {
+        name: 'Angle & Reader Intent',
+        tags: [
+          "Complete Buyer's Guide",
+          'Emergency Readiness Checklist',
+          'Preventive Maintenance & AMC',
+          'Patient Family Operating Guide',
+          'Clinical Specification Comparison'
+        ]
+      }
+    ];
+
     const IDEAS = [
-      { text: 'Oxygen concentrator backup during winter power cuts in Kashmir', type: 'problem_solution', label: 'Winter oxygen backup' },
-      { text: 'Setting up a CPAP or BiPAP machine at home for sleep apnea', type: 'how_to', label: 'CPAP at home' },
-      { text: 'Getting an ICU ready: monitors and equipment checklist in Jammu and Kashmir', type: 'guide', label: 'ICU checklist' },
-      { text: 'How to choose a defibrillator for a clinic or hospital', type: 'comparison', label: 'Choosing a defibrillator' },
+      { text: 'Oxygen concentrator backup during winter power cuts in Kashmir', type: 'problem_solution', label: 'Winter oxygen backup', tags: ['Oxygen Concentrator', 'Kashmir Winter Readiness', 'Power Cuts & Inverter Sizing'] },
+      { text: 'Setting up a CPAP or BiPAP machine at home for sleep apnea', type: 'how_to', label: 'CPAP at home', tags: ['BiPAP & CPAP Systems', 'Patient Family Operating Guide'] },
+      { text: 'Getting an ICU ready: monitors and equipment checklist in Jammu and Kashmir', type: 'guide', label: 'ICU checklist', tags: ['ICU Patient Monitor', 'Defibrillator / AED', 'District Hospitals & Clinics'] },
+      { text: 'How to choose a defibrillator for a clinic or hospital', type: 'comparison', label: 'Choosing a defibrillator', tags: ['Defibrillator / AED', "Complete Buyer's Guide"] },
     ];
     let lastError = '';
+
+    function getCombinedTopic() {
+      const tagList = Array.from(s.tags);
+      if (!tagList.length) return s.keywords.trim();
+      if (!s.keywords.trim()) return `Clinical guide covering: ${tagList.join(', ')}`;
+      const hasTagsAlready = tagList.some(t => s.keywords.toLowerCase().includes(t.toLowerCase()));
+      if (hasTagsAlready) return s.keywords.trim();
+      return `${s.keywords.trim()} (Focus keywords: ${tagList.join(', ')})`;
+    }
 
     function readForm() {
       const kw = $('[data-kw]', pane); if (kw) s.keywords = kw.value;
       $$('[data-d]', pane).forEach((x) => { s.details[x.dataset.d] = x.value; });
       const n = $('[data-news]', pane); if (n) s.useNews = n.checked;
       const o = $('[data-outline-first]', pane); if (o) s.outlineFirst = o.checked;
+      const kwd = $('[data-kw-details]', pane); if (kwd) s.kwOpen = kwd.open;
     }
 
     function drawCompose() {
       const t = typeOf(s.type);
       const advOpen = Boolean(s.type || s.outlineFirst || s.useNews);
+      const selectedTagsArr = Array.from(s.tags);
+
       pane.innerHTML = `
         ${s.postId ? `<div class="notice">${icon('refresh')}<span>Writing a new version of <strong>${h(s.regenTitle || 'this article')}</strong>. It replaces the text and marks the article as not reviewed. The picture and web address stay the same.</span></div>` : ''}
         ${lastError ? `<div class="notice notice-accent">${icon('alert')}<span><strong>The draft could not be finished.</strong> ${h(lastError)}</span></div>` : ''}
         <section class="card writer-card"><div class="card-body">
           <label for="w-kw" class="writer-label">What should the article be about?</label>
-          <textarea class="textarea" id="w-kw" data-kw rows="3" placeholder="For example: oxygen concentrator backup during winter power cuts">${h(s.keywords)}</textarea>
-          <div class="quick-chip-row"><span class="muted small">Ideas:</span>${IDEAS.map((q, i) => `<button type="button" class="quick-chip" data-idea="${i}">${h(q.label)}</button>`).join('')}</div>
+          <textarea class="textarea" id="w-kw" data-kw rows="3" placeholder="Click keywords below or type a topic, e.g. Oxygen concentrator backup during Kashmir winter power cuts">${h(s.keywords)}</textarea>
+
+          <!-- Collapsible Interactive Keyword Selector -->
+          <details class="kw-collapsible" data-kw-details ${s.kwOpen ? 'open' : ''}>
+            <summary class="kw-collapsible-summary">
+              <span class="kw-summary-left">
+                <span class="kw-icon-wrap">${icon('writer')}</span>
+                <strong>Select keywords to guide AI article</strong>
+                <span class="muted small">(Optional · click to expand)</span>
+              </span>
+              <span class="spacer"></span>
+              <span class="kw-badge ${selectedTagsArr.length ? 'is-active' : ''}">${selectedTagsArr.length ? `${selectedTagsArr.length} keywords active` : 'Browse topics'}</span>
+              <svg class="kw-summary-chevron i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+
+            <div class="kw-selector-box">
+              <div class="kw-header">
+                <span class="kw-header-title">Choose from clinical and local topics:</span>
+                ${selectedTagsArr.length ? `<button type="button" class="kw-clear-btn" data-kw-clear>Clear selected (${selectedTagsArr.length})</button>` : ''}
+              </div>
+
+              ${selectedTagsArr.length ? `
+                <div class="kw-selected-cloud">
+                  <span class="small muted" style="margin-right:4px">Targeting:</span>
+                  ${selectedTagsArr.map(tag => `<span class="kw-selected-tag">${h(tag)}<button type="button" class="kw-tag-del" data-tag-remove="${h(tag)}" aria-label="Remove ${h(tag)}">&times;</button></span>`).join('')}
+                </div>` : ''}
+
+              ${KEYWORD_CATEGORIES.map(cat => `
+                <div class="kw-category-section">
+                  <div class="kw-category-label">${h(cat.name)}</div>
+                  <div class="kw-pill-grid">
+                    ${cat.tags.map(tag => {
+                      const isSel = s.tags.has(tag);
+                      return `<button type="button" class="kw-pill-btn${isSel ? ' is-selected' : ''}" data-kw-tag="${h(tag)}">
+                        <svg class="kw-pill-icon i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>${h(tag)}</span>
+                      </button>`;
+                    }).join('')}
+                  </div>
+                </div>`).join('')}
+
+              <div class="kw-custom-adder">
+                <input type="text" class="kw-custom-input" placeholder="Add custom keyword (press Enter)..." data-custom-kw>
+                <button type="button" class="btn btn-sm" data-add-custom-kw>${icon('plus')}Add keyword</button>
+              </div>
+            </div>
+          </details>
+
+          <div class="quick-chip-row"><span class="muted small">Quick prompts:</span>${IDEAS.map((q, i) => `<button type="button" class="quick-chip" data-idea="${i}">${h(q.label)}</button>`).join('')}</div>
           <div class="writer-go">
             <button class="btn btn-primary btn-lg" data-go ${ai ? '' : 'disabled'}>${icon('writer')}${s.outlineFirst ? 'Plan the article' : 'Generate draft'}</button>
-            <span class="muted small">Takes about 30 seconds. The draft opens in the editor. Nothing goes on the website until you publish it.</span>
+            <span class="muted small">Takes about 30 seconds. Draft opens in live phone preview. Nothing published until approved.</span>
           </div>
           <details class="advanced" data-adv ${advOpen ? 'open' : ''}>
             <summary>Advanced options</summary>
@@ -733,11 +837,69 @@
         ${MARKER_HELP}`;
 
       $('[data-kw]', pane).addEventListener('input', (e) => { s.keywords = e.target.value; });
+
+      // Keyword chip click handlers
+      $$('[data-kw-tag]', pane).forEach(btn => {
+        btn.onclick = () => {
+          readForm();
+          const tag = btn.dataset.kwTag;
+          if (s.tags.has(tag)) {
+            s.tags.delete(tag);
+          } else {
+            s.tags.add(tag);
+            if (!s.keywords.trim()) {
+              s.keywords = Array.from(s.tags).join(' · ');
+            } else if (!s.keywords.toLowerCase().includes(tag.toLowerCase())) {
+              s.keywords = `${s.keywords.trim()}, ${tag}`;
+            }
+          }
+          drawCompose();
+        };
+      });
+
+      // Remove individual tag from cloud
+      $$('[data-tag-remove]', pane).forEach(btn => {
+        btn.onclick = () => {
+          readForm();
+          s.tags.delete(btn.dataset.tagRemove);
+          drawCompose();
+        };
+      });
+
+      // Clear all keywords
+      $('[data-kw-clear]', pane)?.addEventListener('click', () => {
+        readForm();
+        s.tags.clear();
+        drawCompose();
+      });
+
+      // Custom tag input adder
+      const customInput = $('[data-custom-kw]', pane);
+      const addCustom = () => {
+        const val = customInput?.value.trim();
+        if (val) {
+          readForm();
+          s.tags.add(val);
+          if (!s.keywords.trim()) s.keywords = val;
+          else if (!s.keywords.toLowerCase().includes(val.toLowerCase())) s.keywords = `${s.keywords.trim()}, ${val}`;
+          drawCompose();
+        }
+      };
+      customInput?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') { e.preventDefault(); addCustom(); }
+      });
+      $('[data-add-custom-kw]', pane)?.addEventListener('click', addCustom);
+
       pane.querySelector('.quick-chip-row').onclick = (e) => {
         const b = e.target.closest('[data-idea]'); if (!b) return;
         const q = IDEAS[Number(b.dataset.idea)];
-        s.keywords = q.text; $('[data-kw]', pane).value = q.text; $('[data-kw]', pane).focus();
+        s.keywords = q.text;
+        s.tags.clear();
+        if (q.tags) q.tags.forEach(t => s.tags.add(t));
+        drawCompose();
+        $('[data-kw]', pane)?.focus();
       };
+
       pane.querySelector('.type-grid').onclick = (e) => {
         const b = e.target.closest('[data-type]'); if (!b) return;
         readForm(); s.type = b.dataset.type; s.guessed = []; drawCompose();
@@ -747,19 +909,22 @@
       $('[data-outline-first]', pane).onchange = (e) => { s.outlineFirst = e.target.checked; $('[data-go]', pane).lastChild.textContent = s.outlineFirst ? 'Plan the article' : 'Generate draft'; };
       $('[data-infer]', pane)?.addEventListener('click', (e) => busy(e.currentTarget, async () => {
         readForm();
-        if (s.keywords.trim().length < 2) { toast('First type what the article should be about.', { error: true }); $('[data-kw]', pane).focus(); return; }
+        const fullTopic = getCombinedTopic();
+        if (fullTopic.length < 2) { toast('First pick keywords or type what the article should be about.', { error: true }); $('[data-kw]', pane).focus(); return; }
         try { await infer(); drawCompose(); toast('Details filled in. Please check them.'); } catch (err) { toastError(err); }
       }));
       $('[data-go]', pane).onclick = (e) => {
         readForm();
-        if (s.keywords.trim().length < 3) { toast('Type a few words about the topic first.', { error: true }); $('[data-kw]', pane).focus(); return; }
+        const fullTopic = getCombinedTopic();
+        if (fullTopic.length < 3) { toast('Please select at least one keyword or type a topic first.', { error: true }); $('[data-kw]', pane).focus(); return; }
         lastError = '';
         if (s.outlineFirst) busy(e.currentTarget, planFirst); else generate();
       };
     }
 
     async function infer() {
-      const r = (await api('POST', 'writer', { action: 'infer', keywords: s.keywords, type: s.type || undefined })).data;
+      const fullTopic = getCombinedTopic();
+      const r = (await api('POST', 'writer', { action: 'infer', keywords: fullTopic, type: s.type || undefined })).data;
       Object.assign(s, { type: r.type, details: { ...r.details, ...Object.fromEntries(Object.entries(s.details).filter(([, v]) => v && v.trim())) }, guessed: r.guessed });
     }
     const hasDetails = () => Object.values(s.details).some((v) => v && String(v).trim());
@@ -767,13 +932,14 @@
     async function planFirst() {
       try {
         if (!s.type || !hasDetails()) await infer();
-        const r = (await api('POST', 'writer', { action: 'outline', type: s.type, details: s.details, guessed: s.guessed, useNews: s.useNews, topic: s.keywords })).data;
+        const fullTopic = getCombinedTopic();
+        const r = (await api('POST', 'writer', { action: 'outline', type: s.type, details: s.details, guessed: s.guessed, useNews: s.useNews, topic: fullTopic })).data;
         s.outline = r.outline; s.news = r.news; drawOutline();
       } catch (err) { lastError = window.Admin.friendly(err.message); drawCompose(); }
     }
 
     function progress(stepsDone) {
-      const STEPS = ['Understanding your topic', 'Writing the draft', 'Checking facts and choosing a cover photo', 'Opening it in the editor'];
+      const STEPS = ['Understanding your keywords & topic', 'Writing clinical content', 'Checking facts and choosing cover photo', 'Opening in phone preview'];
       pane.innerHTML = `<section class="card writer-progress" aria-live="polite"><div class="card-body">
         <h3>Writing your article…</h3>
         <p class="muted">This usually takes 20 to 40 seconds. Please keep this page open.</p>
@@ -788,7 +954,8 @@
         if (!s.type || (!hasDetails() && !s.outline)) await infer();
         progress(1);
         timer = setTimeout(() => progress(2), 18000);
-        const r = (await api('POST', 'writer', { action: 'write', type: s.type, details: s.details, guessed: s.guessed, outline: s.outline, news: s.news, useNews: s.useNews && !s.outline, topic: s.keywords || s.details.keyword, postId: s.postId || undefined })).data;
+        const fullTopic = getCombinedTopic();
+        const r = (await api('POST', 'writer', { action: 'write', type: s.type, details: s.details, guessed: s.guessed, outline: s.outline, news: s.news, useNews: s.useNews && !s.outline, topic: fullTopic || s.details.keyword, postId: s.postId || undefined })).data;
         clearTimeout(timer);
         progress(3);
         window.Admin.invalidatePalette();
@@ -1021,8 +1188,8 @@
             <h3>Full description</h3>
           </div>
           <div class="card-body">
-            <p class="hint" style="margin-top:0;margin-bottom:12px">Optional. A longer explanation shown on the product page.</p>
-            <div data-rte></div>
+            <p class="hint" style="margin-top:0;margin-bottom:12px">Optional. A longer explanation shown on the product page. Box expands as you type or drag to resize.</p>
+            <div data-rte class="rte-compact-adaptive"></div>
           </div>
         </section>
 
