@@ -490,7 +490,7 @@ function initMotion() {
   gsap.set('[data-hero], [data-hero-title], [data-hero-media], [data-tagline], [data-hero-badge]', { autoAlpha: 1, animation: 'none' });
   const tl = gsap.timeline({ delay: 0.05 });
   // Fade only: an inline transform on the sticky header would break the menu sheet's positioning
-  if (header) tl.from(['.topbar', header], { autoAlpha: 0, duration: 0.7, clearProps: 'opacity,visibility' }, 0);
+  if (header) tl.from(header, { autoAlpha: 0, duration: 0.7, clearProps: 'opacity,visibility' }, 0);
   $$('[data-hero-media]').forEach((el) => {
     tl.fromTo(el, { scale: 1 + 0.06 * move, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 1.6, ease: 'power2.out' }, 0.1);
   });

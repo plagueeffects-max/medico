@@ -774,3 +774,31 @@
   .post-body .prose { font-size: 16.5px; line-height: 1.7; }
   .post-foot { margin-top: 36px; }
 }
+
+/* =====================================================
+   Blog hero — the monitors sit behind the copy (overrides the side-by-side grid)
+   ===================================================== */
+.blog-hero .page-hero-grid { position: relative; display: block; }
+.blog-hero .page-hero-copy { position: relative; z-index: 1; max-width: 640px; }
+.blog-hero .page-hero-media {
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  right: -2%;
+  width: min(52%, 640px);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.blog-hero-monitor-stage img { max-width: none; transform: none; }
+
+/* Tablets and phones: the monitors rest under the search box and fade up into the page */
+@media (max-width: 860px) {
+  .blog-hero .page-hero-copy { max-width: none; padding-bottom: clamp(140px, 36vw, 250px); }
+  .blog-hero .page-hero-media { top: auto; bottom: -8px; right: 50%; width: min(96%, 500px); transform: translateX(50%); }
+  .blog-hero-monitor-stage img {
+    margin: 0;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, transparent 18%, #000 58%);
+    mask-image: linear-gradient(180deg, transparent 0%, transparent 18%, #000 58%);
+  }
+  .blog-search { position: relative; z-index: 1; }
+}

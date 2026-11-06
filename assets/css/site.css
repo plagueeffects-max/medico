@@ -371,19 +371,6 @@ ul, ol { list-style: none; }
 /* ---------- Top strip ----------
    Thin ink bar above the header: who we are + how to reach us.
    Scrolls away; the header below stays pinned. */
-.topbar { position: relative; z-index: 51; background: var(--ink); color: rgba(255, 255, 255, 0.78); font-size: 12.5px; }
-.topbar-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 38px; }
-.topbar-note { display: inline-flex; align-items: center; gap: 10px; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.topbar-note strong { color: #fff; font-weight: 600; }
-.topbar-note .icon { width: 13px; height: 13px; flex: none; color: rgba(255, 255, 255, 0.55); }
-.topbar-links { display: flex; align-items: center; gap: 22px; flex: none; }
-.topbar-links span { display: inline-flex; align-items: center; gap: 6px; }
-.topbar-links a { display: inline-flex; align-items: center; gap: 6px; color: rgba(255, 255, 255, 0.78); transition: color 0.2s var(--ease); }
-.topbar-links a:hover { color: #fff; }
-.topbar-links .icon { width: 13px; height: 13px; }
-.topbar-links .topbar-cta { color: #fff; font-weight: 600; }
-.topbar-links .topbar-cta .icon { transition: transform 0.25s var(--ease); }
-.topbar-links .topbar-cta:hover .icon { transform: translateX(3px); }
 
 /* ---------- Header ----------
    Frosted white bar (Apple sub-nav recipe): logo · centred nav · search + quote.
@@ -1329,8 +1316,7 @@ ul, ol { list-style: none; }
    ===================================================== */
 @media (max-width: 1240px) {
   .nav-link { padding: 0 11px; font-size: 14px; }
-  .topbar-hide-md { display: none !important; }
-}
+  }
 
 @media (max-width: 1024px) {
   .feature-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1428,10 +1414,7 @@ ul, ol { list-style: none; }
   .brand-sub { font-size: 7.5px; }
   .header-cta { display: none; }
   .header-actions { gap: 0; }
-  .topbar { font-size: 12px; }
-  .topbar-inner { height: 34px; justify-content: center; }
-  .topbar-links { display: none; }
-
+      
   .section-head { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 32px; }
   .section-head-center { align-items: center; }
   .faq-columns { grid-template-columns: 1fr; }
@@ -1529,11 +1512,10 @@ ul, ol { list-style: none; }
   .footer-bottom { flex-direction: column; }
 }
 
-/* Short landscape screens (phones on their side): drop the top strip and the
-   sticky action bar, which would eat most of the height; the round WhatsApp button stays */
+/* Short landscape screens (phones on their side): drop the sticky action bar,
+   which would eat most of the height; the round WhatsApp button stays */
 @media (max-width: 900px) and (orientation: landscape) and (max-height: 520px) {
-  .topbar,
-  .mobile-bar { display: none; }
+    .mobile-bar { display: none; }
   body { padding-bottom: 0; }
   .wa-fab { display: inline-flex; width: 50px; height: 50px; }
 }

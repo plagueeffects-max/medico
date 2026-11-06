@@ -108,20 +108,15 @@
     const href = ProductsDB.url(p);
     return `
       <article class="item-card" style="--i:${i}">
-        <div class="item-top">
-          <span class="pill ${onRequest ? 'pill-warn' : 'pill-ok'}">${onRequest ? esc(p.stock) : 'In stock'}</span>
-          <button type="button" class="fav-btn${isSaved ? ' is-saved' : ''}" data-fav="${esc(p.id)}" aria-pressed="${isSaved}" aria-label="Save ${esc(p.title)}">${icon('i-heart')}</button>
-        </div>
+        <button type="button" class="fav-btn${isSaved ? ' is-saved' : ''}" data-fav="${esc(p.id)}" aria-pressed="${isSaved}" aria-label="Save ${esc(p.title)}">${icon('i-heart')}</button>
         <a href="${href}" class="item-media" tabindex="-1" aria-hidden="true">
           <img src="${esc(p.mainImage || '/images/products/oxygen.webp')}" alt="" loading="lazy">
         </a>
         <div class="item-body">
+          <p class="item-meta">${p.brand ? `<span>${esc(p.brand)}</span>` : ''}<span class="item-stock${onRequest ? ' is-request' : ''}">${icon(onRequest ? 'i-clock' : 'i-check')}${onRequest ? esc(p.stock) : 'In stock'}</span></p>
           <h3><a href="${href}">${esc(p.title)}</a></h3>
           <p>${esc(p.description)}</p>
-          <div class="item-foot">
-            ${p.brand ? `<span class="pill">${esc(p.brand)}</span>` : '<span></span>'}
-            <span class="item-link">View details${icon('i-arrow')}</span>
-          </div>
+          <div class="item-foot"><span class="item-link">View details${icon('i-arrow')}</span></div>
         </div>
       </article>`;
   }

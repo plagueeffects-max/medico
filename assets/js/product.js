@@ -123,12 +123,12 @@
       const req = r.stock && r.stock !== 'In Stock';
       return `
       <article class="item-card">
-        <div class="item-top"><span class="pill ${req ? 'pill-warn' : 'pill-ok'}">${req ? esc(r.stock) : 'In stock'}</span></div>
         <a href="${href}" class="item-media" tabindex="-1" aria-hidden="true"><img src="${esc(safeUrl(r.mainImage) || FALLBACK)}" alt="" loading="lazy"></a>
         <div class="item-body">
+          <p class="item-meta">${r.brand ? `<span>${esc(r.brand)}</span>` : ''}<span class="item-stock${req ? ' is-request' : ''}">${icon(req ? 'i-clock' : 'i-check')}${req ? esc(r.stock) : 'In stock'}</span></p>
           <h3><a href="${href}">${esc(r.title)}</a></h3>
           <p>${esc(r.description)}</p>
-          <div class="item-foot">${r.brand ? `<span class="pill">${esc(r.brand)}</span>` : '<span></span>'}<span class="item-link">View details${icon('i-arrow')}</span></div>
+          <div class="item-foot"><span class="item-link">View details${icon('i-arrow')}</span></div>
         </div>
       </article>`;
     }).join('');

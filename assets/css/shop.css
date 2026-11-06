@@ -122,7 +122,7 @@
 .filters-done { display: none; }
 
 /* Head + tools */
-.catalogue-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px 24px; flex-wrap: wrap; margin-bottom: 28px; }
+.catalogue-head { position: relative; z-index: 5; display: flex; align-items: flex-end; justify-content: space-between; gap: 16px 24px; flex-wrap: wrap; margin-bottom: 28px; }
 .catalogue-sub { margin-top: 8px; font-size: 15px; color: var(--muted); }
 .catalogue-sub span { color: var(--ink); font-weight: 600; }
 .catalogue-tools { display: flex; align-items: center; gap: 12px; }
@@ -174,17 +174,6 @@
   transform: translateY(-5px);
   border-color: rgba(11, 18, 32, 0.16);
   box-shadow: 0 16px 36px -10px rgba(11, 18, 32, 0.1), 0 1px 3px rgba(11, 18, 32, 0.04);
-}
-.item-top { position: absolute; top: 18px; left: 18px; right: 18px; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-.item-top .pill {
-  font-size: 11px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(11, 18, 32, 0.06);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 .fav-btn {
   display: inline-flex;
@@ -258,15 +247,21 @@
 }
 .item-link .icon { width: 14px; height: 14px; transition: transform 0.25s var(--ease); }
 .item-card:hover .item-link .icon { transform: translateX(3px); }
-.item-card .fav-btn { position: relative; z-index: 2; }
+/* Save button rests on the picture's top-right corner, above the card-wide link */
+.item-card .fav-btn { position: absolute; top: 20px; right: 20px; z-index: 3; }
+.item-body .item-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; font-size: 12.5px; font-weight: 500; color: var(--muted); }
+.item-meta > span + span::before { content: ''; display: inline-block; width: 3px; height: 3px; margin-right: 10px; border-radius: 50%; background: var(--muted-2); vertical-align: middle; }
+.item-stock { display: inline-flex; align-items: center; gap: 5px; color: var(--ink); font-weight: 600; }
+.item-stock .icon { width: 13px; height: 13px; stroke-width: 2.5; color: var(--ok); }
+.item-stock.is-request { color: var(--text); }
+.item-stock.is-request .icon { color: var(--muted); }
 
 /* List view */
 .item-grid.is-list { grid-template-columns: 1fr; gap: 14px; }
 .is-list .item-card { flex-direction: row; padding: 10px; }
 .is-list .item-media { flex: none; width: 220px; aspect-ratio: auto; }
 .is-list .item-body { border-top: 0; border-left: 0; padding: 18px 22px; justify-content: center; }
-.is-list .item-top { right: auto; }
-.is-list .fav-btn { position: absolute; top: 14px; right: 14px; }
+.is-list .item-card .fav-btn { top: 18px; right: 18px; }
 .is-list .item-body p { -webkit-line-clamp: 3; }
 
 .empty-state {
@@ -351,14 +346,15 @@
   .sort > span { display: none; }
   .sort { flex: 1; }
   .view-toggle { display: none; }
-  .item-foot .pill { display: none; }
   .item-grid { gap: 12px; }
   .item-body { padding: 14px; }
   .item-body h3 { font-size: 14.5px; }
-  .item-body p { display: none; }
-  .item-top .pill { min-width: 0; white-space: normal; line-height: 1.25; font-size: 10px; letter-spacing: 0.02em; padding: 4px 8px; }
-  .item-top { align-items: flex-start; }
-  .item-top { top: 8px; left: 8px; right: 8px; }
+  .item-body p:not(.item-meta) { display: none; }
+  .item-card .fav-btn { top: 16px; right: 16px; }
+  /* Narrow cards: stock status only; the brand shows on the product page */
+  .item-body .item-meta { font-size: 12px; }
+  .item-meta > span:not(.item-stock) { display: none; }
+  .item-meta > span + span::before { display: none; }
   .fav-btn { width: 36px; height: 36px; }
   .is-list .item-media { width: 120px; }
   .is-list .item-body { padding: 16px; }
@@ -367,4 +363,11 @@
 @media (max-width: 600px) {
   .shop-hero-copy .display-md { font-size: clamp(2.125rem, 9vw, 2.625rem); margin-bottom: 16px; }
   .shop-hero-copy .lead { font-size: 16px; margin-bottom: 24px; }
+}
+
+/* Sort menu: wide enough that options never wrap */
+.sort .custom-select-menu { min-width: 190px; left: auto; right: 0; }
+.sort .custom-select-option { white-space: nowrap; }
+@media (max-width: 600px) {
+  .sort .custom-select-menu { left: 0; right: 0; min-width: 0; }
 }

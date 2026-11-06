@@ -264,7 +264,6 @@ async function previewPost(row) {
   const previewStyles = `
     <style id="medico-live-preview-viewport-styles">
       @media (max-width: 640px) {
-        .topbar { display: none !important; }
         .site-header {
           padding-top: 32px !important;
           background: rgba(255, 255, 255, 0.94) !important;

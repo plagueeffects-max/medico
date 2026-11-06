@@ -976,27 +976,28 @@
   .hero-copy { max-width: none; }
 
 
-  /* Hero on phones and portrait tablets: the video becomes a band at the top that
-     fades into white, and the copy sits fully below it, so nothing overlaps the lungs. */
-  .hero { display: flex; flex-direction: column; background: #fff; }
+  /* Hero on phones and portrait tablets: the video fills the whole first screen,
+     the lungs sit in the top half and a white wash rises behind the copy at the bottom. */
+  .hero { background: #fff; }
   .hero-media {
-    position: relative;
-    inset: auto;
-    width: 100%;
-    height: clamp(180px, 34svh, 400px);
-    background-position: 80% 40%;
-    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 62%, transparent 100%);
-    mask-image: linear-gradient(180deg, #000 0%, #000 62%, transparent 100%);
+    inset: 0;
+    background-position: 78% 18%;
+    -webkit-mask-image: none;
+    mask-image: none;
   }
-  .hero-media::after { display: none; }
-  .hero-video { object-position: 80% 40%; }
+  .hero-media::after {
+    display: block;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 26%, rgba(255, 255, 255, 0.82) 50%, #fff 64%);
+  }
+  .hero-video { object-position: 78% 18%; }
   .hero-inner {
     flex-direction: column;
+    justify-content: flex-end;
     align-items: flex-start;
-    min-height: 0;
-    margin-top: -12px;
+    /* One screen: viewport minus header and the sticky action bar */
+    min-height: calc(100svh - var(--header-h) - 76px - env(safe-area-inset-bottom));
     padding-top: 0;
-    padding-bottom: 32px;
+    padding-bottom: 28px;
   }
   /* The sticky Call / WhatsApp bar covers this on phones */
   .hero-cta-secondary { display: none; }
@@ -1086,19 +1087,16 @@
 
 /* Landscape phones: too short for stacking, so copy left and video right */
 @media (max-width: 900px) and (orientation: landscape) and (max-height: 520px) {
-  .hero { display: block; }
-  .hero-inner { justify-content: center; min-height: 0; margin-top: 0; padding-top: 32px; padding-bottom: 40px; }
+  .hero-inner { justify-content: center; min-height: 0; padding-top: 32px; padding-bottom: 40px; }
   .hero-copy { max-width: 56%; }
   .hero-media {
-    position: absolute;
     inset: 0;
     left: 46%;
-    width: auto;
-    height: auto;
     -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 30%);
     mask-image: linear-gradient(90deg, transparent 0%, #000 30%);
   }
   .hero-media { background-position: 60% center; }
+  .hero-media::after { display: none; }
   .hero-video { object-position: 60% center; }
   .hero-copy .display { font-size: 2.5rem; }
   .hero-cta-secondary { display: inline-flex; }
