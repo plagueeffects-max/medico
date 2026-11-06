@@ -91,14 +91,15 @@ async function og(req, res, q) {
     let img;
     if (kind === 'product') {
       // Product shots are cut-outs on white: show the whole device on a soft studio ground
-      const { data, info } = await sharp(photo).resize(860, 400, { fit: 'inside' }).flatten({ background: '#ffffff' }).toBuffer({ resolveWithObject: true });
+      const { data, info } = await sharp(photo).resize(860, 400, { fit: 'inside', kernel: 'lanczos3' }).flatten({ background: '#ffffff' }).toBuffer({ resolveWithObject: true });
       img = sharp({ create: { width: 1200, height: 630, channels: 3, background: '#ffffff' } })
         .composite([{ input: data, left: Math.round((1200 - info.width) / 2), top: Math.round(110 + (400 - info.height) / 2) }]);
     } else {
-      img = sharp(photo).resize(1200, 630, { fit: 'cover', position: 'attention' });
+      img = sharp(photo).resize(1200, 630, { fit: 'cover', position: 'attention', kernel: 'lanczos3' });
     }
     const flat = await img.flatten({ background: '#ffffff' }).png().toBuffer();
-    const out = await sharp(flat).composite([{ input: frame }]).jpeg({ quality: 84, mozjpeg: true }).toBuffer();
+    // Light sharpening offsets resampling softness; 4:4:4 keeps the frame's text and red rule crisp
+    const out = await sharp(flat).sharpen({ sigma: 0.6 }).composite([{ input: frame }]).jpeg({ quality: 90, chromaSubsampling: '4:4:4', mozjpeg: true }).toBuffer();
     return send(res, 200, out, { 'Content-Type': 'image/jpeg', 'Cache-Control': 'public, max-age=86400, s-maxage=604800, stale-while-revalidate=604800' });
   } catch (err) {
     console.error('[og]', err.message);

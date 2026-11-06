@@ -6,6 +6,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { chromium } = require('playwright');
+const sharp = require('sharp');
 
 const ROOT = path.join(__dirname, '..');
 const OUT = path.join(ROOT, 'images', 'og');
@@ -74,16 +75,20 @@ const frame = (label, light) => `<!doctype html><html><head><style>${base}
 (async () => {
   fs.mkdirSync(OUT, { recursive: true });
   const browser = await chromium.launch();
-  const page = await browser.newPage({ viewport: { width: 1200, height: 630 } });
+  // Rendered at 2x and downsampled: crisper type than a 1x screenshot
+  const page = await browser.newPage({ viewport: { width: 1200, height: 630 }, deviceScaleFactor: 2 });
   const tmp = path.join(os.tmpdir(), 'medico-og.html');
   const render = async (html, file, opts) => {
     fs.writeFileSync(tmp, html);
     await page.goto(`file:///${tmp.replace(/\\/g, '/')}`, { waitUntil: 'load' });
     await page.evaluate(() => document.fonts.ready);
-    await page.screenshot({ path: path.join(OUT, file), ...opts });
+    const shot = await page.screenshot({ type: 'png', omitBackground: Boolean(opts.omitBackground) });
+    const img = sharp(shot).resize(1200, 630, { kernel: 'lanczos3' });
+    // 4:4:4 keeps red text and thin strokes sharp; the default 4:2:0 smears colour edges
+    await (opts.jpeg ? img.jpeg({ quality: 92, chromaSubsampling: '4:4:4', mozjpeg: true }) : img.png({ compressionLevel: 9 })).toFile(path.join(OUT, file));
     console.log('wrote images/og/' + file);
   };
-  for (const c of CARDS) await render(pageCard(c), `${c.file}.jpg`, { type: 'jpeg', quality: 86 });
+  for (const c of CARDS) await render(pageCard(c), `${c.file}.jpg`, { jpeg: true });
   await render(frame('From the Medico blog'), 'frame-post.png', { omitBackground: true });
   await render(frame('Supplied &amp; serviced by Medico', true), 'frame-product.png', { omitBackground: true });
   await browser.close();
