@@ -26,14 +26,17 @@
   }
 
   document.title = `${blog.title} | Medico blog`;
-  $('crumb-title').textContent = blog.title;
-  $('post-topic').textContent = topicOf(blog);
-  $('post-title').textContent = blog.title;
-  if (blog.subheading) $('post-sub').textContent = blog.subheading; else $('post-sub').remove();
-  const author = blog.author || 'Medico Team';
-  $('post-author').textContent = author;
-  $('post-avatar').textContent = author.replace(/^Dr\.?\s*/i, '').charAt(0).toUpperCase();
-  $('post-date').textContent = [fmtDate(blog.date), `${readTime(blog)} min read`].filter(Boolean).join(' · ');
+  // The server already wrote the header; rewriting it mid-entrance would make it jump
+  if (!ssr) {
+    $('crumb-title').textContent = blog.title;
+    $('post-topic').textContent = topicOf(blog);
+    $('post-title').textContent = blog.title;
+    if (blog.subheading) $('post-sub').textContent = blog.subheading; else $('post-sub').remove();
+    const author = blog.author || 'Medico Team';
+    $('post-author').textContent = author;
+    $('post-avatar').textContent = author.replace(/^Dr\.?\s*/i, '').charAt(0).toUpperCase();
+    $('post-date').textContent = [fmtDate(blog.date), `${readTime(blog)} min read`].filter(Boolean).join(' · ');
+  }
 
   // Cover image + optional gallery
   const images = [blog.image, ...(blog.galleryImages || [])].map(safeUrl).filter(Boolean);

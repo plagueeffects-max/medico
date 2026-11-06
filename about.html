@@ -29,14 +29,14 @@
   <link rel="manifest" href="/favicon/site.webmanifest">
   <link rel="preload" href="/assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/inter-800.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/css/site.css?v=9">
+  <link rel="stylesheet" href="/assets/css/site.css?v=10">
   <script>document.documentElement.classList.add('js');</script>
   <script src="/assets/vendor/gsap.min.js" defer></script>
   <script src="/assets/vendor/ScrollTrigger.min.js" defer></script>
   <script src="/assets/vendor/SplitText.min.js" defer></script>
-  <script src="/assets/js/site.js?v=8" defer></script>
+  <script src="/assets/js/site.js?v=9" defer></script>
   <!-- /@head -->
-  <link rel="stylesheet" href="/assets/css/pages.css?v=9">
+  <link rel="stylesheet" href="/assets/css/pages.css?v=10">
 
   <script type="application/ld+json">
   {
@@ -321,33 +321,39 @@
         <div class="purpose-vision">
           <p class="eyebrow" data-reveal><span data-copy="about.purpose.eyebrow">Our purpose</span></p>
           <h2 class="h2" id="purpose-title" data-split>What we&rsquo;re here to do</h2>
-          <figure class="purpose-statement" data-reveal>
-            <figcaption class="purpose-label"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-eye"/></svg>Our vision</figcaption>
-            <blockquote data-copy="about.purpose.vision">&ldquo;To be the most reliable healthcare equipment partner in Jammu &amp; Kashmir, so every hospital, clinic and patient family can count on certified, dependable life-support technology.&rdquo;</blockquote>
-          </figure>
-          <p class="purpose-body" data-reveal data-copy="about.purpose.vision_body">From ICUs in Srinagar to district clinics across the valley, we pair manufacturer-trained engineering with prompt, on-ground support, seven days a week.</p>
-          <dl class="purpose-facts" data-reveal>
-            <div><dt data-copy="about.purpose.metric2_num">20</dt><dd data-copy="about.purpose.metric2">Districts served</dd></div>
-            <div><dt data-copy="about.purpose.metric3_num">7 days</dt><dd data-copy="about.purpose.metric3">Service and support</dd></div>
-          </dl>
+          <div class="purpose-panel" data-reveal>
+            <figure class="purpose-statement">
+              <figcaption class="purpose-label"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-eye"/></svg>Our vision</figcaption>
+              <blockquote data-copy="about.purpose.vision">&ldquo;To be the most reliable healthcare equipment partner in Jammu &amp; Kashmir, so every hospital, clinic and patient family can count on certified, dependable life-support technology.&rdquo;</blockquote>
+            </figure>
+            <p class="purpose-body" data-copy="about.purpose.vision_body">From ICUs in Srinagar to district clinics across the valley, we pair manufacturer-trained engineering with prompt, on-ground support, seven days a week.</p>
+            <dl class="purpose-facts">
+              <div><dt data-copy="about.purpose.metric2_num">20</dt><dd data-copy="about.purpose.metric2">Districts served</dd></div>
+              <div><dt data-copy="about.purpose.metric3_num">7 days</dt><dd data-copy="about.purpose.metric3">Service and support</dd></div>
+            </dl>
+          </div>
         </div>
 
         <div class="purpose-mission">
           <p class="purpose-label" data-reveal><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-target"/></svg>Our mission<span class="purpose-label-note" data-copy="about.purpose.mission_caption">Four commitments</span></p>
           <ul class="mission-list" data-stagger>
             <li>
+              <span class="mission-icon" aria-hidden="true"><svg class="icon"><use href="/assets/icons.svg#i-badge"/></svg></span>
               <h3 data-copy="about.mission.1.title">Clinical precision</h3>
               <p data-copy="about.mission.1.body">Genuine, manufacturer-authorised devices, calibrated and tested before they reach a ward or a home.</p>
             </li>
             <li>
+              <span class="mission-icon" aria-hidden="true"><svg class="icon"><use href="/assets/icons.svg#i-wrench"/></svg></span>
               <h3 data-copy="about.mission.2.title">Support that shows up</h3>
               <p data-copy="about.mission.2.body">Engineers on the ground, preventive maintenance, calibration and AMCs that keep equipment running.</p>
             </li>
             <li>
+              <span class="mission-icon" aria-hidden="true"><svg class="icon"><use href="/assets/icons.svg#i-activity"/></svg></span>
               <h3 data-copy="about.mission.3.title">Modern technology</h3>
               <p data-copy="about.mission.3.body">Bring current ICU, OT and home-care technology to doctors and hospitals in Kashmir.</p>
             </li>
             <li>
+              <span class="mission-icon" aria-hidden="true"><svg class="icon"><use href="/assets/icons.svg#i-shield"/></svg></span>
               <h3 data-copy="about.mission.4.title">Lasting trust</h3>
               <p data-copy="about.mission.4.body">Clear advice, honest pricing and verified quality for healthcare teams and families.</p>
             </li>
@@ -367,22 +373,28 @@
           <p class="section-aside-text" data-reveal>Manufacturer-authorised distribution for Kashmir, with certified installation and genuine spare parts.</p>
         </div>
 
-        <div class="partners-bento-grid" data-stagger>
-          <div class="partner-showcase-card">
-            <div class="partner-logo-box"><img src="/images/brand-philips.webp" alt="Philips Healthcare" width="480" height="160" loading="lazy"></div>
-            <span class="partner-specialty-tag">RESPIRATORY &amp; SLEEP THERAPY</span>
-            <p>Clinical solutions for sleep apnoea and continuous respiratory care.</p>
-          </div>
-          <div class="partner-showcase-card">
-            <div class="partner-logo-box"><img src="/images/brand-schiller.webp" alt="Schiller Healthcare" width="480" height="160" loading="lazy"></div>
-            <span class="partner-specialty-tag">CARDIOLOGY &amp; DIAGNOSTICS</span>
-            <p>Precision pulmonary function, ECG and stress testing systems.</p>
-          </div>
-          <div class="partner-showcase-card">
-            <div class="partner-logo-box"><img src="/images/brand-shalya.webp" alt="Shalya OT Systems" width="480" height="160" loading="lazy"></div>
-            <span class="partner-specialty-tag">SURGICAL &amp; OT SYSTEMS</span>
-            <p>Dependable surgical and operating theatre equipment.</p>
-          </div>
+        <div class="partner-grid" data-stagger>
+          <article class="partner-card">
+            <div class="partner-logo"><img src="/images/brand-philips.webp" alt="Philips" width="480" height="160" loading="lazy"></div>
+            <div class="partner-text">
+              <h3>Respiratory &amp; sleep therapy</h3>
+              <p>Clinical solutions for sleep apnoea and continuous respiratory care.</p>
+            </div>
+          </article>
+          <article class="partner-card">
+            <div class="partner-logo"><img src="/images/brand-schiller.webp" alt="Schiller" width="480" height="160" loading="lazy"></div>
+            <div class="partner-text">
+              <h3>Cardiology &amp; diagnostics</h3>
+              <p>Precision pulmonary function, ECG and stress testing systems.</p>
+            </div>
+          </article>
+          <article class="partner-card">
+            <div class="partner-logo"><img src="/images/brand-shalya.webp" alt="Shalya" width="480" height="160" loading="lazy"></div>
+            <div class="partner-text">
+              <h3>Surgical &amp; OT systems</h3>
+              <p>Dependable surgical and operating theatre equipment.</p>
+            </div>
+          </article>
         </div>
       </div>
     </section>

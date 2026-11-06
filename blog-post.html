@@ -25,12 +25,12 @@
   <link rel="manifest" href="/favicon/site.webmanifest">
   <link rel="preload" href="/assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/inter-800.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/css/site.css?v=9">
+  <link rel="stylesheet" href="/assets/css/site.css?v=10">
   <script>document.documentElement.classList.add('js');</script>
   <script src="/assets/vendor/gsap.min.js" defer></script>
   <script src="/assets/vendor/ScrollTrigger.min.js" defer></script>
   <script src="/assets/vendor/SplitText.min.js" defer></script>
-  <script src="/assets/js/site.js?v=8" defer></script>
+  <script src="/assets/js/site.js?v=9" defer></script>
   <!-- /@head -->
   <link rel="stylesheet" href="/assets/css/blog.css?v=7">
 </head>
@@ -141,7 +141,7 @@
     <article id="post" hidden>
       <header class="post-hero">
         <div class="container">
-          <nav class="breadcrumb" aria-label="Breadcrumb" data-hero>
+          <nav class="breadcrumb" aria-label="Breadcrumb">
             <ol>
               <li><a href="/index.html"><svg class="icon"><use href="/assets/icons.svg#i-home"/></svg>Home</a></li>
               <li><a href="/blog.html">Blog</a></li>
@@ -149,15 +149,15 @@
             </ol>
           </nav>
           <div class="post-head">
-            <span class="pill pill-accent" id="post-topic" data-hero></span>
-            <h1 class="post-title" id="post-title" data-hero-title></h1>
-            <p class="post-sub" id="post-sub" data-hero></p>
-            <div class="post-byline" data-hero>
+            <span class="pill pill-accent" id="post-topic"></span>
+            <h1 class="post-title" id="post-title"></h1>
+            <p class="post-sub" id="post-sub"></p>
+            <div class="post-byline">
               <span class="post-avatar" id="post-avatar" aria-hidden="true">M</span>
               <span><strong id="post-author">Medico Team</strong><span id="post-date"></span></span>
             </div>
           </div>
-          <figure class="post-cover" id="post-cover" hidden data-hero-media>
+          <figure class="post-cover" id="post-cover" hidden>
             <div class="post-cover-frame">
               <img id="post-cover-img" src="" alt="">
               <span class="pill pill-ink post-cover-count" id="post-cover-count" hidden></span>
@@ -168,7 +168,7 @@
       </header>
 
       <div class="container post-body">
-        <div class="prose" id="post-content" data-reveal></div>
+        <div class="prose" id="post-content"></div>
         <div class="post-foot" data-reveal>
           <a href="/blog.html" class="link-arrow"><svg class="icon"><use href="/assets/icons.svg#i-arrow-left"/></svg>All articles</a>
           <button type="button" class="btn btn-outline btn-sm" id="share-btn"><svg class="icon"><use href="/assets/icons.svg#i-share"/></svg>Share article</button>
@@ -345,6 +345,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js" defer></script>
   <script src="/assets/js/blog-data.js?v=5" defer></script>
-  <script src="/assets/js/post.js?v=6" defer></script>
+  <script src="/assets/js/post.js?v=7" defer></script>
 </body>
 </html>

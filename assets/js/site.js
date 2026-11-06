@@ -509,7 +509,12 @@ function initMotion() {
   if (document.querySelector('[data-hero-badge]')) tl.fromTo('[data-hero-badge]', { y: 24 * move, scale: 1 - 0.06 * move, autoAlpha: 0 }, { y: 0, scale: 1, autoAlpha: 1, ease: 'back.out(1.6)' }, heroEnd);
 
   /* ---------- Scroll reveals ---------- */
-  $$('[data-split]').forEach((el) => {
+  // Anything already on screen at load stays put: hiding painted content only to fade it
+  // back in reads as the page redrawing itself. Reveals are for what scrolls into view.
+  const onScreen = (el) => el.getBoundingClientRect().top < window.innerHeight * 0.9;
+  const later = (sel) => $$(sel).filter((el) => !onScreen(el));
+
+  later('[data-split]').forEach((el) => {
     const split = splitLines(el);
     gsap.from(split.lines, {
       ...lineFrom, duration: 1.1, stagger: 0.1, ease: 'power4.out', onComplete: split.revert,
@@ -525,21 +530,21 @@ function initMotion() {
   // fromTo with explicit end values everywhere: from() reads the resting position at
   // start-up, and elements with a CSS transform transition (hover lifts) report a
   // mid-transition value, which left whole card grids parked 48px low.
-  $$('[data-reveal]').forEach((el) => {
+  later('[data-reveal]').forEach((el) => {
     gsap.fromTo(el, { y: el.dataset.reveal ? 0 : 28 * move, ...revealFrom[el.dataset.reveal], autoAlpha: 0 }, {
       x: 0, y: 0, scale: 1, autoAlpha: 1,
       scrollTrigger: { trigger: el, start: 'top 90%', once: true },
     });
   });
 
-  $$('[data-stagger]').forEach((group) => {
+  later('[data-stagger]').forEach((group) => {
     gsap.fromTo(group.children, { y: 48 * move, autoAlpha: 0 }, {
       y: 0, autoAlpha: 1, duration: 1, stagger: 0.09,
       scrollTrigger: { trigger: group, start: 'top 85%', once: true },
     });
   });
 
-  $$('[data-clip]').forEach((el) => {
+  later('[data-clip]').forEach((el) => {
     gsap.fromTo(el, { clipPath: reducedMotion ? 'inset(0% 0% 0% 0% round 28px)' : 'inset(12% 12% 12% 12% round 28px)', autoAlpha: 0 }, {
       clipPath: 'inset(0% 0% 0% 0% round 28px)', autoAlpha: 1, duration: 1.4, ease: 'power3.inOut', clearProps: 'clipPath',
       scrollTrigger: { trigger: el, start: 'top 85%', once: true },
@@ -547,7 +552,7 @@ function initMotion() {
   });
 
   // Image frames: the picture rises out of its frame and settles from a slight zoom
-  $$('[data-media]').forEach((el) => {
+  later('[data-media]').forEach((el) => {
     const img = el.querySelector('img, video');
     const tl = gsap.timeline({ scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
     tl.fromTo(el, { clipPath: reducedMotion ? 'inset(0% 0% 0% 0%)' : 'inset(18% 0% 0% 0%)', autoAlpha: 0 },

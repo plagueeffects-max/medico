@@ -1046,64 +1046,6 @@ ul, ol { list-style: none; }
 .enquiry-actions { display: flex; align-items: center; gap: 16px; margin-top: 8px; }
 .enquiry-actions .btn { margin-top: 0; flex: none; }
 .enquiry-actions .enquiry-note { margin: 0; text-align: left; }
-@media (max-width: 760px) {
-  .enquiry-dialog {
-    width: calc(100vw - 20px);
-    max-height: calc(100svh - 24px);
-    border-radius: 18px;
-    margin: auto;
-  }
-  .enquiry { grid-template-columns: 1fr; min-height: 0; }
-  .enquiry-aside { gap: 6px; padding: 18px 50px 14px 18px; }
-  .enquiry-aside h3 { font-size: 20px; line-height: 1.15; }
-  .enquiry-aside .enquiry-sub { font-size: 12.5px; line-height: 1.45; }
-  .enquiry-contacts, .enquiry-hours { display: none; }
-  .enquiry-close { top: 12px; right: 12px; color: #fff; }
-  .enquiry-close:hover { background: rgba(255, 255, 255, 0.12); }
-  .enquiry-main { padding: 16px 16px 18px; }
-  .chip-field { margin-bottom: 12px; }
-  .chip-field legend { font-size: 12.5px; margin-bottom: 6px; }
-  .chips { gap: 6px; }
-  .chip span { height: 34px; padding: 0 11px; font-size: 12.5px; border-radius: 7px; }
-  .field { margin-bottom: 12px; gap: 4px; }
-  .field label { font-size: 12.5px; }
-  .field input,
-  .field select,
-  .custom-select-trigger {
-    min-height: 42px;
-    padding: 10px 14px;
-    font-size: 14.5px;
-    border-radius: 10px;
-  }
-  .field textarea {
-    min-height: 64px;
-    padding: 10px 14px;
-    font-size: 14.5px;
-    border-radius: 10px;
-  }
-  .enquiry-actions {
-    position: sticky;
-    bottom: -18px;
-    z-index: 10;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 6px;
-    margin: 6px -16px -18px;
-    padding: 10px 16px max(18px, env(safe-area-inset-bottom));
-    background: #fff;
-    border-top: 1px solid var(--line);
-    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.04);
-  }
-  .enquiry-actions .btn {
-    height: 44px;
-    font-size: 14px;
-  }
-  .enquiry-actions .enquiry-note {
-    font-size: 11.5px;
-    text-align: center;
-  }
-}
-
 .field { display: flex; flex-direction: column; gap: 6px; min-width: 0; margin-bottom: 16px; }
 .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .field label { font-size: 13.5px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; }
@@ -1114,7 +1056,7 @@ ul, ol { list-style: none; }
   width: 100%;
   min-height: 48px;
   padding: 12px 16px;
-  font-size: 15px; /* 16px keeps iOS Safari from zooming on focus */
+  font-size: 16px; /* 16px keeps iOS Safari from zooming on focus */
   color: var(--ink);
   background: #f8fafc;
   border: 1px solid rgba(11, 18, 32, 0.1);
@@ -1661,4 +1603,54 @@ ul, ol { list-style: none; }
   .footer-legal a { display: inline-block; padding-block: 10px; }
   .link-arrow,
   .link-arrow-maps { min-height: 44px; }
+}
+
+/* Enquiry dialog on phones: a bottom sheet with the send button always in reach.
+   Placed after the base field rules so these sizes win. */
+@media (max-width: 760px) {
+  .enquiry-dialog {
+    width: 100%;
+    max-width: 100%;
+    max-height: 92svh;
+    margin: auto 0 0;
+    border: 0;
+    border-radius: 22px 22px 0 0;
+  }
+  .enquiry-dialog[open] { animation: sheet-in 0.4s var(--ease); }
+  .enquiry { grid-template-columns: 1fr; min-height: 0; }
+  .enquiry-aside { gap: 6px; padding: 22px 60px 18px 20px; }
+  .enquiry-aside .eyebrow { margin-bottom: 2px; font-size: 11.5px; }
+  .enquiry-aside h3 { font-size: 22px; line-height: 1.15; }
+  .enquiry-aside .enquiry-sub { font-size: 14px; line-height: 1.5; }
+  .enquiry-contacts, .enquiry-hours { display: none; }
+  .enquiry-close { top: 14px; right: 14px; color: #fff; }
+  .enquiry-close:hover { background: rgba(255, 255, 255, 0.12); }
+  .enquiry-main { padding: 20px 20px 0; }
+  .chip-field { margin-bottom: 16px; }
+  .chip-field legend { font-size: 13.5px; margin-bottom: 8px; }
+  .chip span { height: 40px; padding: 0 14px; font-size: 14px; }
+  .field { margin-bottom: 14px; }
+  .field input,
+  .field select,
+  .custom-select-trigger { min-height: 48px; padding: 12px 14px; font-size: 16px; }
+  .field textarea { min-height: 88px; padding: 12px 14px; font-size: 16px; }
+  .enquiry-actions {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    margin: 4px -20px 0;
+    padding: 12px 20px max(16px, env(safe-area-inset-bottom));
+    background: #fff;
+    border-top: 1px solid var(--line);
+  }
+  .enquiry-actions .btn { height: 50px; font-size: 15px; justify-content: center; }
+  .enquiry-actions .enquiry-note { font-size: 12.5px; text-align: center; }
+  .enquiry-done { padding-bottom: max(20px, env(safe-area-inset-bottom)); }
+}
+@keyframes sheet-in { from { transform: translateY(100%); } }
+@media (prefers-reduced-motion: reduce) {
+  .enquiry-dialog[open] { animation: fade-in 0.2s ease; }
 }
