@@ -42,6 +42,7 @@ app.get('/robots.txt', via(publicApi, { r: 'robots' }));
 app.get('/llms.txt', via(publicApi, { r: 'llms' }));
 app.get('/indexnow-key.txt', via(publicApi, { r: 'indexnow-key' }));
 app.get('/media/:file', via(publicApi, { r: 'media' }));
+app.get('/og/:kind/:id.jpg', (req, res) => via(publicApi, { r: 'og', kind: req.params.kind, id: req.params.id })(req, res));
 
 // APIs
 for (const r of ['posts', 'products', 'inquiry', 'google-reviews']) app.all(`/api/${r}`, via(publicApi, { r }));

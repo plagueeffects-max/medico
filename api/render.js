@@ -25,7 +25,10 @@ async function copyOverrides() {
 }
 
 /** Replace the standard SEO tags in <head> (never duplicate them), then add the rest. */
-function setHead(ed, { title, description, canonical, image, type, robots, extra = '' }) {
+function setHead(ed, { title, description, canonical, image, card, imageAlt, type, robots, extra = '' }) {
+  // Link previews use the branded 1200x630 JPG card; structured data keeps the real photo
+  const share = card || image;
+  const alt = imageAlt || title;
   const t = ed.$('head title');
   if (t) ed.inner(t, escHtml(title));
   const metas = {
@@ -35,11 +38,16 @@ function setHead(ed, { title, description, canonical, image, type, robots, extra
     'meta[property="og:description"]': `<meta property="og:description" content="${escHtml(description)}">`,
     'meta[property="og:type"]': `<meta property="og:type" content="${type}">`,
     'meta[property="og:url"]': `<meta property="og:url" content="${escHtml(canonical)}">`,
-    'meta[property="og:image"]': `<meta property="og:image" content="${escHtml(image)}">`,
+    'meta[property="og:image"]': `<meta property="og:image" content="${escHtml(share)}">`,
+    'meta[property="og:image:type"]': card ? '<meta property="og:image:type" content="image/jpeg">' : '',
+    'meta[property="og:image:width"]': card ? '<meta property="og:image:width" content="1200">' : '',
+    'meta[property="og:image:height"]': card ? '<meta property="og:image:height" content="630">' : '',
+    'meta[property="og:image:alt"]': `<meta property="og:image:alt" content="${escHtml(alt)}">`,
     'meta[name="twitter:card"]': '<meta name="twitter:card" content="summary_large_image">',
     'meta[name="twitter:title"]': `<meta name="twitter:title" content="${escHtml(title)}">`,
     'meta[name="twitter:description"]': `<meta name="twitter:description" content="${escHtml(description)}">`,
-    'meta[name="twitter:image"]': `<meta name="twitter:image" content="${escHtml(image)}">`,
+    'meta[name="twitter:image"]': `<meta name="twitter:image" content="${escHtml(share)}">`,
+    'meta[name="twitter:image:alt"]': `<meta name="twitter:image:alt" content="${escHtml(alt)}">`,
     'meta[name="robots"]': robots ? `<meta name="robots" content="${robots}">` : '',
   };
   let missing = '';
@@ -49,6 +57,23 @@ function setHead(ed, { title, description, canonical, image, type, robots, extra
   }
   ed.appendTo('head', `${missing}${extra}\n`);
 }
+
+/** Branded share card URL; the version changes whenever the title or picture does. */
+const cardUrl = (kind, id, ...parts) => `${siteUrl()}/og/${kind}/${encodeURIComponent(id)}.jpg?v=${require('crypto').createHash('md5').update(parts.join('|')).digest('hex').slice(0, 8)}`;
+
+const insightCard = (p) => `<a href="/blog/${encodeURIComponent(p.slug)}" class="insight">
+            <div class="insight-media" data-media>
+              <img src="${escHtml(p.image)}" alt="${escHtml(p.title)}" width="900" height="676" loading="lazy">
+              ${fmtShort(p.date) ? `<time datetime="${escHtml(p.date)}">${fmtShort(p.date)}</time>` : ''}
+            </div>
+            <div class="insight-body">
+              <span class="insight-tag">${escHtml(p.category || 'Article')}</span>
+              <h3>${escHtml(p.title)}</h3>
+              <p>${escHtml(p.subheading || '')}</p>
+              <span class="read-link">Read article<svg class="icon"><use href="/assets/icons.svg#i-arrow"/></svg></span>
+            </div>
+          </a>`;
+const fmtShort = (d) => { const x = new Date(`${d}T00:00:00`); return isNaN(x) ? '' : x.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }); };
 
 const ld = (obj) => `\n  <script type="application/ld+json">${ldJson({ '@context': 'https://schema.org', ...obj })}</script>`;
 const breadcrumb = (items) => ld({
@@ -64,7 +89,7 @@ async function renderPost(ed, slug, res) {
   if (row === undefined) return null; // database down: serve the template, post.js uses its fallback
   if (!row) {
     ed.attrs(ed.$('#post-missing'), { hidden: null });
-    setHead(ed, { title: 'Article not found | Medico blog', description: 'This article may have been moved or removed.', canonical: `${siteUrl()}/blog.html`, image: abs('/images/medico-shop.webp'), type: 'website', robots: 'noindex, follow' });
+    setHead(ed, { title: 'Article not found | Medico blog', description: 'This article may have been moved or removed.', canonical: `${siteUrl()}/blog.html`, image: abs('/images/og/blog.jpg'), type: 'website', robots: 'noindex, follow' });
     return 404;
   }
   if (row.slug !== slug) { res.setHeader('Location', `/blog/${encodeURIComponent(row.slug)}`); return 301; }
@@ -85,6 +110,7 @@ function fillPost(ed, row, all, s) {
     title: `${p.metaTitle} | Medico blog`,
     description: p.metaDescription || plainText(p.subheading),
     canonical: url, image, type: 'article',
+    card: cardUrl('post', p.slug, p.title, p.image, row.updated_at || ''), imageAlt: p.title,
     // Unreviewed AI articles: readable, links followed, kept out of search results
     robots: indexable ? '' : 'noindex, follow',
     extra: `\n  <meta property="article:published_time" content="${new Date(row.published_at || row.created_at).toISOString()}">`
@@ -126,7 +152,7 @@ async function renderProduct(ed, id) {
   if (row === undefined) return null;
   if (!row) {
     ed.attrs(ed.$('#pd-missing'), { hidden: null });
-    setHead(ed, { title: 'Product not found | Medico Scientific Service Centre', description: 'This product may have been moved or removed.', canonical: `${siteUrl()}/shop.html`, image: abs('/images/shop-hero.webp'), type: 'website', robots: 'noindex, follow' });
+    setHead(ed, { title: 'Product not found | Medico Scientific Service Centre', description: 'This product may have been moved or removed.', canonical: `${siteUrl()}/shop.html`, image: abs('/images/og/shop.jpg'), type: 'website', robots: 'noindex, follow' });
     return 404;
   }
   const p = productOut(row);
@@ -137,6 +163,7 @@ async function renderProduct(ed, id) {
     title: `${p.title} | ${s.business_name}`,
     description: plainText(p.description).slice(0, 160) || `${p.title} from ${s.business_name}, ${s.address_city}.`,
     canonical: url, image, type: 'product',
+    card: cardUrl('product', p.id, p.title, p.mainImage), imageAlt: p.title,
     // No offers/ratings: prices are quoted on request, and we never invent ratings
     extra: ld({
       '@type': 'Product', name: p.title, description: plainText(p.description), image: [image], url,
@@ -186,6 +213,13 @@ module.exports = async (req, res) => {
       const rows = await getPublishedPostRows().catch(() => null);
       if (rows && rows.length) ed.appendTo('body', inlineData('ssr-posts', { posts: rows.map(postOut).map(({ content, ...rest }) => rest) }));
     }
+    // Home "From the blog": the two newest articles, so the cards arrive finished with live links
+    if (page === 'index') {
+      const rows = await withTimeout(getPublishedPostRows(), 2500).catch(() => null);
+      const latest = (rows || []).map(postOut).sort((x, y) => String(y.date).localeCompare(String(x.date))).slice(0, 2);
+      const cards = [...ed.$$('a.insight')].filter((el) => !el.classList.contains('insight-more'));
+      if (latest.length === 2) latest.forEach((p, i) => cards[i] && ed.outer(cards[i], insightCard(p)));
+    }
     if (page === 'shop' || (page === 'product' && q.slug)) {
       const rows = await withTimeout(getProductRows(), 2500).catch(() => null);
       if (rows && rows.length) ed.appendTo('body', inlineData('ssr-products', { products: rows.map(productOut) }));
@@ -210,6 +244,10 @@ function finalize(out, page, s) {
   if (tel !== BUILT_IN.tel) out = out.split(BUILT_IN.tel).join(tel);
   if (wa !== BUILT_IN.wa) out = out.split(BUILT_IN.wa).join(wa);
   if (mail !== BUILT_IN.mail) out = out.split(BUILT_IN.mail).join(mail);
+  // Business facts written into the page (legal pages, footer) follow Admin > Settings too
+  const fact = { business_name: s.business_name, phone: s.phone, email: s.email, gstin: s.gstin,
+    address: [s.address_street, s.address_city, [s.address_region, s.address_postcode].filter(Boolean).join(' ')].filter(Boolean).join(', ') };
+  out = out.replace(/(<span data-setting="(\w+)">)[^<]*(<\/span>)/g, (m, open, key, close) => (fact[key] ? open + escHtml(fact[key]) + close : m));
   if (page !== 'index') return out;
 
   const scripts = /<script type="application\/ld\+json">([\s\S]*?)<\/script>/g;

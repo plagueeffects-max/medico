@@ -148,33 +148,6 @@ const icon = (id, cls = 'icon') => `<svg class="${cls}"><use href="/assets/icons
   })();
 })();
 
-/* ---------- Latest articles from the blog API (static cards stay as fallback) ---------- */
-(async () => {
-  const grid = document.querySelector('.insight-grid');
-  if (!grid) return;
-  try {
-    const res = await fetch('/api/posts');
-    if (!res.ok) return;
-    const { success, posts } = await res.json();
-    if (!success || !Array.isArray(posts) || posts.length < 2) return;
-    const latest = posts.slice().sort((a, b) => String(b.date).localeCompare(String(a.date))).slice(0, 2);
-    const cards = grid.querySelectorAll('.insight:not(.insight-more)');
-    latest.forEach((p, i) => {
-      const card = cards[i];
-      if (!card) return;
-      const url = p.slug ? `/blog/${encodeURIComponent(p.slug)}` : `/blog-post.html?id=${encodeURIComponent(p.id)}`;
-      const img = p.image ? (/^(https?:)?\//.test(p.image) ? p.image : `/${p.image}`) : '';
-      const d = new Date(`${p.date}T00:00:00`);
-      const when = Number.isNaN(d.getTime()) ? '' : d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
-      card.href = url;
-      card.innerHTML = `<div class="insight-media" data-media>${img ? `<img src="${escapeHtml(img)}" alt="" width="900" height="676" loading="lazy">` : ''}${when ? `<time datetime="${escapeHtml(p.date)}">${when}</time>` : ''}</div>
-        <div class="insight-body"><span class="insight-tag">${escapeHtml(p.category || 'Article')}</span><h3>${escapeHtml(p.title)}</h3><p>${escapeHtml(p.subheading || '')}</p><span class="read-link">Read article${icon('i-arrow')}</span></div>`;
-    });
-  } catch {
-    // Static cards stay
-  }
-})();
-
 /* ---------- Home-only motion ---------- */
 const homeMotion = () => {
   const { gsap } = window;

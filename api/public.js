@@ -1,6 +1,7 @@
 // Public API router (one Vercel function). Routes, via vercel.json:
 //   GET  /api/posts[?id=]        GET /api/products[?id=]      POST /api/inquiry
 //   GET  /api/google-reviews     GET /media/<id>.<ext>
+//   GET  /og/post/<slug>.jpg     GET /og/product/<id>.jpg   (link-preview cards)
 //   GET  /sitemap.xml  /llms.txt  /robots.txt  /indexnow-key.txt
 const { query, withTimeout } = require('./_lib/db');
 const { getQuery, pathOf, readBody, send, ipHash } = require('./_lib/http');
@@ -69,10 +70,47 @@ async function media(req, res, q) {
   return send(res, 200, Buffer.from(rows[0].b64, 'base64'), { 'Content-Type': rows[0].mime, 'Cache-Control': 'public, max-age=31536000, immutable' });
 }
 
+/**
+ * Link-preview card for one article or product: its picture at 1200x630 with the Medico
+ * frame (images/og/frame-*.png, made by tools/og-cards.js) laid on top, as a JPG, because
+ * WhatsApp and others render WebP previews unreliably. Any failure falls back to the
+ * section's static card, so a share never ends up without a picture.
+ */
+async function og(req, res, q) {
+  const kind = q.kind === 'product' ? 'product' : 'post';
+  const fallback = `/images/og/${kind === 'product' ? 'shop' : 'blog'}.jpg`;
+  try {
+    const row = kind === 'product' ? await withTimeout(getProductRow(q.id), 3000) : await withTimeout(getPostRow(q.id), 3000);
+    if (!row) throw new Error('not found');
+    const pic = kind === 'product' ? productOut(row).mainImage : postOut(row).image;
+    // Fetch from this deployment, so previews and local runs use their own files
+    const base = `${req.headers['x-forwarded-proto'] || (req.socket?.encrypted ? 'https' : 'http')}://${req.headers.host}`;
+    const get = async (u) => { const r = await fetch(/^https?:/.test(u) ? u : base + encodeURI(u), { signal: AbortSignal.timeout(5000) }); if (!r.ok) throw new Error(`${r.status} ${u}`); return Buffer.from(await r.arrayBuffer()); };
+    const [photo, frame] = await Promise.all([get(pic), get(`/images/og/frame-${kind}.png`)]);
+    const sharp = require('sharp');
+    let img;
+    if (kind === 'product') {
+      // Product shots are cut-outs on white: show the whole device on a soft studio ground
+      const { data, info } = await sharp(photo).resize(860, 400, { fit: 'inside' }).flatten({ background: '#ffffff' }).toBuffer({ resolveWithObject: true });
+      img = sharp({ create: { width: 1200, height: 630, channels: 3, background: '#ffffff' } })
+        .composite([{ input: data, left: Math.round((1200 - info.width) / 2), top: Math.round(110 + (400 - info.height) / 2) }]);
+    } else {
+      img = sharp(photo).resize(1200, 630, { fit: 'cover', position: 'attention' });
+    }
+    const flat = await img.flatten({ background: '#ffffff' }).png().toBuffer();
+    const out = await sharp(flat).composite([{ input: frame }]).jpeg({ quality: 84, mozjpeg: true }).toBuffer();
+    return send(res, 200, out, { 'Content-Type': 'image/jpeg', 'Cache-Control': 'public, max-age=86400, s-maxage=604800, stale-while-revalidate=604800' });
+  } catch (err) {
+    console.error('[og]', err.message);
+    res.setHeader('Location', fallback);
+    return send(res, 302, '', { 'Cache-Control': 'public, s-maxage=300' });
+  }
+}
+
 const text = (type) => ({ 'Content-Type': `${type}; charset=utf-8`, 'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400' });
 
 const ROUTES = {
-  posts, products, inquiry, media,
+  posts, products, inquiry, media, og,
   'google-reviews': (req, res) => googleReviews(req, res),
   sitemap: async (req, res) => send(res, 200, await sitemapXml(), text('application/xml')),
   llms: async (req, res) => send(res, 200, await llmsTxt(), text('text/plain')),
