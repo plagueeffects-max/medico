@@ -55,7 +55,8 @@
   const topicRow = document.getElementById('topic-row');
   const countOf = (t) => (t === 'All' ? blogs.length : blogs.filter((b) => topicOf(b) === t).length);
 
-  topicRow.innerHTML = TOPICS.map((t, i) => `
+  // Topics with no articles yet stay hidden, so every pill leads somewhere
+  topicRow.innerHTML = TOPICS.filter((t) => t === 'All' || countOf(t)).map((t, i) => `
     <button type="button" class="topic-pill${i === 0 ? ' is-active' : ''}" data-topic="${esc(t)}" aria-pressed="${i === 0}">
       ${t === 'All' ? `All articles (${countOf('All')})` : `${esc(t)} (${countOf(t)})`}
     </button>`).join('');

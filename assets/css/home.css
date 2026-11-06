@@ -83,9 +83,7 @@
   grid-template-columns: repeat(4, 1fr);
   padding: 8px;
   border-radius: 24px;
-  background: rgba(255, 255, 255, 0.96);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: #fff;
   border: 1px solid rgba(11, 18, 32, 0.08);
   box-shadow: 0 20px 48px -12px rgba(11, 18, 32, 0.08), 0 1px 3px rgba(11, 18, 32, 0.04);
 }
@@ -94,10 +92,7 @@
   align-items: center;
   gap: 16px;
   padding: 22px 24px;
-  border-radius: 18px;
-  transition: background-color 0.25s var(--ease);
 }
-.stat:hover { background-color: #f8fafc; }
 .stat + .stat { border-left: 1px solid rgba(11, 18, 32, 0.06); }
 .stat-icon {
   display: inline-flex;
@@ -112,7 +107,6 @@
   color: var(--ink);
   transition: transform 0.3s var(--ease);
 }
-.stat:hover .stat-icon { transform: scale(1.05); }
 .stat-icon .icon { width: 22px; height: 22px; }
 .stat-num {
   display: block;
@@ -174,21 +168,6 @@
 }
 .product-card:hover .product-media img {
   transform: scale(1.05) translateY(-3px);
-}
-.product-index {
-  position: absolute;
-  top: 14px;
-  left: 16px;
-  font-family: ui-monospace, 'SF Mono', 'Geist Mono', Menlo, Consolas, monospace;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  color: #94a3b8;
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
-  padding: 3px 7px;
-  border-radius: 6px;
-  background: rgba(11, 18, 32, 0.04);
 }
 .product-icon {
   position: absolute;
@@ -326,7 +305,6 @@
   background: var(--accent);
   border-color: var(--accent);
 }
-.service-num { position: absolute; top: 22px; right: 22px; font-family: var(--font-mono); font-size: 12px; color: rgba(255, 255, 255, 0.35); }
 .service h3 { margin-bottom: 8px; font-size: 16.5px; font-weight: 700; letter-spacing: -0.015em; color: #fff; }
 .service p { font-size: 14px; line-height: 1.6; color: #94a3b8; }
 
@@ -638,8 +616,8 @@
 .reviews-marquee {
   margin-inline: calc(50% - 50vw);
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
-  mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 clamp(24px, 6vw, 120px), #000 calc(100% - clamp(24px, 6vw, 120px)), transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 clamp(24px, 6vw, 120px), #000 calc(100% - clamp(24px, 6vw, 120px)), transparent 100%);
 }
 .reviews-track {
   display: flex;
@@ -997,34 +975,30 @@
 
   .hero-copy { max-width: none; }
 
-  /* Tagline on mobile: hidden to avoid clutter */
 
-  /* Hero: one full first screen. The video fills the top and fades out
-     behind the headline; the copy sits at the bottom, so both are seen at once. */
-  .hero { background: #fff; }
-  .hero-inner {
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-start;
-    /* One screen = viewport minus top strip (34px), header and the sticky action bar (70px) */
-    min-height: calc(100svh - var(--header-h) - 34px - 70px - env(safe-area-inset-bottom));
-    padding-top: 0;
-    padding-bottom: 28px;
-  }
+  /* Hero on phones and portrait tablets: the video becomes a band at the top that
+     fades into white, and the copy sits fully below it, so nothing overlaps the lungs. */
+  .hero { display: flex; flex-direction: column; background: #fff; }
   .hero-media {
-    inset: 0 0 auto;
-    left: 0;
-    height: 64%;
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: clamp(180px, 34svh, 400px);
     background-position: 80% 40%;
-    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 52%, transparent 100%);
-    mask-image: linear-gradient(180deg, #000 0%, #000 52%, transparent 100%);
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 62%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 0%, #000 62%, transparent 100%);
   }
   .hero-media::after { display: none; }
   .hero-video { object-position: 80% 40%; }
-    /* Faint halo keeps small copy crisp where it crosses the lungs */
-  .hero-copy { text-shadow: 0 0 18px rgba(255, 255, 255, 0.9), 0 0 2px rgba(255, 255, 255, 0.6); }
-  .hero-copy .btn { text-shadow: none; }
-  /* The sticky Call / WhatsApp bar covers this on phones; dropping it keeps the hero to one screen */
+  .hero-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    min-height: 0;
+    margin-top: -12px;
+    padding-top: 0;
+    padding-bottom: 32px;
+  }
+  /* The sticky Call / WhatsApp bar covers this on phones */
   .hero-cta-secondary { display: none; }
 
   .stats-wrap { margin-top: 8px; }
@@ -1063,56 +1037,48 @@
   .stat { flex-direction: column; align-items: flex-start; gap: 12px; padding: 18px 16px; }
   .stat-icon { width: 40px; height: 40px; border-radius: 12px; }
   .stat-icon .icon { width: 18px; height: 18px; }
-  .stat-label { font-size: 10.5px; }
+  .stat-label { font-size: 11.5px; }
 
   .product-grid { gap: 12px; }
-  .product-index { top: 10px; left: 12px; font-size: 20px; }
   .product-icon { top: 10px; right: 10px; width: 30px; height: 30px; border-radius: 9px; }
   .product-icon .icon { width: 15px; height: 15px; }
   .product-body { padding: 14px; }
-  .product-title h3 { font-size: 14.5px; }
+  .product-title h3 { font-size: 14.5px; text-wrap: balance; }
   .product-body p { display: none; }
   .arrow-circle { width: 26px; height: 26px; }
 
-  .service-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px 10px;
-  }
+  .services-content { padding: 28px 20px 24px; }
+  .services-top { flex-direction: column; gap: 18px; margin-bottom: 24px; }
+  .services-top .h2 { font-size: 26px; line-height: 1.15; max-width: 100%; }
+  .service-grid { grid-template-columns: 1fr; gap: 0; }
   .service {
-    padding: 18px 14px;
-    border-radius: 18px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    column-gap: 14px;
+    padding: 16px 0;
+    border-radius: 0;
+    background: none;
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
   }
-  .service-icon {
-    width: 38px;
-    height: 38px;
-    margin-bottom: 12px;
-    border-radius: 10px;
-  }
-  .service-icon .icon {
-    width: 18px;
-    height: 18px;
-  }
-  .service-num { position: absolute; top: 22px; right: 22px; font-family: var(--font-mono); font-size: 12px; color: rgba(255, 255, 255, 0.35); }
-.service h3 {
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 1.25;
-    margin-bottom: 6px;
-  }
-  .service p {
-    font-size: 12px;
-    line-height: 1.45;
-    color: rgba(255, 255, 255, 0.7);
-  }
-  .services-top { flex-direction: column; margin-bottom: 40px; }
+  .service-icon { grid-row: 1 / span 2; width: 36px; height: 36px; margin-bottom: 0; border-radius: 10px; }
+  .service-icon .icon { width: 17px; height: 17px; }
+  .service h3 { font-size: 15.5px; font-weight: 600; line-height: 1.3; margin-bottom: 4px; }
+  .service p { font-size: 14px; line-height: 1.5; color: rgba(255, 255, 255, 0.72); }
 
-  .insight-grid { grid-template-columns: 1fr; gap: 16px; }
-  .insight-more { grid-column: auto; }
-  .insight-body { padding: 22px 20px; }
+  .insight { height: auto; }
+  .insight-media { aspect-ratio: 16 / 9; }
+  .insight-body { padding: 16px 16px 18px; gap: 6px; flex: initial; }
+  .insight-body h3 { font-size: 16px; line-height: 1.3; }
+  .insight-body p { font-size: 14px; line-height: 1.5; }
+  .read-link { margin-top: 8px; padding-top: 0; font-size: 14px; }
+  .insight-more .insight-body { padding: 18px 16px; }
   .reviews-track { grid-auto-columns: 86%; }
   .review { padding: 24px; }
+  /* Narrow cards: the brand logo would squeeze the reviewer's name, so it steps aside */
+  .review-footer { padding: 14px 18px; }
+  .review-divider,
+  .review-brand-col { display: none; }
   .review blockquote { font-size: 16px; }
   .rating-pill { flex-wrap: wrap; row-gap: 4px; }
 
@@ -1120,15 +1086,20 @@
 
 /* Landscape phones: too short for stacking, so copy left and video right */
 @media (max-width: 900px) and (orientation: landscape) and (max-height: 520px) {
-  .hero-inner { justify-content: center; min-height: 0; padding-top: 32px; padding-bottom: 40px; }
+  .hero { display: block; }
+  .hero-inner { justify-content: center; min-height: 0; margin-top: 0; padding-top: 32px; padding-bottom: 40px; }
   .hero-copy { max-width: 56%; }
   .hero-media {
+    position: absolute;
     inset: 0;
     left: 46%;
+    width: auto;
     height: auto;
     -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 30%);
     mask-image: linear-gradient(90deg, transparent 0%, #000 30%);
   }
+  .hero-media { background-position: 60% center; }
+  .hero-video { object-position: 60% center; }
   .hero-copy .display { font-size: 2.5rem; }
   .hero-cta-secondary { display: inline-flex; }
 }

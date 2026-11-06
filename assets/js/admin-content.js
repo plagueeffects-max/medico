@@ -103,25 +103,21 @@
           <button type="button" data-cmd="formatBlock" data-arg="h3" title="Subsection (H3)">H3</button>
           <button type="button" data-cmd="formatBlock" data-arg="p" title="Body paragraph">¶</button>
         </div>
-        <span class="sep"></span>
         <div class="rte-btn-group">
           <button type="button" data-cmd="bold" title="Bold (Ctrl+B)"><b>B</b></button>
           <button type="button" data-cmd="italic" title="Italic (Ctrl+I)"><i>I</i></button>
           <button type="button" data-cmd="strikeThrough" title="Strikethrough"><s>S</s></button>
         </div>
-        <span class="sep"></span>
         <div class="rte-btn-group">
           <button type="button" data-cmd="insertUnorderedList" title="Bulleted list">${icon('listBullet') || '•'}</button>
           <button type="button" data-cmd="insertOrderedList" title="Numbered list">${icon('listNumber') || '1.'}</button>
           <button type="button" data-cmd="formatBlock" data-arg="blockquote" title="Quote / Callout">${icon('quote') || '“ ”'}</button>
         </div>
-        <span class="sep"></span>
         <div class="rte-btn-group">
           <button type="button" data-cmd="callout" title="Insert clinical takeaway note">${icon('callout') || '💡'} Note</button>
           <button type="button" data-cmd="table" title="Insert comparison table">${icon('table') || 'Table'}</button>
           <button type="button" data-cmd="divider" title="Insert horizontal divider line">—</button>
         </div>
-        <span class="sep"></span>
         <div class="rte-btn-group">
           <button type="button" data-cmd="link" title="Link (Ctrl+K)">${icon('link')}</button>
           <button type="button" data-cmd="image" title="Insert picture">${icon('image')}</button>

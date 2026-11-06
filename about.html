@@ -29,14 +29,14 @@
   <link rel="manifest" href="/favicon/site.webmanifest">
   <link rel="preload" href="/assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/inter-800.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/css/site.css?v=8">
+  <link rel="stylesheet" href="/assets/css/site.css?v=9">
   <script>document.documentElement.classList.add('js');</script>
   <script src="/assets/vendor/gsap.min.js" defer></script>
   <script src="/assets/vendor/ScrollTrigger.min.js" defer></script>
   <script src="/assets/vendor/SplitText.min.js" defer></script>
   <script src="/assets/js/site.js?v=8" defer></script>
   <!-- /@head -->
-  <link rel="stylesheet" href="/assets/css/pages.css?v=8">
+  <link rel="stylesheet" href="/assets/css/pages.css?v=9">
 
   <script type="application/ld+json">
   {
@@ -261,7 +261,7 @@
           </div>
 
           <div class="founder-profile-right">
-            <p class="eyebrow" data-reveal><span class="eyebrow-num">01</span><span data-copy="about.founder.eyebrow">The founder</span></p>
+            <p class="eyebrow" data-reveal><span data-copy="about.founder.eyebrow">The founder</span></p>
             <h2 class="founder-name" data-split>Mr. Syed Naseer Ahmad Andrabi</h2>
             <p class="founder-designation" data-reveal>FOUNDER &amp; PROPRIETOR</p>
             <div class="founder-bio" data-reveal>
@@ -283,7 +283,7 @@
       <div class="container">
         <div class="section-head-split">
           <div>
-            <p class="eyebrow" data-reveal><span class="eyebrow-num">02</span><span data-copy="about.journey.eyebrow">Our journey</span></p>
+            <p class="eyebrow" data-reveal><span data-copy="about.journey.eyebrow">Our journey</span></p>
             <h2 class="h2" data-split>From a repair bench <span class="text-slate">to Kashmir&rsquo;s trusted partner</span></h2>
           </div>
           <p class="section-aside-text" data-reveal>Three chapters, one constant: equipment that works when a patient needs it.</p>
@@ -316,81 +316,42 @@
     </section>
 
     <!-- ============ 4. Our Purpose ============ -->
-    <section class="section ab-purpose-section">
-      <div class="container">
-        <div class="section-head-simple">
-          <p class="eyebrow" data-reveal><span class="eyebrow-num">03</span><span data-copy="about.purpose.eyebrow">Our purpose</span></p>
-          <h2 class="h2" data-split>What we&rsquo;re here to do</h2>
+    <section class="section ab-purpose-section" aria-labelledby="purpose-title">
+      <div class="container purpose-layout">
+        <div class="purpose-vision">
+          <p class="eyebrow" data-reveal><span data-copy="about.purpose.eyebrow">Our purpose</span></p>
+          <h2 class="h2" id="purpose-title" data-split>What we&rsquo;re here to do</h2>
+          <figure class="purpose-statement" data-reveal>
+            <figcaption class="purpose-label"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-eye"/></svg>Our vision</figcaption>
+            <blockquote data-copy="about.purpose.vision">&ldquo;To be the most reliable healthcare equipment partner in Jammu &amp; Kashmir, so every hospital, clinic and patient family can count on certified, dependable life-support technology.&rdquo;</blockquote>
+          </figure>
+          <p class="purpose-body" data-reveal data-copy="about.purpose.vision_body">From ICUs in Srinagar to district clinics across the valley, we pair manufacturer-trained engineering with prompt, on-ground support, seven days a week.</p>
+          <dl class="purpose-facts" data-reveal>
+            <div><dt data-copy="about.purpose.metric2_num">20</dt><dd data-copy="about.purpose.metric2">Districts served</dd></div>
+            <div><dt data-copy="about.purpose.metric3_num">7 days</dt><dd data-copy="about.purpose.metric3">Service and support</dd></div>
+          </dl>
         </div>
 
-        <div class="purpose-cards-grid" data-stagger>
-          <!-- Left Card: Vision -->
-          <article class="purpose-card purpose-card-vision">
-            <div class="purpose-card-inner">
-              <div class="purpose-card-tag-row">
-                <span class="purpose-pill-tag tag-crimson"><svg class="icon"><use href="/assets/icons.svg#i-eye"/></svg>OUR VISION</span>
-                <span class="purpose-state-badge" data-copy="about.purpose.badge">Serving J&amp;K since 2000</span>
-              </div>
-              <blockquote class="purpose-vision-quote" data-copy="about.purpose.vision">&ldquo;To be the most reliable healthcare equipment partner in Jammu &amp; Kashmir, so every hospital, clinic and patient family can count on certified, dependable life-support technology.&rdquo;</blockquote>
-              <p class="purpose-vision-desc" data-copy="about.purpose.vision_body">From ICUs in Srinagar to district clinics across the valley, we pair manufacturer-trained engineering with prompt, on-ground support, seven days a week.</p>
-              <div class="purpose-vision-metrics">
-                <div class="p-metric-item">
-                  <span class="p-metric-num">100+</span>
-                  <span class="p-metric-lbl" data-copy="about.purpose.metric1">Hospitals &amp; clinics</span>
-                </div>
-                <div class="p-metric-sep"></div>
-                <div class="p-metric-item">
-                  <span class="p-metric-num" data-copy="about.purpose.metric2_num">20</span>
-                  <span class="p-metric-lbl" data-copy="about.purpose.metric2">Districts served</span>
-                </div>
-                <div class="p-metric-sep"></div>
-                <div class="p-metric-item">
-                  <span class="p-metric-num" data-copy="about.purpose.metric3_num">7 days</span>
-                  <span class="p-metric-lbl" data-copy="about.purpose.metric3">Service and support</span>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- Right Card: Mission -->
-          <article class="purpose-card purpose-card-mission">
-            <div class="purpose-card-inner">
-              <div class="purpose-card-tag-row">
-                <span class="purpose-pill-tag tag-slate"><svg class="icon"><use href="/assets/icons.svg#i-target"/></svg>OUR MISSION</span>
-                <span class="purpose-state-caption" data-copy="about.purpose.mission_caption">Four commitments</span>
-              </div>
-              <div class="mission-stack">
-                <div class="mission-row">
-                  <span class="mission-row-num">01</span>
-                  <div class="mission-row-content">
-                    <h4 data-copy="about.mission.1.title">Clinical precision</h4>
-                    <p data-copy="about.mission.1.body">Genuine, manufacturer-authorised devices, calibrated and tested before they reach a ward or a home.</p>
-                  </div>
-                </div>
-                <div class="mission-row">
-                  <span class="mission-row-num">02</span>
-                  <div class="mission-row-content">
-                    <h4 data-copy="about.mission.2.title">Support that shows up</h4>
-                    <p data-copy="about.mission.2.body">Engineers on the ground, preventive maintenance, calibration and AMCs that keep equipment running.</p>
-                  </div>
-                </div>
-                <div class="mission-row">
-                  <span class="mission-row-num">03</span>
-                  <div class="mission-row-content">
-                    <h4 data-copy="about.mission.3.title">Modern technology</h4>
-                    <p data-copy="about.mission.3.body">Bring current ICU, OT and home-care technology to doctors and hospitals in Kashmir.</p>
-                  </div>
-                </div>
-                <div class="mission-row">
-                  <span class="mission-row-num">04</span>
-                  <div class="mission-row-content">
-                    <h4 data-copy="about.mission.4.title">Lasting trust</h4>
-                    <p data-copy="about.mission.4.body">Clear advice, honest pricing and verified quality for healthcare teams and families.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
+        <div class="purpose-mission">
+          <p class="purpose-label" data-reveal><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#i-target"/></svg>Our mission<span class="purpose-label-note" data-copy="about.purpose.mission_caption">Four commitments</span></p>
+          <ul class="mission-list" data-stagger>
+            <li>
+              <h3 data-copy="about.mission.1.title">Clinical precision</h3>
+              <p data-copy="about.mission.1.body">Genuine, manufacturer-authorised devices, calibrated and tested before they reach a ward or a home.</p>
+            </li>
+            <li>
+              <h3 data-copy="about.mission.2.title">Support that shows up</h3>
+              <p data-copy="about.mission.2.body">Engineers on the ground, preventive maintenance, calibration and AMCs that keep equipment running.</p>
+            </li>
+            <li>
+              <h3 data-copy="about.mission.3.title">Modern technology</h3>
+              <p data-copy="about.mission.3.body">Bring current ICU, OT and home-care technology to doctors and hospitals in Kashmir.</p>
+            </li>
+            <li>
+              <h3 data-copy="about.mission.4.title">Lasting trust</h3>
+              <p data-copy="about.mission.4.body">Clear advice, honest pricing and verified quality for healthcare teams and families.</p>
+            </li>
+          </ul>
         </div>
       </div>
     </section>
@@ -400,7 +361,7 @@
       <div class="container">
         <div class="section-head-split">
           <div>
-            <p class="eyebrow" data-reveal><span class="eyebrow-num">04</span><span data-copy="about.partners.eyebrow">Brand partners</span></p>
+            <p class="eyebrow" data-reveal><span data-copy="about.partners.eyebrow">Brand partners</span></p>
             <h2 class="h2" data-split>Global technology. <span class="text-slate">Local expertise</span></h2>
           </div>
           <p class="section-aside-text" data-reveal>Manufacturer-authorised distribution for Kashmir, with certified installation and genuine spare parts.</p>
@@ -431,7 +392,7 @@
       <div class="container">
         <div class="section-head-split">
           <div>
-            <p class="eyebrow" data-reveal><span class="eyebrow-num">05</span><span data-copy="about.visit.eyebrow">Visit us</span></p>
+            <p class="eyebrow" data-reveal><span data-copy="about.visit.eyebrow">Visit us</span></p>
             <h2 class="h2" data-split>Find us in <span class="text-slate">Shergarhi, Srinagar</span></h2>
           </div>
           <a href="https://www.google.com/maps/search/?api=1&amp;query=Medico+Scientific+Service+Centre+Iqbal+Complex+Shergarhi+Srinagar+190008" class="link-arrow-maps" target="_blank" rel="noopener" data-reveal>Open in Google Maps <svg class="icon"><use href="/assets/icons.svg#i-arrow-up-right"/></svg></a>

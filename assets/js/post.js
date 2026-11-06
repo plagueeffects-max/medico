@@ -98,13 +98,13 @@
     .slice(0, 3);
   if (related.length) {
     $('related-grid').innerHTML = related.map((b) => `
-      <article class="article-card">
-        <a href="${BlogDB.url(b)}" class="article-media${/\/products\//.test(b.image || '') ? ' is-product' : ''}" tabindex="-1" aria-hidden="true"><img src="${esc(safeUrl(b.image) || '/images/medico-shop.webp')}" alt="" loading="lazy"></a>
-        <div class="article-body">
-          <div class="article-meta"><span class="pill pill-accent">${esc(topicOf(b))}</span><span class="article-time">${icon('i-clock')}${readTime(b)} min read</span></div>
-          <h3><a href="${BlogDB.url(b)}">${esc(b.title)}</a></h3>
-          <p>${esc(b.subheading)}</p>
-          <span class="article-link">Read more${icon('i-arrow')}</span>
+      <article class="blog-card">
+        <a href="${BlogDB.url(b)}" class="blog-card-media${/\/products\//.test(b.image || '') ? ' is-product' : ''}" tabindex="-1" aria-hidden="true"><img src="${esc(safeUrl(b.image) || '/images/medico-shop.webp')}" alt="" loading="lazy"></a>
+        <div class="blog-card-body">
+          <div class="blog-card-meta"><span class="blog-cat-tag">${esc(topicOf(b))}</span><span class="blog-card-time">${icon('i-clock')}${readTime(b)} min read</span></div>
+          <h3 class="blog-card-title"><a href="${BlogDB.url(b)}">${esc(b.title)}</a></h3>
+          <p class="blog-card-desc">${esc(b.subheading)}</p>
+          <a href="${BlogDB.url(b)}" class="blog-card-link">Read more${icon('i-arrow')}</a>
         </div>
       </article>`).join('');
     $('related').hidden = false;
