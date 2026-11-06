@@ -1,13 +1,30 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "buildCommand": null,
+  "installCommand": "npm install",
+  "outputDirectory": null,
   "functions": {
-    "api/render.js": { "includeFiles": "*.html", "maxDuration": 10 },
-    "api/public.js": { "maxDuration": 15 },
-    "api/admin.js": { "includeFiles": "*.html", "maxDuration": 60 },
-    "api/cron.js": { "maxDuration": 60 }
+    "api/render.js": {
+      "includeFiles": "*.html",
+      "maxDuration": 10
+    },
+    "api/public.js": {
+      "maxDuration": 15
+    },
+    "api/admin.js": {
+      "includeFiles": "*.html",
+      "maxDuration": 60
+    },
+    "api/cron.js": {
+      "maxDuration": 60
+    }
   },
   "crons": [
-    { "path": "/api/cron", "schedule": "30 0 * * *" }
+    {
+      "path": "/api/cron",
+      "schedule": "30 0 * * *"
+    }
   ],
   "routes": [
     {
@@ -21,30 +38,94 @@
       },
       "continue": true
     },
-    { "src": "/(images|Products|Blog Assets|Blog%20Assets|favicon)/(.*)", "headers": { "Cache-Control": "public, max-age=31536000, immutable" }, "continue": true },
-    { "src": "/assets/(.*)", "headers": { "Cache-Control": "public, max-age=0, must-revalidate" }, "continue": true },
-    { "src": "/admin(-[a-z]+\\.html)?/?", "headers": { "X-Robots-Tag": "noindex, nofollow", "Cache-Control": "no-store" }, "continue": true },
-
-    { "src": "/admin/?", "dest": "/admin-login.html" },
-
-    { "src": "/", "dest": "/api/render?page=index" },
-    { "src": "/index\\.html", "dest": "/api/render?page=index" },
-    { "src": "/(about|shop|blog|terms)\\.html", "dest": "/api/render?page=$1" },
-    { "src": "/privacy-policy\\.html", "dest": "/api/render?page=privacy" },
-    { "src": "/blog-post\\.html", "dest": "/api/render?page=post" },
-    { "src": "/product\\.html", "dest": "/api/render?page=product" },
-    { "src": "/blog/([^/]+)/?", "dest": "/api/render?page=post&slug=$1" },
-    { "src": "/product/([^/]+)/?", "dest": "/api/render?page=product&slug=$1" },
-
-    { "src": "/sitemap\\.xml", "dest": "/api/public?r=sitemap" },
-    { "src": "/robots\\.txt", "dest": "/api/public?r=robots" },
-    { "src": "/llms\\.txt", "dest": "/api/public?r=llms" },
-    { "src": "/indexnow-key\\.txt", "dest": "/api/public?r=indexnow-key" },
-    { "src": "/media/([^/]+)", "dest": "/api/public?r=media&file=$1" },
-
-    { "src": "/api/(posts|products|inquiry|google-reviews)/?", "dest": "/api/public?r=$1" },
-    { "src": "/api/admin/([a-z-]+)/?", "dest": "/api/admin?r=$1" },
-
-    { "handle": "filesystem" }
+    {
+      "src": "/(images|Products|Blog Assets|Blog%20Assets|favicon)/(.*)",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      },
+      "continue": true
+    },
+    {
+      "src": "/assets/(.*)",
+      "headers": {
+        "Cache-Control": "public, max-age=0, must-revalidate"
+      },
+      "continue": true
+    },
+    {
+      "src": "/admin(-[a-z]+\\.html)?/?",
+      "headers": {
+        "X-Robots-Tag": "noindex, nofollow",
+        "Cache-Control": "no-store"
+      },
+      "continue": true
+    },
+    {
+      "src": "/admin/?",
+      "dest": "/admin-login.html"
+    },
+    {
+      "src": "/",
+      "dest": "/api/render?page=index"
+    },
+    {
+      "src": "/index\\.html",
+      "dest": "/api/render?page=index"
+    },
+    {
+      "src": "/(about|shop|blog|terms)\\.html",
+      "dest": "/api/render?page=$1"
+    },
+    {
+      "src": "/privacy-policy\\.html",
+      "dest": "/api/render?page=privacy"
+    },
+    {
+      "src": "/blog-post\\.html",
+      "dest": "/api/render?page=post"
+    },
+    {
+      "src": "/product\\.html",
+      "dest": "/api/render?page=product"
+    },
+    {
+      "src": "/blog/([^/]+)/?",
+      "dest": "/api/render?page=post&slug=$1"
+    },
+    {
+      "src": "/product/([^/]+)/?",
+      "dest": "/api/render?page=product&slug=$1"
+    },
+    {
+      "src": "/sitemap\\.xml",
+      "dest": "/api/public?r=sitemap"
+    },
+    {
+      "src": "/robots\\.txt",
+      "dest": "/api/public?r=robots"
+    },
+    {
+      "src": "/llms\\.txt",
+      "dest": "/api/public?r=llms"
+    },
+    {
+      "src": "/indexnow-key\\.txt",
+      "dest": "/api/public?r=indexnow-key"
+    },
+    {
+      "src": "/media/([^/]+)",
+      "dest": "/api/public?r=media&file=$1"
+    },
+    {
+      "src": "/api/(posts|products|inquiry|google-reviews)/?",
+      "dest": "/api/public?r=$1"
+    },
+    {
+      "src": "/api/admin/([a-z-]+)/?",
+      "dest": "/api/admin?r=$1"
+    },
+    {
+      "handle": "filesystem"
+    }
   ]
 }

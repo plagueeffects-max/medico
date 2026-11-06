@@ -1,38 +1,67 @@
-# Secrets
+# ---------- Secrets ----------
 .env
 .env.*
 !.env.example
+*.pem
+*.key
 
-# Dependencies
+# ---------- Dependencies & build output ----------
 node_modules/
+.vercel/
+.next/
+dist/
+build/
+out/
+coverage/
+.cache/
+*.tsbuildinfo
 
-# Logs
+# ---------- Logs & scratch ----------
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+*.tmp
+*.bak
+*.orig
+*.swp
+tmp/
+screenshots/
 
-# OS files
+# ---------- OS files ----------
 .DS_Store
 Thumbs.db
 desktop.ini
+ehthumbs.db
 
-# Editors and AI tooling
+# ---------- Editors ----------
 .vscode/
 .idea/
+*.sublime-*
+
+# ---------- AI and agent tooling (local only) ----------
 .claude/
 .gstack/
+.agents/
+.cursor/
+.windsurf/
+.gemini/
+.codex/
+.aider*
 .code-review-graph/
 .playwright-mcp/
+skills-lock.json
 system-commandline-sentinel-files/
 
-# Deploy tooling
-.vercel/
+# ---------- Local-only scripts ----------
+# One-off UI checks that click through a running admin; keep them out of the repo
+scripts/verify-ui.js
 
-# Local design references (mockups, not part of the site)
+# ---------- Design sources (not served by the site) ----------
 design/
-
-# Scratch output
-*.tmp
-screenshots/
+# Full-size originals; the site uses the optimised .webp versions in images/
+images/aboutHero.png
+images/about-hero-equipment.jpg
+images/**/*.psd
+images/**/*.fig
