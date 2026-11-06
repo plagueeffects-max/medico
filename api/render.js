@@ -59,7 +59,9 @@ function setHead(ed, { title, description, canonical, image, card, imageAlt, typ
 }
 
 /** Branded share card URL; the version changes whenever the title or picture does. */
-const cardUrl = (kind, id, ...parts) => `${siteUrl()}/og/${kind}/${encodeURIComponent(id)}.jpg?v=${require('crypto').createHash('md5').update(parts.join('|')).digest('hex').slice(0, 8)}`;
+const cardUrl = (kind, id, ...parts) => `${siteUrl()}/og/${kind}/${encodeURIComponent(id)}.jpg?v=${require('crypto').createHash('md5').update([CARD_DESIGN, ...parts].join('|')).digest('hex').slice(0, 8)}`;
+// Bump CARD_DESIGN whenever tools/og-cards.js changes the frames, so caches fetch the new look
+const CARD_DESIGN = '2';
 
 const insightCard = (p) => `<a href="/blog/${encodeURIComponent(p.slug)}" class="insight">
             <div class="insight-media" data-media>

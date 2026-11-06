@@ -12,11 +12,12 @@ const ROOT = path.join(__dirname, '..');
 const OUT = path.join(ROOT, 'images', 'og');
 const url = (p) => `file:///${path.join(ROOT, p).replace(/\\/g, '/')}`;
 
+// Each card: a short label for the page, and the photo that frames the brand on wide previews
 const CARDS = [
-  { file: 'home', photo: 'images/hero-poster.webp', pos: '70% 40%', title: 'Medical equipment for a <em>healthier</em> tomorrow', sub: 'Supply, installation and 7-day service across Jammu &amp; Kashmir' },
-  { file: 'about', photo: 'images/about-hero.webp', pos: '55% 60%', title: 'Kashmir&rsquo;s equipment partner <em>since 2000</em>', sub: 'Authorised Philips, Schiller and Shalya distributor in Srinagar' },
-  { file: 'shop', photo: 'images/shop-hero.webp', pos: '78% 50%', title: 'Clinical equipment, <em>looked after locally</em>', sub: 'Oxygen &middot; ICU &middot; Anaesthesia &middot; Diagnostics &middot; Surgical' },
-  { file: 'blog', photo: 'images/blog-featured-icu.webp', pos: '50% 50%', title: 'Practical guides for medical equipment <em>in Kashmir</em>', sub: 'Buying advice, care tips and service notes from the Medico team' },
+  { file: 'home', photo: 'images/hero-poster.webp', pos: '70% 40%', label: 'Medical equipment &amp; service' },
+  { file: 'about', photo: 'images/about-hero.webp', pos: '55% 60%', label: 'Serving Kashmir since 2000' },
+  { file: 'shop', photo: 'images/shop-hero.webp', pos: '78% 50%', label: 'Equipment catalogue' },
+  { file: 'blog', photo: 'images/blog-featured-icu.webp', pos: '50% 50%', label: 'The Medico blog' },
 ];
 
 const MARK = '<svg viewBox="0 0 64 64"><path d="M8 34h9l3.5-6 4.5 11 6.5-25 6.5 33 4.5-17 3 4h10"/></svg>';
@@ -35,41 +36,48 @@ const base = `
 
 const lockup = (dark) => `<div class="lockup" style="color:${dark ? '#090d16' : '#fff'}"><span class="mark">${MARK}</span><span><div class="name">Medico<b>.</b></div><div class="sub">Scientific Service Centre</div></span></div>`;
 
-// Centred composition: WhatsApp's compact preview crops the middle square, so the brand and
-// headline sit on the centre line and the photo only sets the mood.
+// Centre safe zone: WhatsApp's compact preview crops the middle 630x630 square and shrinks it to
+// about 80px, so only the brand emblem lives there, big enough to read as an app icon. The page's
+// title and description already sit beside the thumbnail as native text, so none is baked in.
+// On wide previews (iMessage, LinkedIn, X, WhatsApp's large card) the photo fills the sides.
 const pageCard = (c) => `<!doctype html><html><head><style>${base}
   body { position: relative; background: #090d16; color: #fff; }
-  .photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: ${c.pos}; filter: saturate(.9) contrast(1.05); }
-  .veil { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 80% at 50% 48%, rgba(9,13,22,.8) 0%, rgba(9,13,22,.9) 60%, rgba(6,9,16,.97) 100%); }
-  .inner { position: relative; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 120px; }
-  h1 { margin-top: 44px; max-width: 900px; font-size: 64px; font-weight: 800; line-height: 1.04; letter-spacing: -.04em; text-wrap: balance; }
-  h1 em { font-style: normal; color: #ff4d42; }
-  p { margin-top: 22px; font-size: 25px; font-weight: 500; line-height: 1.4; color: rgba(255,255,255,.78); }
-  .foot { position: absolute; left: 0; right: 0; bottom: 36px; display: flex; justify-content: center; align-items: center; gap: 14px; font-size: 17px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.6); }
-  .foot::before, .foot::after { content: ''; width: 40px; height: 2px; border-radius: 2px; background: #e5181f; }
+  .photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: ${c.pos}; filter: saturate(.95) contrast(1.04); }
+  .veil { position: absolute; inset: 0; background: radial-gradient(ellipse 560px 400px at 50% 50%, rgba(9,13,22,.9) 0%, rgba(9,13,22,.78) 50%, rgba(9,13,22,.42) 100%); }
+  .inner { position: relative; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .label { display: inline-flex; align-items: center; gap: 14px; font-size: 19px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.72); }
+  .label::before, .label::after { content: ''; width: 28px; height: 2px; border-radius: 2px; background: #e5181f; }
+  .emblem { display: grid; place-items: center; width: 232px; height: 232px; margin-top: 30px; border-radius: 60px; background: #fff; box-shadow: 0 30px 70px -24px rgba(0,0,0,.7), 0 0 0 10px rgba(255,255,255,.06); }
+  .emblem svg { width: 168px; height: 168px; fill: none; stroke: #e5181f; stroke-width: 5.5; stroke-linecap: round; stroke-linejoin: round; }
+  .word { margin-top: 30px; font-size: 76px; font-weight: 800; letter-spacing: -.045em; line-height: 1; }
+  .word b { color: #ff3b30; }
+  .tag { margin-top: 12px; font-size: 15px; font-weight: 600; letter-spacing: .3em; text-transform: uppercase; color: rgba(255,255,255,.62); }
 </style></head><body>
   <img class="photo" src="${url(c.photo)}">
   <div class="veil"></div>
-  <div class="inner">${lockup(false)}<h1>${c.title}</h1><p>${c.sub}</p></div>
-  <div class="foot">Srinagar &middot; Jammu &amp; Kashmir</div>
+  <div class="inner">
+    <div class="label">${c.label}</div>
+    <div class="emblem">${MARK}</div>
+    <div class="word">Medico<b>.</b></div>
+    <div class="tag">Scientific Service Centre &middot; Srinagar</div>
+  </div>
 </body></html>`;
 
-// Transparent overlay for generated cards: brand top-left, a soft floor with a label.
+// Transparent overlay for generated cards. Everything sits on the centre line so the brand
+// survives WhatsApp's square crop: the logo pill at the top, the label at the bottom.
 const frame = (label, light) => `<!doctype html><html><head><style>${base}
-  .top { position: absolute; top: 32px; left: 32px; padding: 10px 22px 10px 10px; border-radius: 22px; background: rgba(255,255,255,.96); box-shadow: 0 10px 30px -12px rgba(9,13,22,.4); }
+  .top { position: absolute; top: 30px; left: 50%; transform: translateX(-50%); padding: 10px 22px 10px 10px; border-radius: 22px; background: rgba(255,255,255,.96); box-shadow: 0 10px 30px -12px rgba(9,13,22,.4); }
   .top .mark { width: 48px; height: 48px; box-shadow: none; border: 1px solid rgba(11,18,32,.08); }
   .top .mark svg { width: 34px; height: 34px; }
   .top .name { font-size: 26px; } .top .sub { font-size: 9.5px; }
   .floor { position: absolute; left: 0; right: 0; bottom: 0; height: 150px; background: linear-gradient(180deg, rgba(9,13,22,0) 0%, rgba(9,13,22,.7) 100%); }
-  .tag { position: absolute; left: 36px; bottom: 32px; display: inline-flex; align-items: center; gap: 12px; color: #fff; font-size: 20px; font-weight: 600; letter-spacing: .01em; }
-  .tag::before { content: ''; width: 36px; height: 3px; border-radius: 3px; background: #e5181f; }
-  .loc { position: absolute; right: 36px; bottom: 34px; color: rgba(255,255,255,.75); font-size: 16px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
-  ${light ? '.floor { display: none; } .tag { color: #090d16; } .loc { color: #64748b; } .top { box-shadow: 0 0 0 1px rgba(11,18,32,.08), 0 10px 30px -14px rgba(9,13,22,.25); }' : ''}
+  .tag { position: absolute; left: 0; right: 0; bottom: 32px; display: flex; justify-content: center; align-items: center; gap: 12px; color: #fff; font-size: 20px; font-weight: 600; }
+  .tag::before, .tag::after { content: ''; width: 28px; height: 3px; border-radius: 3px; background: #e5181f; }
+  ${light ? '.floor { display: none; } .tag { color: #090d16; } .top { box-shadow: 0 0 0 1px rgba(11,18,32,.08), 0 10px 30px -14px rgba(9,13,22,.25); }' : ''}
 </style></head><body>
   <div class="top">${lockup(true)}</div>
   <div class="floor"></div>
   <div class="tag">${label}</div>
-  <div class="loc">Srinagar &middot; J&amp;K</div>
 </body></html>`;
 
 (async () => {
