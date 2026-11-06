@@ -20,7 +20,7 @@ for (const page of pages) {
     html = html.replace(re, () => `<!-- @${name} -->\n${partial(name)}\n  <!-- /@${name} -->`);
   }
   // Root-relative paths so pages also work when served from nested URLs (/blog/slug)
-  html = html.replace(/(\s(?:href|src|poster|data-src-sm|data-src-lg)=")(?!\/|https?:|mailto:|tel:|#|data:)((?:assets|images|favicon|Products|Blog Assets)\/|(?:index|shop|about|blog|blog-post|product|privacy-policy|terms)\.html)/g, '$1/$2');
+  html = html.replace(/(\s(?:href|src|poster|data-src-sm|data-src-lg)=")(?!\/|https?:|mailto:|tel:|#|data:)((?:assets|images|favicon)\/|(?:index|shop|about|blog|blog-post|product|privacy-policy|terms)\.html)/g, '$1/$2');
   html = html.replace(/(srcset=")([^"]+)"/g, (m, a, list) => a + list.split(',').map((s) => s.trim().replace(/^(?!\/|https?:)(images\/)/, '/$1')).join(', ') + '"');
   fs.writeFileSync(file, html);
   console.log(`stamped ${page}`);

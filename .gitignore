@@ -51,12 +51,14 @@ ehthumbs.db
 .aider*
 .code-review-graph/
 .playwright-mcp/
+.impeccable/
 skills-lock.json
 system-commandline-sentinel-files/
 
-# ---------- Local-only scripts ----------
-# One-off UI checks that click through a running admin; keep them out of the repo
-scripts/verify-ui.js
+# ---------- Local-only scripts and their output ----------
+# One-off UI checks that click through a running site; keep them and their screenshots out of the repo
+scripts/verify-*.js
+scripts/*.png
 
 # ---------- Design sources (not served by the site) ----------
 design/
@@ -65,3 +67,8 @@ images/aboutHero.png
 images/about-hero-equipment.jpg
 images/**/*.psd
 images/**/*.fig
+
+# ---------- Legacy content folders ----------
+# Old CMS uploads; products, articles and pictures now live in the database and /media
+Products/
+Blog Assets/

@@ -53,7 +53,7 @@ app.get(['/admin', '/admin/'], (req, res) => res.sendFile(path.join(__dirname, '
 
 // Static files (dotfiles such as .env are never served)
 // Only public folders and root-level pages; source, docs and tooling stay private
-for (const dir of ['assets', 'images', 'favicon', 'Products', 'Blog Assets']) {
+for (const dir of ['assets', 'images', 'favicon']) {
   app.use(`/${dir}`, express.static(path.join(__dirname, dir), { dotfiles: 'ignore', index: false }));
 }
 app.get(/^\/[\w-]+\.(?:html|ico|txt|xml)$/, (req, res, next) => {
